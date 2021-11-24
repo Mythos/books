@@ -24,7 +24,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $categories = Category::with('series')->orderBy('name')->get();
+        $categories = Category::with('series.books')->orderBy('name')->get();
         return view('home')->with('categories', $categories);
     }
 }

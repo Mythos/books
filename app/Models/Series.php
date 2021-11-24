@@ -97,7 +97,7 @@ class Series extends Model
      */
     public function getNewBooksCountAttribute() : string
     {
-        return $this->books()->whereStatus('0')->count();
+        return $this->books->where('status', '0')->count();
     }
 
     /**
@@ -107,7 +107,7 @@ class Series extends Model
      */
     public function getOrderedBooksCountAttribute() : string
     {
-        return $this->books()->whereStatus('1')->count();
+        return $this->books->where('status', '1')->count();
     }
 
     /**
@@ -117,7 +117,7 @@ class Series extends Model
      */
     public function getDeliveredBooksCountAttribute() : string
     {
-        return $this->books()->whereStatus('2')->count();
+        return $this->books->where('status', '2')->count();
     }
 
     /**

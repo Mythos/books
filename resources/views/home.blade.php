@@ -11,7 +11,7 @@
                     </div>
                 </div>
                 <div class="row" style="padding: 1rem 0;">
-                    @foreach ($category->series()->orderBy('name')->get() as $series)
+                    @foreach ($category->series->sortBy('name') as $series)
                         <div class="col-sm-12 col-md-6 col-lg-3 d-flex align-self-stretch">
                             <div class="card shadow-sm mb-4" style="width: 30rem;">
                                 <img src="{{ $series->image }}" alt="{{ $series->image }}" class="card-img-top" style="max-height: 400px; object-fit: contain;">

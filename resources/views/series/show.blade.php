@@ -36,7 +36,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($series->books()->orderBy('publish_date')->get() as $book)
+                                @foreach ($series->books->sortBy('publish_date') as $book)
                                     <tr class="{{ $book->status_class }}">
                                         <th scope="row">{{ $book->number }}</th>
                                         <td>{{ $book->publish_date }}</td>
@@ -44,7 +44,7 @@
                                         <td>{{ $book->status_name }}</td>
                                     </tr>
                                 @endforeach
-                                @if($series->books()->count() == 0)
+                                @if($series->books->count() == 0)
                                     <tr>
                                         <td colspan="4" style="text-align: center;">No data</td>
                                     </tr>
