@@ -34,9 +34,8 @@ Route::prefix('')->middleware(['auth'])->group(function () {
             Route::get('edit', SeriesController::class . '@edit')->name('series.edit');
 
             Route::get('books/new', BookController::class . '@create')->name('books.create');
-            Route::post('books', CategoryController::class . '@store')->name('books.store');
+            Route::post('books', BookController::class . '@store')->name('books.store');
             Route::get('{book}', BookController::class . '@show')->name('books.show');
-            Route::post('book', BookController::class . '@store')->name('books.store');
         });
     });
 });
