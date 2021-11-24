@@ -44,6 +44,11 @@
                                         <td>{{ $book->status_name }}</td>
                                     </tr>
                                 @endforeach
+                                @if($series->books()->count() == 0)
+                                    <tr>
+                                        <td colspan="4" style="text-align: center;">No data</td>
+                                    </tr>
+                                @endif
                             </tbody>
                         </table>
                     </div>
