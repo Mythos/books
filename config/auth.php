@@ -18,6 +18,8 @@ return [
         'passwords' => 'users',
     ],
 
+    'registration_enabled' => env('AUTH_REGISTRATION_ENABLED', true),
+
     /*
     |--------------------------------------------------------------------------
     | Authentication Guards

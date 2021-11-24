@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Auth::routes();
+Auth::routes(['register' => config('auth.registration_enabled')]);
 
 Route::prefix('')->middleware(['auth'])->group(function () {
     Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
