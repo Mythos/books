@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use Auth;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StoreBookRequest extends FormRequest
@@ -13,7 +14,7 @@ class StoreBookRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return !Auth::guest();
     }
 
     /**
@@ -24,7 +25,9 @@ class StoreBookRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'publish_date' => 'date',
+            'status' => 'required|integer|min:0',
+            'series_id' => 'required|exists:series,id'
         ];
     }
 }

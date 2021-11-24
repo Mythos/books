@@ -18,4 +18,25 @@ use Illuminate\Support\Facades\Route;
 
 Auth::routes();
 
-Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home')->middleware(['auth']);
+Route::prefix('')->middleware(['auth'])->group(function () {
+    Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+    Route::get('category/new', CategoryController::class . '@create')->name('categories.create');
+    Route::post('categories', CategoryController::class . '@store')->name('categories.store');
+    Route::prefix('{category}')->group(function () {
+        Route::get('edit', CategoryController::class . '@edit')->name('categories.edit');
+
+        Route::get('series/new', SeriesController::class . '@create')->name('series.create');
+        Route::get('{series}', SeriesController::class . '@show')->name('series.show');
+        Route::post('series', SeriesController::class . '@store')->name('series.store');
+
+        Route::prefix('{series}')->group(function () {
+            Route::get('edit', SeriesController::class . '@edit')->name('series.edit');
+
+            Route::get('books/new', BookController::class . '@create')->name('books.create');
+            Route::post('books', CategoryController::class . '@store')->name('books.store');
+            Route::get('{book}', BookController::class . '@show')->name('books.show');
+            Route::post('book', BookController::class . '@store')->name('books.store');
+        });
+    });
+});

@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Series;
 use App\Http\Requests\StoreSeriesRequest;
 use App\Http\Requests\UpdateSeriesRequest;
+use App\Models\Category;
+use Image;
+use Storage;
 
 class SeriesController extends Controller
 {
@@ -21,11 +24,12 @@ class SeriesController extends Controller
     /**
      * Show the form for creating a new resource.
      *
+     * @param  \App\Models\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Category $category)
     {
-        //
+        return view('series.create')->with('category', $category);
     }
 
     /**
@@ -34,9 +38,15 @@ class SeriesController extends Controller
      * @param  \App\Http\Requests\StoreSeriesRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreSeriesRequest $request)
+    public function store(StoreSeriesRequest $request, Category $category)
     {
-        //
+        $image_url = $request->get('image');
+        $series = Series::create($request->all());
+        $image = Image::make($image_url)->resize(null, 400, function ($constraint) {
+            $constraint->aspectRatio();
+        })->encode('jpg');
+        Storage::put('public/series/'.$series->slug.'.jpg', $image);
+        return redirect()->to(route('home'));
     }
 
     /**
@@ -45,9 +55,9 @@ class SeriesController extends Controller
      * @param  \App\Models\Series  $series
      * @return \Illuminate\Http\Response
      */
-    public function show(Series $series)
+    public function show(Category $category, Series $series)
     {
-        //
+        return view('series.show')->with('category', $category)->with('series', $series);
     }
 
     /**

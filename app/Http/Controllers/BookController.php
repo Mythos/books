@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Book;
 use App\Http\Requests\StoreBookRequest;
 use App\Http\Requests\UpdateBookRequest;
+use App\Models\Category;
+use App\Models\Series;
 
 class BookController extends Controller
 {
@@ -23,9 +25,9 @@ class BookController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Category $category, Series $series)
     {
-        //
+        return view('books.create')->with('category', $category)->with('series', $series);
     }
 
     /**
@@ -34,9 +36,13 @@ class BookController extends Controller
      * @param  \App\Http\Requests\StoreBookRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreBookRequest $request)
+    public function store(StoreBookRequest $request, Category $category, Series $series)
     {
-        //
+        $number = Book::whereSeriesId($series->id)->max('number') ?? 0;
+        $book = new Book($request->all());
+        $book->number = ++$number;
+        $book->save();
+        return redirect()->to(route('series.show', [$category, $series]));
     }
 
     /**
@@ -45,7 +51,7 @@ class BookController extends Controller
      * @param  \App\Models\Book  $book
      * @return \Illuminate\Http\Response
      */
-    public function show(Book $book)
+    public function show(Category $category, Series $series, Book $book)
     {
         //
     }

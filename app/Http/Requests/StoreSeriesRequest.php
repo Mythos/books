@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use Auth;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StoreSeriesRequest extends FormRequest
@@ -13,7 +14,7 @@ class StoreSeriesRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return !Auth::guest();
     }
 
     /**
@@ -24,7 +25,9 @@ class StoreSeriesRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'name' => 'required',
+            'status' => 'required',
+            'category_id' => 'required|exists:categories,id'
         ];
     }
 }

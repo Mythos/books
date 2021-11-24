@@ -16,8 +16,9 @@ class CreateSeriesTable extends Migration
         Schema::create('series', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->integer('status');
-            $table->unsignedInteger('total');
+            $table->string('slug');
+            $table->unsignedTinyInteger('status');
+            $table->unsignedInteger('total')->nullable();
             $table->foreignId('category_id')->constrained();
             $table->timestamps();
         });
