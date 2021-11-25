@@ -10,6 +10,7 @@
                         <tr>
                             <th scope="col">Publish date</th>
                             <th scope="col">Title</th>
+                            <th scope="col">ISBN</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -17,6 +18,7 @@
                         <tr class="{{ $book->status_class }}">
                             <th scope="row">{{ $book->publish_date }}</th>
                             <td>{{ $book->series->name }} {{ $book->number }}</td>
+                            <td>{{ $book->isbn }}</td>
                         </tr>
                         @endforeach
                         @if(count($upcoming) == 0)
