@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Book;
 use App\Models\Category;
 use Illuminate\Http\Request;
 
@@ -25,6 +26,7 @@ class HomeController extends Controller
     public function index()
     {
         $categories = Category::with('series.books')->orderBy('name')->get();
-        return view('home')->with('categories', $categories);
+        $upcoming = Book::with('series')->where('status', '!=', '2')->orderBy('publish_date')->get();
+        return view('home')->with('categories', $categories)->with('upcoming', $upcoming);
     }
 }

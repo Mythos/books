@@ -14,8 +14,11 @@
                     </div>
                 </div>
                 <div style="padding: 1rem 0;">
-                    {{ __('Status') }}: <span class="{{ $series->status_class }}">{{ $series->status_name }}</span>
-                    {{ __('Total') }}: {{ isset($series->total) ? $series->total : '?' }}
+                    <div>{{ __('Status') }}: <span class="{{ $series->status_class }}">{{ $series->status_name }}</span></div>
+                    <div>{{ __('New') }}: <span class="badge badge-pill badge-danger">{{ $series->new_books_count }}</span></div>
+                    <div>{{ __('Ordered') }}: <span class="badge badge-pill badge-warning">{{ $series->ordered_books_count }}</span></div>
+                    <div>{{ __('Delivered') }}: <span class="badge badge-pill badge-success">{{ $series->delivered_books_count }}</span></div>
+                    <div>{{ __('Total') }}: {{ isset($series->total) ? $series->total : '?' }}</div>
                 </div>
                 <div style="padding: 1rem 0;">
                     <div>
@@ -24,9 +27,8 @@
                             <a href="{{ route('books.create', [$category, $series]) }}" class="btn btn-link"><i class="fas fa-plus-circle"></i></a>
                         </div>
                     </div>
-                    {{-- <h2>{{ __('Volumes') }}</h2> --}}
-                    <div>
-                        <table class="table">
+                    <div class="table-responsive">
+                        <table class="table table-hover">
                             <thead>
                                 <tr>
                                     <th scope="col">#</th>

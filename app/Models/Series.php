@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 
@@ -73,6 +74,7 @@ class Series extends Model
         }
     }
 
+
     /**
      * Get the series' status CSS class.
      *
@@ -82,12 +84,55 @@ class Series extends Model
     {
         switch ($this->status) {
             case 0:
-                return __('badge badge-secondary');
+                return 'badge badge-secondary';
             case 1:
-                return __('badge badge-warning');
+                return 'badge badge-warning';
             case 2:
-                return __('badge badge-success');
+                return 'badge badge-success';
         }
+    }
+
+    /**
+     * Get the series' completion status CSS class.
+     *
+     * @return string
+     */
+    public function getCompletionStatusClassAttribute() : string
+    {
+        switch ($this->completion_status) {
+            case false:
+                return 'badge badge-danger';
+            case true:
+                return 'badge badge-success';
+        }
+    }
+
+      /**
+     * Get the series' completion status display name.
+     *
+     * @return string
+     */
+    public function getCompletionStatusNameAttribute() : string
+    {
+        switch ($this->completion_status) {
+            case false:
+                return __('Incomplete');
+            case true:
+                return __('Complete');
+        }
+    }
+
+    /**
+     * Get the series' completion status.
+     *
+     * @return string
+     */
+    public function getCompletionStatusAttribute() : bool
+    {
+        if(empty($this->total)){
+            return false;
+        }
+        return $this->total == $this->deliveredBooksCount;
     }
 
     /**

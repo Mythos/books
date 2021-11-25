@@ -75,14 +75,11 @@ class Book extends Model
     {
         switch ($this->status) {
             case 0:
-                return __('table-danger');
-                // return __('badge badge-danger');
+                return 'table-danger';
             case 1:
-                return __('table-warning');
-                // return __('badge badge-warning');
+                return 'table-warning';
             case 2:
-                return __('table-success');
-                // return __('badge badge-success');
+                return 'table-success';
         }
     }
 
