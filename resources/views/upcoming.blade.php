@@ -8,7 +8,7 @@
                         <tr>
                             <th scope="col" style="min-width: 7rem;">{{ __('Publish date') }}</th>
                             <th scope="col" style="min-width: 25rem;">{{ __('Title') }}</th>
-                            <th scope="col">{{ __('ISBN') }}</th>
+                            <th scope="col" style="min-width: 11rem;">{{ __('ISBN') }}</th>
                         </tr>
                     </thead>
                     <tbody>
