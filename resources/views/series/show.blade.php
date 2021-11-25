@@ -32,9 +32,9 @@
                             <thead>
                                 <tr>
                                     <th scope="col">#</th>
-                                    <th scope="col">Publish date</th>
-                                    <th scope="col">ISBN</th>
-                                    <th scope="col">Status</th>
+                                    <th scope="col">{{ __('Publish date') }}</th>
+                                    <th scope="col">{{ __('ISBN') }}</th>
+                                    <th scope="col">{{ __('Status') }}</th>
                                 </tr>
                             </thead>
                             <tbody>

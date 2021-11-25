@@ -8,9 +8,9 @@
                 <table class="table table-hover">
                     <thead>
                         <tr>
-                            <th scope="col">Publish date</th>
-                            <th scope="col">Title</th>
-                            <th scope="col">ISBN</th>
+                            <th scope="col">{{ __('Publish date') }}</th>
+                            <th scope="col">{{ __('Title') }}</th>
+                            <th scope="col">{{ __('ISBN') }}</th>
                         </tr>
                     </thead>
                     <tbody>

@@ -6,7 +6,6 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">{{ __('Create Book') }}</div>
-
                     <div class="card-body">
                         <form method="POST" action="{{ route('books.store', [$category, $series]) }}">
                             @csrf
@@ -50,7 +49,7 @@
                             </div>
                             <div class="form-group row mb-0 float-right">
                                 <button type="submit" class="btn btn-primary">
-                                    {{ __('Login') }}
+                                    {{ __('Save') }}
                                 </button>
                             </div>
                         </form>

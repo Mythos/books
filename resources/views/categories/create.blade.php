@@ -6,11 +6,9 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header">{{ __('Create Category') }}</div>
-
                 <div class="card-body">
                     <form method="POST" action="{{ route('categories.store') }}">
                         @csrf
-
                         <div class="form-group row">
                             <label for="name" class="col-md-2 col-form-label text-md-right">{{ __('Name') }}</label>
                             <div class="col-md-10">
@@ -23,11 +21,9 @@
                             </div>
                         </div>
                         <div class="form-group row mb-0 float-right">
-                            {{-- <div class="col-md-8 offset-md-4"> --}}
-                                <button type="submit" class="btn btn-primary">
-                                    {{ __('Login') }}
-                                </button>
-                            {{-- </div> --}}
+                            <button type="submit" class="btn btn-primary">
+                                {{ __('Save') }}
+                            </button>
                         </div>
                     </form>
                 </div>
