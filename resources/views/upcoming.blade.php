@@ -26,7 +26,7 @@
                         @endforeach
                         @if (count($upcoming) == 0)
                             <tr>
-                                <td colspan="2" style="text-align: center;">No data</td>
+                                <td colspan="4" style="text-align: center;">No data</td>
                             </tr>
                         @endif
                     </tbody>
