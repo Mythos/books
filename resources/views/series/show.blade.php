@@ -29,7 +29,7 @@
                     </div>
                     <div class="table-responsive">
                         <table class="table table-hover">
-                            <thead>
+                            <thead class="table-dark">
                                 <tr>
                                     <th scope="col" style="min-width: 2rem;">#</th>
                                     <th scope="col" style="min-width: 7rem;">{{ __('Publish date') }}</th>
