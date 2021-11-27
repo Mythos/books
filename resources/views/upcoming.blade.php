@@ -1,4 +1,4 @@
-<div class="row" style="padding-bottom: 1.2rem;">
+<div class="row mb-3">
     <div class="col-sm-12 col-md-12 col-lg-12">
         <div class="card shadow-sm mb-12">
             <div class="card-header">{{ __('Upcoming Releases') }}</div>

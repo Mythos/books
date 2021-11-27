@@ -2,25 +2,25 @@
 
 @section('content')
     <div class="container">
-        <div class="row" style="padding: 1rem 0;">
-            <div class="col-sm-12 col-md-12 col-lg-4 d-flex align-self-stretch">
-                <img src="{{ $series->image }}" alt="{{ $series->image }}" class="card-img-top" style="max-height: 400px; object-fit: contain;">
+        <div class="row">
+            <div class="col-sm-12 col-md-12 col-lg-3 d-flex align-self-stretch justify-content-center my-2">
+                <img src="{{ $series->image }}" alt="{{ $series->image }}" class="rounded" style="max-height: 400px; object-fit: contain;">
             </div>
-            <div class="col-sm-12 col-md-12 col-lg-8">
+            <div class="col-sm-12 col-md-12 col-lg-9 my-2 pl-4">
                 <div>
                     <h1 style="display: inline;">{{ $series->name }}</h1>
                     <div class="float-right" style="display: inline;">
                         <a href="{{ route('series.edit', [$category, $series]) }}" class="btn btn-link"><i class="fas fa-edit"></i></a>
                     </div>
                 </div>
-                <div style="padding: 1rem 0;">
+                <div class="mt-3">
                     <div>{{ __('Status') }}: <span class="{{ $series->status_class }}">{{ $series->status_name }}</span></div>
                     <div>{{ __('New') }}: <span class="badge badge-pill badge-danger">{{ $series->new_books_count }}</span></div>
                     <div>{{ __('Ordered') }}: <span class="badge badge-pill badge-warning">{{ $series->ordered_books_count }}</span></div>
                     <div>{{ __('Delivered') }}: <span class="badge badge-pill badge-success">{{ $series->delivered_books_count }}</span></div>
                     <div>{{ __('Total') }}: {{ isset($series->total) ? $series->total : '?' }}</div>
                 </div>
-                <div style="padding: 1rem 0;">
+                <div class="mt-3">
                     <div>
                         <h2 style="display: inline;">{{ __('Volumes') }}</h2>
                         <div class="float-right" style="display: inline;">
@@ -31,10 +31,10 @@
                         <table class="table table-hover">
                             <thead>
                                 <tr>
-                                    <th scope="col">#</th>
-                                    <th scope="col">{{ __('Publish date') }}</th>
-                                    <th scope="col">{{ __('ISBN') }}</th>
-                                    <th scope="col">{{ __('Status') }}</th>
+                                    <th scope="col" style="min-width: 2rem;">#</th>
+                                    <th scope="col" style="min-width: 7rem;">{{ __('Publish date') }}</th>
+                                    <th scope="col" style="min-width: 10rem;">{{ __('ISBN') }}</th>
+                                    <th scope="col" style="min-width: 7rem;">{{ __('Status') }}</th>
                                     <th scope="col"></th>
                                 </tr>
                             </thead>
