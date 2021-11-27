@@ -45,6 +45,17 @@ class BookController extends Controller
         return redirect()->to(route('series.show', [$category, $series]));
     }
 
+    public function ordered(Category $category, Series $series, int $number) {
+        $book = Book::whereSeriesId($series->id)->whereNumber($number)->first();
+        $book->status = 1;
+        $book->save();
+    }
+    public function delivered(Category $category, Series $series, int $number) {
+        $book = Book::whereSeriesId($series->id)->whereNumber($number)->first();
+        $book->status = 2;
+        $book->save();
+    }
+
     /**
      * Display the specified resource.
      *

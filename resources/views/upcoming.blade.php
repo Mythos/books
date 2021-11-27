@@ -9,17 +9,22 @@
                             <th scope="col" style="min-width: 7rem;">{{ __('Publish date') }}</th>
                             <th scope="col" style="min-width: 25rem;">{{ __('Title') }}</th>
                             <th scope="col" style="min-width: 11rem;">{{ __('ISBN') }}</th>
+                            <th scope="col"></th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach ($upcoming as $book)
-                        <tr class="{{ $book->status_class }}">
-                            <th scope="row">{{ $book->publish_date }}</th>
-                            <td>{{ $book->series->name }} {{ $book->number }}</td>
-                            <td>{{ $book->isbn }}</td>
-                        </tr>
+                            <tr class="{{ $book->status_class }}">
+                                <th scope="row">{{ $book->publish_date }}</th>
+                                <td>{{ $book->series->name }} {{ $book->number }}</td>
+                                <td>{{ $book->isbn }}</td>
+                                <td>
+                                    @if ($book->status == 0)<a data-type="book-set-status" data-status="1" data-context="upcoming" href="{{ route('books.ordered', [$book->series->category, $book->series, $book->number]) }}"><i class="fa fa-shopping-cart"></i></a>@endif
+                                    @if ($book->status == 1)<a data-type="book-set-status" data-status="2" data-context="upcoming" href="{{ route('books.delivered', [$book->series->category, $book->series, $book->number]) }}"><i class="fa fa-check"></i></a>@endif
+                                </td>
+                            </tr>
                         @endforeach
-                        @if(count($upcoming) == 0)
+                        @if (count($upcoming) == 0)
                             <tr>
                                 <td colspan="2" style="text-align: center;">No data</td>
                             </tr>

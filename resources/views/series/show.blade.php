@@ -35,6 +35,7 @@
                                     <th scope="col">{{ __('Publish date') }}</th>
                                     <th scope="col">{{ __('ISBN') }}</th>
                                     <th scope="col">{{ __('Status') }}</th>
+                                    <th scope="col"></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -44,6 +45,10 @@
                                         <td>{{ $book->publish_date }}</td>
                                         <td>{{ $book->isbn }}</td>
                                         <td>{{ $book->status_name }}</td>
+                                        <td>
+                                            @if ($book->status == 0)<a data-type="book-set-status" data-status="1" data-context="list" href="{{ route('books.ordered', [$category, $series, $book->number]) }}"><i class="fa fa-shopping-cart"></i></a>@endif
+                                            @if ($book->status == 1)<a data-type="book-set-status" data-status="1" data-context="list" href="{{ route('books.delivered', [$category, $series, $book->number]) }}"><i class="fa fa-check"></i></a>@endif
+                                        </td>
                                     </tr>
                                 @endforeach
                                 @if($series->books->count() == 0)
