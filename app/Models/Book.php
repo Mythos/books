@@ -93,7 +93,7 @@ class Book extends Model
         return $this->belongsTo(Series::class);
     }
 
-      /**
+    /**
      * Get the route key for the model.
      *
      * @return string

@@ -11,9 +11,10 @@ class UpcomingSeries extends Component
 
     public function render()
     {
-        $this->upcoming = Book::with('series.category')->where('status', '!=', '2')->orderBy('publish_date')->get();
+        $this->upcoming = Book::with('series')->where('status', '!=', '2')->orderBy('publish_date')->get();
         return view('livewire.series.upcoming-series');
     }
+
     public function ordered(int $id)
     {
         $book = Book::find($id);
