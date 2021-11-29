@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="container">
-        @include('upcoming', [$upcoming])
+        <livewire:series.upcoming-series />
         @foreach ($categories as $category)
             @include('categories.gallery', [$category])
         @endforeach
