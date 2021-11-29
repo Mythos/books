@@ -6,7 +6,7 @@
     </div>
 </div>
 <div class="row mt-2">
-    @foreach ($category->series->sortBy('name') as $series)
-        @include('series.card', [$series])
+    @foreach ($series as $item)
+        @include('series.card', [$item])
     @endforeach
 </div>

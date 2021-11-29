@@ -4,7 +4,7 @@
     <div class="container">
         <livewire:series.upcoming-series />
         @foreach ($categories as $category)
-            @include('categories.gallery', [$category])
+            @livewire('series.gallery', [$category])
         @endforeach
     </div>
 @endsection
