@@ -21,5 +21,6 @@ class EditCategory extends Component
     public function save() {
         $this->validate();
         $this->category->save();
+        return redirect()->route('categories.edit', [$this->category]);
     }
 }
