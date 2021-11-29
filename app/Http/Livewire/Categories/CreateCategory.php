@@ -21,6 +21,7 @@ class CreateCategory extends Component
         $this->validate();
         $category = new Category(['name' => $this->name]);
         $category->save();
+        toastr()->addSuccess(__('Category has been created'));
         return redirect()->route('home');
     }
 }

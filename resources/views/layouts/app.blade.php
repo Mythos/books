@@ -95,6 +95,8 @@
             @yield('content')
         </main>
     </div>
+    @flasher_render
+    @flasher_livewire_render
     @livewireScripts
 </body>
 

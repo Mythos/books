@@ -21,6 +21,7 @@ class EditCategory extends Component
     public function save() {
         $this->validate();
         $this->category->save();
+        toastr()->addSuccess(__('Category has been updated'));
         return redirect()->route('categories.edit', [$this->category]);
     }
 }

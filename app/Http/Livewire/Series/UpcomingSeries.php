@@ -20,11 +20,13 @@ class UpcomingSeries extends Component
         $book = Book::find($id);
         $book->status = 1;
         $book->save();
+        toastr()->livewire()->addSuccess(__(':name has been updated', ['name' => $book->series->name . ' ' . $book->number]));
     }
     public function delivered(int $id)
     {
         $book = Book::find($id);
         $book->status = 2;
         $book->save();
+        toastr()->livewire()->addSuccess(__(':name has been updated', ['name' => $book->series->name . ' ' . $book->number]));
     }
 }

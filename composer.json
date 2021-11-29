@@ -14,6 +14,8 @@
         "laravel/tinker": "^2.5",
         "laravel/ui": "^3.3",
         "livewire/livewire": "^2.8",
+        "php-flasher/flasher-livewire": "^0.9.5",
+        "php-flasher/flasher-toastr-laravel": "^0.9.5",
         "spatie/laravel-sluggable": "^2.6"
     },
     "require-dev": {
