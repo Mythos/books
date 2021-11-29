@@ -3,6 +3,8 @@
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\SeriesController;
+use App\Http\Livewire\Categories\CreateCategory;
+use App\Http\Livewire\Categories\EditCategory;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -21,10 +23,9 @@ Auth::routes(['register' => config('auth.registration_enabled')]);
 Route::prefix('')->middleware(['auth'])->group(function () {
     Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-    Route::get('category/new', CategoryController::class . '@create')->name('categories.create');
-    Route::post('categories', CategoryController::class . '@store')->name('categories.store');
+    Route::get('category/new', CreateCategory::class)->name('categories.create');
     Route::prefix('{category}')->group(function () {
-        Route::get('edit', CategoryController::class . '@edit')->name('categories.edit');
+        Route::get('edit', EditCategory::class)->name('categories.edit');
 
         Route::get('series/new', SeriesController::class . '@create')->name('series.create');
         Route::get('{series}', SeriesController::class . '@show')->name('series.show');

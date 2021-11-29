@@ -18,6 +18,7 @@
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
 
     <!-- Styles -->
+    @livewireStyles
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
 
@@ -94,6 +95,7 @@
             @yield('content')
         </main>
     </div>
+    @livewireScripts
 </body>
 
 </html>

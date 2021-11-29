@@ -1,0 +1,26 @@
+<?php
+
+namespace App\Http\Livewire\Categories;
+
+use App\Models\Category;
+use Livewire\Component;
+
+class CreateCategory extends Component
+{
+    public string $name = '';
+
+    protected $rules = [
+        'name' => 'required'
+    ];
+    public function render()
+    {
+        return view('livewire.categories.create-category')->extends('layouts.app')->section('content');
+    }
+
+    public function save() {
+        $this->validate();
+        $category = new Category(['name' => $this->name]);
+        $category->save();
+        return redirect()->route('home');
+    }
+}
