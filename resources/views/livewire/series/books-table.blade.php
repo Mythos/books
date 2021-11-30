@@ -5,7 +5,7 @@
             <a href="{{ route('books.create', [$category, $series]) }}" class="btn btn-link"><i class="fas fa-plus-circle"></i></a>
         </div>
     </div>
-    <div class="table-responsive">
+    <div class="table-responsive" style="width: 100%;">
         <table class="table table-hover">
             <thead class="table-dark">
                 <tr>
