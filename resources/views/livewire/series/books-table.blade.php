@@ -1,7 +1,7 @@
 <div class="mt-3">
     <div>
         <h2 style="display: inline;">{{ __('Volumes') }}</h2>
-        <div class="float-right" style="display: inline;">
+        <div class="float-end" style="display: inline;">
             <a href="{{ route('books.create', [$category, $series]) }}" class="btn btn-link"><i class="fas fa-plus-circle"></i></a>
         </div>
     </div>

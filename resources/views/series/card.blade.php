@@ -4,10 +4,10 @@
         <div class="card-body d-flex flex-column">
             <h5 class="card-title text-uppercase">{{ $item->name }}</h5>
             <div class="mt-auto">
-                <div class="float-left">
+                <div class="float-start">
                     <span class="{{ $item->status_class }}">{{ $item->status_name }}</span>
                 </div>
-                <div class="float-right">
+                <div class="float-end">
                     <span class="{{ $item->completion_status_class }}">{{ $item->completion_status_name }}</span>
                 </div>
             </div>

@@ -6,7 +6,7 @@
                 <div class="card-body">
                     <form method="POST" wire:submit.prevent='save'>
                         @csrf
-                        <div class="form-group row">
+                        <div class="mb-3 row">
                             <label for="name" class="col-md-2 col-form-label text-md-right">{{ __('Name') }}</label>
                             <div class="col-md-10">
                                 <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" wire:model='name' required autocomplete="name" autofocus>
@@ -17,7 +17,7 @@
                                 @enderror
                             </div>
                         </div>
-                        <div class="form-group row mb-0 float-right">
+                        <div class="row mb-0 float-end">
                             <button type="submit" class="btn btn-primary">
                                 {{ __('Save') }}
                             </button>

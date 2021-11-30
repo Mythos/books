@@ -84,11 +84,11 @@ class Series extends Model
     {
         switch ($this->status) {
             case 0:
-                return 'badge badge-secondary';
+                return 'badge bg-secondary';
             case 1:
-                return 'badge badge-warning';
+                return 'badge bg-warning';
             case 2:
-                return 'badge badge-success';
+                return 'badge bg-success';
         }
     }
 
@@ -101,9 +101,9 @@ class Series extends Model
     {
         switch ($this->completion_status) {
             case false:
-                return 'badge badge-danger';
+                return 'badge bg-danger';
             case true:
-                return 'badge badge-success';
+                return 'badge bg-success';
         }
     }
 
