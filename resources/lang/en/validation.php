@@ -155,6 +155,8 @@ return [
     |
     */
 
-    'attributes' => [],
+    'attributes' => [
+        'isbn' => 'ISBN'
+    ],
 
 ];
