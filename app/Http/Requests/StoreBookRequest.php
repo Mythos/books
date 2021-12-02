@@ -40,7 +40,9 @@ class StoreBookRequest extends FormRequest
 {
     $data = $this->all();
     try {
-        $data['isbn'] = IsbnIsbn::of($data['isbn'])->to13();
+        if(!empty($data['isbn'])) {
+            $data['isbn'] = IsbnIsbn::of($data['isbn'])->to13();
+        }
     } catch (InvalidIsbnException $exception) {
     }
     $this->getInputSource()->replace($data);
