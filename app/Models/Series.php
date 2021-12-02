@@ -39,6 +39,12 @@ use Spatie\Sluggable\SlugOptions;
  * @method static \Illuminate\Database\Eloquent\Builder|Series whereTotal($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Series whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @property-read string $completion_status
+ * @property-read string $completion_status_class
+ * @property-read string $completion_status_name
+ * @property-read string $delivered_books_count
+ * @property-read string $new_books_count
+ * @property-read string $ordered_books_count
  */
 class Series extends Model
 {

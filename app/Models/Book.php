@@ -5,7 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-
+use Nicebooks\Isbn\Isbn;
+use Nicebooks\Isbn\IsbnTools;
 
 /**
  * App\Models\Book
@@ -31,6 +32,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @method static \Illuminate\Database\Eloquent\Builder|Book whereStatus($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Book whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @property-read string $status_class
+ * @property-read string $status_name
  */
 class Book extends Model
 {
@@ -48,6 +51,31 @@ class Book extends Model
         'status',
         'series_id',
     ];
+
+    /**
+     * Set the book's ISBN.
+     *
+     * @param  string  $value
+     * @return void
+     */
+    public function setIsbnAttribute($value)
+    {
+        $isbn = Isbn::of($value);
+        $this->attributes['isbn'] = $isbn->to13();
+    }
+
+    /**
+     * Set the book's ISBN.
+     *
+     * @param  string  $value
+     * @return void
+     */
+    public function getIsbnAttribute($value)
+    {
+        $tools = new IsbnTools();
+        return $tools->format($value);
+        // $this->attributes['isbn'] = strtolower($value);
+    }
 
     /**
      * Get the book's status name.

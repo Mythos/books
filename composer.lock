@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "75bf0725dbd01f501e283cd8c0af9cda",
+    "content-hash": "ce5fd2de4667fd070c36c6b245d6d10e",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -1042,6 +1042,75 @@
                 }
             ],
             "time": "2021-10-03T14:17:12+00:00"
+        },
+        {
+            "name": "intervention/validation",
+            "version": "3.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Intervention/validation.git",
+                "reference": "b90f9a745514aba56dca08dc5d6d0b6bb5704064"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Intervention/validation/zipball/b90f9a745514aba56dca08dc5d6d0b6bb5704064",
+                "reference": "b90f9a745514aba56dca08dc5d6d0b6bb5704064",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/validation": "~7|~8",
+                "php": "^7.3|^7.4|^8.0"
+            },
+            "require-dev": {
+                "phpstan/phpstan": "^0.12.17",
+                "phpunit/phpunit": "^9.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Intervention\\Validation\\Laravel\\ValidationServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Intervention\\Validation\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Oliver Vogel",
+                    "email": "oliver@olivervogel.com",
+                    "homepage": "https://olivervogel.com/"
+                }
+            ],
+            "description": "Additional validation rules for the Laravel framework",
+            "keywords": [
+                "BIC",
+                "IBAN",
+                "ISBN",
+                "ISIN",
+                "base64",
+                "creditcard",
+                "data-url",
+                "ean",
+                "gtin",
+                "laravel",
+                "luhn",
+                "ulid",
+                "validation",
+                "validator"
+            ],
+            "support": {
+                "issues": "https://github.com/Intervention/validation/issues",
+                "source": "https://github.com/Intervention/validation/tree/3.0.1"
+            },
+            "time": "2021-10-13T16:31:26+00:00"
         },
         {
             "name": "laravel/framework",
@@ -2222,6 +2291,55 @@
                 "source": "https://github.com/nette/utils/tree/v3.2.6"
             },
             "time": "2021-11-24T15:47:23+00:00"
+        },
+        {
+            "name": "nicebooks/isbn",
+            "version": "0.3.8",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/nicebooks-com/isbn.git",
+                "reference": "94b9698a7a2af5ba569b77ba529fe3f32c3c1e6b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/nicebooks-com/isbn/zipball/94b9698a7a2af5ba569b77ba529fe3f32c3c1e6b",
+                "reference": "94b9698a7a2af5ba569b77ba529fe3f32c3c1e6b",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.4 || ^8.0"
+            },
+            "require-dev": {
+                "brick/varexporter": "~0.3.0",
+                "ext-dom": "*",
+                "php-coveralls/php-coveralls": "^2.0",
+                "phpunit/phpunit": "^9.0",
+                "vimeo/psalm": "^4.8"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Nicebooks\\Isbn\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "ISBN tools",
+            "keywords": [
+                "ISBN",
+                "ISBN-10",
+                "ISBN-13",
+                "Nicebooks",
+                "book",
+                "books"
+            ],
+            "support": {
+                "issues": "https://github.com/nicebooks-com/isbn/issues",
+                "source": "https://github.com/nicebooks-com/isbn/tree/0.3.8"
+            },
+            "time": "2021-11-25T21:11:41+00:00"
         },
         {
             "name": "nikic/php-parser",
