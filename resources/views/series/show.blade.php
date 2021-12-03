@@ -2,6 +2,12 @@
 
 @section('content')
     <div class="container">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{{ route('home') }}">{{ __('Home') }}</a></li>
+                <li class="breadcrumb-item active">{{ $series->name }}</li>
+            </ol>
+        </nav>
         <div class="row">
             <div class="col-sm-12 col-md-12 col-lg-3 d-flex align-self-stretch justify-content-center my-2">
                 <img src="{{ $series->image }}" alt="{{ $series->image }}" class="rounded" style="max-height: 400px; object-fit: contain;">
