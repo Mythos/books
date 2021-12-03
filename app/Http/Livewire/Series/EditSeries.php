@@ -19,6 +19,7 @@ class EditSeries extends Component
         'series.status' => 'required',
         'series.total' => 'nullable|integer|min:1',
         'series.category_id' => 'required|exists:categories,id',
+        'series.language' => 'required',
         'image_url' => 'url'
     ];
 
@@ -41,8 +42,8 @@ class EditSeries extends Component
 
     public function save()
     {
+        $this->validate();
         try {
-            $this->validate();
             $this->series->save();
             $this->storeImage();
             toastr()->livewire()->addSuccess(__('Series :series has been updated', ['series' => $this->series->name]));

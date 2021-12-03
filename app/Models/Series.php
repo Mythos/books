@@ -60,6 +60,7 @@ class Series extends Model
         'name',
         'status',
         'total',
+        'language',
         'category_id',
     ];
 
