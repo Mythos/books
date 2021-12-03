@@ -46,6 +46,7 @@ class EditSeries extends Component
             $this->series->save();
             $this->storeImage();
             toastr()->livewire()->addSuccess(__('Series :series has been updated', ['series' => $this->series->name]));
+            $this->reset(['image_url']);
         } catch (Exception $exception) {
             toastr()->livewire()->addError(__('Series :series could not be updated', ['series' => $this->series->name]));
         }
