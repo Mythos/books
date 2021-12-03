@@ -178,7 +178,7 @@ class Series extends Model
      */
     public function getImageAttribute() : string
     {
-        return url('storage/series/' . $this->slug . '.jpg');
+        return url('storage/series/' . $this->id . '.jpg');
     }
 
     /**
