@@ -12,6 +12,7 @@ class CreateCategory extends Component
     protected $rules = [
         'name' => 'required'
     ];
+
     public function render()
     {
         return view('livewire.categories.create-category')->extends('layouts.app')->section('content');
