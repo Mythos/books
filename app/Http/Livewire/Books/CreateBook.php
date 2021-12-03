@@ -71,7 +71,7 @@ class CreateBook extends Component
             if($response['totalItems'] > 0) {
                 $date = $response["items"][0]["volumeInfo"]["publishedDate"];
                 if(!empty($date)) {
-                    $this->publish_date = date('Y-m-d', strtotime($date));
+                    return date('Y-m-d', strtotime($date));
                 }
             }
         }
