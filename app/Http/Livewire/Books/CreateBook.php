@@ -69,7 +69,10 @@ class CreateBook extends Component
             $isbn = IsbnIsbn::of($isbn)->to13();
             $response = Http::get('https://www.googleapis.com/books/v1/volumes?q=isbn:'.$isbn);
             if($response['totalItems'] > 0) {
-                return $response["items"][0]["volumeInfo"]["publishedDate"];
+                $date = $response["items"][0]["volumeInfo"]["publishedDate"];
+                if(!empty($date)) {
+                    $this->publish_date = date('Y-m-d', strtotime($date));
+                }
             }
         }
         return '';
