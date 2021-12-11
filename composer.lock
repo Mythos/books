@@ -2287,16 +2287,16 @@
         },
         {
             "name": "nicebooks/isbn",
-            "version": "0.3.9",
+            "version": "0.3.10",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nicebooks-com/isbn.git",
-                "reference": "1719d2b310991c4e43d191702b1323e33ab5448b"
+                "reference": "38fd06fa2ac5b6d489982a7e90a5c9ecb024562f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nicebooks-com/isbn/zipball/1719d2b310991c4e43d191702b1323e33ab5448b",
-                "reference": "1719d2b310991c4e43d191702b1323e33ab5448b",
+                "url": "https://api.github.com/repos/nicebooks-com/isbn/zipball/38fd06fa2ac5b6d489982a7e90a5c9ecb024562f",
+                "reference": "38fd06fa2ac5b6d489982a7e90a5c9ecb024562f",
                 "shasum": ""
             },
             "require": {
@@ -2305,7 +2305,7 @@
             "require-dev": {
                 "brick/varexporter": "~0.3.0",
                 "ext-dom": "*",
-                "php-coveralls/php-coveralls": "^2.0",
+                "php-coveralls/php-coveralls": "^2.5.2",
                 "phpunit/phpunit": "^9.0",
                 "vimeo/psalm": "^4.8"
             },
@@ -2330,9 +2330,9 @@
             ],
             "support": {
                 "issues": "https://github.com/nicebooks-com/isbn/issues",
-                "source": "https://github.com/nicebooks-com/isbn/tree/0.3.9"
+                "source": "https://github.com/nicebooks-com/isbn/tree/0.3.10"
             },
-            "time": "2021-12-05T23:34:30+00:00"
+            "time": "2021-12-10T19:53:03+00:00"
         },
         {
             "name": "nikic/php-parser",
@@ -10308,5 +10308,5 @@
         "php": "^7.3|^8.0"
     },
     "platform-dev": [],
-    "plugin-api-version": "2.0.0"
+    "plugin-api-version": "2.1.0"
 }
