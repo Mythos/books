@@ -18,7 +18,7 @@ class Gallery extends Component
 
     public function render()
     {
-        $this->series = Series::whereCategoryId($this->category->id)->orderBy('status')->orderBy('name')->get();
+        $this->series = Series::whereCategoryId($this->category->id)->with('books')->orderBy('status')->orderBy('name')->get();
         return view('livewire.series.gallery');
     }
 }
