@@ -6,6 +6,7 @@ use App\Http\Livewire\Categories\CreateCategory;
 use App\Http\Livewire\Categories\EditCategory;
 use App\Http\Livewire\Series\CreateSeries;
 use App\Http\Livewire\Series\EditSeries;
+use App\Http\Livewire\Series\ShowSeries;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -29,8 +30,7 @@ Route::prefix('')->middleware(['auth'])->group(function () {
         Route::get('edit', EditCategory::class)->name('categories.edit');
 
         Route::get('series/new', CreateSeries::class)->name('series.create');
-        Route::get('{series}', SeriesController::class . '@show')->name('series.show');
-        Route::post('series', SeriesController::class . '@store')->name('series.store');
+        Route::get('{series}', ShowSeries::class)->name('series.show');
 
         Route::prefix('{series}')->group(function () {
             Route::get('edit', EditSeries::class)->name('series.edit');
