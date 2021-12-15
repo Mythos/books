@@ -2,6 +2,7 @@
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{ route('home') }}">{{ __('Home') }}</a></li>
+            <li class="breadcrumb-item"><a href="#">{{ $category->name }}</a></li>
             <li class="breadcrumb-item active">{{ $series->name }}</li>
         </ol>
     </nav>
