@@ -4,6 +4,7 @@ use App\Http\Controllers\SeriesController;
 use App\Http\Livewire\Books\CreateBook;
 use App\Http\Livewire\Categories\CreateCategory;
 use App\Http\Livewire\Categories\EditCategory;
+use App\Http\Livewire\Series\CreateSeries;
 use App\Http\Livewire\Series\EditSeries;
 use Illuminate\Support\Facades\Route;
 
@@ -27,7 +28,7 @@ Route::prefix('')->middleware(['auth'])->group(function () {
     Route::prefix('{category}')->group(function () {
         Route::get('edit', EditCategory::class)->name('categories.edit');
 
-        Route::get('series/new', SeriesController::class . '@create')->name('series.create');
+        Route::get('series/new', CreateSeries::class)->name('series.create');
         Route::get('{series}', SeriesController::class . '@show')->name('series.show');
         Route::post('series', SeriesController::class . '@store')->name('series.store');
 

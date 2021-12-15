@@ -2,14 +2,16 @@
 
 namespace App\Http\Livewire\Series;
 
+use App\Models\Category;
 use App\Models\Series;
 use Exception;
 use Image;
 use Livewire\Component;
 use Storage;
 
-class EditSeries extends Component
+class CreateSeries extends Component
 {
+    public Category $category;
     public Series $series;
 
     public string $image_url = '';
@@ -20,7 +22,7 @@ class EditSeries extends Component
         'series.total' => 'nullable|integer|min:1',
         'series.category_id' => 'required|exists:categories,id',
         'series.language' => 'required',
-        'image_url' => 'url'
+        'image_url' => 'required|url'
     ];
 
     public function updated($property, $value)
@@ -30,27 +32,32 @@ class EditSeries extends Component
         }
     }
 
-    public function mount(Series $series)
+    public function mount(Category $category)
     {
-        $this->series = $series;
+        $this->category = $category;
+        $this->series = new Series([
+            'status' => 0,
+            'category_id' => $category->id
+        ]);
     }
 
     public function render()
     {
-        return view('livewire.series.edit-series')->extends('layouts.app')->section('content');
+        return view('livewire.series.create-series')->extends('layouts.app')->section('content');
     }
 
     public function save()
     {
         $this->validate();
+        $this->series->category_id = $this->category->id;
         try {
             $image = $this->getImage();
             $this->series->save();
             $this->storeImage($image);
-            toastr()->livewire()->addSuccess(__('Series :name has been updated', ['name' => $this->series->name]));
-            $this->reset(['image_url']);
+            toastr()->addSuccess(__('Series :name has been created', ['name' => $this->series->name]));
+            redirect()->route('home');
         } catch (Exception $exception) {
-            toastr()->livewire()->addError(__('Series :name could not be updated', ['name' => $this->series->name]));
+            toastr()->livewire()->addError(__('Series :name could not be created', ['name' => $this->series->name]));
         }
     }
 

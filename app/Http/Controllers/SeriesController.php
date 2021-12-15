@@ -22,34 +22,6 @@ class SeriesController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @param  \App\Models\Category  $category
-     * @return \Illuminate\Http\Response
-     */
-    public function create(Category $category)
-    {
-        return view('series.create')->with('category', $category);
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \App\Http\Requests\StoreSeriesRequest  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(StoreSeriesRequest $request, Category $category)
-    {
-        $image_url = $request->get('image');
-        $series = Series::create($request->all());
-        $image = Image::make($image_url)->resize(null, 400, function ($constraint) {
-            $constraint->aspectRatio();
-        })->encode('jpg');
-        Storage::put('public/series/'.$series->slug.'.jpg', $image);
-        return redirect()->to(route('home'));
-    }
-
-    /**
      * Display the specified resource.
      *
      * @param  \App\Models\Series  $series
