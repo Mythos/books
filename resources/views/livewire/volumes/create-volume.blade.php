@@ -3,13 +3,13 @@
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{ route('home') }}">{{ __('Home') }}</a></li>
             <li class="breadcrumb-item"><a href="{{ route('series.show', [$series->category, $series]) }}">{{ $series->name }}</a></li>
-            <li class="breadcrumb-item active" aria-current="page">{{ __('Create Book') }}</li>
+            <li class="breadcrumb-item active" aria-current="page">{{ __('Create Volume') }}</li>
         </ol>
     </nav>
     <div class="row justify-content-center">
         <div class="col-md-12">
             <div class="card">
-                <div class="card-header">{{ __('Create Book') }}</div>
+                <div class="card-header">{{ __('Create Volume') }}</div>
                 <div class="card-body">
                     <form method="POST" wire:submit.prevent="save">
                         @csrf

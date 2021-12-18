@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Http\Livewire\Books;
+namespace App\Http\Livewire\Volumes;
 
-use App\Models\Book;
+use App\Models\Volume;
 use App\Models\Series;
 use Http;
 use Intervention\Validation\Rules\Isbn;
@@ -11,7 +11,7 @@ use Nicebooks\Isbn\Exception\InvalidIsbnException;
 use Nicebooks\Isbn\Isbn as IsbnIsbn;
 use Nicebooks\Isbn\IsbnTools;
 
-class CreateBook extends Component
+class CreateVolume extends Component
 {
     public string $publish_date = '';
     public string $isbn = '';
@@ -25,7 +25,7 @@ class CreateBook extends Component
 
     public function render()
     {
-        return view('livewire.books.create-book')->extends('layouts.app')->section('content');
+        return view('livewire.volumes.create-volume')->extends('layouts.app')->section('content');
     }
 
     public function updated($name, $value)
@@ -48,17 +48,17 @@ class CreateBook extends Component
         $this->validate([
             'publish_date' => 'date',
             'status' => 'required|integer|min:0',
-            'isbn' => ['required', 'unique:books,isbn,NULL,id,series_id,' . $this->series->id, new Isbn()],
+            'isbn' => ['required', 'unique:volumes,isbn,NULL,id,series_id,' . $this->series->id, new Isbn()],
         ]);
-        $number = Book::whereSeriesId($this->series->id)->max('number') ?? 0;
-        $book = new Book([
+        $number = Volume::whereSeriesId($this->series->id)->max('number') ?? 0;
+        $volume = new Volume([
             'series_id' => $this->series->id,
             'number' => ++$number,
             'publish_date' => $this->publish_date,
             'isbn' => $this->isbn,
             'status' => $this->status
         ]);
-        $book->save();
+        $volume->save();
         toastr()->livewire()->addSuccess(__('Volumme :number has been created', ['number' => $number]));
         $this->resetExcept('series');
     }

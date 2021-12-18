@@ -14,14 +14,14 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($upcoming as $book)
-                                <tr class="{{ $book->status_class }}">
-                                    <th scope="row">{{ $book->publish_date }}</th>
-                                    <td>{{ $book->series->name }} {{ $book->number }}</td>
-                                    <td>{{ $book->isbn }}</td>
+                            @foreach ($upcoming as $volume)
+                                <tr class="{{ $volume->status_class }}">
+                                    <th scope="row">{{ $volume->publish_date }}</th>
+                                    <td>{{ $volume->series->name }} {{ $volume->number }}</td>
+                                    <td>{{ $volume->isbn }}</td>
                                     <td>
-                                        @if ($book->status == 0)<a wire:click.prevent='ordered({{ $book->id }})' href="#" title="{{ __('Sets the status to Ordered') }}"><i class="fa fa-shopping-cart"></i></a>@endif
-                                        @if ($book->status == 1)<a wire:click.prevent='delivered({{ $book->id }})' href="#" title="{{ __('Sets the status to Delivered') }}"><i class="fa fa-check"></i></a>@endif
+                                        @if ($volume->status == 0)<a wire:click.prevent='ordered({{ $volume->id }})' href="#" title="{{ __('Sets the status to Ordered') }}"><i class="fa fa-shopping-cart"></i></a>@endif
+                                        @if ($volume->status == 1)<a wire:click.prevent='delivered({{ $volume->id }})' href="#" title="{{ __('Sets the status to Delivered') }}"><i class="fa fa-check"></i></a>@endif
                                     </td>
                                 </tr>
                             @endforeach

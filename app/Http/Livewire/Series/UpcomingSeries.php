@@ -2,7 +2,7 @@
 
 namespace App\Http\Livewire\Series;
 
-use App\Models\Book;
+use App\Models\Volume;
 use Livewire\Component;
 
 class UpcomingSeries extends Component
@@ -11,22 +11,25 @@ class UpcomingSeries extends Component
 
     public function render()
     {
-        $this->upcoming = Book::with('series')->where('status', '!=', '2')->orderBy('publish_date')->get();
+        $this->upcoming = Volume::with('series')->where('status', '!=', '2')->orderBy('publish_date')->get();
         return view('livewire.series.upcoming-series');
     }
 
     public function ordered(int $id)
     {
-        $book = Book::find($id);
-        $book->status = 1;
-        $book->save();
-        toastr()->livewire()->addSuccess(__(':name has been updated', ['name' => $book->series->name . ' ' . $book->number]));
+        $this->setStatus($id, 1);
     }
+
     public function delivered(int $id)
     {
-        $book = Book::find($id);
-        $book->status = 2;
-        $book->save();
-        toastr()->livewire()->addSuccess(__(':name has been updated', ['name' => $book->series->name . ' ' . $book->number]));
+        $this->setStatus($id, 2);
+    }
+
+    private function setStatus(int $id, int $status)
+    {
+        $volume = Volume::find($id);
+        $volume->status = $status;
+        $volume->save();
+        toastr()->livewire()->addSuccess(__(':name has been updated', ['name' => $volume->series->name . ' ' . $volume->number]));
     }
 }

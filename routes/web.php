@@ -1,7 +1,6 @@
 <?php
 
-use App\Http\Controllers\SeriesController;
-use App\Http\Livewire\Books\CreateBook;
+use App\Http\Livewire\Volumes\CreateVolume;
 use App\Http\Livewire\Categories\CreateCategory;
 use App\Http\Livewire\Categories\EditCategory;
 use App\Http\Livewire\Series\CreateSeries;
@@ -35,7 +34,7 @@ Route::prefix('')->middleware(['auth'])->group(function () {
         Route::prefix('{series}')->group(function () {
             Route::get('edit', EditSeries::class)->name('series.edit');
 
-            Route::get('books/new', CreateBook::class)->name('books.create');
+            Route::get('volumes/new', CreateVolume::class)->name('volumes.create');
         });
     });
 });

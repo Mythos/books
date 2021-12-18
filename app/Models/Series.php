@@ -21,8 +21,8 @@ use Spatie\Sluggable\SlugOptions;
  * @property int $category_id
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Book[] $books
- * @property-read int|null $books_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Volume[] $volumes
+ * @property-read int|null $volumes_count
  * @property-read \App\Models\Category $category
  * @property-read string $image
  * @property-read string $status_class
@@ -42,9 +42,11 @@ use Spatie\Sluggable\SlugOptions;
  * @property-read string $completion_status
  * @property-read string $completion_status_class
  * @property-read string $completion_status_name
- * @property-read string $delivered_books_count
- * @property-read string $new_books_count
- * @property-read string $ordered_books_count
+ * @property-read string $delivered_volumes_count
+ * @property-read string $new_volumes_count
+ * @property-read string $ordered_volumes_count
+ * @property string|null $language
+ * @method static \Illuminate\Database\Eloquent\Builder|Series whereLanguage($value)
  */
 class Series extends Model
 {
@@ -139,37 +141,37 @@ class Series extends Model
         if(empty($this->total)){
             return false;
         }
-        return $this->total == $this->deliveredBooksCount;
+        return $this->total == $this->deliveredVolumesCount;
     }
 
     /**
-     * Get the series' count of new books.
+     * Get the series' count of new volumes.
      *
      * @return string
      */
-    public function getNewBooksCountAttribute() : string
+    public function getNewVolumesCountAttribute() : string
     {
-        return $this->books->where('status', '0')->count();
+        return $this->volumes->where('status', '0')->count();
     }
 
     /**
-     * Get the series' count of ordered books.
+     * Get the series' count of ordered volumes.
      *
      * @return string
      */
-    public function getOrderedBooksCountAttribute() : string
+    public function getOrderedVolumesCountAttribute() : string
     {
-        return $this->books->where('status', '1')->count();
+        return $this->volumes->where('status', '1')->count();
     }
 
     /**
-     * Get the series' count of delivered books.
+     * Get the series' count of delivered volumes.
      *
      * @return string
      */
-    public function getDeliveredBooksCountAttribute() : string
+    public function getDeliveredVolumesCountAttribute() : string
     {
-        return $this->books->where('status', '2')->count();
+        return $this->volumes->where('status', '2')->count();
     }
 
     /**
@@ -183,13 +185,13 @@ class Series extends Model
     }
 
     /**
-     * Get all of the books for the Series
+     * Get all of the volumes for the Series
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function books(): HasMany
+    public function volumes(): HasMany
     {
-        return $this->hasMany(Book::class);
+        return $this->hasMany(Volume::class);
     }
 
     /**

@@ -2,15 +2,15 @@
 
 namespace App\Http\Livewire\Series;
 
-use App\Models\Book;
+use App\Models\Volume;
 use App\Models\Category;
 use App\Models\Series;
 use Http;
 use Livewire\Component;
 
-class BooksTable extends Component
+class VolumesTable extends Component
 {
-    public $books = [];
+    public $volumes = [];
     public Series $series;
     public Category $category;
 
@@ -22,8 +22,8 @@ class BooksTable extends Component
 
     public function render()
     {
-        $this->books = Book::whereSeriesId($this->series->id)->orderBy('number')->get();
-        return view('livewire.series.books-table');
+        $this->volumes = Volume::whereSeriesId($this->series->id)->orderBy('number')->get();
+        return view('livewire.series.volumes-table');
     }
 
     public function ordered(int $id)
@@ -43,15 +43,15 @@ class BooksTable extends Component
 
     public function refresh(int $id)
     {
-        $book = Book::find($id);
-        $publish_date = $this->getPublishDateByIsbn($book->isbn);
-        if($book->publish_date != $publish_date) {
-            $book->publish_date = $publish_date;
-            $book->save();
-            toastr()->livewire()->addInfo(__('Publish date of :name has been set to :date', ['name' => $book->series->name . ' ' . $book->number, 'date' => $publish_date]));
+        $volume = Volume::find($id);
+        $publish_date = $this->getPublishDateByIsbn($volume->isbn);
+        if($volume->publish_date != $publish_date) {
+            $volume->publish_date = $publish_date;
+            $volume->save();
+            toastr()->livewire()->addInfo(__('Publish date of :name has been set to :date', ['name' => $volume->series->name . ' ' . $volume->number, 'date' => $publish_date]));
         }
         else {
-            toastr()->livewire()->addSuccess(__('No changes have been found for :name', ['name' => $book->series->name . ' ' . $book->number]));
+            toastr()->livewire()->addSuccess(__('No changes have been found for :name', ['name' => $volume->series->name . ' ' . $volume->number]));
         }
     }
 
@@ -68,9 +68,9 @@ class BooksTable extends Component
 
     private function setStatus(int $id, int $status)
     {
-        $book = Book::find($id);
-        $book->status = $status;
-        $book->save();
-        toastr()->livewire()->addSuccess(__(':name has been updated', ['name' => $book->series->name . ' ' . $book->number]));
+        $volume = Volume::find($id);
+        $volume->status = $status;
+        $volume->save();
+        toastr()->livewire()->addSuccess(__(':name has been updated', ['name' => $volume->series->name . ' ' . $volume->number]));
     }
 }

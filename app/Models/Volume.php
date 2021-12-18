@@ -9,7 +9,7 @@ use Nicebooks\Isbn\Isbn;
 use Nicebooks\Isbn\IsbnTools;
 
 /**
- * App\Models\Book
+ * App\Models\Volume
  *
  * @property int $id
  * @property int $number
@@ -20,22 +20,22 @@ use Nicebooks\Isbn\IsbnTools;
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \App\Models\Series $series
- * @method static \Illuminate\Database\Eloquent\Builder|Book newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Book newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Book query()
- * @method static \Illuminate\Database\Eloquent\Builder|Book whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Book whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Book whereIsbn($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Book whereNumber($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Book wherePublishDate($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Book whereSeriesId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Book whereStatus($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Book whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Volume newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Volume newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Volume query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Volume whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Volume whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Volume whereIsbn($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Volume whereNumber($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Volume wherePublishDate($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Volume whereSeriesId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Volume whereStatus($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Volume whereUpdatedAt($value)
  * @mixin \Eloquent
  * @property-read string $status_class
  * @property-read string $status_name
  */
-class Book extends Model
+class Volume extends Model
 {
     use HasFactory;
 
@@ -53,7 +53,7 @@ class Book extends Model
     ];
 
     /**
-     * Set the book's ISBN.
+     * Set the volume's ISBN.
      *
      * @param  string  $value
      * @return void
@@ -65,7 +65,7 @@ class Book extends Model
     }
 
     /**
-     * Set the book's ISBN.
+     * Set the volume's ISBN.
      *
      * @param  string  $value
      * @return void
@@ -78,7 +78,7 @@ class Book extends Model
     }
 
     /**
-     * Get the book's status name.
+     * Get the volume's status name.
      *
      * @return string
      */
@@ -95,7 +95,7 @@ class Book extends Model
     }
 
     /**
-     * Get the book's status CSS class.
+     * Get the volume's status CSS class.
      *
      * @return string
      */
@@ -112,7 +112,7 @@ class Book extends Model
     }
 
     /**
-     * Get the series that owns the Book
+     * Get the series that owns the Volume
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
