@@ -24,8 +24,9 @@
                         <td>{{ $book->isbn }}</td>
                         <td>{{ $book->status_name }}</td>
                         <td>
-                            @if ($book->status == 0)<a data-type="book-set-status" data-status="1" data-context="upcoming" wire:click.prevent='ordered({{ $book->id }})' href="#"><i class="fa fa-shopping-cart"></i></a>@endif
-                            @if ($book->status == 1)<a data-type="book-set-status" data-status="2" data-context="upcoming" wire:click.prevent='delivered({{ $book->id }})' href="#"><i class="fa fa-check"></i></a>@endif
+                            @if ($book->status == 0)<a wire:click.prevent='ordered({{ $book->id }})' href="#" title="{{ __('Sets the status to Ordered') }}"><i class="fa fa-shopping-cart"></i></a>@endif
+                            @if ($book->status == 1)<a wire:click.prevent='delivered({{ $book->id }})' href="#" title="{{ __('Sets the status to Delivered') }}"><i class="fa fa-check"></i></a>@endif
+                            @if ($book->status == 1 || $book->status == 2)<a wire:click.prevent='canceled({{ $book->id }})' href="#" title="{{ __('Sets the status to New') }}"><i class="fa fa-ban"></i></a>@endif
                         </td>
                     </tr>
                 @endforeach

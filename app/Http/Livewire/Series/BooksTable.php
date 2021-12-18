@@ -27,15 +27,23 @@ class BooksTable extends Component
 
     public function ordered(int $id)
     {
-        $book = Book::find($id);
-        $book->status = 1;
-        $book->save();
-        toastr()->livewire()->addSuccess(__(':name has been updated', ['name' => $book->series->name . ' ' . $book->number]));
+        $this->setStatus($id, 1);
     }
+
     public function delivered(int $id)
     {
+        $this->setStatus($id, 2);
+    }
+
+    public function canceled(int $id)
+    {
+        $this->setStatus($id, 0);
+    }
+
+    private function setStatus(int $id, int $status)
+    {
         $book = Book::find($id);
-        $book->status = 2;
+        $book->status = $status;
         $book->save();
         toastr()->livewire()->addSuccess(__(':name has been updated', ['name' => $book->series->name . ' ' . $book->number]));
     }
