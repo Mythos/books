@@ -28,6 +28,7 @@ class EditSeries extends Component
         if ($property == 'series.total' && empty($value)) {
             $this->series->total = null;
         }
+        $this->validateOnly($property);
     }
 
     public function mount(Series $series)

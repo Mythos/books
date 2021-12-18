@@ -18,6 +18,11 @@ class EditCategory extends Component
         return view('livewire.categories.edit-category')->extends('layouts.app')->section('content');
     }
 
+    public function updated($property)
+    {
+        $this->validateOnly($property);
+    }
+
     public function save() {
         $this->validate();
         $this->category->save();

@@ -18,6 +18,11 @@ class CreateCategory extends Component
         return view('livewire.categories.create-category')->extends('layouts.app')->section('content');
     }
 
+    public function updated($property)
+    {
+        $this->validateOnly($property);
+    }
+
     public function save() {
         $this->validate();
         $category = new Category(['name' => $this->name]);
