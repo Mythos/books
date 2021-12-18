@@ -7,8 +7,6 @@ use App\Models\Category;
 use App\Models\Series;
 use Http;
 use Livewire\Component;
-use Nicebooks\Isbn\Isbn;
-use Nicebooks\Isbn\IsbnTools;
 
 class BooksTable extends Component
 {
@@ -58,15 +56,11 @@ class BooksTable extends Component
     }
 
     private function getPublishDateByIsbn($isbn){
-        $tools = new IsbnTools();
-        if($tools->isValidIsbn($isbn)){
-            $isbn = Isbn::of($isbn)->to13();
-            $response = Http::get('https://www.googleapis.com/books/v1/volumes?q=isbn:'.$isbn);
-            if($response['totalItems'] > 0) {
-                $date = $response["items"][0]["volumeInfo"]["publishedDate"];
-                if(!empty($date)) {
-                    return date('Y-m-d', strtotime($date));
-                }
+        $response = Http::get('https://www.googleapis.com/books/v1/volumes?q=isbn:'.$isbn);
+        if($response['totalItems'] > 0) {
+            $date = $response["items"][0]["volumeInfo"]["publishedDate"];
+            if(!empty($date)) {
+                return date('Y-m-d', strtotime($date));
             }
         }
         return '';
