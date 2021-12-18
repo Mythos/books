@@ -13,7 +13,7 @@ class UpdateVolumesFixIsbn extends Migration
      */
     public function up()
     {
-        DB::raw("UPDATE volumes SET isbn = REPLACE(isbn, '-', '') WHERE isbn LIKE '%-%';");
+        DB::statement("UPDATE volumes SET isbn = REPLACE(isbn, '-', '') WHERE isbn LIKE '%-%';");
     }
 
     /**
