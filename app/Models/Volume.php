@@ -2,11 +2,10 @@
 
 namespace App\Models;
 
+use App\Helpers\IsbnHelpers;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Nicebooks\Isbn\Isbn;
-use Nicebooks\Isbn\IsbnTools;
 
 /**
  * App\Models\Volume
@@ -58,23 +57,9 @@ class Volume extends Model
      * @param  string  $value
      * @return void
      */
-    public function setIsbnAttribute($value)
+    public function getIsbnFormattedAttribute()
     {
-        $isbn = Isbn::of($value);
-        $this->attributes['isbn'] = $isbn->to13();
-    }
-
-    /**
-     * Set the volume's ISBN.
-     *
-     * @param  string  $value
-     * @return void
-     */
-    public function getIsbnAttribute($value)
-    {
-        $tools = new IsbnTools();
-        return $tools->format($value);
-        // $this->attributes['isbn'] = strtolower($value);
+        return IsbnHelpers::format($this->isbn);
     }
 
     /**

@@ -1,0 +1,64 @@
+<?php
+
+namespace App\Http\Livewire\Volumes;
+
+use App\Helpers\IsbnHelpers;
+use App\Models\Category;
+use App\Models\Series;
+use App\Models\Volume;
+use Intervention\Validation\Rules\Isbn;
+use Livewire\Component;
+
+class EditVolume extends Component
+{
+    public Category $category;
+    public Series $series;
+    public Volume $volume;
+
+    public function mount(Category $category, Series $series, int $number)
+    {
+        $this->category = $category;
+        $this->series = $series;
+        $this->volume = Volume::whereSeriesId($series->id)->whereNumber($number)->first();
+    }
+
+    protected function rules()
+    {
+        return [
+            'volume.publish_date' => 'date',
+            'volume.status' => 'required|integer|min:0',
+            'volume.isbn' => ['required', 'unique:volumes,isbn,' . $this->volume->id . ',id,series_id,' . $this->series->id, new Isbn()],
+        ];
+    }
+
+    public function updated($property, $value)
+    {
+        if ($property == "volume.isbn") {
+            $isbn = IsbnHelpers::convertTo13($value);
+            if (!empty($isbn)) {
+                $this->volume->isbn = $isbn;
+            }
+            $this->validateOnly($property);
+            $this->volume->publish_date = IsbnHelpers::getPublishDateByIsbn($isbn);
+        } else {
+            $this->validateOnly($property);
+        }
+    }
+
+    public function render()
+    {
+        return view('livewire.volumes.edit-volume')->extends('layouts.app')->section('content');;
+    }
+
+    public function save()
+    {
+        $isbn = IsbnHelpers::convertTo13($this->volume->isbn);
+        if (!empty($isbn)) {
+            $this->isbn = $isbn;
+        }
+        $this->validate();
+        $this->volume->save();
+        toastr()->addSuccess(__('Volumme :number has been updated', ['number' => $this->volume->number]));
+        redirect()->route('series.show', [$this->category, $this->series]);
+    }
+}

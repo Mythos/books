@@ -18,7 +18,7 @@
                                 <tr class="{{ $volume->status_class }}">
                                     <th scope="row">{{ $volume->publish_date }}</th>
                                     <td>{{ $volume->series->name }} {{ $volume->number }}</td>
-                                    <td>{{ $volume->isbn }}</td>
+                                    <td>{{ $volume->isbn_formatted }}</td>
                                     <td>
                                         @if ($volume->status == 0)<a wire:click.prevent='ordered({{ $volume->id }})' href="#" title="{{ __('Sets the status to Ordered') }}"><i class="fa fa-shopping-cart"></i></a>@endif
                                         @if ($volume->status == 1)<a wire:click.prevent='delivered({{ $volume->id }})' href="#" title="{{ __('Sets the status to Delivered') }}"><i class="fa fa-check"></i></a>@endif

@@ -21,9 +21,9 @@
                 @foreach ($volumes as $volume)
                     <tr class="{{ $volume->status_class }}">
                         <th scope="row">{{ $volume->number }}</th>
-                        <td>@if ($volume->status == 0 || $volume->status == 1)<a wire:click.prevent='refresh({{ $volume->id }})' href="#" title="{{ __('Refreshes volume data') }}"><i class="fa fa-sync"></i></a>@endif</td>
+                        <td><a href="{{ route('volumes.edit', [$category, $series, $volume->number]) }}"><i class="fa fa-edit"></i></a></td>
                         <td>{{ $volume->publish_date }}</td>
-                        <td>{{ $volume->isbn }}</td>
+                        <td>{{ $volume->isbn_formatted }}</td>
                         <td>{{ $volume->status_name }}</td>
                         <td>
                             @if ($volume->status == 0)<a wire:click.prevent='ordered({{ $volume->id }})' href="#" title="{{ __('Sets the status to Ordered') }}"><i class="fa fa-shopping-cart"></i></a>@endif

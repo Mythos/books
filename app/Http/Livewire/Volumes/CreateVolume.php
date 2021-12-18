@@ -2,14 +2,12 @@
 
 namespace App\Http\Livewire\Volumes;
 
+use App\Helpers\IsbnHelpers;
 use App\Models\Volume;
 use App\Models\Series;
 use Http;
 use Intervention\Validation\Rules\Isbn;
 use Livewire\Component;
-use Nicebooks\Isbn\Exception\InvalidIsbnException;
-use Nicebooks\Isbn\Isbn as IsbnIsbn;
-use Nicebooks\Isbn\IsbnTools;
 
 class CreateVolume extends Component
 {
@@ -28,28 +26,36 @@ class CreateVolume extends Component
         return view('livewire.volumes.create-volume')->extends('layouts.app')->section('content');
     }
 
-    public function updated($name, $value)
+    protected function rules()
     {
-        if($name == "isbn") {
-            $this->publish_date = $this->getPublishDateByIsbn($value);
+        return [
+            'publish_date' => 'date',
+            'status' => 'required|integer|min:0',
+            'isbn' => ['required', 'unique:volumes,isbn,NULL,id,series_id,' . $this->series->id, new Isbn()],
+        ];
+    }
+
+    public function updated($property, $value)
+    {
+        if ($property == "isbn") {
+            $isbn = IsbnHelpers::convertTo13($value);
+            if (!empty($isbn)) {
+                $this->isbn = $isbn;
+            }
+            $this->validateOnly($property);
+            $this->publish_date = IsbnHelpers::getPublishDateByIsbn($isbn);
+        } else {
+            $this->validateOnly($property);
         }
     }
 
     public function save()
     {
-        $isbn = $this->isbn;
-        try {
-            if (!empty($isbn)) {
-                $isbn = IsbnIsbn::of($isbn)->to13();
-                $this->isbn = $isbn;
-            }
-        } catch (InvalidIsbnException $exception) {
+        $isbn = IsbnHelpers::convertTo13($this->isbn);
+        if (!empty($isbn)) {
+            $this->isbn = $isbn;
         }
-        $this->validate([
-            'publish_date' => 'date',
-            'status' => 'required|integer|min:0',
-            'isbn' => ['required', 'unique:volumes,isbn,NULL,id,series_id,' . $this->series->id, new Isbn()],
-        ]);
+        $this->validate();
         $number = Volume::whereSeriesId($this->series->id)->max('number') ?? 0;
         $volume = new Volume([
             'series_id' => $this->series->id,
@@ -61,20 +67,5 @@ class CreateVolume extends Component
         $volume->save();
         toastr()->livewire()->addSuccess(__('Volumme :number has been created', ['number' => $number]));
         $this->resetExcept('series');
-    }
-
-    private function getPublishDateByIsbn($isbn){
-        $tools = new IsbnTools();
-        if($tools->isValidIsbn($isbn)){
-            $isbn = IsbnIsbn::of($isbn)->to13();
-            $response = Http::get('https://www.googleapis.com/books/v1/volumes?q=isbn:'.$isbn);
-            if($response['totalItems'] > 0) {
-                $date = $response["items"][0]["volumeInfo"]["publishedDate"];
-                if(!empty($date)) {
-                    return date('Y-m-d', strtotime($date));
-                }
-            }
-        }
-        return '';
     }
 }

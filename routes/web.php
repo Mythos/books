@@ -6,6 +6,7 @@ use App\Http\Livewire\Categories\EditCategory;
 use App\Http\Livewire\Series\CreateSeries;
 use App\Http\Livewire\Series\EditSeries;
 use App\Http\Livewire\Series\ShowSeries;
+use App\Http\Livewire\Volumes\EditVolume;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -35,6 +36,7 @@ Route::prefix('')->middleware(['auth'])->group(function () {
             Route::get('edit', EditSeries::class)->name('series.edit');
 
             Route::get('volumes/new', CreateVolume::class)->name('volumes.create');
+            Route::get('{number}/edit', EditVolume::class)->name('volumes.edit');
         });
     });
 });
