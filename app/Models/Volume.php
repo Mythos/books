@@ -33,6 +33,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @mixin \Eloquent
  * @property-read string $status_class
  * @property-read string $status_name
+ * @property-read void $isbn_formatted
  */
 class Volume extends Model
 {
