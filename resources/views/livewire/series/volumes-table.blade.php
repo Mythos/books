@@ -32,7 +32,7 @@
                         </td>
                     </tr>
                 @endforeach
-                @if($volumes->count() == 0)
+                @if ($volumes->count() == 0)
                     <tr>
                         <td colspan="5" style="text-align: center;">No data</td>
                     </tr>
