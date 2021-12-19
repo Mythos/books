@@ -12,7 +12,7 @@ class UpcomingSeries extends Component
 
     public function render()
     {
-        $this->upcoming = Cache::remember('upcoming', 60 * 10, function () {
+        $this->upcoming = Cache::remember('upcoming', config('cache.duration'), function () {
             return Volume::with('series')->where('status', '!=', '2')->orderBy('publish_date')->get();
         });
         return view('livewire.series.upcoming-series');

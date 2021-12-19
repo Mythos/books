@@ -23,7 +23,7 @@ class VolumesTable extends Component
 
     public function render()
     {
-        $this->volumes = Cache::remember('volumes.table.' . $this->series->id, 60 * 10, function () {
+        $this->volumes = Cache::remember('volumes.table.' . $this->series->id, config('cache.duration'), function () {
             return Volume::whereSeriesId($this->series->id)->orderBy('number')->get();
         });
         return view('livewire.series.volumes-table');

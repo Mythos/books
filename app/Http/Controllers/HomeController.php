@@ -24,7 +24,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $categories = Cache::remember('categories', 60 * 10, function () {
+        $categories = Cache::remember('categories', config('cache.duration'), function () {
             return Category::all();
         });
         return view('home')->with('categories', $categories);
