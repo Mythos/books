@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use Cache;
 
 class HomeController extends Controller
 {
@@ -23,7 +24,9 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $categories = Category::all();
+        $categories = Cache::remember('categories', 60 * 10, function () {
+            return Category::all();
+        });
         return view('home')->with('categories', $categories);
     }
 }

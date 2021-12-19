@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Series;
 
 use App\Models\Volume;
+use Cache;
 use Livewire\Component;
 
 class UpcomingSeries extends Component
@@ -11,7 +12,9 @@ class UpcomingSeries extends Component
 
     public function render()
     {
-        $this->upcoming = Volume::with('series')->where('status', '!=', '2')->orderBy('publish_date')->get();
+        $this->upcoming = Cache::remember('upcoming', 60 * 10, function () {
+            return Volume::with('series')->where('status', '!=', '2')->orderBy('publish_date')->get();
+        });
         return view('livewire.series.upcoming-series');
     }
 

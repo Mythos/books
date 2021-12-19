@@ -67,7 +67,7 @@ class Volume extends Model
      *
      * @return string
      */
-    public function getStatusNameAttribute() : string
+    public function getStatusNameAttribute(): string
     {
         switch ($this->status) {
             case 0:
@@ -84,7 +84,7 @@ class Volume extends Model
      *
      * @return string
      */
-    public function getStatusClassAttribute() : string
+    public function getStatusClassAttribute(): string
     {
         switch ($this->status) {
             case 0:
@@ -111,7 +111,7 @@ class Volume extends Model
      *
      * @return string
      */
-    public function getRouteKeyName() : string
+    public function getRouteKeyName(): string
     {
         return 'number';
     }

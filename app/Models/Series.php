@@ -2,11 +2,13 @@
 
 namespace App\Models;
 
+use Cache;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Support\Collection;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 
@@ -71,7 +73,7 @@ class Series extends Model
      *
      * @return string
      */
-    public function getStatusNameAttribute() : string
+    public function getStatusNameAttribute(): string
     {
         switch ($this->status) {
             case 0:
@@ -89,7 +91,7 @@ class Series extends Model
      *
      * @return string
      */
-    public function getStatusClassAttribute() : string
+    public function getStatusClassAttribute(): string
     {
         switch ($this->status) {
             case 0:
@@ -106,7 +108,7 @@ class Series extends Model
      *
      * @return string
      */
-    public function getCompletionStatusClassAttribute() : string
+    public function getCompletionStatusClassAttribute(): string
     {
         switch ($this->completion_status) {
             case false:
@@ -116,12 +118,12 @@ class Series extends Model
         }
     }
 
-      /**
+    /**
      * Get the series' completion status display name.
      *
      * @return string
      */
-    public function getCompletionStatusNameAttribute() : string
+    public function getCompletionStatusNameAttribute(): string
     {
         switch ($this->completion_status) {
             case false:
@@ -136,9 +138,9 @@ class Series extends Model
      *
      * @return string
      */
-    public function getCompletionStatusAttribute() : bool
+    public function getCompletionStatusAttribute(): bool
     {
-        if(empty($this->total)){
+        if (empty($this->total)) {
             return false;
         }
         return $this->total == $this->deliveredVolumesCount;
@@ -149,7 +151,7 @@ class Series extends Model
      *
      * @return string
      */
-    public function getNewVolumesCountAttribute() : string
+    public function getNewVolumesCountAttribute(): string
     {
         return $this->volumes->where('status', '0')->count();
     }
@@ -159,7 +161,7 @@ class Series extends Model
      *
      * @return string
      */
-    public function getOrderedVolumesCountAttribute() : string
+    public function getOrderedVolumesCountAttribute(): string
     {
         return $this->volumes->where('status', '1')->count();
     }
@@ -169,7 +171,7 @@ class Series extends Model
      *
      * @return string
      */
-    public function getDeliveredVolumesCountAttribute() : string
+    public function getDeliveredVolumesCountAttribute(): string
     {
         return $this->volumes->where('status', '2')->count();
     }
@@ -179,7 +181,7 @@ class Series extends Model
      *
      * @return string
      */
-    public function getImageAttribute() : string
+    public function getImageAttribute(): string
     {
         return url('storage/series/' . $this->id . '.jpg');
     }
@@ -192,6 +194,21 @@ class Series extends Model
     public function volumes(): HasMany
     {
         return $this->hasMany(Volume::class);
+    }
+
+    public function getVolumesAttribute(): Collection
+    {
+        if ($this->relationLoaded('volumes')) {
+            return $this->getRelationValue('volumes');
+        }
+
+        $volumes = Cache::rememberForever('volumes.' . $this->id, function () {
+            return $this->getRelationValue('volumes');
+        });
+
+        $this->setRelation('volumes', $volumes);
+
+        return $volumes;
     }
 
     /**
@@ -217,7 +234,7 @@ class Series extends Model
      *
      * @return string
      */
-    public function getRouteKeyName() : string
+    public function getRouteKeyName(): string
     {
         return 'slug';
     }

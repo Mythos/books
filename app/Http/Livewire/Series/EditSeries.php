@@ -68,7 +68,7 @@ class EditSeries extends Component
 
     private function storeImage($image)
     {
-        if(empty($image)) {
+        if (empty($image)) {
             return;
         }
         Storage::put('public/series/' . $this->series->id . '.jpg', $image);

@@ -23,7 +23,8 @@ class EditCategory extends Component
         $this->validateOnly($property);
     }
 
-    public function save() {
+    public function save()
+    {
         $this->validate();
         $this->category->save();
         toastr()->livewire()->addSuccess(__('Category has been updated'));

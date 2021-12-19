@@ -5,6 +5,7 @@ namespace App\Http\Livewire\Series;
 use App\Models\Volume;
 use App\Models\Category;
 use App\Models\Series;
+use Cache;
 use Http;
 use Livewire\Component;
 
@@ -22,7 +23,9 @@ class VolumesTable extends Component
 
     public function render()
     {
-        $this->volumes = Volume::whereSeriesId($this->series->id)->orderBy('number')->get();
+        $this->volumes = Cache::remember('volumes.table.' . $this->series->id, 60 * 10, function () {
+            return Volume::whereSeriesId($this->series->id)->orderBy('number')->get();
+        });
         return view('livewire.series.volumes-table');
     }
 

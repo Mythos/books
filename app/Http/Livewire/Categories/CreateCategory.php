@@ -23,7 +23,8 @@ class CreateCategory extends Component
         $this->validateOnly($property);
     }
 
-    public function save() {
+    public function save()
+    {
         $this->validate();
         $category = new Category(['name' => $this->name]);
         $category->save();
