@@ -21,3 +21,14 @@ If you want to bring in new features, please create an issue for discussion firs
 ## License
 
 MIT
+
+## Screenshots
+
+### Landing page & Gallery
+
+![grafik](https://user-images.githubusercontent.com/416568/146996766-f6c09054-6b96-42a4-9475-0eb0e309cf7c.png)
+
+
+### Series details page
+
+![grafik](https://user-images.githubusercontent.com/416568/146996593-bae7d4e6-5c6d-47a0-a22b-4adfc3455776.png)
