@@ -42,7 +42,8 @@
                                 <select class="form-select @error('volume.status') is-invalid @enderror" name="status" wire:model='volume.status' required>
                                     <option value="0">{{ __('New') }}</option>
                                     <option value="1">{{ __('Ordered') }}</option>
-                                    <option value="2">{{ __('Delivered') }}</option>
+                                    <option value="2">{{ __('Shipped') }}</option>
+                                    <option value="3">{{ __('Delivered') }}</option>
                                 </select>
                                 @error('volume.status')
                                     <span class="invalid-feedback" role="alert">
