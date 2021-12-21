@@ -76,6 +76,8 @@ class Volume extends Model
             case 1:
                 return __('Ordered');
             case 2:
+                return __('Shipped');
+            case 3:
                 return __('Delivered');
         }
     }
@@ -93,6 +95,8 @@ class Volume extends Model
             case 1:
                 return 'table-warning';
             case 2:
+                return 'table-info';
+            case 3:
                 return 'table-success';
         }
     }

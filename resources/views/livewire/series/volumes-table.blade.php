@@ -27,8 +27,9 @@
                         <td>{{ $volume->status_name }}</td>
                         <td>
                             @if ($volume->status == 0)<a wire:click.prevent='ordered({{ $volume->id }})' href="#" title="{{ __('Sets the status to Ordered') }}"><i class="fa fa-shopping-cart"></i></a>@endif
-                            @if ($volume->status == 1)<a wire:click.prevent='delivered({{ $volume->id }})' href="#" title="{{ __('Sets the status to Delivered') }}"><i class="fa fa-check"></i></a>@endif
-                            @if ($volume->status == 1 || $volume->status == 2)<a wire:click.prevent='canceled({{ $volume->id }})' href="#" title="{{ __('Sets the status to New') }}"><i class="fa fa-ban"></i></a>@endif
+                            @if ($volume->status == 1)<a wire:click.prevent='shipped({{ $volume->id }})' href="#" title="{{ __('Sets the status to Shipped') }}"><i class="fa fa-truck"></i></a>@endif
+                            @if ($volume->status == 2)<a wire:click.prevent='delivered({{ $volume->id }})' href="#" title="{{ __('Sets the status to Delivered') }}"><i class="fa fa-check"></i></a>@endif
+                            @if ($volume->status == 1 || $volume->status == 2 || $volume->status == 3)<a wire:click.prevent='canceled({{ $volume->id }})' href="#" title="{{ __('Sets the status to New') }}"><i class="fa fa-ban"></i></a>@endif
                         </td>
                     </tr>
                 @endforeach

@@ -29,19 +29,24 @@ class VolumesTable extends Component
         return view('livewire.series.volumes-table');
     }
 
+    public function canceled(int $id)
+    {
+        $this->setStatus($id, 0);
+    }
+
     public function ordered(int $id)
     {
         $this->setStatus($id, 1);
     }
 
-    public function delivered(int $id)
+    public function shipped(int $id)
     {
         $this->setStatus($id, 2);
     }
 
-    public function canceled(int $id)
+    public function delivered(int $id)
     {
-        $this->setStatus($id, 0);
+        $this->setStatus($id, 3);
     }
 
     private function setStatus(int $id, int $status)
