@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Series;
 
 use App\Models\Series;
 use Exception;
+use Illuminate\Support\Facades\Log;
 use Image;
 use Livewire\Component;
 use Storage;
@@ -51,6 +52,7 @@ class EditSeries extends Component
             toastr()->livewire()->addSuccess(__('Series :name has been updated', ['name' => $this->series->name]));
             $this->reset(['image_url']);
         } catch (Exception $exception) {
+            Log::error($exception);
             toastr()->livewire()->addError(__('Series :name could not be updated', ['name' => $this->series->name]));
         }
     }
