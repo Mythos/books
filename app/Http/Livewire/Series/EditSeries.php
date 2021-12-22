@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Series;
 
 use App\Models\Series;
+use App\Models\Volume;
 use Exception;
 use Illuminate\Support\Facades\Log;
 use Image;
@@ -74,5 +75,14 @@ class EditSeries extends Component
             return;
         }
         Storage::put('public/series/' . $this->series->id . '.jpg', $image);
+    }
+
+    public function delete()
+    {
+        Volume::whereSeriesId($this->series->id)->delete();
+        $this->series->delete();
+        Storage::delete('public/series/' . $this->series->id . '.jpg');
+        toastr()->addSuccess(__('Series :name has been deleted', ['name' => $this->series->name]));
+        redirect()->route('categories.show', [$this->series->category]);
     }
 }

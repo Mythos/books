@@ -74,9 +74,14 @@
                             </div>
                         </div>
                         <div class="row mb-0 float-end">
-                            <button type="submit" class="btn btn-primary">
-                                {{ __('Save') }}
-                            </button>
+                            <div class="col-md-12">
+                                <button type="button" class="btn btn-danger" wire:click='delete'>
+                                    {{ __('Delete') }}
+                                </button>
+                                <button type="submit" class="btn btn-primary">
+                                    {{ __('Save') }}
+                                </button>
+                            </div>
                         </div>
                     </form>
                 </div>
