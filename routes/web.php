@@ -3,6 +3,7 @@
 use App\Http\Livewire\Volumes\CreateVolume;
 use App\Http\Livewire\Categories\CreateCategory;
 use App\Http\Livewire\Categories\EditCategory;
+use App\Http\Livewire\Categories\ShowCategory;
 use App\Http\Livewire\Series\CreateSeries;
 use App\Http\Livewire\Series\EditSeries;
 use App\Http\Livewire\Series\ShowSeries;
@@ -26,6 +27,7 @@ Route::prefix('')->middleware(['auth'])->group(function () {
     Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
     Route::get('category/new', CreateCategory::class)->name('categories.create');
+    Route::get('{category}', ShowCategory::class)->name('categories.show');
     Route::prefix('{category}')->group(function () {
         Route::get('edit', EditCategory::class)->name('categories.edit');
 

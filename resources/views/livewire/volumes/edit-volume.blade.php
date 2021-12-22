@@ -2,6 +2,7 @@
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{ route('home') }}">{{ __('Home') }}</a></li>
+            <li class="breadcrumb-item"><a href="{{ route('categories.show', [$series->category]) }}">{{ $series->category->name }}</a></li>
             <li class="breadcrumb-item"><a href="{{ route('series.show', [$category, $series]) }}">{{ $series->name }}</a></li>
             <li class="breadcrumb-item active" aria-current="page">{{ __('Volume :number', ['number' => $volume->number]) }}</li>
         </ol>
