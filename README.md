@@ -6,6 +6,7 @@ I also use this project to improve my Laravel skills as I'm mainly a .NET develo
 
 ## Installation
 
+* Make sure to have [Laravel 8.X requirements](https://laravel.com/docs/8.x/deployment#server-requirements) installed
 * Clone this repository
 * Run `composer install --no-dev`
 * Set your credentials and settings in `.env`
