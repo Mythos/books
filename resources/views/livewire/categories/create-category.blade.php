@@ -13,7 +13,7 @@
                     <form method="POST" wire:submit.prevent='save'>
                         @csrf
                         <div class="mb-3 row">
-                            <label for="name" class="col-md-2 col-form-label text-md-end">{{ __('Name') }}</label>
+                            <label for="name" class="col-md-2 col-form-label required text-md-end">{{ __('Name') }}</label>
                             <div class="col-md-10">
                                 <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" wire:model='name' required autocomplete="name" autofocus>
                                 @error('name')
