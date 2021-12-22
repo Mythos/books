@@ -15,7 +15,7 @@
                         @csrf
                         <input id="series_id" type="hidden" name="series_id" wire:model='volume.series_id' />
                         <div class="mb-3 row">
-                            <label for="isbn" class="col-md-2 col-form-label text-md-right">{{ __('ISBN') }}</label>
+                            <label for="isbn" class="col-md-2 col-form-label text-md-end">{{ __('ISBN') }}</label>
                             <div class="col-md-10">
                                 <input id="isbn" type="text" class="form-control @error('volume.isbn') is-invalid @enderror" name="isbn" wire:model='volume.isbn' required autocomplete="isbn" autofocus>
                                 @error('volume.isbn')
@@ -26,7 +26,7 @@
                             </div>
                         </div>
                         <div class="mb-3 row">
-                            <label for="publish_date" class="col-md-2 col-form-label text-md-right">{{ __('Publish Date') }}</label>
+                            <label for="publish_date" class="col-md-2 col-form-label text-md-end">{{ __('Publish Date') }}</label>
                             <div class="col-md-10">
                                 <input id="publish_date" type="date" class="form-control @error('volume.publish_date') is-invalid @enderror" name="publish_date" wire:model='volume.publish_date' required autofocus>
                                 @error('volume.publish_date')
@@ -37,7 +37,7 @@
                             </div>
                         </div>
                         <div class="mb-3 row">
-                            <label for="status" class="col-md-2 col-form-label text-md-right">{{ __('Status') }}</label>
+                            <label for="status" class="col-md-2 col-form-label text-md-end">{{ __('Status') }}</label>
                             <div class="col-md-10">
                                 <select class="form-select @error('volume.status') is-invalid @enderror" name="status" wire:model='volume.status' required>
                                     <option value="0">{{ __('New') }}</option>
