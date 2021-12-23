@@ -8,7 +8,7 @@
     </nav>
     <div class="row">
         <div class="col-sm-12 col-md-12 col-lg-3 d-flex align-self-stretch justify-content-center my-2">
-            <img src="{{ $series->image }}" alt="{{ $series->image }}" class="rounded" style="max-height: 400px; object-fit: contain;">
+            @livewire('series.image', [$series])
         </div>
         <div class="col-sm-12 col-md-12 col-lg-9 my-2 pl-4">
             <div>

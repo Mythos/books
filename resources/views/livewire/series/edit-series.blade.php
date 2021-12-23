@@ -73,6 +73,19 @@
                                 @enderror
                             </div>
                         </div>
+                        <div class="mb-3 row">
+                            <label for="is_nsfw" class="col-md-2 col-form-label text-md-end">{{ __('NSFW') }}</label>
+                            <div class="col-md-10">
+                                <div class="form-check">
+                                    <input id="is_nsfw" type="checkbox" class="form-check-input @error('series.is_nsfw') is-invalid @enderror" name="is_nsfw" wire:model='series.is_nsfw' autocomplete="series.is_nsfw" autofocus>
+                                </div>
+                                @error('series.is_nsfw')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
                         <div class="row mb-0 float-end">
                             <div class="col-md-12">
                                 <button type="button" class="btn btn-danger" wire:click='delete'>

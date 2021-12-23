@@ -49,6 +49,8 @@ use Spatie\Sluggable\SlugOptions;
  * @property-read string $ordered_volumes_count
  * @property string|null $language
  * @method static \Illuminate\Database\Eloquent\Builder|Series whereLanguage($value)
+ * @property int|null $is_nsfw
+ * @method static \Illuminate\Database\Eloquent\Builder|Series whereIsNsfw($value)
  */
 class Series extends Model
 {
@@ -65,6 +67,7 @@ class Series extends Model
         'status',
         'total',
         'language',
+        'is_nsfw',
         'category_id',
     ];
 

@@ -23,6 +23,7 @@ class CreateSeries extends Component
         'series.total' => 'nullable|integer|min:1',
         'series.category_id' => 'required|exists:categories,id',
         'series.language' => 'required',
+        'series.is_nsfw' => 'boolean',
         'image_url' => 'required|url'
     ];
 
@@ -39,7 +40,8 @@ class CreateSeries extends Component
         $this->category = $category;
         $this->series = new Series([
             'status' => 0,
-            'category_id' => $category->id
+            'category_id' => $category->id,
+            'is_nsfw' => false
         ]);
     }
 
