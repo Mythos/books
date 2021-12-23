@@ -23,6 +23,17 @@
                                 @enderror
                             </div>
                         </div>
+                        <div class="mb-3 row">
+                            <label for="sort_index" class="col-md-2 col-form-label required text-md-end">{{ __('Sort Index') }}</label>
+                            <div class="col-md-10">
+                                <input id="sort_index" type="number" min="0" class="form-control @error('sort_index') is-invalid @enderror" name="sort_index" wire:model='sort_index' required autocomplete="sort_index" autofocus>
+                                @error('sort_index')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
                         <div class="row mb-0 float-end">
                             <button type="submit" class="btn btn-primary">
                                 {{ __('Save') }}

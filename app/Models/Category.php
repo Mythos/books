@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 
+
 /**
  * App\Models\Category
  *
@@ -27,6 +28,8 @@ use Spatie\Sluggable\SlugOptions;
  * @method static \Illuminate\Database\Eloquent\Builder|Category whereSlug($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Category whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @property int $sort_index
+ * @method static \Illuminate\Database\Eloquent\Builder|Category whereSortIndex($value)
  */
 class Category extends Model
 {
@@ -40,6 +43,7 @@ class Category extends Model
      */
     protected $fillable = [
         'name',
+        'sort_index',
     ];
 
     /**
