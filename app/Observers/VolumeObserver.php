@@ -17,7 +17,7 @@ class VolumeObserver
     {
         Cache::forget('volumes.' . $volume->series->id);
         Cache::forget('volumes.table.' . $volume->series->id);
-        Cache::forget('series.' . $volume->series->id);
+        Cache::forget('series.' . $volume->series->category->id);
         Cache::forget('upcoming');
     }
 
@@ -31,7 +31,7 @@ class VolumeObserver
     {
         Cache::forget('volumes.' . $volume->series->id);
         Cache::forget('volumes.table.' . $volume->series->id);
-        Cache::forget('series.' . $volume->series->id);
+        Cache::forget('series.' . $volume->series->category->id);
         Cache::forget('upcoming');
     }
 
@@ -45,7 +45,7 @@ class VolumeObserver
     {
         Cache::forget('volumes.' . $volume->series->id);
         Cache::forget('volumes.table.' . $volume->series->id);
-        Cache::forget('series.' . $volume->series->id);
+        Cache::forget('series.' . $volume->series->category->id);
         Cache::forget('upcoming');
     }
 
@@ -59,7 +59,7 @@ class VolumeObserver
     {
         Cache::forget('volumes.' . $volume->series->id);
         Cache::forget('volumes.table.' . $volume->series->id);
-        Cache::forget('series.' . $volume->series->id);
+        Cache::forget('series.' . $volume->series->category->id);
         Cache::forget('upcoming');
     }
 
@@ -73,7 +73,7 @@ class VolumeObserver
     {
         Cache::forget('volumes.' . $volume->series->id);
         Cache::forget('volumes.table.' . $volume->series->id);
-        Cache::forget('series.' . $volume->series->id);
+        Cache::forget('series.' . $volume->series->category->id);
         Cache::forget('upcoming');
     }
 }
