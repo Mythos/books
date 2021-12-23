@@ -173,7 +173,7 @@ class Series extends Model
      */
     public function getDeliveredVolumesCountAttribute(): string
     {
-        return $this->volumes->where('status', '2')->count();
+        return $this->volumes->where('status', '3')->count();
     }
 
     /**
