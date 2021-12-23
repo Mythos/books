@@ -202,7 +202,7 @@ class Series extends Model
             return $this->getRelationValue('volumes');
         }
 
-        $volumes = Cache::rememberForever('volumes.' . $this->id, function () {
+        $volumes = Cache::remember('volumes.' . $this->id, config('cache.duration'), function () {
             return $this->getRelationValue('volumes');
         });
 
