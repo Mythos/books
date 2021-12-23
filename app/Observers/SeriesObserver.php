@@ -17,6 +17,7 @@ class SeriesObserver
     {
         Cache::forget('series.' . $series->category->id);
         Cache::forget('upcoming');
+        Cache::forget('image_series_' . $series->id . '_session_' . session()->getId());
     }
 
     /**
@@ -29,6 +30,7 @@ class SeriesObserver
     {
         Cache::forget('series.' . $series->category->id);
         Cache::forget('upcoming');
+        Cache::forget('image_series_' . $series->id . '_session_' . session()->getId());
     }
 
     /**
@@ -41,6 +43,7 @@ class SeriesObserver
     {
         Cache::forget('series.' . $series->category->id);
         Cache::forget('upcoming');
+        Cache::forget('image_series_' . $series->id . '_session_' . session()->getId());
     }
 
     /**
@@ -53,6 +56,7 @@ class SeriesObserver
     {
         Cache::forget('series.' . $series->category->id);
         Cache::forget('upcoming');
+        Cache::forget('image_series_' . $series->id . '_session_' . session()->getId());
     }
 
     /**
@@ -65,5 +69,6 @@ class SeriesObserver
     {
         Cache::forget('series.' . $series->category->id);
         Cache::forget('upcoming');
+        Cache::forget('image_series_' . $series->id . '_session_' . session()->getId());
     }
 }

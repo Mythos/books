@@ -26,7 +26,6 @@ use Spatie\Sluggable\SlugOptions;
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Volume[] $volumes
  * @property-read int|null $volumes_count
  * @property-read \App\Models\Category $category
- * @property-read string $image
  * @property-read string $status_class
  * @property-read string $status_name
  * @method static \Illuminate\Database\Eloquent\Builder|Series newModelQuery()
@@ -177,16 +176,6 @@ class Series extends Model
     public function getDeliveredVolumesCountAttribute(): string
     {
         return $this->volumes->where('status', '3')->count();
-    }
-
-    /**
-     * Get the series' image.
-     *
-     * @return string
-     */
-    public function getImageAttribute(): string
-    {
-        return url('storage/series/' . $this->id . '.jpg');
     }
 
     /**
