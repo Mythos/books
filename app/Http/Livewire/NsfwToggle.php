@@ -2,8 +2,6 @@
 
 namespace App\Http\Livewire;
 
-use App\Models\Series;
-use Illuminate\Support\Facades\Cache;
 use Livewire\Component;
 
 class NsfwToggle extends Component
@@ -19,10 +17,6 @@ class NsfwToggle extends Component
     {
         $this->show_nsfw = !$this->show_nsfw;
         session()->put('show_nsfw', $this->show_nsfw);
-        $seriesIds = Series::whereIsNsfw(true)->pluck('id')->all();
-        foreach ($seriesIds as $seriesId) {
-            Cache::forget('image_series_' . $seriesId . '_session_' . session()->getId());
-        }
         return redirect(request()->header('Referer'));
     }
 }

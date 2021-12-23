@@ -50,7 +50,7 @@ class EditSeries extends Component
         try {
             $image = $this->getImage();
             $this->series->save();
-            $this->storeImage($image);
+            $this->storeImages($image);
             toastr()->livewire()->addSuccess(__('Series :name has been updated', ['name' => $this->series->name]));
             $this->reset(['image_url']);
         } catch (Exception $exception) {
@@ -62,7 +62,7 @@ class EditSeries extends Component
     private function getImage()
     {
         if (empty($this->image_url)) {
-            return;
+            return null;
         }
         $image = Image::make($this->image_url)->resize(null, 400, function ($constraint) {
             $constraint->aspectRatio();
@@ -70,19 +70,20 @@ class EditSeries extends Component
         return $image;
     }
 
-    private function storeImage($image)
+    private function storeImages($image)
     {
         if (empty($image)) {
             return;
         }
-        Storage::put('public/series/' . $this->series->id . '.jpg', $image);
+        Storage::put('public/series/' . $this->series->id . '/cover.jpg', $image);
+        Storage::put('public/series/' . $this->series->id . '/cover_sfw.jpg', $image->pixelate(10)->blur(5)->encode('jpg'));
     }
 
     public function delete()
     {
         Volume::whereSeriesId($this->series->id)->delete();
         $this->series->delete();
-        Storage::delete('public/series/' . $this->series->id . '.jpg');
+        Storage::deleteDirectory('public/series/' . $this->series->id);
         toastr()->addSuccess(__('Series :name has been deleted', ['name' => $this->series->name]));
         redirect()->route('categories.show', [$this->series->category]);
     }

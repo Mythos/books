@@ -57,7 +57,7 @@ class CreateSeries extends Component
         try {
             $image = $this->getImage();
             $this->series->save();
-            $this->storeImage($image);
+            $this->storeImages($image);
             toastr()->addSuccess(__('Series :name has been created', ['name' => $this->series->name]));
             return redirect()->route('home');
         } catch (Exception $exception) {
@@ -69,7 +69,7 @@ class CreateSeries extends Component
     private function getImage()
     {
         if (empty($this->image_url)) {
-            return;
+            return null;
         }
         $image = Image::make($this->image_url)->resize(null, 400, function ($constraint) {
             $constraint->aspectRatio();
@@ -77,11 +77,12 @@ class CreateSeries extends Component
         return $image;
     }
 
-    private function storeImage($image)
+    private function storeImages($image)
     {
         if (empty($image)) {
             return;
         }
-        Storage::put('public/series/' . $this->series->id . '.jpg', $image);
+        Storage::put('public/series/' . $this->series->id . '/cover.jpg', $image);
+        Storage::put('public/series/' . $this->series->id . '/cover_sfw.jpg', $image->pixelate(10)->blur(5)->encode('jpg'));
     }
 }

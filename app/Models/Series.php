@@ -9,8 +9,10 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Support\Collection;
+use Intervention\Image\Facades\Image;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
+use Storage;
 
 /**
  * App\Models\Series
@@ -176,6 +178,20 @@ class Series extends Model
     public function getDeliveredVolumesCountAttribute(): string
     {
         return $this->volumes->where('status', '3')->count();
+    }
+
+    /**
+     * Get the series' image.
+     *
+     * @return string
+     */
+    public function getImageAttribute(): string
+    {
+        $path = 'storage/series/' . $this->id . '/';
+        if ($this->is_nsfw && !session('show_nsfw', false)) {
+            return url($path . 'cover_sfw.jpg');
+        }
+        return url($path . 'cover.jpg');
     }
 
     /**

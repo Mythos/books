@@ -12,9 +12,9 @@ I also use this project to improve my Laravel skills as I'm mainly a .NET develo
 * Set your credentials and settings in `.env`
 * Run `php artisan migrate`
 * Set up the `DocumentRoot` correctly (points to `/public/` folder)
-<!-- * As series covers are stored publicly run 
+* As series covers are stored publicly run 
     * `php artisan storage:link`
-    *  or `ln -s ./storage/app/public ./public/storage` if you are on a shared webspace -->
+    *  or `ln -s ./storage/app/public ./public/storage` if you are on a shared webspace
 
 ## Contribution
 

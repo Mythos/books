@@ -8,7 +8,7 @@
     </nav>
     <div class="row">
         <div class="col-sm-12 col-md-12 col-lg-3 d-flex align-self-stretch justify-content-center my-2">
-            @livewire('series.image', [$series])
+            <img src="{{ $series->image }}" alt="{{ $series->name }}" class="card-img-top" style="max-height: 400px; object-fit: contain;">
         </div>
         <div class="col-sm-12 col-md-12 col-lg-9 my-2 pl-4">
             <div>

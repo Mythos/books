@@ -40,7 +40,7 @@ class EditCategory extends Component
         foreach ($series as $s) {
             Volume::whereSeriesId($s->id)->delete();
             $s->delete();
-            Storage::delete('public/series/' . $s->id . '.jpg');
+            Storage::deleteDirectory('public/series/' . $s->id);
         }
         $this->category->delete();
         toastr()->addSuccess(__('Category :name has been deleted', ['name' => $this->category->name]));
