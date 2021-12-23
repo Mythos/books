@@ -59,13 +59,13 @@ class EditVolume extends Component
         $this->validate();
         $this->volume->save();
         toastr()->addSuccess(__('Volumme :number has been updated', ['number' => $this->volume->number]));
-        redirect()->route('series.show', [$this->category, $this->series]);
+        return redirect()->route('series.show', [$this->category, $this->series]);
     }
 
     public function delete()
     {
         $this->volume->delete();
         toastr()->addSuccess(__('Volumme :number has been deleted', ['number' => $this->volume->number]));
-        redirect()->route('series.show', [$this->category, $this->series]);
+        return redirect()->route('series.show', [$this->category, $this->series]);
     }
 }

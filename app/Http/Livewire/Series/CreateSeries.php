@@ -57,7 +57,7 @@ class CreateSeries extends Component
             $this->series->save();
             $this->storeImage($image);
             toastr()->addSuccess(__('Series :name has been created', ['name' => $this->series->name]));
-            redirect()->route('home');
+            return redirect()->route('home');
         } catch (Exception $exception) {
             Log::error($exception);
             toastr()->livewire()->addError(__('Series :name could not be created', ['name' => $this->series->name]));
