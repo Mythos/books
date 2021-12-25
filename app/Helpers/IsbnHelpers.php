@@ -2,6 +2,7 @@
 
 namespace App\Helpers;
 
+use Exception;
 use Http;
 use Illuminate\Support\Facades\Log;
 use Nicebooks\Isbn\Isbn;

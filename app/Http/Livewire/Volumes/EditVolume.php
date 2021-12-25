@@ -39,7 +39,7 @@ class EditVolume extends Component
                 $this->volume->isbn = $isbn;
             }
             $this->validateOnly($property);
-            $this->volume->publish_date = IsbnHelpers::getPublishDateByIsbn($isbn);
+            $this->volume->publish_date = IsbnHelpers::getPublishDateByIsbn($isbn) ?? '';
         } else {
             $this->validateOnly($property);
         }

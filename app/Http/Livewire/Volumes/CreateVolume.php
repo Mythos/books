@@ -5,7 +5,6 @@ namespace App\Http\Livewire\Volumes;
 use App\Helpers\IsbnHelpers;
 use App\Models\Volume;
 use App\Models\Series;
-use Http;
 use Intervention\Validation\Rules\Isbn;
 use Livewire\Component;
 
@@ -43,7 +42,7 @@ class CreateVolume extends Component
                 $this->isbn = $isbn;
             }
             $this->validateOnly($property);
-            $this->publish_date = IsbnHelpers::getPublishDateByIsbn($isbn);
+            $this->publish_date = IsbnHelpers::getPublishDateByIsbn($isbn) ?? '';
         } else {
             $this->validateOnly($property);
         }

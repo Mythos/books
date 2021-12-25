@@ -18,7 +18,7 @@
                         <div class="mb-3 row">
                             <label for="isbn" class="col-md-2 col-form-label required text-md-end">{{ __('ISBN') }}</label>
                             <div class="col-md-10">
-                                <input id="isbn" type="text" class="form-control @error('volume.isbn') is-invalid @enderror" name="isbn" wire:model='volume.isbn' required autocomplete="isbn" autofocus>
+                                <input id="isbn" type="text" class="form-control @error('volume.isbn') is-invalid @enderror" name="isbn" wire:model.debounce.500ms='volume.isbn' required autocomplete="isbn" autofocus>
                                 @error('volume.isbn')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
