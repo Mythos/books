@@ -34,12 +34,11 @@ class EditVolume extends Component
     public function updated($property, $value)
     {
         if ($property == "volume.isbn") {
+            $this->validateOnly($property);
             $isbn = IsbnHelpers::convertTo13($value);
             if (!empty($isbn)) {
-                $this->volume->isbn = $isbn;
+                $this->volume->publish_date = IsbnHelpers::getPublishDateByIsbn($isbn) ?? '';
             }
-            $this->validateOnly($property);
-            $this->volume->publish_date = IsbnHelpers::getPublishDateByIsbn($isbn) ?? '';
         } else {
             $this->validateOnly($property);
         }

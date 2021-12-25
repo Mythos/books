@@ -37,12 +37,11 @@ class CreateVolume extends Component
     public function updated($property, $value)
     {
         if ($property == "isbn") {
+            $this->validateOnly($property);
             $isbn = IsbnHelpers::convertTo13($value);
             if (!empty($isbn)) {
-                $this->isbn = $isbn;
+                $this->publish_date = IsbnHelpers::getPublishDateByIsbn($isbn) ?? '';
             }
-            $this->validateOnly($property);
-            $this->publish_date = IsbnHelpers::getPublishDateByIsbn($isbn) ?? '';
         } else {
             $this->validateOnly($property);
         }
