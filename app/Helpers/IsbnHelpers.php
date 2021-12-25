@@ -3,6 +3,7 @@
 namespace App\Helpers;
 
 use Http;
+use Illuminate\Support\Facades\Log;
 use Nicebooks\Isbn\Isbn;
 use Nicebooks\Isbn\IsbnTools;
 
@@ -36,12 +37,16 @@ class IsbnHelpers
             return null;
         }
         if (!empty($isbn)) {
-            $response = Http::get('https://www.googleapis.com/books/v1/volumes?q=isbn:' . $isbn);
-            if ($response['totalItems'] > 0) {
-                $date = $response["items"][0]["volumeInfo"]["publishedDate"];
-                if (!empty($date)) {
-                    return date('Y-m-d', strtotime($date));
+            try {
+                $response = Http::get('https://www.googleapis.com/books/v1/volumes?q=isbn:' . $isbn);
+                if ($response['totalItems'] > 0) {
+                    $date = $response["items"][0]["volumeInfo"]["publishedDate"];
+                    if (!empty($date)) {
+                        return date('Y-m-d', strtotime($date));
+                    }
                 }
+            } catch (Exception $exception) {
+                Log::error($exception);
             }
         }
         return null;
