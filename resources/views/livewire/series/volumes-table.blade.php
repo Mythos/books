@@ -2,6 +2,7 @@
     <div>
         <h2 style="display: inline;">{{ __('Volumes') }}</h2>
         <div class="float-end" style="display: inline;">
+            <a wire:click.prevent='toggle_reordering' href="#" title="{{ __('Allows volumes to be reordered') }}"><i class="fa fa-sort"></i></a>
             <a href="{{ route('volumes.create', [$category, $series]) }}" class="btn btn-link"><i class="fas fa-plus-circle"></i></a>
         </div>
     </div>
@@ -9,6 +10,10 @@
         <table class="table table-hover">
             <thead class="table-dark">
                 <tr>
+                    @if ($enable_reordering)
+                        <th scope="col" style="width: 1rem;"></th>
+                        <th scope="col" style="width: 1rem;"></th>
+                    @endif
                     <th scope="col" style="min-width: 2rem;">#</th>
                     <th scope="col" style="min-width: 1rem;"></th>
                     <th scope="col" style="min-width: 7rem;">{{ __('Publish date') }}</th>
@@ -20,6 +25,18 @@
             <tbody>
                 @foreach ($volumes as $volume)
                     <tr class="{{ $volume->status_class }}">
+                        @if ($enable_reordering)
+                            <td>
+                                @if ($volume->number > 1)
+                                    <a wire:click.prevent='move_up({{ $volume->id }})' href="#" title="{{ __('Moves the volume up') }}"><i class="fa fa-arrow-up"></i></a>
+                                @endif
+                            </td>
+                            <td>
+                                @if ($volume->number < $volumes->max('number'))
+                                    <a wire:click.prevent='move_down({{ $volume->id }})' href="#" title="{{ __('Moves the volume up') }}"><i class="fa fa-arrow-down"></i></a>
+                                @endif
+                            </td>
+                        @endif
                         <th scope="row">{{ $volume->number }}</th>
                         <td><a href="{{ route('volumes.edit', [$category, $series, $volume->number]) }}"><i class="fa fa-edit"></i></a></td>
                         <td>{{ $volume->publish_date }}</td>
