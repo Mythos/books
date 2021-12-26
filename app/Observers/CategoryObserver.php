@@ -37,6 +37,7 @@ class CategoryObserver
      */
     public function deleted(Category $category)
     {
+        Cache::forget('volumes');
         Cache::forget('categories');
     }
 
@@ -48,6 +49,7 @@ class CategoryObserver
      */
     public function restored(Category $category)
     {
+        Cache::forget('volumes');
         Cache::forget('categories');
     }
 
@@ -59,6 +61,7 @@ class CategoryObserver
      */
     public function forceDeleted(Category $category)
     {
+        Cache::forget('volumes');
         Cache::forget('categories');
     }
 }

@@ -41,6 +41,7 @@ class SeriesObserver
      */
     public function deleted(Series $series)
     {
+        Cache::forget('volumes');
         Cache::forget('series.' . $series->category->id);
         Cache::forget('upcoming');
         Cache::forget('image_series_' . $series->id . '_session_' . session()->getId());
@@ -54,6 +55,7 @@ class SeriesObserver
      */
     public function restored(Series $series)
     {
+        Cache::forget('volumes');
         Cache::forget('series.' . $series->category->id);
         Cache::forget('upcoming');
         Cache::forget('image_series_' . $series->id . '_session_' . session()->getId());
@@ -67,6 +69,7 @@ class SeriesObserver
      */
     public function forceDeleted(Series $series)
     {
+        Cache::forget('volumes');
         Cache::forget('series.' . $series->category->id);
         Cache::forget('upcoming');
         Cache::forget('image_series_' . $series->id . '_session_' . session()->getId());

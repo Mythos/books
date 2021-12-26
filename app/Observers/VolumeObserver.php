@@ -15,6 +15,7 @@ class VolumeObserver
      */
     public function created(Volume $volume)
     {
+        Cache::forget('volumes');
         Cache::forget('volumes.' . $volume->series->id);
         Cache::forget('volumes.table.' . $volume->series->id);
         Cache::forget('series.' . $volume->series->category->id);
@@ -29,6 +30,7 @@ class VolumeObserver
      */
     public function updated(Volume $volume)
     {
+        Cache::forget('volumes');
         Cache::forget('volumes.' . $volume->series->id);
         Cache::forget('volumes.table.' . $volume->series->id);
         Cache::forget('series.' . $volume->series->category->id);
@@ -43,6 +45,7 @@ class VolumeObserver
      */
     public function deleted(Volume $volume)
     {
+        Cache::forget('volumes');
         Cache::forget('volumes.' . $volume->series->id);
         Cache::forget('volumes.table.' . $volume->series->id);
         Cache::forget('series.' . $volume->series->category->id);
@@ -57,6 +60,7 @@ class VolumeObserver
      */
     public function restored(Volume $volume)
     {
+        Cache::forget('volumes');
         Cache::forget('volumes.' . $volume->series->id);
         Cache::forget('volumes.table.' . $volume->series->id);
         Cache::forget('series.' . $volume->series->category->id);
@@ -71,6 +75,7 @@ class VolumeObserver
      */
     public function forceDeleted(Volume $volume)
     {
+        Cache::forget('volumes');
         Cache::forget('volumes.' . $volume->series->id);
         Cache::forget('volumes.table.' . $volume->series->id);
         Cache::forget('series.' . $volume->series->category->id);
