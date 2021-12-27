@@ -52,18 +52,7 @@
                             </div>
                         </div>
                         <div class="mb-3 row">
-                            <label for="language" class="col-md-2 col-form-label required text-md-end">{{ __('Language') }}</label>
-                            <div class="col-md-10">
-                                <input id="language" type="text" class="form-control @error('series.language') is-invalid @enderror" name="language" wire:model='series.language' autocomplete="language" autofocus>
-                                @error('series.language')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-                        <div class="mb-3 row">
-                            <label for="image" class="col-md-2 col-form-label required text-md-end">{{ __('Image') }}</label>
+                            <label for="image" class="col-md-2 col-form-label text-md-end">{{ __('Image') }}</label>
                             <div class="col-md-10">
                                 <input id="image_url" type="text" class="form-control @error('image_url') is-invalid @enderror" name="image_url" wire:model='image_url' autocomplete="image_url" autofocus>
                                 @error('image_url')

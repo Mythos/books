@@ -21,7 +21,6 @@ class EditSeries extends Component
         'series.status' => 'required|integer|min:0',
         'series.total' => 'nullable|integer|min:1',
         'series.category_id' => 'required|exists:categories,id',
-        'series.language' => 'required',
         'series.is_nsfw' => 'boolean',
         'image_url' => 'url'
     ];
