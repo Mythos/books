@@ -4,6 +4,7 @@ namespace App\Http\Livewire;
 
 use App\Models\Volume;
 use Cache;
+use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 
 class GlobalStatistics extends Component
@@ -16,12 +17,21 @@ class GlobalStatistics extends Component
 
     public function render()
     {
-        $volumes = Volume::all();
-        $this->new = $volumes->where('status', '0')->count();
-        $this->ordered = $volumes->where('status', '1')->count();
-        $this->shipped = $volumes->where('status', '2')->count();
-        $this->delivered = $volumes->where('status', '3')->count();
-        $this->total = $volumes->count();
+        $statistics = DB::table("volumes")
+            ->select([
+                DB::raw("sum(case when status = 0 then 1 else 0 end) as new"),
+                DB::raw("sum(case when status = 1 then 1 else 0 end) as ordered"),
+                DB::raw("sum(case when status = 2 then 1 else 0 end) as shipped"),
+                DB::raw("sum(case when status = 3 then 1 else 0 end) as delivered"),
+                DB::raw("count(*) as total"),
+            ])
+            ->first();
+
+        $this->new = $statistics->new;
+        $this->ordered = $statistics->ordered;
+        $this->shipped = $statistics->shipped;
+        $this->delivered = $statistics->delivered;
+        $this->total = $statistics->total;
         return view('livewire.global-statistics');
     }
 }
