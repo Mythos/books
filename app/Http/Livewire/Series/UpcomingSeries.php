@@ -12,9 +12,7 @@ class UpcomingSeries extends Component
 
     public function render()
     {
-        $this->upcoming = Cache::remember('upcoming', config('cache.duration'), function () {
-            return Volume::with('series')->where('status', '!=', '3')->orderBy('publish_date')->get();
-        });
+        $this->upcoming = Volume::with('series')->where('status', '!=', '3')->orderBy('publish_date')->get();
         return view('livewire.series.upcoming-series');
     }
 
@@ -38,6 +36,7 @@ class UpcomingSeries extends Component
         $volume = Volume::find($id);
         $volume->status = $status;
         $volume->save();
+        $this->emitTo('global-statistics', '$refresh');
         toastr()->livewire()->addSuccess(__(':name has been updated', ['name' => $volume->series->name . ' ' . $volume->number]));
     }
 }

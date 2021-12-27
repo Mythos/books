@@ -19,9 +19,7 @@ class Gallery extends Component
 
     public function render()
     {
-        $this->series = Cache::remember('series.' . $this->category->id, config('cache.duration'), function () {
-            return Series::whereCategoryId($this->category->id)->with('volumes')->orderBy('status')->orderBy('name')->get();
-        });
+        $this->series = Series::whereCategoryId($this->category->id)->with('volumes')->orderBy('status')->orderBy('name')->get();
         return view('livewire.series.gallery');
     }
 }

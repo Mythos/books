@@ -5,9 +5,6 @@ namespace App\Providers;
 use App\Models\Category;
 use App\Models\Series;
 use App\Models\Volume;
-use App\Observers\CategoryObserver;
-use App\Observers\SeriesObserver;
-use App\Observers\VolumeObserver;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -33,8 +30,5 @@ class EventServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        Category::observe(CategoryObserver::class);
-        Series::observe(SeriesObserver::class);
-        Volume::observe(VolumeObserver::class);
     }
 }

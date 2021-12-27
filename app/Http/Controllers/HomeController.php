@@ -24,9 +24,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $categories = Cache::remember('categories', config('cache.duration'), function () {
-            return Category::orderBy('sort_index')->orderBy('name')->get();
-        });
+        $categories = Category::orderBy('sort_index')->orderBy('name')->get();
         return view('home')->with('categories', $categories);
     }
 }

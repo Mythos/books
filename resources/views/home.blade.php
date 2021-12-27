@@ -7,7 +7,10 @@
                 <li class="breadcrumb-item active">{{ __('Home') }}</li>
             </ol>
         </nav>
-        <livewire:series.upcoming-series />
+        <div class="row mb-3">
+            <livewire:series.upcoming-series />
+            <livewire:global-statistics />
+        </div>
         @foreach ($categories as $category)
             @livewire('series.gallery', [$category])
         @endforeach
