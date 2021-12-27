@@ -16,9 +16,7 @@ class GlobalStatistics extends Component
 
     public function render()
     {
-        $volumes = Cache::remember('volumes', config('cache.duration'), function () {
-            return Volume::all();
-        });
+        $volumes = Volume::all();
         $this->new = $volumes->where('status', '0')->count();
         $this->ordered = $volumes->where('status', '1')->count();
         $this->shipped = $volumes->where('status', '2')->count();

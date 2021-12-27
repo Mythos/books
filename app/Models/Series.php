@@ -199,21 +199,6 @@ class Series extends Model
         return $this->hasMany(Volume::class);
     }
 
-    public function getVolumesAttribute(): Collection
-    {
-        if ($this->relationLoaded('volumes')) {
-            return $this->getRelationValue('volumes');
-        }
-
-        $volumes = Cache::remember('volumes.' . $this->id, config('cache.duration'), function () {
-            return $this->getRelationValue('volumes');
-        });
-
-        $this->setRelation('volumes', $volumes);
-
-        return $volumes;
-    }
-
     /**
      * Get the category that owns the Series
      *
