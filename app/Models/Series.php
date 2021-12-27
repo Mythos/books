@@ -7,12 +7,9 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Support\Collection;
-use Intervention\Image\Facades\Image;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
-use Storage;
 
 /**
  * App\Models\Series
@@ -48,10 +45,9 @@ use Storage;
  * @property-read string $delivered_volumes_count
  * @property-read string $new_volumes_count
  * @property-read string $ordered_volumes_count
- * @property string|null $language
- * @method static \Illuminate\Database\Eloquent\Builder|Series whereLanguage($value)
  * @property int|null $is_nsfw
  * @method static \Illuminate\Database\Eloquent\Builder|Series whereIsNsfw($value)
+ * @property-read string $image
  */
 class Series extends Model
 {
@@ -67,7 +63,6 @@ class Series extends Model
         'name',
         'status',
         'total',
-        'language',
         'is_nsfw',
         'category_id',
     ];
