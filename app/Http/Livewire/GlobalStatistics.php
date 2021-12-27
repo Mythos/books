@@ -15,6 +15,10 @@ class GlobalStatistics extends Component
     public ?int $delivered;
     public ?int $total;
 
+    protected $listeners = [
+        '$refresh'
+    ];
+
     public function render()
     {
         $statistics = DB::table("volumes")
