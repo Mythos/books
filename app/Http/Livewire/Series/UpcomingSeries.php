@@ -3,7 +3,6 @@
 namespace App\Http\Livewire\Series;
 
 use App\Models\Volume;
-use Cache;
 use Livewire\Component;
 
 class UpcomingSeries extends Component

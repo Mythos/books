@@ -2,12 +2,10 @@
 
 namespace App\Models;
 
-use Cache;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Support\Collection;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 
@@ -22,32 +20,29 @@ use Spatie\Sluggable\SlugOptions;
  * @property int $category_id
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Volume[] $volumes
- * @property-read int|null $volumes_count
+ * @property int|null $is_nsfw
  * @property-read \App\Models\Category $category
+ * @property-read string $completion_status
+ * @property-read string $completion_status_class
+ * @property-read string $completion_status_name
+ * @property-read string $image
  * @property-read string $status_class
  * @property-read string $status_name
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Volume[] $volumes
+ * @property-read int|null $volumes_count
  * @method static \Illuminate\Database\Eloquent\Builder|Series newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Series newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Series query()
  * @method static \Illuminate\Database\Eloquent\Builder|Series whereCategoryId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Series whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Series whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Series whereIsNsfw($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Series whereName($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Series whereSlug($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Series whereStatus($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Series whereTotal($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Series whereUpdatedAt($value)
  * @mixin \Eloquent
- * @property-read string $completion_status
- * @property-read string $completion_status_class
- * @property-read string $completion_status_name
- * @property-read string $delivered_volumes_count
- * @property-read string $new_volumes_count
- * @property-read string $ordered_volumes_count
- * @property int|null $is_nsfw
- * @method static \Illuminate\Database\Eloquent\Builder|Series whereIsNsfw($value)
- * @property-read string $image
  */
 class Series extends Model
 {
@@ -143,36 +138,6 @@ class Series extends Model
             return false;
         }
         return $this->total == $this->deliveredVolumesCount;
-    }
-
-    /**
-     * Get the series' count of new volumes.
-     *
-     * @return string
-     */
-    public function getNewVolumesCountAttribute(): string
-    {
-        return $this->volumes->where('status', '0')->count();
-    }
-
-    /**
-     * Get the series' count of ordered volumes.
-     *
-     * @return string
-     */
-    public function getOrderedVolumesCountAttribute(): string
-    {
-        return $this->volumes->where('status', '1')->count();
-    }
-
-    /**
-     * Get the series' count of delivered volumes.
-     *
-     * @return string
-     */
-    public function getDeliveredVolumesCountAttribute(): string
-    {
-        return $this->volumes->where('status', '3')->count();
     }
 
     /**

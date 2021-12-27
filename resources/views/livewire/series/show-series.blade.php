@@ -21,12 +21,13 @@
             </div>
             <div class="mt-3">
                 <div>{{ __('Status') }}: <span class="{{ $series->status_class }}">{{ $series->status_name }}</span></div>
-                <div>{{ __('New') }}: <span class="badge rounded-pill bg-danger">{{ $series->new_volumes_count }}</span></div>
-                <div>{{ __('Ordered') }}: <span class="badge rounded-pill bg-warning">{{ $series->ordered_volumes_count }}</span></div>
-                <div>{{ __('Delivered') }}: <span class="badge rounded-pill bg-success">{{ $series->delivered_volumes_count }}</span></div>
+                <div>{{ __('New') }}: <span class="badge rounded-pill bg-danger">{{ $new }}</span></div>
+                <div>{{ __('Ordered') }}: <span class="badge rounded-pill bg-warning">{{ $ordered }}</span></div>
+                <div>{{ __('Shipped') }}: <span class="badge rounded-pill bg-info">{{ $shipped }}</span></div>
+                <div>{{ __('Delivered') }}: <span class="badge rounded-pill bg-success">{{ $delivered }}</span></div>
                 <div>{{ __('Total') }}: {{ isset($series->total) ? $series->total : '?' }}</div>
             </div>
-            @livewire('series.volumes-table', [$category, $series])
+            @include('livewire.series.volumes-table', [$category, $series, $volumes])
         </div>
     </div>
 </div>

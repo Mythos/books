@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
-use Cache;
 
 class HomeController extends Controller
 {
