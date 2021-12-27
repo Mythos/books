@@ -25,20 +25,21 @@ Auth::routes(['register' => config('auth.registration_enabled')]);
 
 Route::prefix('')->middleware(['auth'])->group(function () {
     Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+    Route::prefix('books')->group(function () {
+        Route::get('category/new', CreateCategory::class)->name('categories.create');
+        Route::get('{category}', ShowCategory::class)->name('categories.show');
+        Route::prefix('{category}')->group(function () {
+            Route::get('edit', EditCategory::class)->name('categories.edit');
 
-    Route::get('category/new', CreateCategory::class)->name('categories.create');
-    Route::get('{category}', ShowCategory::class)->name('categories.show');
-    Route::prefix('{category}')->group(function () {
-        Route::get('edit', EditCategory::class)->name('categories.edit');
+            Route::get('series/new', CreateSeries::class)->name('series.create');
+            Route::get('{series}', ShowSeries::class)->name('series.show');
 
-        Route::get('series/new', CreateSeries::class)->name('series.create');
-        Route::get('{series}', ShowSeries::class)->name('series.show');
+            Route::prefix('{series}')->group(function () {
+                Route::get('edit', EditSeries::class)->name('series.edit');
 
-        Route::prefix('{series}')->group(function () {
-            Route::get('edit', EditSeries::class)->name('series.edit');
-
-            Route::get('volumes/new', CreateVolume::class)->name('volumes.create');
-            Route::get('{number}/edit', EditVolume::class)->name('volumes.edit');
+                Route::get('volumes/new', CreateVolume::class)->name('volumes.create');
+                Route::get('{number}/edit', EditVolume::class)->name('volumes.edit');
+            });
         });
     });
 });
