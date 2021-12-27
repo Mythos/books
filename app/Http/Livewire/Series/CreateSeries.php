@@ -82,6 +82,6 @@ class CreateSeries extends Component
             return;
         }
         Storage::put('public/series/' . $this->series->id . '/cover.jpg', $image);
-        Storage::put('public/series/' . $this->series->id . '/cover_sfw.jpg', $image->pixelate(10)->blur(5)->encode('jpg'));
+        Storage::put('public/series/' . $this->series->id . '/cover_sfw.jpg', $image->pixelate(config('images.nsfw.pixelate', 10))->blur(config('images.nsfw.blur', 5))->encode('jpg'));
     }
 }

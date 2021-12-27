@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Livewire\Administration;
 use App\Http\Livewire\Volumes\CreateVolume;
 use App\Http\Livewire\Categories\CreateCategory;
 use App\Http\Livewire\Categories\EditCategory;
@@ -42,4 +43,7 @@ Route::prefix('')->middleware(['auth'])->group(function () {
             });
         });
     });
+});
+Route::prefix('/admin')->middleware(['auth'])->group(function () {
+    Route::get('/', Administration::class)->name('admin.index');
 });
