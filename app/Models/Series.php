@@ -137,7 +137,7 @@ class Series extends Model
         if (empty($this->total)) {
             return false;
         }
-        return $this->total == $this->deliveredVolumesCount;
+        return $this->total == $this->volumes->where('status', '3')->count();
     }
 
     /**
