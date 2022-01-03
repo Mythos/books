@@ -163,7 +163,7 @@ class Series extends Model
      */
     public function getTotalWorthAttribute(): string
     {
-        return $this->volumes->sum('price');
+        return $this->volumes->where('status', '3')->sum('price');
     }
 
     /**
