@@ -51,6 +51,7 @@ class Volume extends Model
         'publish_date',
         'isbn',
         'status',
+        'price',
         'series_id',
     ];
 
