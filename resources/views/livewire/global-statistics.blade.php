@@ -6,23 +6,27 @@
                 <tbody>
                     <tr class="table-danger">
                         <td>{{ __('New') }}</td>
-                        <td>{{ $new }}</td>
+                        <td class="text-end">{{ $new }} {{ __('Volumes') }}</td>
                     </tr>
                     <tr class="table-warning">
                         <td>{{ __('Ordered') }}</td>
-                        <td>{{ $ordered }}</td>
+                        <td class="text-end">{{ $ordered }} {{ __('Volumes') }}</td>
                     </tr>
                     <tr class="table-info">
                         <td>{{ __('Shipped') }}</td>
-                        <td>{{ $shipped }}</td>
+                        <td class="text-end">{{ $shipped }} {{ __('Volumes') }}</td>
                     </tr>
                     <tr class="table-success">
                         <td>{{ __('Delivered') }}</td>
-                        <td>{{ $delivered }}</td>
+                        <td class="text-end">{{ $delivered }} {{ __('Volumes') }}</td>
                     </tr>
                     <tr style="font-weight: bold;">
                         <td>{{ __('Total') }}</td>
-                        <td>{{ $total }}</td>
+                        <td class="text-end">{{ $total }} {{ __('Volumes') }}</td>
+                    </tr>
+                    <tr class="table-secondary">
+                        <td>{{ __('Total Worth') }}</td>
+                        <td class="text-end">{{ number_format($price, 2) }} {{ config('app.currency') }}</td>
                     </tr>
                 </tbody>
             </table>

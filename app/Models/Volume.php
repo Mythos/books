@@ -34,6 +34,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property-read string $status_class
  * @property-read string $status_name
  * @property-read void $isbn_formatted
+ * @property string|null $price
+ * @method static \Illuminate\Database\Eloquent\Builder|Volume wherePrice($value)
  */
 class Volume extends Model
 {

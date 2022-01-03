@@ -6,6 +6,7 @@ use App\Models\Category;
 use App\Models\Series;
 use Exception;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Str;
 use Image;
 use Livewire\Component;
 use Storage;
@@ -23,6 +24,7 @@ class CreateSeries extends Component
         'series.total' => 'nullable|integer|min:1',
         'series.category_id' => 'required|exists:categories,id',
         'series.is_nsfw' => 'boolean',
+        'series.default_price' => 'nullable|regex:"^[0-9]{1,9}([,.][0-9]{1,2})?$"',
         'image_url' => 'required|url'
     ];
 
@@ -32,6 +34,9 @@ class CreateSeries extends Component
             $this->series->total = null;
         }
         $this->validateOnly($property);
+        if ($property == 'series.default_price' && !empty($value)) {
+            $this->series->default_price = Str::replace(',', '.', $value);
+        }
     }
 
     public function mount(Category $category)
@@ -52,6 +57,9 @@ class CreateSeries extends Component
     public function save()
     {
         $this->validate();
+        if (!empty($this->series->default_price)) {
+            $this->series->default_price = floatval(Str::replace(',', '.', $this->series->default_price));
+        }
         $this->series->category_id = $this->category->id;
         try {
             $image = $this->getImage();

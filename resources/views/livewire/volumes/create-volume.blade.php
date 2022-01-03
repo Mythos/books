@@ -38,6 +38,20 @@
                             </div>
                         </div>
                         <div class="mb-3 row">
+                            <label for="price" class="col-md-2 col-form-label text-md-end">{{ __('Price') }}</label>
+                            <div class="col-md-10">
+                                <div class="input-group">
+                                    <input id="price" type="text" class="form-control @error('price') is-invalid @enderror" name="price" wire:model='price' autocomplete="price" autofocus>
+                                    <span class="input-group-text">{{ config('app.currency') }}</span>
+                                    @error('price')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mb-3 row">
                             <label for="status" class="col-md-2 col-form-label text-md-end">{{ __('Status') }}</label>
                             <div class="col-md-10">
                                 <select class="form-select @error('status') is-invalid @enderror" name="status" wire:model='status' required>

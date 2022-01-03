@@ -41,6 +41,20 @@
                             </div>
                         </div>
                         <div class="mb-3 row">
+                            <label for="default_price" class="col-md-2 col-form-label text-md-end">{{ __('Default Price') }}</label>
+                            <div class="col-md-10">
+                                <div class="input-group">
+                                    <input id="default_price" type="text" class="form-control @error('series.default_price') is-invalid @enderror" name="default_price" wire:model='series.default_price' autocomplete="default_price" autofocus>
+                                    <span class="input-group-text">{{ config('app.currency') }}</span>
+                                    @error('series.default_price')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mb-3 row">
                             <label for="total" class="col-md-2 col-form-label text-md-end">{{ __('Total') }}</label>
                             <div class="col-md-10">
                                 <input id="total" type="number" min="0" class="form-control @error('series.total') is-invalid @enderror" name="total" wire:model='series.total' autocomplete="total" autofocus>

@@ -6,6 +6,7 @@ use App\Models\Series;
 use App\Models\Volume;
 use Exception;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Str;
 use Image;
 use Livewire\Component;
 use Storage;
@@ -22,6 +23,7 @@ class EditSeries extends Component
         'series.total' => 'nullable|integer|min:1',
         'series.category_id' => 'required|exists:categories,id',
         'series.is_nsfw' => 'boolean',
+        'series.default_price' => 'nullable|regex:"^[0-9]{1,9}([,.][0-9]{1,2})?$"',
         'image_url' => 'url'
     ];
 
@@ -46,16 +48,29 @@ class EditSeries extends Component
     public function save()
     {
         $this->validate();
+        if (!empty($this->series->default_price)) {
+            $this->series->default_price = floatval(Str::replace(',', '.', $this->series->default_price));
+        }
         try {
             $image = $this->getImage();
             $this->series->save();
             $this->storeImages($image);
+            $this->updatePrices();
             toastr()->livewire()->addSuccess(__('Series :name has been updated', ['name' => $this->series->name]));
             $this->reset(['image_url']);
         } catch (Exception $exception) {
             Log::error($exception);
             toastr()->livewire()->addError(__('Series :name could not be updated', ['name' => $this->series->name]));
         }
+    }
+
+    public function delete()
+    {
+        Volume::whereSeriesId($this->series->id)->delete();
+        $this->series->delete();
+        Storage::deleteDirectory('public/series/' . $this->series->id);
+        toastr()->addSuccess(__('Series :name has been deleted', ['name' => $this->series->name]));
+        redirect()->route('categories.show', [$this->series->category]);
     }
 
     private function getImage()
@@ -78,12 +93,10 @@ class EditSeries extends Component
         Storage::put('public/series/' . $this->series->id . '/cover_sfw.jpg', $image->pixelate(config('images.nsfw.pixelate', 10))->blur(config('images.nsfw.blur', 5))->encode('jpg'));
     }
 
-    public function delete()
+    private function updatePrices()
     {
-        Volume::whereSeriesId($this->series->id)->delete();
-        $this->series->delete();
-        Storage::deleteDirectory('public/series/' . $this->series->id);
-        toastr()->addSuccess(__('Series :name has been deleted', ['name' => $this->series->name]));
-        redirect()->route('categories.show', [$this->series->category]);
+        if (!empty($this->series->default_price) && $this->series->default_price > 0) {
+            Volume::whereSeriesId($this->series->id)->whereNull('price')->update(['price' => $this->series->default_price]);
+        }
     }
 }

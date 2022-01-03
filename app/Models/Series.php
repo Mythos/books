@@ -43,6 +43,8 @@ use Spatie\Sluggable\SlugOptions;
  * @method static \Illuminate\Database\Eloquent\Builder|Series whereTotal($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Series whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @property string|null $default_price
+ * @method static \Illuminate\Database\Eloquent\Builder|Series whereDefaultPrice($value)
  */
 class Series extends Model
 {
@@ -152,6 +154,16 @@ class Series extends Model
             return url($path . 'cover_sfw.jpg');
         }
         return url($path . 'cover.jpg');
+    }
+
+    /**
+     * Get the series' total worth which is owned.
+     *
+     * @return string
+     */
+    public function getTotalWorthAttribute(): string
+    {
+        return $this->volumes->sum('price');
     }
 
     /**

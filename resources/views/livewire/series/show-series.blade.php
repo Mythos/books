@@ -21,11 +21,12 @@
             </div>
             <div class="mt-3">
                 <div>{{ __('Status') }}: <span class="{{ $series->status_class }}">{{ $series->status_name }}</span></div>
-                <div>{{ __('New') }}: <span class="badge rounded-pill bg-danger">{{ $new }}</span></div>
-                <div>{{ __('Ordered') }}: <span class="badge rounded-pill bg-warning">{{ $ordered }}</span></div>
-                <div>{{ __('Shipped') }}: <span class="badge rounded-pill bg-info">{{ $shipped }}</span></div>
-                <div>{{ __('Delivered') }}: <span class="badge rounded-pill bg-success">{{ $delivered }}</span></div>
-                <div>{{ __('Total') }}: {{ isset($series->total) ? $series->total : '?' }}</div>
+                <div>{{ __('New') }}: <span class="badge rounded-pill bg-danger">{{ $new }} {{ __('Volumes') }}</span></div>
+                <div>{{ __('Ordered') }}: <span class="badge rounded-pill bg-warning">{{ $ordered }} {{ __('Volumes') }}</span></div>
+                <div>{{ __('Shipped') }}: <span class="badge rounded-pill bg-info">{{ $shipped }} {{ __('Volumes') }}</span></div>
+                <div>{{ __('Delivered') }}: <span class="badge rounded-pill bg-success">{{ $delivered }} {{ __('Volumes') }}</span></div>
+                <div>{{ __('Total') }}: {{ isset($series->total) ? $series->total : '?' }} {{ __('Volumes') }}</div>
+                <div>{{ __('Total Worth') }}: {{ number_format($series->total_worth, 2) }} {{ config('app.currency') }}</div>
             </div>
             @include('livewire.series.volumes-table', [$category, $series, $volumes])
         </div>
