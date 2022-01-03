@@ -57,8 +57,8 @@ class EditVolume extends Component
         if (!empty($isbn)) {
             $this->volume->isbn = $isbn;
         }
-        if (!empty($this->price)) {
-            $this->volume->price = floatval(Str::replace(',', '.', $this->price));
+        if (!empty($this->volume->price)) {
+            $this->volume->price = floatval(Str::replace(',', '.', $this->volume->price));
         }
         $this->validate();
         $this->volume->save();
