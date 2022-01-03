@@ -61,6 +61,7 @@ class Series extends Model
         'status',
         'total',
         'is_nsfw',
+        'default_price',
         'category_id',
     ];
 

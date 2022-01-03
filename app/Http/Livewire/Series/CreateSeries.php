@@ -34,9 +34,6 @@ class CreateSeries extends Component
             $this->series->total = null;
         }
         $this->validateOnly($property);
-        if ($property == 'series.default_price' && !empty($value)) {
-            $this->series->default_price = Str::replace(',', '.', $value);
-        }
     }
 
     public function mount(Category $category)

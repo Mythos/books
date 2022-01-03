@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.0.2 (2022-01-03)
+
+- Removed replacing of commas when entering the default price while creating a series
+- Fixed volumes not saving the default price inherited from the series
+
 ## 1.0.1 (2022-01-03)
 
 - Increased min width for volume title and ISBN in upcoming releases
