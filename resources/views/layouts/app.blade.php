@@ -95,6 +95,18 @@
         <main class="py-4">
             @yield('content')
         </main>
+        <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
+            <div class="col-md-4 d-flex align-items-center">
+            </div>
+
+            <ul class="nav col-md-4 justify-content-end list-unstyled d-flex">
+                <li class="me-3">
+                    <a class="text-muted" href="https://github.com/Mythos/books/releases" target="_blank">
+                        {{ __('Version') }} {{ config('app.version') }}
+                    </a>
+                </li>
+            </ul>
+        </footer>
     </div>
     @flasher_render
     @flasher_livewire_render

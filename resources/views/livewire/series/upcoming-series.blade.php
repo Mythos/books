@@ -5,16 +5,17 @@
             <table class="table table-hover mb-0">
                 <thead class="table-dark">
                     <tr>
-                        <th scope="col" style="min-width: 7rem;">{{ __('Publish date') }}</th>
-                        <th scope="col" style="min-width: 25rem;">{{ __('Title') }}</th>
-                        <th scope="col" style="min-width: 11rem;">{{ __('ISBN') }}</th>
+                        <th scope="col" class="text-center" style="width: 7rem; min-width: 7rem;">{{ __('Publish date') }}</th>
+                        <th scope="col" style="min-width: 20rem;">{{ __('Title') }}</th>
+                        <th scope="col" style="min-width: 8rem;">{{ __('ISBN') }}</th>
                         <th scope="col"></th>
+
                     </tr>
                 </thead>
                 <tbody>
                     @foreach ($upcoming as $volume)
                         <tr class="{{ $volume->status_class }}">
-                            <th scope="row">{{ $volume->publish_date }}</th>
+                            <th scope="row" class="text-center">{{ $volume->publish_date }}</th>
                             <td>{{ $volume->series->name }} {{ $volume->number }}</td>
                             <td>{{ $volume->isbn_formatted }}</td>
                             <td>
