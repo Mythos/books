@@ -1,4 +1,11 @@
-## Version 1.0.0
+# Changelog
+
+## 1.0.1 (2022-01-03)
+
+- Increased min width for volume title and ISBN in upcoming releases
+- Increased min width for ISBN in volumes table
+
+## 1.0.0 (2022-01-03)
 
 - Added categories
 - Added series to categories
