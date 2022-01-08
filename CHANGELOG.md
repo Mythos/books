@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.4 (2022-01-08)
+
+- Fixed exception when creating multiple volumes in a row due to missing price
+
 ## 1.0.3 (2022-01-08)
 
 - Fixed creation of new volumes when no default price was set in the series

@@ -20,11 +20,11 @@ class CreateVolume extends Component
     public function mount(Series $series)
     {
         $this->series = $series;
-        $this->price = $series->default_price ?? '';
     }
 
     public function render()
     {
+        $this->price = $this->series->default_price ?? '';
         return view('livewire.volumes.create-volume')->extends('layouts.app')->section('content');
     }
 
