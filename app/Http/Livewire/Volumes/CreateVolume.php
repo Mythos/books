@@ -20,7 +20,7 @@ class CreateVolume extends Component
     public function mount(Series $series)
     {
         $this->series = $series;
-        $this->price = $series->default_price;
+        $this->price = $series->default_price ?? '';
     }
 
     public function render()

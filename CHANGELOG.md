@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.3 (2022-01-08)
+
+- Fixed creation of new volumes when no default price was set in the series
+
 ## 1.0.2 (2022-01-03)
 
 - Removed replacing of commas when entering the default price while creating a series
