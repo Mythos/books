@@ -24,7 +24,7 @@ class CreateVolume extends Component
 
     public function render()
     {
-        $this->price = $series->default_price ?? '';
+        $this->price = $this->series->default_price ?? '';
         return view('livewire.volumes.create-volume')->extends('layouts.app')->section('content');
     }
 
