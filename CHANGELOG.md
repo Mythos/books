@@ -2,6 +2,8 @@
 
 ## 1.0.5
 
+- Added notification when a new version is available
+- Added German language
 - Hide Administration when not being logged in
 
 ## 1.0.4 (2022-01-08)

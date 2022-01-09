@@ -48,5 +48,6 @@
     "Volumes (total)": "Bände (gesamt)",
     "Volumes": "Bände",
     "Volumme :number has been created": "Band :number wurde angelegt",
-    "Statistics": "Statistik"
+    "Statistics": "Statistik",
+    "Version :version is available": "Version :version ist verfügbar"
 }

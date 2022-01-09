@@ -110,6 +110,9 @@
             </ul>
         </footer>
     </div>
+    @auth
+        @livewire('version-check')
+    @endauth
     @flasher_render
     @flasher_livewire_render
     @livewireScripts
