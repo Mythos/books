@@ -5,7 +5,7 @@
             <table class="table table-hover mb-0">
                 <thead class="table-dark">
                     <tr>
-                        <th scope="col" class="text-center" style="width: 7rem; min-width: 7rem;">{{ __('Publish date') }}</th>
+                        <th scope="col" class="text-center" style="width: 7rem; min-width: 7rem;">{{ __('Publish Date') }}</th>
                         <th scope="col" style="min-width: 25rem;">{{ __('Title') }}</th>
                         <th scope="col" style="min-width: 10rem;">{{ __('ISBN') }}</th>
                         <th scope="col"></th>

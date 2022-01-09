@@ -2,7 +2,7 @@
     <div>
         <h2 style="display: inline;">{{ __('Volumes') }}</h2>
         <div class="float-end" style="display: inline;">
-            <a wire:click.prevent='toggle_reordering' href="#" title="{{ __('Allows volumes to be reordered') }}"><i class="fa fa-sort"></i></a>
+            <a wire:click.prevent='toggle_reordering' href="#" title="{{ __('Reorder volumes') }}"><i class="fa fa-sort"></i></a>
             <a href="{{ route('volumes.create', [$category, $series]) }}" class="btn btn-link"><i class="fas fa-plus-circle"></i></a>
         </div>
     </div>
@@ -14,9 +14,9 @@
                         <th scope="col" class="text-center" style="width: 1rem; min-width: 1rem;"></th>
                         <th scope="col" class="text-center" style="width: 1rem; min-width: 1rem;"></th>
                     @endif
-                    <th scope="col" class="text-end" style="width: 2rem; min-width: 2rem;">#</th>
+                    <th scope="col" class="text-end" style="width: 2rem; min-width: 2rem;">{{ __('#') }}</th>
                     <th scope="col" class="text-center" style="width: 2rem; min-width: 2rem;"></th>
-                    <th scope="col" class="text-center" style="width: 7rem; min-width: 7rem;">{{ __('Publish date') }}</th>
+                    <th scope="col" class="text-center" style="width: 7rem; min-width: 7rem;">{{ __('Publish Date') }}</th>
                     <th scope="col" style="min-width: 10rem;">{{ __('ISBN') }}</th>
                     <th scope="col" class="text-end" style="width: 5rem; min-width: 5rem;">{{ __('Price') }}</th>
                     <th scope="col" class="text-center" style="width: 7rem; min-width: 7rem;">{{ __('Status') }}</th>
@@ -34,7 +34,7 @@
                             </td>
                             <td class="text-center">
                                 @if ($volume->number < $volumes->max('number'))
-                                    <a wire:click.prevent='move_down({{ $volume->id }})' href="#" title="{{ __('Moves the volume up') }}"><i class="fa fa-arrow-down"></i></a>
+                                    <a wire:click.prevent='move_down({{ $volume->id }})' href="#" title="{{ __('Moves the volume down') }}"><i class="fa fa-arrow-down"></i></a>
                                 @endif
                             </td>
                         @endif
