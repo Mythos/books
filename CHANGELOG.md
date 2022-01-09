@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.5
+
+- Hide Administration when not being logged in
+
 ## 1.0.4 (2022-01-08)
 
 - Fixed exception when creating multiple volumes in a row due to missing price
