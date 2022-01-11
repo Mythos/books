@@ -1,10 +1,11 @@
 # Changelog
 
-## 1.0.5
+## 1.0.5 (2022-01-11)
 
 - Added notification when a new version is available
 - Added German language
-- Hide Administration when not being logged in
+- Changed default app title
+- Hide Administration from navigation when not being logged in
 
 ## 1.0.4 (2022-01-08)
 
