@@ -103,16 +103,13 @@
 
             <ul class="nav col-md-4 justify-content-end list-unstyled d-flex">
                 <li class="me-3">
-                    <a class="text-muted" href="https://github.com/Mythos/books/releases" target="_blank">
-                        {{ __('Version') }} {{ config('app.version') }}
-                    </a>
+                    @auth
+                        @livewire('version')
+                    @endauth
                 </li>
             </ul>
         </footer>
     </div>
-    @auth
-        @livewire('version-check')
-    @endauth
     @flasher_render
     @flasher_livewire_render
     @livewireScripts

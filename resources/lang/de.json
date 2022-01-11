@@ -1,8 +1,9 @@
 {
-    ":name has been created": ":name wurde angelegt",
-    ":name has been updated": ":name wurde aktualisiert",
-    ":name has been deleted": ":name wurde gelöscht",
     ":name could not be created": ":name konnte nicht angelegt werden",
+    ":name has been created": ":name wurde angelegt",
+    ":name has been deleted": ":name wurde gelöscht",
+    ":name has been updated": ":name wurde aktualisiert",
+    "(Latest: :version)": "(Aktuellste: :version)",
     "#": "#",
     "Administration": "Administration",
     "Complete": "Vollständig",
@@ -40,14 +41,16 @@
     "Shipped": "Versendet",
     "Show NSFW": "NSFW anzeigen",
     "Sort Index": "Sortierindex",
+    "Statistics": "Statistik",
     "Status": "Status",
     "Title": "Titel",
     "Total Worth": "Gesamtwert",
     "Total": "Gesamt",
     "Upcoming Releases": "Anstehende Veröffentlichungen",
+    "Version :version is available": "Version :version ist verfügbar",
+    "Version check failed": "Versionsprüfung fehlgeschlagen",
+    "Version": "Version",
     "Volumes (total)": "Bände (gesamt)",
     "Volumes": "Bände",
-    "Volumme :number has been created": "Band :number wurde angelegt",
-    "Statistics": "Statistik",
-    "Version :version is available": "Version :version ist verfügbar"
+    "Volumme :number has been created": "Band :number wurde angelegt"
 }
