@@ -29,9 +29,10 @@ MIT
 
 ### Landing page & Gallery
 
-![grafik](https://user-images.githubusercontent.com/416568/146996766-f6c09054-6b96-42a4-9475-0eb0e309cf7c.png)
+![grafik](https://user-images.githubusercontent.com/416568/148980214-a3332b5a-6d2d-4062-8d1a-56d114c7e391.png)
+
 
 
 ### Series details page
 
-![grafik](https://user-images.githubusercontent.com/416568/146996593-bae7d4e6-5c6d-47a0-a22b-4adfc3455776.png)
+![grafik](https://user-images.githubusercontent.com/416568/148980247-7acdc972-94b6-4010-9002-1749fc6f4fe4.png)

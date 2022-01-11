@@ -31,7 +31,7 @@ class EditCategory extends Component
     {
         $this->validate();
         $this->category->save();
-        toastr()->livewire()->addSuccess(__('Category has been updated'));
+        toastr()->livewire()->addSuccess(__(':name has been updated', ['name' => $this->category->name]));
     }
 
     public function delete()
@@ -43,7 +43,7 @@ class EditCategory extends Component
             Storage::deleteDirectory('public/series/' . $s->id);
         }
         $this->category->delete();
-        toastr()->addSuccess(__('Category :name has been deleted', ['name' => $this->category->name]));
+        toastr()->addSuccess(__(':name has been deleted', ['name' => $this->category->name]));
         return redirect()->route('home');
     }
 }

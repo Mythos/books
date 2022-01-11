@@ -36,9 +36,11 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav me-auto">
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('admin.index') }}">{{ __('Administration') }}</a>
-                        </li>
+                        @auth
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('admin.index') }}">{{ __('Administration') }}</a>
+                            </li>
+                        @endauth
                     </ul>
 
                     <!-- Right Side Of Navbar -->
@@ -101,9 +103,9 @@
 
             <ul class="nav col-md-4 justify-content-end list-unstyled d-flex">
                 <li class="me-3">
-                    <a class="text-muted" href="https://github.com/Mythos/books/releases" target="_blank">
-                        {{ __('Version') }} {{ config('app.version') }}
-                    </a>
+                    @auth
+                        @livewire('version')
+                    @endauth
                 </li>
             </ul>
         </footer>

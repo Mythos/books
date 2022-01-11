@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.0.5 (2022-01-11)
+
+- Added notification when a new version is available
+- Added German language
+- Changed default app title
+- Hide Administration from navigation when not being logged in
+
 ## 1.0.4 (2022-01-08)
 
 - Fixed exception when creating multiple volumes in a row due to missing price

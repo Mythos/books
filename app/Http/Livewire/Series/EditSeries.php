@@ -56,11 +56,11 @@ class EditSeries extends Component
             $this->series->save();
             $this->storeImages($image);
             $this->updatePrices();
-            toastr()->livewire()->addSuccess(__('Series :name has been updated', ['name' => $this->series->name]));
+            toastr()->livewire()->addSuccess(__(':name has been updated', ['name' => $this->series->name]));
             $this->reset(['image_url']);
         } catch (Exception $exception) {
             Log::error($exception);
-            toastr()->livewire()->addError(__('Series :name could not be updated', ['name' => $this->series->name]));
+            toastr()->livewire()->addError(__(':name could not be updated', ['name' => $this->series->name]));
         }
     }
 
@@ -69,7 +69,7 @@ class EditSeries extends Component
         Volume::whereSeriesId($this->series->id)->delete();
         $this->series->delete();
         Storage::deleteDirectory('public/series/' . $this->series->id);
-        toastr()->addSuccess(__('Series :name has been deleted', ['name' => $this->series->name]));
+        toastr()->addSuccess(__(':name has been deleted', ['name' => $this->series->name]));
         redirect()->route('categories.show', [$this->series->category]);
     }
 
