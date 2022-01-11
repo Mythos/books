@@ -20,7 +20,7 @@ class Version extends Component
 
     private function getLatestVersion()
     {
-        return Cache::remember('github_latest_version', 43200, function () {
+        return Cache::remember('github_latest_version', 3600, function () {
             $response = Http::get('https://api.github.com/repos/Mythos/books/releases/latest');
             if (!$response->successful()) {
                 return null;
