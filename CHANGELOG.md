@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.1.1 (2022-01-15)
+
+- Fixed version update notification not being shown
+- Show version update notification every 30 minutes instead of every 60 minutes
+
 ## 1.1.0 (2022-01-15)
 
 - Added "Read" as status after "Delivered"
