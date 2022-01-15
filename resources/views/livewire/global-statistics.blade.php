@@ -16,9 +16,13 @@
                         <td>{{ __('Shipped') }}</td>
                         <td class="text-end">{{ $shipped }} {{ __('Volumes') }}</td>
                     </tr>
-                    <tr class="table-success">
+                    <tr class="table-primary">
                         <td>{{ __('Delivered') }}</td>
                         <td class="text-end">{{ $delivered }} {{ __('Volumes') }}</td>
+                    </tr>
+                    <tr class="table-success">
+                        <td>{{ __('Read') }}</td>
+                        <td class="text-end">{{ $read }} {{ __('Volumes') }}</td>
                     </tr>
                     <tr style="font-weight: bold;">
                         <td>{{ __('Total') }}</td>

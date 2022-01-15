@@ -11,7 +11,7 @@ class UpcomingSeries extends Component
 
     public function render()
     {
-        $this->upcoming = Volume::with('series')->where('status', '!=', '3')->orderBy('publish_date')->get();
+        $this->upcoming = Volume::with('series')->whereIn('status', [0, 1, 2])->orderBy('publish_date')->get();
         return view('livewire.series.upcoming-series');
     }
 
