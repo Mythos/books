@@ -19,6 +19,7 @@ class ShowSeries extends Component
     public int $ordered;
     public int $shipped;
     public int $delivered;
+    public int $read;
 
     public function mount(Category $category, Series $series)
     {
@@ -33,6 +34,7 @@ class ShowSeries extends Component
         $this->ordered = $this->volumes->where('status', '1')->count();
         $this->shipped = $this->volumes->where('status', '2')->count();
         $this->delivered = $this->volumes->where('status', '3')->count();
+        $this->read = $this->volumes->where('status', '4')->count();
         return view('livewire.series.show-series')->extends('layouts.app')->section('content');
     }
 
@@ -54,6 +56,11 @@ class ShowSeries extends Component
     public function delivered(int $id)
     {
         $this->setStatus($id, 3);
+    }
+
+    public function read(int $id)
+    {
+        $this->setStatus($id, 4);
     }
 
     private function setStatus(int $id, int $status)

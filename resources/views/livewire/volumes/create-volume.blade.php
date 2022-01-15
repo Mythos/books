@@ -59,6 +59,7 @@
                                     <option value="1">{{ __('Ordered') }}</option>
                                     <option value="2">{{ __('Shipped') }}</option>
                                     <option value="3">{{ __('Delivered') }}</option>
+                                    <option value="4">{{ __('Read') }}</option>
                                 </select>
                                 @error('status')
                                     <span class="invalid-feedback" role="alert">

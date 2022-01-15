@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.1.0 (2022-01-15)
+
+- Added "Read" as status after "Delivered"
+
 ## 1.0.5 (2022-01-11)
 
 - Added notification when a new version is available
