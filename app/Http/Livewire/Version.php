@@ -37,12 +37,8 @@ class Version extends Component
     private function showVersionCheckNotification()
     {
         $lastShown = session('version_check_shown');
-        if (empty($lastShown)) {
-            return true;
-        }
 
-        $difference = $lastShown->diffInMinutes(Carbon::now());
-        if ($difference < 60) {
+        if (!empty($lastShown) && $lastShown->diffInMinutes(Carbon::now()) < 30) {
             return;
         }
 
