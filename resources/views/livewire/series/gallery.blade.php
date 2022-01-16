@@ -1,4 +1,4 @@
-<div class="bg-white rounded px-3 py-2">
+<div class="bg-white rounded my-2 px-3 py-2">
     <div class="my-2">
         <h1 style="display: inline;">{{ $category->name }}</h1>
         <div class="float-end">
