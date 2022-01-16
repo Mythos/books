@@ -82,7 +82,6 @@ class Series extends Model
         }
     }
 
-
     /**
      * Get the series' status CSS class.
      *
@@ -140,6 +139,7 @@ class Series extends Model
         if (empty($this->total)) {
             return false;
         }
+
         return $this->total == $this->volumes->where('status', '3')->count();
     }
 
@@ -154,6 +154,7 @@ class Series extends Model
         if ($this->is_nsfw && !session('show_nsfw', false)) {
             return url($path . 'cover_sfw.jpg');
         }
+
         return url($path . 'cover.jpg');
     }
 

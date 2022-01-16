@@ -15,6 +15,7 @@ class Version extends Component
     {
         $this->latestVersion = $this->getLatestVersion();
         $this->showVersionCheckNotification();
+
         return view('livewire.version');
     }
 
@@ -25,6 +26,7 @@ class Version extends Component
             if (!$response->successful()) {
                 return null;
             }
+
             return $response['tag_name'];
         });
     }
@@ -44,7 +46,7 @@ class Version extends Component
 
         if ($this->latestVersion != null && $this->isNewerVersionAvailable($this->latestVersion)) {
             toastr()->addInfo(__('Version :version is available', ['version' => $this->latestVersion]));
-        } else if ($this->latestVersion == null) {
+        } elseif ($this->latestVersion == null) {
             toastr()->addWarning(__('Version check failed'));
         }
         session(['version_check_shown' => Carbon::now()]);

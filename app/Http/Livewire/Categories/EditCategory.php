@@ -44,6 +44,7 @@ class EditCategory extends Component
         }
         $this->category->delete();
         toastr()->addSuccess(__(':name has been deleted', ['name' => $this->category->name]));
+
         return redirect()->route('home');
     }
 }

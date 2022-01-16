@@ -16,6 +16,6 @@ class ShowCategory extends Component
 
     public function render()
     {
-        return view('livewire.categories.show-category')->extends('layouts.app')->section('content');;
+        return view('livewire.categories.show-category')->extends('layouts.app')->section('content');
     }
 }

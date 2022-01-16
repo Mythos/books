@@ -13,7 +13,7 @@ class UpdateVolumesChangeDeliveredStatus extends Migration
      */
     public function up()
     {
-        DB::statement("UPDATE volumes SET status = 3 WHERE status = 2");
+        DB::statement('UPDATE volumes SET status = 3 WHERE status = 2');
     }
 
     /**
@@ -23,6 +23,6 @@ class UpdateVolumesChangeDeliveredStatus extends Migration
      */
     public function down()
     {
-        DB::statement("UPDATE volumes SET status = 2 WHERE status = 3");
+        DB::statement('UPDATE volumes SET status = 2 WHERE status = 3');
     }
 }

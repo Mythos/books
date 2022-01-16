@@ -1,13 +1,13 @@
 <?php
 
 use App\Http\Livewire\Administration;
-use App\Http\Livewire\Volumes\CreateVolume;
 use App\Http\Livewire\Categories\CreateCategory;
 use App\Http\Livewire\Categories\EditCategory;
 use App\Http\Livewire\Categories\ShowCategory;
 use App\Http\Livewire\Series\CreateSeries;
 use App\Http\Livewire\Series\EditSeries;
 use App\Http\Livewire\Series\ShowSeries;
+use App\Http\Livewire\Volumes\CreateVolume;
 use App\Http\Livewire\Volumes\EditVolume;
 use Illuminate\Support\Facades\Route;
 

@@ -14,6 +14,7 @@ use Storage;
 class CreateSeries extends Component
 {
     public Category $category;
+
     public Series $series;
 
     public string $image_url = '';
@@ -25,7 +26,7 @@ class CreateSeries extends Component
         'series.category_id' => 'required|exists:categories,id',
         'series.is_nsfw' => 'boolean',
         'series.default_price' => 'nullable|regex:"^[0-9]{1,9}([,.][0-9]{1,2})?$"',
-        'image_url' => 'required|url'
+        'image_url' => 'required|url',
     ];
 
     public function updated($property, $value)
@@ -42,7 +43,7 @@ class CreateSeries extends Component
         $this->series = new Series([
             'status' => 0,
             'category_id' => $category->id,
-            'is_nsfw' => false
+            'is_nsfw' => false,
         ]);
     }
 
@@ -63,6 +64,7 @@ class CreateSeries extends Component
             $this->series->save();
             $this->storeImages($image);
             toastr()->addSuccess(__(':name has been created', ['name' => $this->series->name]));
+
             return redirect()->route('home');
         } catch (Exception $exception) {
             Log::error($exception);
@@ -78,6 +80,7 @@ class CreateSeries extends Component
         $image = Image::make($this->image_url)->resize(null, 400, function ($constraint) {
             $constraint->aspectRatio();
         })->encode('jpg');
+
         return $image;
     }
 

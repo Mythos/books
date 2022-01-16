@@ -11,14 +11,21 @@ use Livewire\Component;
 class ShowSeries extends Component
 {
     public Category $category;
+
     public Series $series;
+
     public Collection $volumes;
+
     public bool $enable_reordering = false;
 
     public int $new;
+
     public int $ordered;
+
     public int $shipped;
+
     public int $delivered;
+
     public int $read;
 
     public function mount(Category $category, Series $series)
@@ -35,6 +42,7 @@ class ShowSeries extends Component
         $this->shipped = $this->volumes->where('status', '2')->count();
         $this->delivered = $this->volumes->where('status', '3')->count();
         $this->read = $this->volumes->where('status', '4')->count();
+
         return view('livewire.series.show-series')->extends('layouts.app')->section('content');
     }
 

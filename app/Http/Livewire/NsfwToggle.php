@@ -7,9 +7,11 @@ use Livewire\Component;
 class NsfwToggle extends Component
 {
     public bool $show_nsfw;
+
     public function render()
     {
         $this->show_nsfw = session('show_nsfw') ?? false;
+
         return view('livewire.nsfw-toggle');
     }
 
@@ -17,6 +19,7 @@ class NsfwToggle extends Component
     {
         $this->show_nsfw = !$this->show_nsfw;
         session()->put('show_nsfw', $this->show_nsfw);
+
         return redirect(request()->header('Referer'));
     }
 }

@@ -27,7 +27,7 @@ class StoreSeriesRequest extends FormRequest
         return [
             'name' => 'required',
             'status' => 'required',
-            'category_id' => 'required|exists:categories,id'
+            'category_id' => 'required|exists:categories,id',
         ];
     }
 }

@@ -24,7 +24,7 @@ class EditSeries extends Component
         'series.category_id' => 'required|exists:categories,id',
         'series.is_nsfw' => 'boolean',
         'series.default_price' => 'nullable|regex:"^[0-9]{1,9}([,.][0-9]{1,2})?$"',
-        'image_url' => 'url'
+        'image_url' => 'url',
     ];
 
     public function updated($property, $value)
@@ -81,6 +81,7 @@ class EditSeries extends Component
         $image = Image::make($this->image_url)->resize(null, 400, function ($constraint) {
             $constraint->aspectRatio();
         })->encode('jpg');
+
         return $image;
     }
 

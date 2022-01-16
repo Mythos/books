@@ -19,6 +19,7 @@ class IsbnHelpers
         if ($tools->isValidIsbn($isbn)) {
             return Isbn::of($isbn)->to13();
         }
+
         return null;
     }
 
@@ -28,6 +29,7 @@ class IsbnHelpers
             return null;
         }
         $tools = new IsbnTools();
+
         return $tools->format($isbn);
     }
 
@@ -41,7 +43,7 @@ class IsbnHelpers
             try {
                 $response = Http::get('https://www.googleapis.com/books/v1/volumes?q=isbn:' . $isbn);
                 if ($response['totalItems'] > 0) {
-                    $date = $response["items"][0]["volumeInfo"]["publishedDate"];
+                    $date = $response['items'][0]['volumeInfo']['publishedDate'];
                     if (!empty($date)) {
                         return date('Y-m-d', strtotime($date));
                     }
@@ -50,6 +52,7 @@ class IsbnHelpers
                 Log::error($exception);
             }
         }
+
         return null;
     }
 }
