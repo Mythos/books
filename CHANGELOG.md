@@ -5,6 +5,8 @@
 - Added user profile
 - Added changing password in user profile
 - Moved NSFW toggle to user dropdown
+- Changed layout of forms
+- Fixed completion status for cards (read volumes were not taken into account)
 
 ## 1.1.1 (2022-01-15)
 

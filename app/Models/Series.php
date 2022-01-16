@@ -141,7 +141,7 @@ class Series extends Model
             return false;
         }
 
-        return $this->total == $this->volumes->where('status', '3')->count();
+        return $this->total == $this->volumes->whereIn('status', ['3', '4'])->count();
     }
 
     /**
