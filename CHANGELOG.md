@@ -2,6 +2,8 @@
 
 ## 1.2.0
 
+- Added user profile
+- Added changing password in user profile
 - Moved NSFW toggle to user dropdown
 
 ## 1.1.1 (2022-01-15)

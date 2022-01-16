@@ -4,6 +4,8 @@ use App\Http\Livewire\Administration;
 use App\Http\Livewire\Categories\CreateCategory;
 use App\Http\Livewire\Categories\EditCategory;
 use App\Http\Livewire\Categories\ShowCategory;
+use App\Http\Livewire\ChangePassword;
+use App\Http\Livewire\Profile;
 use App\Http\Livewire\Series\CreateSeries;
 use App\Http\Livewire\Series\EditSeries;
 use App\Http\Livewire\Series\ShowSeries;
@@ -26,6 +28,8 @@ Auth::routes(['register' => config('auth.registration_enabled')]);
 
 Route::prefix('')->middleware(['auth'])->group(function (): void {
     Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+    Route::get('profile', Profile::class)->name('profile');
+    Route::get('profile/change-password', ChangePassword::class)->name('change-password');
     Route::prefix('books')->group(function (): void {
         Route::get('category/new', CreateCategory::class)->name('categories.create');
         Route::get('{category}', ShowCategory::class)->name('categories.show');
