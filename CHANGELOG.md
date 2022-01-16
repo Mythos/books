@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.2.0
+
+- Moved NSFW toggle to user dropdown
+
 ## 1.1.1 (2022-01-15)
 
 - Fixed version update notification not being shown
