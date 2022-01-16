@@ -6,7 +6,7 @@
             <li class="breadcrumb-item active">{{ $series->name }}</li>
         </ol>
     </nav>
-    <div class="row bg-white rounded py-2">
+    <div class="row bg-white shadow-sm rounded py-2">
         <div class="col-sm-12 col-md-12 col-lg-3 d-flex align-self-stretch justify-content-center my-2">
             <img src="{{ $series->image }}" alt="{{ $series->name }}" class="card-img-top" style="max-height: 400px; object-fit: contain;">
         </div>
