@@ -13,11 +13,15 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property int $id
  * @property int $number
  * @property string|null $publish_date
- * @property string $isbn
+ * @property string|null $isbn
  * @property int $status
  * @property int $series_id
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property string|null $price
+ * @property-read void $isbn_formatted
+ * @property-read string $status_class
+ * @property-read string $status_name
  * @property-read \App\Models\Series $series
  * @method static \Illuminate\Database\Eloquent\Builder|Volume newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Volume newQuery()
@@ -26,16 +30,12 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @method static \Illuminate\Database\Eloquent\Builder|Volume whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Volume whereIsbn($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Volume whereNumber($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Volume wherePrice($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Volume wherePublishDate($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Volume whereSeriesId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Volume whereStatus($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Volume whereUpdatedAt($value)
  * @mixin \Eloquent
- * @property-read string $status_class
- * @property-read string $status_name
- * @property-read void $isbn_formatted
- * @property string|null $price
- * @method static \Illuminate\Database\Eloquent\Builder|Volume wherePrice($value)
  */
 class Volume extends Model
 {
