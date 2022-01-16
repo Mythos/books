@@ -18,7 +18,7 @@ class EditVolume extends Component
 
     public Volume $volume;
 
-    public function mount(Category $category, Series $series, int $number)
+    public function mount(Category $category, Series $series, int $number): void
     {
         $this->category = $category;
         $this->series = $series;
@@ -35,7 +35,7 @@ class EditVolume extends Component
         ];
     }
 
-    public function updated($property, $value)
+    public function updated($property, $value): void
     {
         if ($property == 'volume.isbn') {
             $this->validateOnly($property);

@@ -22,12 +22,12 @@ class EditCategory extends Component
         return view('livewire.categories.edit-category')->extends('layouts.app')->section('content');
     }
 
-    public function updated($property)
+    public function updated($property): void
     {
         $this->validateOnly($property);
     }
 
-    public function save()
+    public function save(): void
     {
         $this->validate();
         $this->category->save();

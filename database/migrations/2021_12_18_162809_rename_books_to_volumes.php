@@ -10,7 +10,7 @@ class RenameBooksToVolumes extends Migration
      *
      * @return void
      */
-    public function up()
+    public function up(): void
     {
         Schema::rename('books', 'volumes');
     }
@@ -20,7 +20,7 @@ class RenameBooksToVolumes extends Migration
      *
      * @return void
      */
-    public function down()
+    public function down(): void
     {
         Schema::rename('volumes', 'books');
     }

@@ -21,7 +21,7 @@ class CreateVolume extends Component
 
     public Series $series;
 
-    public function mount(Series $series)
+    public function mount(Series $series): void
     {
         $this->series = $series;
     }
@@ -43,7 +43,7 @@ class CreateVolume extends Component
         ];
     }
 
-    public function updated($property, $value)
+    public function updated($property, $value): void
     {
         if ($property == 'isbn') {
             $this->validateOnly($property);
@@ -56,7 +56,7 @@ class CreateVolume extends Component
         }
     }
 
-    public function save()
+    public function save(): void
     {
         $isbn = IsbnHelpers::convertTo13($this->isbn);
         if (!empty($isbn)) {

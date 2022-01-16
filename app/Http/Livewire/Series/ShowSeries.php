@@ -28,7 +28,7 @@ class ShowSeries extends Component
 
     public int $read;
 
-    public function mount(Category $category, Series $series)
+    public function mount(Category $category, Series $series): void
     {
         $this->category = $category;
         $this->series = $series;
@@ -46,32 +46,32 @@ class ShowSeries extends Component
         return view('livewire.series.show-series')->extends('layouts.app')->section('content');
     }
 
-    public function canceled(int $id)
+    public function canceled(int $id): void
     {
         $this->setStatus($id, 0);
     }
 
-    public function ordered(int $id)
+    public function ordered(int $id): void
     {
         $this->setStatus($id, 1);
     }
 
-    public function shipped(int $id)
+    public function shipped(int $id): void
     {
         $this->setStatus($id, 2);
     }
 
-    public function delivered(int $id)
+    public function delivered(int $id): void
     {
         $this->setStatus($id, 3);
     }
 
-    public function read(int $id)
+    public function read(int $id): void
     {
         $this->setStatus($id, 4);
     }
 
-    private function setStatus(int $id, int $status)
+    private function setStatus(int $id, int $status): void
     {
         $volume = Volume::find($id);
         $volume->status = $status;
@@ -79,12 +79,12 @@ class ShowSeries extends Component
         toastr()->livewire()->addSuccess(__(':name has been updated', ['name' => $volume->series->name . ' ' . $volume->number]));
     }
 
-    public function toggle_reordering()
+    public function toggle_reordering(): void
     {
         $this->enable_reordering = !$this->enable_reordering;
     }
 
-    public function move_up(int $id)
+    public function move_up(int $id): void
     {
         $volume = Volume::find($id);
         if ($volume->number <= 1) {
@@ -100,7 +100,7 @@ class ShowSeries extends Component
         toastr()->livewire()->addSuccess(__(':name has been updated', ['name' => $volume->series->name . ' ' . $volume->number]));
     }
 
-    public function move_down(int $id)
+    public function move_down(int $id): void
     {
         $volume = Volume::find($id);
         if ($volume->number >= $this->volumes->max('number')) {

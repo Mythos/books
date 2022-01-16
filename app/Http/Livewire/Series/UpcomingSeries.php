@@ -16,22 +16,22 @@ class UpcomingSeries extends Component
         return view('livewire.series.upcoming-series');
     }
 
-    public function ordered(int $id)
+    public function ordered(int $id): void
     {
         $this->setStatus($id, 1);
     }
 
-    public function shipped(int $id)
+    public function shipped(int $id): void
     {
         $this->setStatus($id, 2);
     }
 
-    public function delivered(int $id)
+    public function delivered(int $id): void
     {
         $this->setStatus($id, 3);
     }
 
-    private function setStatus(int $id, int $status)
+    private function setStatus(int $id, int $status): void
     {
         $volume = Volume::find($id);
         $volume->status = $status;

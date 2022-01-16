@@ -11,9 +11,9 @@ class AddNsfwToSeries extends Migration
      *
      * @return void
      */
-    public function up()
+    public function up(): void
     {
-        Schema::table('series', function (Blueprint $table) {
+        Schema::table('series', function (Blueprint $table): void {
             $table->boolean('is_nsfw')->nullable()->default(0);
         });
     }
@@ -23,9 +23,9 @@ class AddNsfwToSeries extends Migration
      *
      * @return void
      */
-    public function down()
+    public function down(): void
     {
-        Schema::table('series', function (Blueprint $table) {
+        Schema::table('series', function (Blueprint $table): void {
             $table->removeColumn('is_nsfw');
         });
     }

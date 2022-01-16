@@ -11,9 +11,9 @@ class CreateBooksTable extends Migration
      *
      * @return void
      */
-    public function up()
+    public function up(): void
     {
-        Schema::create('books', function (Blueprint $table) {
+        Schema::create('books', function (Blueprint $table): void {
             $table->id();
             $table->smallInteger('number')->unsigned();
             $table->date('publish_date')->nullable();
@@ -29,7 +29,7 @@ class CreateBooksTable extends Migration
      *
      * @return void
      */
-    public function down()
+    public function down(): void
     {
         Schema::dropIfExists('books');
     }

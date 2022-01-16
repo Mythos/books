@@ -7,7 +7,8 @@ use App\Models\Series;
 use Exception;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
-use Image;
+use Intervention\Image\Facades\Image as FacadesImage;
+use Intervention\Image\Image;
 use Livewire\Component;
 use Storage;
 
@@ -29,7 +30,7 @@ class CreateSeries extends Component
         'image_url' => 'required|url',
     ];
 
-    public function updated($property, $value)
+    public function updated($property, $value): void
     {
         if ($property == 'series.total' && empty($value)) {
             $this->series->total = null;
@@ -37,7 +38,7 @@ class CreateSeries extends Component
         $this->validateOnly($property);
     }
 
-    public function mount(Category $category)
+    public function mount(Category $category): void
     {
         $this->category = $category;
         $this->series = new Series([
@@ -72,19 +73,19 @@ class CreateSeries extends Component
         }
     }
 
-    private function getImage()
+    private function getImage(): ?Image
     {
         if (empty($this->image_url)) {
             return null;
         }
-        $image = Image::make($this->image_url)->resize(null, 400, function ($constraint) {
+        $image = FacadesImage::make($this->image_url)->resize(null, 400, function ($constraint): void {
             $constraint->aspectRatio();
         })->encode('jpg');
 
         return $image;
     }
 
-    private function storeImages($image)
+    private function storeImages($image): void
     {
         if (empty($image)) {
             return;

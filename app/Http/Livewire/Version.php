@@ -19,7 +19,7 @@ class Version extends Component
         return view('livewire.version');
     }
 
-    private function getLatestVersion()
+    private function getLatestVersion(): ?string
     {
         return Cache::remember('github_latest_version', 3600, function () {
             $response = Http::get('https://api.github.com/repos/Mythos/books/releases/latest');
@@ -31,12 +31,12 @@ class Version extends Component
         });
     }
 
-    private function isNewerVersionAvailable()
+    private function isNewerVersionAvailable(): bool
     {
         return version_compare(config('app.version'), $this->latestVersion) < 0;
     }
 
-    private function showVersionCheckNotification()
+    private function showVersionCheckNotification(): void
     {
         $lastShown = session('version_check_shown');
 

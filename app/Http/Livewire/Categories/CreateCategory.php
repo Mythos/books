@@ -16,7 +16,7 @@ class CreateCategory extends Component
         'sort_index' => 'required|integer|min:0',
     ];
 
-    public function mount()
+    public function mount(): void
     {
         $this->sort_index = (Category::all()->max('sort_index') ?? 0) + 1;
     }
@@ -26,7 +26,7 @@ class CreateCategory extends Component
         return view('livewire.categories.create-category')->extends('layouts.app')->section('content');
     }
 
-    public function updated($property)
+    public function updated($property): void
     {
         $this->validateOnly($property);
     }

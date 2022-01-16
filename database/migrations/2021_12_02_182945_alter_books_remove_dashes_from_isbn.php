@@ -11,7 +11,7 @@ class AlterBooksRemoveDashesFromIsbn extends Migration
      *
      * @return void
      */
-    public function up()
+    public function up(): void
     {
         DB::raw("UPDATE books SET isbn = REPLACE(isbn, '-', '')");
     }
@@ -21,7 +21,7 @@ class AlterBooksRemoveDashesFromIsbn extends Migration
      *
      * @return void
      */
-    public function down()
+    public function down(): void
     {
     }
 }
