@@ -158,5 +158,12 @@ return (new PhpCsFixer\Config)
         ],
         'void_return' => true,
         'whitespace_after_comma_in_array' => true,
+        'assign_null_coalescing_to_coalesce_equal' => true,
+        'clean_namespace' => true,
+        'visibility_required' => ['elements' => [
+            'property',
+            'method',
+            'const',
+        ]],
     ])
     ->setFinder($finder);
