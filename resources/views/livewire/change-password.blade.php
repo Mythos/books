@@ -10,13 +10,13 @@
         <div class="row bg-white rounded">
             <div class="col-md-12">
                 <div class="p-3 py-3">
-                    <div class="d-flex justify-content-between align-items-center mb-3">
+                    <div class="d-flex justify-content-between align-items-center">
                         <h4 class="text-right">{{ __('Change Password') }}</h4>
                     </div>
-                    <div class="row mt-3">
+                    <div class="row mt-1">
                         <div class="col-md-12">
-                            <label class="labels">{{ __('Current Password') }}</label>
-                            <input id="current_password" name="current_password" type="password" class="form-control @error('current_password') is-invalid @enderror" wire:model='current_password'>
+                            <label for="current_password" class="col-form-label required">{{ __('Current Password') }}</label>
+                            <input id="current_password" name="current_password" type="password" class="form-control @error('current_password') is-invalid @enderror" wire:model='current_password' autofocus>
                             @error('current_password')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -24,9 +24,9 @@
                             @enderror
                         </div>
                     </div>
-                    <div class="row mt-3">
+                    <div class="row mt-1">
                         <div class="col-md-12">
-                            <label class="labels">{{ __('New Password') }}</label>
+                            <label for="new_password" class="col-form-label required">{{ __('New Password') }}</label>
                             <input id="new_password" name="new_password" type="password" class="form-control @error('new_password') is-invalid @enderror" wire:model='new_password'>
                             @error('new_password')
                                 <span class="invalid-feedback" role="alert">
@@ -35,9 +35,9 @@
                             @enderror
                         </div>
                     </div>
-                    <div class="row mt-3">
+                    <div class="row mt-1">
                         <div class="col-md-12">
-                            <label class="labels">{{ __('Confirm Password') }}</label>
+                            <label for="new_password_confirmation" class="col-form-label required">{{ __('Confirm Password') }}</label>
                             <input id="new_password_confirmation" name="new_password_confirmation" type="password" class="form-control @error('new_password_confirmation') is-invalid @enderror" wire:model='new_password_confirmation'>
                             @error('new_password_confirmation')
                                 <span class="invalid-feedback" role="alert">
@@ -54,6 +54,4 @@
             </div>
         </div>
     </form>
-</div>
-</div>
 </div>

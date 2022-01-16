@@ -17,12 +17,12 @@
             <div class="col-md-9">
                 <div class="p-3 py-3">
                     <div class="d-flex justify-content-between align-items-center mb-3">
-                        <h4 class="text-right">Profile Settings</h4>
+                        <h4 class="text-right">{{ __('Profile') }}</h4>
                         <a class="btn btn-danger" href="{{ route('change-password') }}">{{ __('Change password') }}</a>
                     </div>
-                    <div class="row mt-2">
+                    <div class="row mt-1">
                         <div class="col-md-12">
-                            <label class="labels">{{ __('Name') }}</label>
+                            <label for="name" class="col-form-label required">{{ __('Name') }}</label>
                             <input id="name" name="name" type="text" class="form-control @error('name') is-invalid @enderror" wire:model='name'>
                             @error('name')
                                 <span class="invalid-feedback" role="alert">
@@ -31,9 +31,9 @@
                             @enderror
                         </div>
                     </div>
-                    <div class="row mt-3">
+                    <div class="row mt-1">
                         <div class="col-md-12">
-                            <label class="labels">{{ __('E-Mail Address') }}</label>
+                            <label for="email" class="col-form-label required">{{ __('E-Mail Address') }}</label>
                             <input id="email" name="email" type="email" class="form-control @error('email') is-invalid @enderror" wire:model='email'>
                             @error('email')
                                 <span class="invalid-feedback" role="alert">
@@ -42,13 +42,11 @@
                             @enderror
                         </div>
                     </div>
-                    <div class="mt-5 text-center">
+                    <div class="mt-3 text-center">
                         <button class="btn btn-primary" type="submit">Save Profile</button>
                     </div>
                 </div>
             </div>
         </div>
     </form>
-</div>
-</div>
 </div>
