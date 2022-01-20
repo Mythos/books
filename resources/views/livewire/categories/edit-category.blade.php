@@ -2,7 +2,7 @@
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{ route('home') }}">{{ __('Home') }}</a></li>
-            <li class="breadcrumb-item active" aria-current="page">{{ __('Create Category') }}</li>
+            <li class="breadcrumb-item active" aria-current="page">{{ $category->name }}</li>
         </ol>
     </nav>
     <form method="POST" wire:submit.prevent='save'>
@@ -10,7 +10,7 @@
             <div class="col-md-12">
                 <div class="p-3 py-3">
                     <div class="d-flex justify-content-between align-items-center">
-                        <h4 class="text-right">{{ __('Create Category') }}</h4>
+                        <h4 class="text-right">{{ __('Edit Category') }}</h4>
                     </div>
                     <div class="row mt-1">
                         <div class="col-md-12">
