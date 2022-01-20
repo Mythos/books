@@ -17,6 +17,7 @@ use Spatie\Sluggable\SlugOptions;
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property int $sort_index
+ * @property int $type
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Series[] $series
  * @property-read int|null $series_count
  * @method static \Illuminate\Database\Eloquent\Builder|Category newModelQuery()
@@ -27,6 +28,7 @@ use Spatie\Sluggable\SlugOptions;
  * @method static \Illuminate\Database\Eloquent\Builder|Category whereName($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Category whereSlug($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Category whereSortIndex($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Category whereType($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Category whereUpdatedAt($value)
  * @mixin \Eloquent
  */
@@ -43,6 +45,7 @@ class Category extends Model
     protected $fillable = [
         'name',
         'sort_index',
+        'type',
     ];
 
     /**

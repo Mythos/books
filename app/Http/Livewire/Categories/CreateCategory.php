@@ -11,9 +11,12 @@ class CreateCategory extends Component
 
     public int $sort_index = 0;
 
+    public int $type = 0;
+
     protected $rules = [
         'name' => 'required',
         'sort_index' => 'required|integer|min:0',
+        'type' => 'required|integer|min:0',
     ];
 
     public function mount(): void
@@ -34,7 +37,11 @@ class CreateCategory extends Component
     public function save()
     {
         $this->validate();
-        $category = new Category(['name' => $this->name, 'sort_index' => $this->sort_index]);
+        $category = new Category([
+            'name' => $this->name,
+            'sort_index' => $this->sort_index,
+            'type' => $this->type,
+        ]);
         $category->save();
         toastr()->addSuccess(__(':name has been created', ['name' => $this->name]));
 

@@ -3,7 +3,7 @@
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{ route('home') }}">{{ __('Home') }}</a></li>
             <li class="breadcrumb-item"><a href="{{ route('profile') }}">{{ __('Profile') }}</a></li>
-            <li class="breadcrumb-item active">{{ __('Change Password') }}</li>
+            <li class="breadcrumb-item active">{{ __('Change password') }}</li>
         </ol>
     </nav>
     <form method="POST" wire:submit.prevent='save'>
@@ -11,7 +11,7 @@
             <div class="col-md-12">
                 <div class="p-3 py-3">
                     <div class="d-flex justify-content-between align-items-center">
-                        <h4 class="text-right">{{ __('Change Password') }}</h4>
+                        <h4 class="text-right">{{ __('Change password') }}</h4>
                     </div>
                     <div class="row mt-1">
                         <div class="col-md-12">
@@ -48,7 +48,7 @@
                     </div>
 
                     <div class="mt-3 text-center">
-                        <button class="btn btn-danger" type="submit">{{ __('Change Password') }}</button>
+                        <button class="btn btn-danger" type="submit">{{ __('Change password') }}</button>
                     </div>
                 </div>
             </div>

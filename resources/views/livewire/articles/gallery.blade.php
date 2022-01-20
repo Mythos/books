@@ -3,7 +3,7 @@
         <h1 style="display: inline;">{{ $category->name }}</h1>
         <div class="float-end">
             @if ($category->type == 0)
-                <a href="{{ route('series.create', [$category]) }}" class="btn btn-link"><i class="fas fa-plus-circle"></i></a>
+                <a href="{{ route('articles.create', [$category]) }}" class="btn btn-link"><i class="fas fa-plus-circle"></i></a>
             @elseif ($category->type == 1)
                 <a href="{{ route('article.create', [$category]) }}" class="btn btn-link"><i class="fas fa-plus-circle"></i></a>
             @endif
@@ -11,8 +11,8 @@
         </div>
     </div>
     <div class="row mt-2">
-        @foreach ($series as $item)
-            @include('series.card', [$item])
+        @foreach ($articles as $article)
+            @include('articles.card', [$article])
         @endforeach
     </div>
 </div>

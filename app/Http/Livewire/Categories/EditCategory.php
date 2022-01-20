@@ -15,6 +15,7 @@ class EditCategory extends Component
     protected $rules = [
         'category.name' => 'required',
         'category.sort_index' => 'required|integer|min:0',
+        'category.type' => 'required|integer|min:0',
     ];
 
     public function render()

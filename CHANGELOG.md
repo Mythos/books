@@ -2,6 +2,8 @@
 
 ## 1.2.0
 
+- Added articles
+- Added type to categories (books or articles)
 - Added user profile
 - Added changing password in user profile
 - Moved NSFW toggle to user dropdown

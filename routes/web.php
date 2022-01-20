@@ -1,6 +1,9 @@
 <?php
 
 use App\Http\Livewire\Administration;
+use App\Http\Livewire\Articles\CreateArticle;
+use App\Http\Livewire\Articles\EditArticle;
+use App\Http\Livewire\Articles\ShowArticle;
 use App\Http\Livewire\Categories\CreateCategory;
 use App\Http\Livewire\Categories\EditCategory;
 use App\Http\Livewire\Categories\ShowCategory;
@@ -30,12 +33,16 @@ Route::prefix('')->middleware(['auth'])->group(function (): void {
     Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
     Route::get('profile', Profile::class)->name('profile');
     Route::get('profile/change-password', ChangePassword::class)->name('change-password');
-    Route::prefix('books')->group(function (): void {
-        Route::get('category/new', CreateCategory::class)->name('categories.create');
-        Route::get('{category}', ShowCategory::class)->name('categories.show');
-        Route::prefix('{category}')->group(function (): void {
-            Route::get('edit', EditCategory::class)->name('categories.edit');
+    Route::prefix('admin')->group(function (): void {
+        Route::get('/', Administration::class)->name('admin.index');
+    });
 
+    Route::get('category/new', CreateCategory::class)->name('categories.create');
+    Route::get('{category}', ShowCategory::class)->name('categories.show');
+    Route::prefix('{category}')->group(function (): void {
+        Route::get('edit', EditCategory::class)->name('categories.edit');
+
+        Route::prefix('books')->group(function (): void {
             Route::get('series/new', CreateSeries::class)->name('series.create');
             Route::get('{series}', ShowSeries::class)->name('series.show');
 
@@ -46,8 +53,13 @@ Route::prefix('')->middleware(['auth'])->group(function (): void {
                 Route::get('{number}/edit', EditVolume::class)->name('volumes.edit');
             });
         });
+        Route::prefix('articles')->group(function (): void {
+            Route::get('articles/new', CreateArticle::class)->name('article.create');
+            Route::get('{article}', ShowArticle::class)->name('article.show');
+
+            Route::prefix('{article}')->group(function (): void {
+                Route::get('edit', EditArticle::class)->name('article.edit');
+            });
+        });
     });
-});
-Route::prefix('/admin')->middleware(['auth'])->group(function (): void {
-    Route::get('/', Administration::class)->name('admin.index');
 });

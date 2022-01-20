@@ -34,6 +34,20 @@
                             @enderror
                         </div>
                     </div>
+                    <div class="row mt-1">
+                        <div class="col-md-12">
+                            <label for="type" class="col-form-label required">{{ __('Type') }}</label>
+                            <select class="form-select @error('type') is-invalid @enderror" name="status" wire:model='type' required>
+                                <option value="0">{{ __('Books') }}</option>
+                                <option value="1">{{ __('Articles') }}</option>
+                            </select>
+                            @error('type')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+                        </div>
+                    </div>
                     <div class="mt-3">
                         <div class="text-end">
                             <button class="btn btn-primary" type="submit">{{ __('Save') }}</button>

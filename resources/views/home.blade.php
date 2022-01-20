@@ -12,7 +12,11 @@
             <livewire:global-statistics />
         </div>
         @foreach ($categories as $category)
-            @livewire('series.gallery', [$category])
+            @if ($category->type == 0)
+                @livewire('series.gallery', [$category])
+            @elseif($category->type == 1)
+                @livewire('articles.gallery', [$category])
+            @endif
         @endforeach
     </div>
 @endsection
