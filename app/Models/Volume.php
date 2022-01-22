@@ -19,7 +19,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property string|null $price
- * @property-read void $isbn_formatted
+ * @property-read string $isbn_formatted
  * @property-read string $status_class
  * @property-read string $status_name
  * @property-read \App\Models\Series $series
