@@ -11,8 +11,14 @@
         </div>
     </div>
     <div class="row mt-2">
-        @foreach ($articles as $article)
-            @include('articles.card', [$article])
-        @endforeach
+        @if (count($articles) == 0)
+            <div class="text-center">
+                {{ __('No data') }}
+            </div>
+        @else
+            @foreach ($articles as $article)
+                @include('articles.card', [$article])
+            @endforeach
+        @endif
     </div>
 </div>

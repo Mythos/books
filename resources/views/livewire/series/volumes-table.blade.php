@@ -55,7 +55,7 @@
                 @endforeach
                 @if ($volumes->count() == 0)
                     <tr>
-                        <td colspan="5" style="text-align: center;">No data</td>
+                        <td colspan="5" style="text-align: center;">{{ __('No data') }}</td>
                     </tr>
                 @endif
             </tbody>
