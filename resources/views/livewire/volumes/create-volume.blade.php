@@ -13,7 +13,7 @@
             <div class="col-md-12">
                 <div class="p-3 py-3">
                     <div class="d-flex justify-content-between align-items-center">
-                        <h4 class="text-right">{{ __('Edit Series') }}</h4>
+                        <h4 class="text-right">{{ __('Create Volume') }}</h4>
                     </div>
                     <div class="row mt-1">
                         <div class="col-md-12">
@@ -69,9 +69,6 @@
                         </div>
                     </div>
                     <div class="mt-3">
-                        <div class="float-start mb-3">
-                            <button type="button" class="btn btn-danger" wire:click='delete'>{{ __('Delete') }}</button>
-                        </div>
                         <div class="float-end mb-3">
                             <button class="btn btn-primary" type="submit">{{ __('Save') }}</button>
                         </div>
