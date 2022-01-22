@@ -19,7 +19,8 @@ class UpcomingSeries extends Component
         $upcoming = Volume::with('series')->whereIn('status', [0, 1, 2])->orderBy('publish_date')->get();
         if (!empty($this->search)) {
             $upcoming = $upcoming->filter(function ($volume) {
-                return Str::contains(Str::lower($volume->name), Str::lower($this->search));
+                return Str::contains(Str::lower($volume->name), Str::lower($this->search))
+                || Str::contains(Str::lower($volume->isbn), Str::lower($this->search));
             });
         }
         $this->upcoming = $upcoming;

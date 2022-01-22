@@ -25,7 +25,10 @@ class Gallery extends Component
     {
         $series = Series::whereCategoryId($this->category->id)->with('volumes');
         if (!empty($this->search)) {
-            $series->where('name', 'like', '%' . $this->search . '%');
+            $series->where('name', 'like', '%' . $this->search . '%')
+                   ->orWhereHas('volumes', function ($query): void {
+                       $query->where('isbn', 'like', '%' . $this->search . '%');
+                   });
         }
         $this->series = $series->orderBy('status')->orderBy('name')->get();
 
