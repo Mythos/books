@@ -22,9 +22,9 @@
                     </div>
                     <div class="row mt-1">
                         <div class="col-md-12">
-                            <label for="name" class="col-form-label required">{{ __('Name') }}</label>
-                            <input id="name" name="name" type="text" class="form-control @error('name') is-invalid @enderror" wire:model='name'>
-                            @error('name')
+                            <label for="user.name" class="col-form-label required">{{ __('Name') }}</label>
+                            <input id="user.name" name="user.name" type="text" class="form-control @error('user.name') is-invalid @enderror" wire:model='user.name'>
+                            @error('user.name')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
                                 </span>
@@ -33,9 +33,22 @@
                     </div>
                     <div class="row mt-1">
                         <div class="col-md-12">
-                            <label for="email" class="col-form-label required">{{ __('E-Mail Address') }}</label>
-                            <input id="email" name="email" type="email" class="form-control @error('email') is-invalid @enderror" wire:model='email'>
-                            @error('email')
+                            <label for="user.email" class="col-form-label required">{{ __('E-Mail Address') }}</label>
+                            <input id="user.email" name="user.email" type="email" class="form-control @error('user.email') is-invalid @enderror" wire:model='user.email'>
+                            @error('user.email')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-md-12">
+                            <div class="form-check">
+                                <input id="user.is_nsfw" name="user.is_nsfw" type="checkbox" class="form-check-input @error('user.format_isbns_enabled') is-invalid @enderror" wire:model='user.format_isbns_enabled'>
+                                <label for="user.is_nsfw" class="form-check-label">{{ __('Format ISBNs') }}</label>
+                            </div>
+                            @error('user.format_isbns_enabled')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
                                 </span>

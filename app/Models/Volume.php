@@ -59,11 +59,15 @@ class Volume extends Model
      * Set the volume's ISBN.
      *
      * @param  string  $value
-     * @return void
+     * @return string
      */
-    public function getIsbnFormattedAttribute()
+    public function getIsbnFormattedAttribute(): string
     {
-        return IsbnHelpers::format($this->isbn);
+        if (auth()->user()->format_isbns_enabled) {
+            return IsbnHelpers::format($this->isbn);
+        }
+
+        return $this->isbn;
     }
 
     /**

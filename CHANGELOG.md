@@ -6,6 +6,7 @@
 - Added type to categories (books or articles)
 - Added user profile
 - Added changing password in user profile
+- Added option to toggle ISBN formatting in user profile
 - Moved NSFW toggle to user dropdown
 - Changed layout of forms
 - Fixed completion status for cards (read volumes were not taken into account)

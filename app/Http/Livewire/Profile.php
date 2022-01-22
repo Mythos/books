@@ -7,20 +7,17 @@ use Livewire\Component;
 
 class Profile extends Component
 {
-    public string $name;
-
-    public string $email;
+    public User $user;
 
     protected $rules = [
-        'name' => 'required',
-        'email' => 'required|email',
+        'user.name' => 'required',
+        'user.email' => 'required|email',
+        'user.format_isbns_enabled' => 'boolean',
     ];
 
     public function mount(): void
     {
-        $user = User::find(auth()->user()->id);
-        $this->name = $user->name;
-        $this->email = $user->email;
+        $this->user = User::find(auth()->user()->id);
     }
 
     public function render()
@@ -31,10 +28,7 @@ class Profile extends Component
     public function save()
     {
         $this->validate();
-        $user = User::find(auth()->user()->id);
-        $user->name = $this->name;
-        $user->email = $this->email;
-        $user->save();
+        $this->user->save();
         toastr()->addSuccess(__('Your profile has been updated'));
 
         return redirect()->route('profile');
