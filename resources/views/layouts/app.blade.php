@@ -115,6 +115,7 @@
     @flasher_render
     @flasher_livewire_render
     @livewireScripts
+    <x-livewire-alert::scripts />
 </body>
 
 </html>

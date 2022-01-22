@@ -10,10 +10,13 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Intervention\Image\Facades\Image as FacadesImage;
 use Intervention\Image\Image;
+use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Component;
 
 class EditArticle extends Component
 {
+    use LivewireAlert;
+
     public Category $category;
 
     public Article $article;
@@ -27,6 +30,10 @@ class EditArticle extends Component
         'article.status' => 'required|integer|min:0',
         'article.category_id' => 'required|exists:categories,id',
         'image_url' => 'url',
+    ];
+
+    protected $listeners = [
+        'confirmedDelete',
     ];
 
     public function updated($property, $value): void
@@ -65,10 +72,19 @@ class EditArticle extends Component
 
     public function delete(): void
     {
+        $this->confirm(__('Are you sure you want to delete :name?', ['name' => $this->article->name]), [
+            'confirmButtonText' => __('Delete'),
+            'cancelButtonText' => __('Cancel'),
+            'onConfirmed' => 'confirmedDelete',
+        ]);
+    }
+
+    public function confirmedDelete(): void
+    {
         $this->article->delete();
         Storage::deleteDirectory('public/articles/' . $this->article->id);
         toastr()->addSuccess(__(':name has been deleted', ['name' => $this->article->name]));
-        redirect()->route('categories.show', [$this->article->category]);
+        redirect()->route('categories.show', [$this->category]);
     }
 
     private function getImage(): ?Image
