@@ -10,6 +10,7 @@
         "production": "mix --production"
     },
     "devDependencies": {
+        "@fortawesome/fontawesome-free": "^5.15.4",
         "axios": "^0.25",
         "bootstrap": "^5.1.0",
         "jquery": "^3.6",
@@ -19,9 +20,7 @@
         "postcss": "^8.4.5",
         "resolve-url-loader": "^5.0.0",
         "sass": "^1.45.2",
-        "sass-loader": "^12.4.0"
-    },
-    "dependencies": {
-        "@fortawesome/fontawesome-free": "^5.15.4"
+        "sass-loader": "^12.4.0",
+        "sweetalert2": "^11.3.6"
     }
 }

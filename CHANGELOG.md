@@ -1,5 +1,14 @@
 # Changelog
 
+## 1.2.1
+
+- Added confirmation dialog when deleting categories
+- Added confirmation dialog when deleting series
+- Added confirmation dialog when deleting articles
+- Added confirmation dialog when deleting volumes
+- Fixed deletion of article categories
+- Fixed deletion of articles
+
 ## 1.2.0 (2022-01-22)
 
 - Added articles

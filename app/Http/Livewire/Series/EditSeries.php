@@ -2,6 +2,8 @@
 
 namespace App\Http\Livewire\Series;
 
+use App\Http\Traits\LivewireDelete;
+use App\Models\Category;
 use App\Models\Series;
 use App\Models\Volume;
 use Exception;
@@ -9,11 +11,16 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 use Intervention\Image\Facades\Image as FacadesImage;
 use Intervention\Image\Image;
+use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Component;
 use Storage;
 
 class EditSeries extends Component
 {
+    use LivewireAlert;
+
+    public Category $category;
+
     public Series $series;
 
     public string $image_url = '';
@@ -28,6 +35,10 @@ class EditSeries extends Component
         'image_url' => 'url',
     ];
 
+    protected $listeners = [
+        'confirmedDelete',
+    ];
+
     public function updated($property, $value): void
     {
         if ($property == 'series.total' && empty($value)) {
@@ -36,7 +47,7 @@ class EditSeries extends Component
         $this->validateOnly($property);
     }
 
-    public function mount(Series $series): void
+    public function mount(Category $category, Series $series): void
     {
         $this->series = $series;
     }
@@ -67,11 +78,20 @@ class EditSeries extends Component
 
     public function delete(): void
     {
+        $this->confirm(__('Are you sure you want to delete :name?', ['name' => $this->series->name]), [
+            'confirmButtonText' => __('Delete'),
+            'cancelButtonText' => __('Cancel'),
+            'onConfirmed' => 'confirmedDelete',
+        ]);
+    }
+
+    public function confirmedDelete(): void
+    {
         Volume::whereSeriesId($this->series->id)->delete();
         $this->series->delete();
         Storage::deleteDirectory('public/series/' . $this->series->id);
         toastr()->addSuccess(__(':name has been deleted', ['name' => $this->series->name]));
-        redirect()->route('categories.show', [$this->series->category]);
+        redirect()->route('categories.show', [$this->category]);
     }
 
     private function getImage(): ?Image

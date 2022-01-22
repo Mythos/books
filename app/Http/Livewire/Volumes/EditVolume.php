@@ -8,10 +8,13 @@ use App\Models\Series;
 use App\Models\Volume;
 use Illuminate\Support\Str;
 use Intervention\Validation\Rules\Isbn;
+use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Component;
 
 class EditVolume extends Component
 {
+    use LivewireAlert;
+
     public Category $category;
 
     public Series $series;
@@ -34,6 +37,10 @@ class EditVolume extends Component
             'volume.isbn' => ['required', 'unique:volumes,isbn,' . $this->volume->id . ',id,series_id,' . $this->series->id, new Isbn()],
         ];
     }
+
+    protected $listeners = [
+        'confirmedDelete',
+    ];
 
     public function updated($property, $value): void
     {
@@ -69,7 +76,16 @@ class EditVolume extends Component
         return redirect()->route('series.show', [$this->category, $this->series]);
     }
 
-    public function delete()
+    public function delete(): void
+    {
+        $this->confirm(__('Are you sure you want to delete :name?', ['name' => __('Volume :number', ['number' => $this->volume->number])]), [
+            'confirmButtonText' => __('Delete'),
+            'cancelButtonText' => __('Cancel'),
+            'onConfirmed' => 'confirmedDelete',
+        ]);
+    }
+
+    public function confirmedDelete()
     {
         $this->volume->delete();
         toastr()->addSuccess(__('Volumme :number has been deleted', ['number' => $this->volume->number]));
