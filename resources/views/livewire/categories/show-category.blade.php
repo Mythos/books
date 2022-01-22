@@ -5,5 +5,9 @@
             <li class="breadcrumb-item active">{{ $category->name }}</li>
         </ol>
     </nav>
-    @livewire('series.gallery', [$category])
+    @if ($category->type == 0)
+        @livewire('series.gallery', [$category])
+    @elseif($category->type == 1)
+        @livewire('articles.gallery', [$category])
+    @endif
 </div>

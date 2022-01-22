@@ -156,7 +156,10 @@ return [
     */
 
     'attributes' => [
-        'isbn' => 'ISBN'
+        'isbn' => 'ISBN',
+        'current_password' => 'Current Password',
+        'new_password' => 'New Password',
+        'new_password_confirmation' => 'Confirm Password',
     ],
 
 ];

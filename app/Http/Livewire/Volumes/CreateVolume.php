@@ -3,8 +3,8 @@
 namespace App\Http\Livewire\Volumes;
 
 use App\Helpers\IsbnHelpers;
-use App\Models\Volume;
 use App\Models\Series;
+use App\Models\Volume;
 use Illuminate\Support\Str;
 use Intervention\Validation\Rules\Isbn;
 use Livewire\Component;
@@ -12,12 +12,16 @@ use Livewire\Component;
 class CreateVolume extends Component
 {
     public string $publish_date = '';
+
     public string $isbn = '';
+
     public int $status = 0;
+
     public string $price = '';
+
     public Series $series;
 
-    public function mount(Series $series)
+    public function mount(Series $series): void
     {
         $this->series = $series;
     }
@@ -25,6 +29,7 @@ class CreateVolume extends Component
     public function render()
     {
         $this->price = $this->series->default_price ?? '';
+
         return view('livewire.volumes.create-volume')->extends('layouts.app')->section('content');
     }
 
@@ -38,9 +43,9 @@ class CreateVolume extends Component
         ];
     }
 
-    public function updated($property, $value)
+    public function updated($property, $value): void
     {
-        if ($property == "isbn") {
+        if ($property == 'isbn') {
             $this->validateOnly($property);
             $isbn = IsbnHelpers::convertTo13($value);
             if (!empty($isbn)) {
@@ -51,7 +56,7 @@ class CreateVolume extends Component
         }
     }
 
-    public function save()
+    public function save(): void
     {
         $isbn = IsbnHelpers::convertTo13($this->isbn);
         if (!empty($isbn)) {
@@ -68,7 +73,7 @@ class CreateVolume extends Component
             'publish_date' => $this->publish_date,
             'isbn' => $this->isbn,
             'status' => $this->status,
-            'price' => $this->price
+            'price' => $this->price,
         ]);
         $volume->save();
         toastr()->livewire()->addSuccess(__('Volumme :number has been created', ['number' => $number]));

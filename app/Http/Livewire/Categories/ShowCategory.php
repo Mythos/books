@@ -9,13 +9,13 @@ class ShowCategory extends Component
 {
     public Category $category;
 
-    public function mount(Category $category)
+    public function mount(Category $category): void
     {
         $this->category = $category;
     }
 
     public function render()
     {
-        return view('livewire.categories.show-category')->extends('layouts.app')->section('content');;
+        return view('livewire.categories.show-category')->extends('layouts.app')->section('content');
     }
 }

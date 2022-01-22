@@ -24,6 +24,7 @@ class HomeController extends Controller
     public function index()
     {
         $categories = Category::orderBy('sort_index')->orderBy('name')->get();
+
         return view('home')->with('categories', $categories);
     }
 }

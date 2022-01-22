@@ -7,7 +7,8 @@ use App\Models\Volume;
 use Exception;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
-use Image;
+use Intervention\Image\Facades\Image as FacadesImage;
+use Intervention\Image\Image;
 use Livewire\Component;
 use Storage;
 
@@ -24,10 +25,10 @@ class EditSeries extends Component
         'series.category_id' => 'required|exists:categories,id',
         'series.is_nsfw' => 'boolean',
         'series.default_price' => 'nullable|regex:"^[0-9]{1,9}([,.][0-9]{1,2})?$"',
-        'image_url' => 'url'
+        'image_url' => 'url',
     ];
 
-    public function updated($property, $value)
+    public function updated($property, $value): void
     {
         if ($property == 'series.total' && empty($value)) {
             $this->series->total = null;
@@ -35,7 +36,7 @@ class EditSeries extends Component
         $this->validateOnly($property);
     }
 
-    public function mount(Series $series)
+    public function mount(Series $series): void
     {
         $this->series = $series;
     }
@@ -45,7 +46,7 @@ class EditSeries extends Component
         return view('livewire.series.edit-series')->extends('layouts.app')->section('content');
     }
 
-    public function save()
+    public function save(): void
     {
         $this->validate();
         if (!empty($this->series->default_price)) {
@@ -64,7 +65,7 @@ class EditSeries extends Component
         }
     }
 
-    public function delete()
+    public function delete(): void
     {
         Volume::whereSeriesId($this->series->id)->delete();
         $this->series->delete();
@@ -73,18 +74,19 @@ class EditSeries extends Component
         redirect()->route('categories.show', [$this->series->category]);
     }
 
-    private function getImage()
+    private function getImage(): ?Image
     {
         if (empty($this->image_url)) {
             return null;
         }
-        $image = Image::make($this->image_url)->resize(null, 400, function ($constraint) {
+        $image = FacadesImage::make($this->image_url)->resize(null, 400, function ($constraint): void {
             $constraint->aspectRatio();
         })->encode('jpg');
+
         return $image;
     }
 
-    private function storeImages($image)
+    private function storeImages($image): void
     {
         if (empty($image)) {
             return;
@@ -93,7 +95,7 @@ class EditSeries extends Component
         Storage::put('public/series/' . $this->series->id . '/cover_sfw.jpg', $image->pixelate(config('images.nsfw.pixelate', 10))->blur(config('images.nsfw.blur', 5))->encode('jpg'));
     }
 
-    private function updatePrices()
+    private function updatePrices(): void
     {
         if (!empty($this->series->default_price) && $this->series->default_price > 0) {
             Volume::whereSeriesId($this->series->id)->whereNull('price')->update(['price' => $this->series->default_price]);

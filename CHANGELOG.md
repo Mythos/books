@@ -1,5 +1,17 @@
 # Changelog
 
+## 1.2.0 (2022-01-22)
+
+- Added articles
+- Added type to categories (books or articles)
+- Added user profile
+- Added changing password in user profile
+- Added option to toggle ISBN formatting in user profile
+- Added search bar to filter galleries and upcoming releases
+- Moved NSFW toggle to user dropdown
+- Changed layout of forms
+- Fixed completion status for cards (read volumes were not taken into account)
+
 ## 1.1.1 (2022-01-15)
 
 - Fixed version update notification not being shown

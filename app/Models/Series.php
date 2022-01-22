@@ -21,6 +21,7 @@ use Spatie\Sluggable\SlugOptions;
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property int|null $is_nsfw
+ * @property string|null $default_price
  * @property-read \App\Models\Category $category
  * @property-read string $completion_status
  * @property-read string $completion_status_class
@@ -28,6 +29,7 @@ use Spatie\Sluggable\SlugOptions;
  * @property-read string $image
  * @property-read string $status_class
  * @property-read string $status_name
+ * @property-read string $total_worth
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Volume[] $volumes
  * @property-read int|null $volumes_count
  * @method static \Illuminate\Database\Eloquent\Builder|Series newModelQuery()
@@ -35,6 +37,7 @@ use Spatie\Sluggable\SlugOptions;
  * @method static \Illuminate\Database\Eloquent\Builder|Series query()
  * @method static \Illuminate\Database\Eloquent\Builder|Series whereCategoryId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Series whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Series whereDefaultPrice($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Series whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Series whereIsNsfw($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Series whereName($value)
@@ -43,8 +46,6 @@ use Spatie\Sluggable\SlugOptions;
  * @method static \Illuminate\Database\Eloquent\Builder|Series whereTotal($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Series whereUpdatedAt($value)
  * @mixin \Eloquent
- * @property string|null $default_price
- * @method static \Illuminate\Database\Eloquent\Builder|Series whereDefaultPrice($value)
  */
 class Series extends Model
 {
@@ -81,7 +82,6 @@ class Series extends Model
                 return __('Finished');
         }
     }
-
 
     /**
      * Get the series' status CSS class.
@@ -140,7 +140,8 @@ class Series extends Model
         if (empty($this->total)) {
             return false;
         }
-        return $this->total == $this->volumes->where('status', '3')->count();
+
+        return $this->total == $this->volumes->whereIn('status', ['3', '4'])->count();
     }
 
     /**
@@ -154,6 +155,7 @@ class Series extends Model
         if ($this->is_nsfw && !session('show_nsfw', false)) {
             return url($path . 'cover_sfw.jpg');
         }
+
         return url($path . 'cover.jpg');
     }
 

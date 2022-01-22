@@ -4,7 +4,7 @@
             <li class="breadcrumb-item active">{{ __('Administration') }}</li>
         </ol>
     </nav>
-    <div class="row mb-3">
+    <div class="row bg-white shadow-sm rounded py-2">
         @livewire('regenerate-images')
     </div>
 </div>

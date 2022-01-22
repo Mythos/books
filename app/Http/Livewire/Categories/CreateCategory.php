@@ -8,14 +8,18 @@ use Livewire\Component;
 class CreateCategory extends Component
 {
     public string $name = '';
+
     public int $sort_index = 0;
+
+    public int $type = 0;
 
     protected $rules = [
         'name' => 'required',
         'sort_index' => 'required|integer|min:0',
+        'type' => 'required|integer|min:0',
     ];
 
-    public function mount()
+    public function mount(): void
     {
         $this->sort_index = (Category::all()->max('sort_index') ?? 0) + 1;
     }
@@ -25,7 +29,7 @@ class CreateCategory extends Component
         return view('livewire.categories.create-category')->extends('layouts.app')->section('content');
     }
 
-    public function updated($property)
+    public function updated($property): void
     {
         $this->validateOnly($property);
     }
@@ -33,9 +37,14 @@ class CreateCategory extends Component
     public function save()
     {
         $this->validate();
-        $category = new Category(['name' => $this->name, 'sort_index' => $this->sort_index]);
+        $category = new Category([
+            'name' => $this->name,
+            'sort_index' => $this->sort_index,
+            'type' => $this->type,
+        ]);
         $category->save();
         toastr()->addSuccess(__(':name has been created', ['name' => $this->name]));
+
         return redirect()->route('home');
     }
 }

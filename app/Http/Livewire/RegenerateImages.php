@@ -14,7 +14,7 @@ class RegenerateImages extends Component
         return view('livewire.regenerate-images');
     }
 
-    public function regenerate()
+    public function regenerate(): void
     {
         $series = Series::all();
         foreach ($series as $item) {

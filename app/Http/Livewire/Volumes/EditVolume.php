@@ -13,10 +13,12 @@ use Livewire\Component;
 class EditVolume extends Component
 {
     public Category $category;
+
     public Series $series;
+
     public Volume $volume;
 
-    public function mount(Category $category, Series $series, int $number)
+    public function mount(Category $category, Series $series, int $number): void
     {
         $this->category = $category;
         $this->series = $series;
@@ -33,9 +35,9 @@ class EditVolume extends Component
         ];
     }
 
-    public function updated($property, $value)
+    public function updated($property, $value): void
     {
-        if ($property == "volume.isbn") {
+        if ($property == 'volume.isbn') {
             $this->validateOnly($property);
             $isbn = IsbnHelpers::convertTo13($value);
             if (!empty($isbn)) {
@@ -48,7 +50,7 @@ class EditVolume extends Component
 
     public function render()
     {
-        return view('livewire.volumes.edit-volume')->extends('layouts.app')->section('content');;
+        return view('livewire.volumes.edit-volume')->extends('layouts.app')->section('content');
     }
 
     public function save()
@@ -63,6 +65,7 @@ class EditVolume extends Component
         $this->validate();
         $this->volume->save();
         toastr()->addSuccess(__('Volumme :number has been updated', ['number' => $this->volume->number]));
+
         return redirect()->route('series.show', [$this->category, $this->series]);
     }
 
@@ -70,6 +73,7 @@ class EditVolume extends Component
     {
         $this->volume->delete();
         toastr()->addSuccess(__('Volumme :number has been deleted', ['number' => $this->volume->number]));
+
         return redirect()->route('series.show', [$this->category, $this->series]);
     }
 }
