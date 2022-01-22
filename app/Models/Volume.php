@@ -20,6 +20,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property string|null $price
  * @property-read string $isbn_formatted
+ * @property-read string $name
  * @property-read string $status_class
  * @property-read string $status_name
  * @property-read \App\Models\Series $series
@@ -56,9 +57,18 @@ class Volume extends Model
     ];
 
     /**
-     * Set the volume's ISBN.
+     * Get the volume's name.
      *
-     * @param  string  $value
+     * @return string
+     */
+    public function getNameAttribute(): string
+    {
+        return "{$this->series->name} {$this->number}";
+    }
+
+    /**
+     * Get the volume's ISBN.
+     *
      * @return string
      */
     public function getIsbnFormattedAttribute(): string
