@@ -3,7 +3,7 @@
 return [
     'default' => 'template',
 
-    'root_script' => 'https://cdn.jsdelivr.net/npm/@flasher/flasher@0.6.1/dist/flasher.min.js',
+    'root_script' => null,
 
     'template_factory' => [
         'default' => 'tailwindcss',

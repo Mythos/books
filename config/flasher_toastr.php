@@ -2,7 +2,7 @@
 
 return [
     'scripts' => [
-        'https://cdn.jsdelivr.net/npm/@flasher/flasher-toastr@0.1.3/dist/flasher-toastr.min.js',
+        config('app.url') . '/js/flasher-toastr.min.js',
     ],
     'styles' => [],
     'options' => [

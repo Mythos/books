@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.2.2 (2022-01-22)
+
+- A local version of flasher is now used instead of loading it via a CDN
+
 ## 1.2.1 (2022-01-22)
 
 - Added confirmation dialog when deleting categories
