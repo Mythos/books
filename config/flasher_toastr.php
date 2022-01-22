@@ -2,7 +2,7 @@
 
 return [
     'scripts' => [
-        asset('js/flasher-toastr.min.js'),
+        config('app.url') . '/js/flasher-toastr.min.js',
     ],
     'styles' => [],
     'options' => [
