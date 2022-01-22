@@ -7,6 +7,7 @@
 - Added user profile
 - Added changing password in user profile
 - Added option to toggle ISBN formatting in user profile
+- Added search bar to filter galleries and upcoming releases
 - Moved NSFW toggle to user dropdown
 - Changed layout of forms
 - Fixed completion status for cards (read volumes were not taken into account)
