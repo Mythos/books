@@ -3,15 +3,26 @@
 namespace App\Http\Livewire\Series;
 
 use App\Models\Volume;
+use Illuminate\Support\Str;
 use Livewire\Component;
 
 class UpcomingSeries extends Component
 {
     public $upcoming;
 
+    private string $search;
+
+    protected $listeners = ['search' => 'filter'];
+
     public function render()
     {
-        $this->upcoming = Volume::with('series')->whereIn('status', [0, 1, 2])->orderBy('publish_date')->get();
+        $upcoming = Volume::with('series')->whereIn('status', [0, 1, 2])->orderBy('publish_date')->get();
+        if (!empty($this->search)) {
+            $upcoming = $upcoming->filter(function ($volume) {
+                return Str::contains(Str::lower($volume->name), Str::lower($this->search));
+            });
+        }
+        $this->upcoming = $upcoming;
 
         return view('livewire.series.upcoming-series');
     }
@@ -38,5 +49,10 @@ class UpcomingSeries extends Component
         $volume->save();
         $this->emitTo('global-statistics', '$refresh');
         toastr()->livewire()->addSuccess(__(':name has been updated', ['name' => $volume->series->name . ' ' . $volume->number]));
+    }
+
+    public function filter($filter): void
+    {
+        $this->search = $filter;
     }
 }

@@ -10,6 +10,8 @@ class Gallery extends Component
 {
     public $articles = [];
 
+    private string $search = '';
+
     public Category $category;
 
     public function mount(Category $category): void
@@ -17,10 +19,21 @@ class Gallery extends Component
         $this->category = $category;
     }
 
+    protected $listeners = ['search' => 'filter'];
+
     public function render()
     {
-        $this->articles = Article::whereCategoryId($this->category->id)->orderBy('status')->orderBy('name')->get();
+        $articles = Article::whereCategoryId($this->category->id);
+        if (!empty($this->search)) {
+            $articles->where('name', 'like', '%' . $this->search . '%');
+        }
+        $this->articles = $articles->orderBy('status')->orderBy('name')->get();
 
         return view('livewire.articles.gallery');
+    }
+
+    public function filter($filter): void
+    {
+        $this->search = $filter;
     }
 }
