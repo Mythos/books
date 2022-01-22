@@ -1,6 +1,6 @@
 # Changelog
 
-## 1.2.1
+## 1.2.1 (2022-01-22)
 
 - Added confirmation dialog when deleting categories
 - Added confirmation dialog when deleting series
