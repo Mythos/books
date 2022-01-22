@@ -1,6 +1,6 @@
 # Changelog
 
-## 1.2.0
+## 1.2.0 (2022-01-22)
 
 - Added articles
 - Added type to categories (books or articles)
