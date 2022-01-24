@@ -68,6 +68,19 @@
                             @enderror
                         </div>
                     </div>
+                    <div class="row mt-3">
+                        <div class="col-md-12">
+                            <div class="form-check">
+                                <input id="volume.ignore_in_upcoming" type="checkbox" class="form-check-input @error('volume.ignore_in_upcoming') is-invalid @enderror" name="volume.ignore_in_upcoming" wire:model='volume.ignore_in_upcoming'>
+                                <label for="volume.ignore_in_upcoming" class="form-check-label">{{ __('Hide in upcoming releases') }}</label>
+                            </div>
+                            @error('volume.ignore_in_upcoming')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+                        </div>
+                    </div>
                     <div class="mt-3">
                         <div class="float-start mb-3">
                             <button type="button" class="btn btn-danger" wire:click='delete'>{{ __('Delete') }}</button>

@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.2.3
+
+- Added option in volumes to prevent from showing up in upcoming releases
+
 ## 1.2.2 (2022-01-22)
 
 - A local version of flasher is now used instead of loading it via a CDN

@@ -37,6 +37,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @method static \Illuminate\Database\Eloquent\Builder|Volume whereStatus($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Volume whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @property int $ignore_in_upcoming
+ * @method static \Illuminate\Database\Eloquent\Builder|Volume whereIgnoreInUpcoming($value)
  */
 class Volume extends Model
 {
@@ -53,6 +55,7 @@ class Volume extends Model
         'isbn',
         'status',
         'price',
+        'ignore_in_upcoming',
         'series_id',
     ];
 
