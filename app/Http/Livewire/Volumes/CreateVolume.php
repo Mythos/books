@@ -26,12 +26,11 @@ class CreateVolume extends Component
     public function mount(Series $series): void
     {
         $this->series = $series;
+        $this->price = $this->series->default_price ?? '';
     }
 
     public function render()
     {
-        $this->price = $this->series->default_price ?? '';
-
         return view('livewire.volumes.create-volume')->extends('layouts.app')->section('content');
     }
 
@@ -69,6 +68,8 @@ class CreateVolume extends Component
         $number = Volume::whereSeriesId($this->series->id)->max('number') ?? 0;
         if (!empty($this->price)) {
             $this->price = floatval(Str::replace(',', '.', $this->price));
+        } else {
+            $this->price = 0;
         }
         $volume = new Volume([
             'series_id' => $this->series->id,
