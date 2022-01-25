@@ -1,8 +1,9 @@
 # Changelog
 
-## 1.2.3
+## 1.2.3 (2022-01-25)
 
 - Added option in volumes to prevent from showing up in upcoming releases
+- Fixed prices when creating a volume and not having set a default price in the series
 
 ## 1.2.2 (2022-01-22)
 
