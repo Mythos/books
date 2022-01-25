@@ -19,17 +19,18 @@ class CreateVolume extends Component
 
     public string $price = '';
 
+    public bool $ignore_in_upcoming = false;
+
     public Series $series;
 
     public function mount(Series $series): void
     {
         $this->series = $series;
+        $this->price = $this->series->default_price ?? '';
     }
 
     public function render()
     {
-        $this->price = $this->series->default_price ?? '';
-
         return view('livewire.volumes.create-volume')->extends('layouts.app')->section('content');
     }
 
@@ -40,6 +41,7 @@ class CreateVolume extends Component
             'status' => 'required|integer|min:0',
             'price' => 'nullable|regex:"^[0-9]{1,9}([,.][0-9]{1,2})?$"',
             'isbn' => ['required', 'unique:volumes,isbn,NULL,id,series_id,' . $this->series->id, new Isbn()],
+            'ignore_in_upcoming' => 'boolean',
         ];
     }
 
@@ -66,6 +68,8 @@ class CreateVolume extends Component
         $number = Volume::whereSeriesId($this->series->id)->max('number') ?? 0;
         if (!empty($this->price)) {
             $this->price = floatval(Str::replace(',', '.', $this->price));
+        } else {
+            $this->price = 0;
         }
         $volume = new Volume([
             'series_id' => $this->series->id,
@@ -74,6 +78,7 @@ class CreateVolume extends Component
             'isbn' => $this->isbn,
             'status' => $this->status,
             'price' => $this->price,
+            'ignore_in_upcoming' => $this->ignore_in_upcoming,
         ]);
         $volume->save();
         toastr()->livewire()->addSuccess(__('Volumme :number has been created', ['number' => $number]));

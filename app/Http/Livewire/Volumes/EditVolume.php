@@ -35,6 +35,7 @@ class EditVolume extends Component
             'volume.status' => 'required|integer|min:0',
             'volume.price' => 'nullable|regex:"^[0-9]{1,9}([,.][0-9]{1,2})?$"',
             'volume.isbn' => ['required', 'unique:volumes,isbn,' . $this->volume->id . ',id,series_id,' . $this->series->id, new Isbn()],
+            'volume.ignore_in_upcoming' => 'boolean',
         ];
     }
 
@@ -68,6 +69,8 @@ class EditVolume extends Component
         }
         if (!empty($this->volume->price)) {
             $this->volume->price = floatval(Str::replace(',', '.', $this->volume->price));
+        } else {
+            $this->volume->price = 0;
         }
         $this->validate();
         $this->volume->save();
