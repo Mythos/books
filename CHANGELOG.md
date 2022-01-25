@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.2.4 (2022-01-25)
+
+- Increased height of upcoming releases and statistics
+
 ## 1.2.3 (2022-01-25)
 
 - Added option in volumes to prevent from showing up in upcoming releases
