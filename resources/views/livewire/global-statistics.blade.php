@@ -1,7 +1,7 @@
 <div class="col-sm-12 col-md-12 col-lg-3">
     <div class="card shadow-sm mb-2">
         <div class="card-header">{{ __('Statistics') }}</div>
-        <div class="card-body d-flex flex-column table-responsive p-0" style="height: 280px; overflow-y: scroll;">
+        <div class="card-body d-flex flex-column table-responsive p-0" style="height: 280px; overflow-y: auto;">
             <table class="table table-hover mb-0">
                 <tbody>
                     <tr class="table-danger">

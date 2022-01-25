@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.2.5 (2022-01-25)
+
+- Made table header for upcoming releases sticky
+
 ## 1.2.4 (2022-01-25)
 
 - Increased height of upcoming releases and statistics
