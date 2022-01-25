@@ -3,6 +3,7 @@
 ## 1.2.4 (2022-01-25)
 
 - Increased height of upcoming releases and statistics
+- Hide search bar when not being authenticated
 
 ## 1.2.3 (2022-01-25)
 

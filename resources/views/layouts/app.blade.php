@@ -43,7 +43,9 @@
                         @endauth
                     </ul>
                     <ul class="navbar-nav">
-                        @livewire('search')
+                        @auth
+                            @livewire('search')
+                        @endauth
                     </ul>
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ms-auto">
