@@ -29,7 +29,7 @@ class GlobalStatistics extends Component
             ->orWhere('series.name', 'like', '%' . $this->search . '%')
             ->orWhere('publishers.name', 'like', '%' . $this->search . '%');
         }
-        $volumeStatistics = $volumes->get([
+        $volumeStatistics = $volumes->select([
             DB::raw('COALESCE(sum(case when volumes.status = 0 then 1 else 0 end), 0) as new'),
             DB::raw('COALESCE(sum(case when volumes.status = 1 then 1 else 0 end), 0) as ordered'),
             DB::raw('COALESCE(sum(case when volumes.status = 2 then 1 else 0 end), 0) as shipped'),
@@ -37,7 +37,7 @@ class GlobalStatistics extends Component
             DB::raw('COALESCE(sum(case when volumes.status = 4 then 1 else 0 end), 0) as `read`'),
             DB::raw('COALESCE(sum(case when volumes.status = 3 OR volumes.status = 4 then price else 0 end), 0) as price'),
             DB::raw('count(*) as total'),
-        ])->first();
+        ]);
 
         $articles = DB::table('articles');
         if (!empty($this->search)) {
@@ -48,11 +48,13 @@ class GlobalStatistics extends Component
             DB::raw('COALESCE(sum(case when status = 1 then 1 else 0 end), 0) as ordered'),
             DB::raw('COALESCE(sum(case when status = 2 then 1 else 0 end), 0) as shipped'),
             DB::raw('COALESCE(sum(case when status = 3 then 1 else 0 end), 0) as delivered'),
+            DB::raw('0 as `read`'),
             DB::raw('COALESCE(sum(case when status = 3 then price else 0 end), 0) as price'),
             DB::raw('count(*) as total'),
-        ])->first();
-        $this->volumeStatistics = json_decode(json_encode($volumeStatistics), true);
-        $this->articleStatistics = json_decode(json_encode($articleStatistics), true);
+        ]);
+        $statistics = $volumeStatistics->union($articleStatistics)->get();
+        $this->volumeStatistics = json_decode(json_encode($statistics[0]), true);
+        $this->articleStatistics = json_decode(json_encode($statistics[1]), true);
 
         return view('livewire.global-statistics');
     }
