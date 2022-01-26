@@ -17,7 +17,7 @@
             </div>
         @else
             @foreach ($articles as $article)
-                @include('articles.card', [$article])
+                @include('articles.card', [$category, $article])
             @endforeach
         @endif
     </div>

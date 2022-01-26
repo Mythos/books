@@ -17,7 +17,7 @@
             </div>
         @else
             @foreach ($series as $item)
-                @include('series.card', [$item])
+                @include('series.card', [$category, $item])
             @endforeach
         @endif
     </div>
