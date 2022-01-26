@@ -66,6 +66,10 @@ class Volume extends Model
      */
     public function getNameAttribute(): string
     {
+        if ($this->series->total == 1) {
+            return $this->series->name;
+        }
+
         return "{$this->series->name} {$this->number}";
     }
 
