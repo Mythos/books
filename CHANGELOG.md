@@ -4,9 +4,10 @@
 
 - Added publishers in the Administration menu
 - Added publishers to series
+- Added series/articles count next to category name
+- Added a pie chart for volume statistics in series
 - Filtering also applies to statistics now
 - Fixed filter being lost when updating an upcoming release
-- Add series/articles count next to category name
 
 ## 1.2.5 (2022-01-25)
 
