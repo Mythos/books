@@ -28,7 +28,7 @@
                     <div class="row mt-1">
                         <div class="col-md-12">
                             <label for="series.publisher_id" class="col-form-label">{{ __('Publisher') }}</label>
-                            <select class="form-select @error('series.publisher_id') is-invalid @enderror" name="status" wire:model='series.publisher_id' required>
+                            <select class="form-select @error('series.publisher_id') is-invalid @enderror" name="status" wire:model='series.publisher_id'>
                                 <option></option>
                                 @foreach ($publishers as $publisher)
                                     <option value="{{ $publisher->id }}">{{ $publisher->name }}</option>
