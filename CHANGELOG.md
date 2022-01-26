@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.3.0
+
+- Added publishers in the Administration menu
+- Added publishers to series
+- Filtering also applies to statistics now
+
 ## 1.2.5 (2022-01-25)
 
 - Made table header for upcoming releases sticky

@@ -94,5 +94,8 @@
     "Volumme :number has been deleted": "Band :number wurde gelöscht",
     "Volumme :number has been updated": "Band :number wurde aktualisiert",
     "Your password has been changed": "Ihr Passwort wurde geändert",
-    "Your profile has been updated": "Ihr Profil wurde aktualisiert"
+    "Your profile has been updated": "Ihr Profil wurde aktualisiert",
+    "Publishers": "Verlage",
+    "Publisher": "Verlag",
+    "Create Publisher": "Verlag anlegen"
 }

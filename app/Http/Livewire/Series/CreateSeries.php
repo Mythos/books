@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Series;
 
 use App\Models\Category;
+use App\Models\Publisher;
 use App\Models\Series;
 use Exception;
 use Illuminate\Support\Facades\Log;
@@ -14,6 +15,8 @@ use Storage;
 
 class CreateSeries extends Component
 {
+    public $publishers;
+
     public Category $category;
 
     public Series $series;
@@ -27,6 +30,7 @@ class CreateSeries extends Component
         'series.category_id' => 'required|exists:categories,id',
         'series.is_nsfw' => 'boolean',
         'series.default_price' => 'nullable|regex:"^[0-9]{1,9}([,.][0-9]{1,2})?$"',
+        'series.publisher_id' => 'exists:publishers,id',
         'image_url' => 'required|url',
     ];
 
@@ -40,6 +44,7 @@ class CreateSeries extends Component
 
     public function mount(Category $category): void
     {
+        $this->publishers = Publisher::orderBy('name')->get();
         $this->category = $category;
         $this->series = new Series([
             'status' => 0,

@@ -7,8 +7,9 @@
         </ol>
     </nav>
     <div class="row bg-white shadow-sm rounded py-2">
-        <div class="col-sm-12 col-md-12 col-lg-3 d-flex align-self-stretch justify-content-center my-2">
+        <div class="col-sm-12 col-md-12 col-lg-3 d-flex flex-column align-items-center text-center my-2">
             <img src="{{ $series->image }}" alt="{{ $series->name }}" class="card-img-top" style="max-height: 400px; object-fit: contain;">
+            <span class="mt-2 fs-5">{{ $series->publisher?->name }}</span>
         </div>
         <div class="col-sm-12 col-md-12 col-lg-9 my-2 pl-4">
             <div>

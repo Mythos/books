@@ -23,11 +23,14 @@ class Gallery extends Component
 
     public function render()
     {
-        $series = Series::whereCategoryId($this->category->id)->with('volumes');
+        $series = Series::whereCategoryId($this->category->id)->with(['volumes', 'publisher']);
         if (!empty($this->search)) {
             $series->where('name', 'like', '%' . $this->search . '%')
                    ->orWhereHas('volumes', function ($query): void {
                        $query->where('isbn', 'like', '%' . $this->search . '%');
+                   })
+                   ->orWhereHas('publisher', function ($query): void {
+                       $query->where('name', 'like', '%' . $this->search . '%');
                    });
         }
         $this->series = $series->orderBy('status')->orderBy('name')->get();

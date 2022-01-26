@@ -19,6 +19,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property string|null $price
+ * @property int $ignore_in_upcoming
  * @property-read string $isbn_formatted
  * @property-read string $name
  * @property-read string $status_class
@@ -29,6 +30,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @method static \Illuminate\Database\Eloquent\Builder|Volume query()
  * @method static \Illuminate\Database\Eloquent\Builder|Volume whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Volume whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Volume whereIgnoreInUpcoming($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Volume whereIsbn($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Volume whereNumber($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Volume wherePrice($value)
@@ -37,8 +39,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @method static \Illuminate\Database\Eloquent\Builder|Volume whereStatus($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Volume whereUpdatedAt($value)
  * @mixin \Eloquent
- * @property int $ignore_in_upcoming
- * @method static \Illuminate\Database\Eloquent\Builder|Volume whereIgnoreInUpcoming($value)
  */
 class Volume extends Model
 {

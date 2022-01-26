@@ -27,6 +27,22 @@
                     </div>
                     <div class="row mt-1">
                         <div class="col-md-12">
+                            <label for="series.publisher_id" class="col-form-label">{{ __('Publisher') }}</label>
+                            <select class="form-select @error('series.publisher_id') is-invalid @enderror" name="status" wire:model='series.publisher_id' required>
+                                <option></option>
+                                @foreach ($publishers as $publisher)
+                                    <option value="{{ $publisher->id }}">{{ $publisher->name }}</option>
+                                @endforeach
+                            </select>
+                            @error('series.publisher_id')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+                        </div>
+                    </div>
+                    <div class="row mt-1">
+                        <div class="col-md-12">
                             <label for="series.status" class="col-form-label required">{{ __('Status') }}</label>
                             <select class="form-select @error('series.status') is-invalid @enderror" name="status" wire:model='series.status' required>
                                 <option value="0">{{ __('New') }}</option>

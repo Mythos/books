@@ -9,6 +9,10 @@ use App\Http\Livewire\Categories\EditCategory;
 use App\Http\Livewire\Categories\ShowCategory;
 use App\Http\Livewire\ChangePassword;
 use App\Http\Livewire\Profile;
+use App\Http\Livewire\Publishers\CreatePublisher;
+use App\Http\Livewire\Publishers\EditPublisher;
+use App\Http\Livewire\Publishers\PublisherTable;
+use App\Http\Livewire\Publishers\ShowPublisher;
 use App\Http\Livewire\Series\CreateSeries;
 use App\Http\Livewire\Series\EditSeries;
 use App\Http\Livewire\Series\ShowSeries;
@@ -35,6 +39,11 @@ Route::prefix('')->middleware(['auth'])->group(function (): void {
     Route::get('profile/change-password', ChangePassword::class)->name('change-password');
     Route::prefix('admin')->group(function (): void {
         Route::get('/', Administration::class)->name('admin.index');
+    });
+    Route::prefix('publishers')->group(function (): void {
+        Route::get('/', PublisherTable::class)->name('publishers.index');
+        Route::get('new', CreatePublisher::class)->name('publishers.create');
+        Route::get('{publisher}/edit', EditPublisher::class)->name('publishers.edit');
     });
 
     Route::get('category/new', CreateCategory::class)->name('categories.create');
