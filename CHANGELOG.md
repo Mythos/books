@@ -8,6 +8,7 @@
 - Added a pie chart for volume statistics in series
 - Filtering also applies to statistics now
 - Fixed filter being lost when updating an upcoming release
+- Renamed global statistics to overview
 
 ## 1.2.5 (2022-01-25)
 

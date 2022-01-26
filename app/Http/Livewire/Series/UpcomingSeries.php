@@ -49,7 +49,7 @@ class UpcomingSeries extends Component
         $volume = Volume::find($id);
         $volume->status = $status;
         $volume->save();
-        $this->emitTo('global-statistics', '$refresh');
+        $this->emitTo('overview', '$refresh');
         toastr()->livewire()->addSuccess(__(':name has been updated', ['name' => $volume->series->name . ' ' . $volume->number]));
     }
 

@@ -8,8 +8,8 @@
             </ol>
         </nav>
         <div class="row mb-3">
-            <livewire:series.upcoming-series />
-            <livewire:global-statistics />
+            @livewire('series.upcoming-series')
+            @livewire('overview')
         </div>
         @foreach ($categories as $category)
             @if ($category->type == 0)

@@ -6,7 +6,7 @@ use App\Models\Volume;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 
-class GlobalStatistics extends Component
+class Overview extends Component
 {
     public array $volumeStatistics = [];
 
@@ -56,7 +56,7 @@ class GlobalStatistics extends Component
         $this->volumeStatistics = json_decode(json_encode($statistics[0]), true);
         $this->articleStatistics = json_decode(json_encode($statistics[1]), true);
 
-        return view('livewire.global-statistics');
+        return view('livewire.overview');
     }
 
     public function filter($filter): void
