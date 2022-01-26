@@ -35,7 +35,7 @@ class EditSeries extends Component
         'series.category_id' => 'required|exists:categories,id',
         'series.is_nsfw' => 'boolean',
         'series.default_price' => 'nullable|regex:"^[0-9]{1,9}([,.][0-9]{1,2})?$"',
-        'series.publisher_id' => 'exists:publishers,id',
+        'series.publisher_id' => 'nullable|exists:publishers,id',
         'image_url' => 'url',
     ];
 
