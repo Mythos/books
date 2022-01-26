@@ -15,6 +15,6 @@ class Search extends Component
 
     public function updated(): void
     {
-        $this->emit('search', $this->search);
+        $this->emit('search', trim($this->search));
     }
 }

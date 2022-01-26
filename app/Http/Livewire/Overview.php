@@ -3,14 +3,15 @@
 namespace App\Http\Livewire;
 
 use App\Models\Volume;
+use Exception;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 
 class Overview extends Component
 {
-    public array $volumeStatistics = [];
+    public $volumeStatistics = [];
 
-    public array $articleStatistics = [];
+    public $articleStatistics = [];
 
     public string $search;
 
@@ -20,6 +21,19 @@ class Overview extends Component
     ];
 
     public function render()
+    {
+        $this->volumeStatistics = $this->getVolumeStatistics();
+        $this->articleStatistics = $this->getArticleStatistics();
+
+        return view('livewire.overview');
+    }
+
+    public function filter($filter): void
+    {
+        $this->search = $filter;
+    }
+
+    private function getVolumeStatistics()
     {
         $volumes = DB::table('volumes')
                    ->join('series', 'volumes.series_id', '=', 'series.id')
@@ -37,8 +51,13 @@ class Overview extends Component
             DB::raw('COALESCE(sum(case when volumes.status = 4 then 1 else 0 end), 0) as `read`'),
             DB::raw('COALESCE(sum(case when volumes.status = 3 OR volumes.status = 4 then price else 0 end), 0) as price'),
             DB::raw('count(*) as total'),
-        ]);
+        ])->first();
 
+        return json_decode(json_encode($volumeStatistics), true);
+    }
+
+    private function getArticleStatistics()
+    {
         $articles = DB::table('articles');
         if (!empty($this->search)) {
             $articles->where('name', 'like', '%' . $this->search . '%');
@@ -51,16 +70,8 @@ class Overview extends Component
             DB::raw('0 as `read`'),
             DB::raw('COALESCE(sum(case when status = 3 then price else 0 end), 0) as price'),
             DB::raw('count(*) as total'),
-        ]);
-        $statistics = $volumeStatistics->union($articleStatistics)->get();
-        $this->volumeStatistics = json_decode(json_encode($statistics[0]), true);
-        $this->articleStatistics = json_decode(json_encode($statistics[1]), true);
+        ])->first();
 
-        return view('livewire.overview');
-    }
-
-    public function filter($filter): void
-    {
-        $this->search = $filter;
+        return json_decode(json_encode($articleStatistics), true);
     }
 }
