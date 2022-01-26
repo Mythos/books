@@ -48,6 +48,9 @@ class EditSeries extends Component
         if ($property == 'series.total' && empty($value)) {
             $this->series->total = null;
         }
+        if ($property == 'series.publisher_id' && empty($value)) {
+            $this->series->publisher_id = null;
+        }
         $this->validateOnly($property);
     }
 
