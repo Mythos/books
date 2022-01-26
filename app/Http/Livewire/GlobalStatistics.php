@@ -23,7 +23,7 @@ class GlobalStatistics extends Component
     {
         $volumes = DB::table('volumes')
                    ->join('series', 'volumes.series_id', '=', 'series.id')
-                   ->join('publishers', 'series.publisher_id', '=', 'publishers.id');
+                   ->leftJoin('publishers', 'series.publisher_id', '=', 'publishers.id');
         if (!empty($this->search)) {
             $volumes->where('isbn', 'like', '%' . $this->search . '%')
             ->orWhere('series.name', 'like', '%' . $this->search . '%')
