@@ -12,7 +12,7 @@ class GlobalStatistics extends Component
 
     public array $articleStatistics = [];
 
-    private string $search;
+    public string $search;
 
     protected $listeners = [
         '$refresh',

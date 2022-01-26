@@ -10,7 +10,7 @@ class UpcomingSeries extends Component
 {
     public $upcoming;
 
-    private string $search;
+    public string $search;
 
     protected $listeners = ['search' => 'filter'];
 

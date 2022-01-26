@@ -5,6 +5,7 @@
 - Added publishers in the Administration menu
 - Added publishers to series
 - Filtering also applies to statistics now
+- Fixed filter being lost when updating an upcoming release
 
 ## 1.2.5 (2022-01-25)
 

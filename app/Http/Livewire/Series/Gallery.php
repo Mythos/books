@@ -10,7 +10,7 @@ class Gallery extends Component
 {
     public $series = [];
 
-    private string $search = '';
+    public string $search = '';
 
     public Category $category;
 
