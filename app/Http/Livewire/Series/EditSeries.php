@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Series;
 
 use App\Http\Traits\LivewireDelete;
 use App\Models\Category;
+use App\Models\Publisher;
 use App\Models\Series;
 use App\Models\Volume;
 use Exception;
@@ -19,6 +20,8 @@ class EditSeries extends Component
 {
     use LivewireAlert;
 
+    public $publishers;
+
     public Category $category;
 
     public Series $series;
@@ -32,6 +35,7 @@ class EditSeries extends Component
         'series.category_id' => 'required|exists:categories,id',
         'series.is_nsfw' => 'boolean',
         'series.default_price' => 'nullable|regex:"^[0-9]{1,9}([,.][0-9]{1,2})?$"',
+        'series.publisher_id' => 'nullable|exists:publishers,id',
         'image_url' => 'url',
     ];
 
@@ -44,11 +48,15 @@ class EditSeries extends Component
         if ($property == 'series.total' && empty($value)) {
             $this->series->total = null;
         }
+        if ($property == 'series.publisher_id' && empty($value)) {
+            $this->series->publisher_id = null;
+        }
         $this->validateOnly($property);
     }
 
     public function mount(Category $category, Series $series): void
     {
+        $this->publishers = Publisher::orderBy('name')->get();
         $this->series = $series;
     }
 

@@ -9,30 +9,26 @@ use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 
 /**
- * App\Models\Category
+ * App\Models\Publisher
  *
  * @property int $id
  * @property string $name
  * @property string $slug
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
- * @property int $sort_index
- * @property int $type
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Series[] $series
  * @property-read int|null $series_count
- * @method static \Illuminate\Database\Eloquent\Builder|Category newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Category newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Category query()
- * @method static \Illuminate\Database\Eloquent\Builder|Category whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Category whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Category whereName($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Category whereSlug($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Category whereSortIndex($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Category whereType($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Category whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Publisher newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Publisher newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Publisher query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Publisher whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Publisher whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Publisher whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Publisher whereSlug($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Publisher whereUpdatedAt($value)
  * @mixin \Eloquent
  */
-class Category extends Model
+class Publisher extends Model
 {
     use HasFactory;
     use HasSlug;
@@ -44,28 +40,16 @@ class Category extends Model
      */
     protected $fillable = [
         'name',
-        'sort_index',
-        'type',
     ];
 
     /**
-     * Get all of the series for the Category
+     * Get all of the series for the Publisher
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function series(): HasMany
     {
         return $this->hasMany(Series::class);
-    }
-
-    /**
-     * Get all of the articles for the Category
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function articles(): HasMany
-    {
-        return $this->hasMany(Article::class);
     }
 
     /**

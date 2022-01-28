@@ -1,5 +1,15 @@
 # Changelog
 
+## 1.3.0 (2022-01-28)
+
+- Added publishers in the Administration menu
+- Added publishers to series
+- Added series/articles count next to category name
+- Added a pie chart for volume statistics in series
+- Filtering also applies to statistics now
+- Fixed filter being lost when updating an upcoming release
+- Renamed global statistics to overview
+
 ## 1.2.5 (2022-01-25)
 
 - Made table header for upcoming releases sticky

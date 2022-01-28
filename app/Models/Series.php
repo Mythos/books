@@ -22,6 +22,7 @@ use Spatie\Sluggable\SlugOptions;
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property int|null $is_nsfw
  * @property string|null $default_price
+ * @property int|null $publisher_id
  * @property-read \App\Models\Category $category
  * @property-read string $completion_status
  * @property-read string $completion_status_class
@@ -30,6 +31,7 @@ use Spatie\Sluggable\SlugOptions;
  * @property-read string $status_class
  * @property-read string $status_name
  * @property-read string $total_worth
+ * @property-read \App\Models\Publisher|null $publisher
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Volume[] $volumes
  * @property-read int|null $volumes_count
  * @method static \Illuminate\Database\Eloquent\Builder|Series newModelQuery()
@@ -41,6 +43,7 @@ use Spatie\Sluggable\SlugOptions;
  * @method static \Illuminate\Database\Eloquent\Builder|Series whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Series whereIsNsfw($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Series whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Series wherePublisherId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Series whereSlug($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Series whereStatus($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Series whereTotal($value)
@@ -64,6 +67,7 @@ class Series extends Model
         'is_nsfw',
         'default_price',
         'category_id',
+        'publisher_id',
     ];
 
     /**
@@ -187,6 +191,16 @@ class Series extends Model
     public function category(): BelongsTo
     {
         return $this->belongsTo(Category::class);
+    }
+
+    /**
+     * Get the publisher that owns the Series
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function publisher(): BelongsTo
+    {
+        return $this->belongsTo(Publisher::class);
     }
 
     /**

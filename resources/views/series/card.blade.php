@@ -4,6 +4,9 @@
         <div class="card-body d-flex flex-column">
             <h5 class="card-title text-uppercase">{{ $item->name }}</h5>
             <div class="mt-auto">
+                <div>
+                    {{ $item->publisher?->name }}
+                </div>
                 <div class="float-start">
                     <span class="{{ $item->status_class }}">{{ $item->status_name }}</span>
                 </div>

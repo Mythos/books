@@ -3,7 +3,7 @@
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{ route('home') }}">{{ __('Home') }}</a></li>
             <li class="breadcrumb-item"><a href="{{ route('categories.show', [$series->category]) }}">{{ $series->category->name }}</a></li>
-            <li class="breadcrumb-item active" aria-current="page">{{ $series->name }}</li>
+            <li class="breadcrumb-item active" aria-current="page"><a href="{{ route('series.show', [$category, $series]) }}">{{ $series->name }}</a></li>
         </ol>
     </nav>
     <form method="POST" wire:submit.prevent='save'>
@@ -19,6 +19,22 @@
                             <label for="series.name" class="col-form-label required">{{ __('Name') }}</label>
                             <input id="series.name" name="series.name" type="text" class="form-control @error('series.name') is-invalid @enderror" wire:model='series.name' autofocus>
                             @error('series.name')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+                        </div>
+                    </div>
+                    <div class="row mt-1">
+                        <div class="col-md-12">
+                            <label for="series.publisher_id" class="col-form-label">{{ __('Publisher') }}</label>
+                            <select class="form-select @error('series.publisher_id') is-invalid @enderror" name="status" wire:model='series.publisher_id'>
+                                <option></option>
+                                @foreach ($publishers as $publisher)
+                                    <option value="{{ $publisher->id }}">{{ $publisher->name }}</option>
+                                @endforeach
+                            </select>
+                            @error('series.publisher_id')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
                                 </span>
