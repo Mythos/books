@@ -1,6 +1,6 @@
 # Changelog
 
-## 1.3.0
+## 1.3.0 (2022-01-28)
 
 - Added publishers in the Administration menu
 - Added publishers to series
