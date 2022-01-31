@@ -20,6 +20,7 @@ use Spatie\Sluggable\SlugOptions;
  * @property int $category_id
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \App\Models\Category $category
  * @property-read string $image
  * @property-read string $status_class
  * @property-read string $status_name
