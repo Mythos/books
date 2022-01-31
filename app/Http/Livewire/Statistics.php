@@ -2,7 +2,6 @@
 
 namespace App\Http\Livewire;
 
-use App\Models\Volume;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 
