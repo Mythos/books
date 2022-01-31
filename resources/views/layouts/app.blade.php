@@ -57,6 +57,9 @@
                                     </li>
                                 </ul>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('statistics') }}">{{ __('Statistics') }}</a>
+                            </li>
                         @endauth
                     </ul>
                     <!-- Right Side Of Navbar -->

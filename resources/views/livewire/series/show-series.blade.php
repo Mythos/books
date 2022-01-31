@@ -32,72 +32,10 @@
                     <div>{{ __('Total Worth') }}: {{ number_format($series->total_worth, 2) }} {{ config('app.currency') }}</div>
                 </div>
                 <div class="mt-3 col-sm-12 col-md-12 col-lg-4" style="height: 180px;">
-                    <canvas id="myChart"></canvas>
+                    @include('livewire.series.partials.volume-statistics')
                 </div>
             </div>
             @include('livewire.series.volumes-table', [$category, $series, $volumes])
         </div>
     </div>
-
-    <script>
-        let chart = null;
-        document.addEventListener('livewire:load', function() {
-            chart = initializeChart();
-        });
-        document.addEventListener('livewire:update', function() {
-            chart.destroy();
-            chart = initializeChart();
-        });
-
-        function initializeChart() {
-            const ctx = document.getElementById("myChart").getContext("2d");
-
-            const data = {
-                labels: [
-                    '{{ __('New') }}',
-                    '{{ __('Ordered') }}',
-                    '{{ __('Shipped') }}',
-                    '{{ __('Delivered') }}',
-                    '{{ __('Read') }}',
-                ],
-                datasets: [{
-                    label: 'My First Dataset',
-                    data: [
-                        @this.new,
-                        @this.ordered,
-                        @this.shipped,
-                        @this.delivered,
-                        @this.read,
-                    ],
-                    backgroundColor: [
-                        '#dc3545',
-                        '#ffc107',
-                        '#0dcaf0',
-                        '#0d6efd',
-                        '#198754',
-                    ],
-                    hoverOffset: 4
-                }]
-            };
-            const config = {
-                type: 'pie',
-                data: data,
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        legend: {
-                            position: 'right'
-                        }
-                    },
-                    elements: {
-                        arc: {
-                            borderWidth: 0
-                        }
-                    }
-                }
-            };
-            return new Chart(ctx, config);
-        }
-    </script>
 </div>
