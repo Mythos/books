@@ -10,6 +10,12 @@
 
     <title>{{ config('app.name', 'Laravel') }}</title>
 
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ mix('apple-touch-icon.png') }}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ mix('favicon-32x32.png') }}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ mix('favicon-16x16.png') }}">
+    <link rel="manifest" href="{{ mix('site.webmanifest') }}">
+    <meta name="theme-color" content="#3c8dbc">
+
     <!-- Scripts -->
     <script src="{{ mix('js/app.js') }}" defer></script>
 
@@ -125,6 +131,11 @@
             </ul>
         </footer>
     </div>
+    <script>
+        if ("serviceWorker" in navigator) {
+            navigator.serviceWorker.register("{{ asset('service-worker.js') }}").then(function(reg) {}).catch(function(err) {});
+        }
+    </script>
     @flasher_render
     @flasher_livewire_render
     @livewireScripts
