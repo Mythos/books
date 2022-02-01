@@ -28,9 +28,11 @@ use Spatie\Sluggable\SlugOptions;
  * @property-read string $completion_status_class
  * @property-read string $completion_status_name
  * @property-read string $image
+ * @property-read string $read_volumes_count
  * @property-read string $status_class
  * @property-read string $status_name
  * @property-read string $total_worth
+ * @property-read string $unread_volumes_count
  * @property-read \App\Models\Publisher|null $publisher
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Volume[] $volumes
  * @property-read int|null $volumes_count
@@ -69,6 +71,26 @@ class Series extends Model
         'category_id',
         'publisher_id',
     ];
+
+    /**
+     * Get the series' unread volumes count.
+     *
+     * @return string
+     */
+    public function getUnreadVolumesCountAttribute(): ?int
+    {
+        return $this->volumes->where('status', '=', '3')->count();
+    }
+
+    /**
+     * Get the series' read volumes count.
+     *
+     * @return string
+     */
+    public function getReadVolumesCountAttribute(): ?int
+    {
+        return $this->volumes->where('status', '=', '4')->count();
+    }
 
     /**
      * Get the series' status name.

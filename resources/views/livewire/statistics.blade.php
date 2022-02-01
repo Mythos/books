@@ -35,8 +35,8 @@
                         <tbody>
                             @foreach ($unreadSeries as $series)
                                 <tr>
-                                    <td>{{ $series->name }}</td>
-                                    <td class="text-end">{{ $series->unread }} {{ __('Volumes') }}</td>
+                                    <td><a href="{{ route('series.show', [$series->category, $series]) }}">{{ $series->name }}</a></td>
+                                    <td class="text-end">{{ $series->unread_volumes_count }} {{ __('Volumes') }}</td>
                                 </tr>
                             @endforeach
                             @if ($unreadSeries->count() == 0)
@@ -46,7 +46,6 @@
                             @endif
                         </tbody>
                     </table>
-
                     {{ $unreadSeries->links() }}
                 </div>
             </div>
@@ -65,8 +64,8 @@
                         <tbody>
                             @foreach ($mostReadSeries as $series)
                                 <tr>
-                                    <td>{{ $series->name }}</td>
-                                    <td class="text-end">{{ $series->read }} {{ __('Volumes') }}</td>
+                                    <td><a href="{{ route('series.show', [$series->category, $series]) }}">{{ $series->name }}</a></td>
+                                    <td class="text-end">{{ $series->read_volumes_count }} {{ __('Volumes') }}</td>
                                 </tr>
                             @endforeach
                             @if ($mostReadSeries->count() == 0)

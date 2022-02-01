@@ -2,6 +2,8 @@
 
 namespace App\Http\Livewire;
 
+use App\Models\Series;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -20,22 +22,30 @@ class Statistics extends Component
     {
         $this->loadVolumesByStatusStatistics();
         $this->loadSeriesByPublisherStatistics();
-        $unreadSeries = DB::table('series')
-                            ->join('volumes', 'volumes.series_id', '=', 'series.id')
-                            ->where('volumes.status', '=', 3)
-                            ->select('series.name', DB::raw('count(*) as unread'))
-                            ->groupBy('series.name')
-                            ->orderByDesc('unread')
-                            ->orderBy('series.name')
-                            ->paginate(10, ['*'], 'unread');
-        $mostReadSeries = DB::table('series')
-                              ->join('volumes', 'volumes.series_id', '=', 'series.id')
-                              ->where('volumes.status', '=', 4)
-                              ->select('series.name', DB::raw('count(*) as `read`'))
-                              ->groupBy('series.name')
-                              ->orderByDesc('read')
-                              ->orderBy('series.name')
-                              ->paginate(10, ['*'], 'mostread');
+
+        $unreadSeries = Series::with(['category', 'volumes'])
+                                ->withCount([
+                                    'volumes as unread_sum' => function ($query): void {
+                                        $query->select(DB::raw('SUM(CASE WHEN `status` = 3 THEN 1 ELSE 0 END)'));
+                                    },
+                                ])
+                                ->whereHas('volumes', function (Builder $query): void {
+                                    $query->where('status', '=', '3');
+                                })
+                                ->orderByDesc('unread_sum')
+                                ->paginate(10, ['*'], 'unread');
+
+        $mostReadSeries = Series::with(['category', 'volumes'])
+                                  ->withCount([
+                                      'volumes as read_sum' => function ($query): void {
+                                          $query->select(DB::raw('SUM(CASE WHEN `status` = 4 THEN 1 ELSE 0 END)'));
+                                      },
+                                  ])
+                                  ->whereHas('volumes', function (Builder $query): void {
+                                      $query->where('status', '=', '4');
+                                  })
+                                  ->orderByDesc('read_sum')
+                                  ->paginate(10, ['*'], 'mostread');
 
         return view('livewire.statistics', [
             'unreadSeries' => $unreadSeries,
