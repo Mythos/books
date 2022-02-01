@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.4.1 (2022-02-01)
+
+- Fixed login redirect
+
 ## 1.4.0 (2022-02-01)
 
 - Added additional statistics

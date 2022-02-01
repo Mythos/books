@@ -17,6 +17,9 @@ mix.js("resources/js/app.js", "public/js")
         "node_modules/@flasher/flasher-toastr/dist/flasher-toastr.min.js",
         "public/js/flasher-toastr.min.js"
     )
+    .copy([
+        'resources/js/service-worker.js',
+    ], 'public/service-worker.js')
     .copy("resources/fonts", "public/fonts")
     .copy('resources/favicon/site.webmanifest', 'public/site.webmanifest')
     .copy('resources/favicon/android-chrome-192x192.png', 'public/android-chrome-192x192.png')
