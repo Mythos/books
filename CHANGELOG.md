@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.4.0
+
+- Added additional statistics
+- Fonts are no longer loaded from Google
+
 ## 1.3.0 (2022-01-28)
 
 - Added publishers in the Administration menu
