@@ -246,7 +246,8 @@
             // the barcode had actually been found.
             Quagga.onDetected(function(result) {
                 if (result.codeResult.code) {
-                    $('#isbn').val(result.codeResult.code);
+                    @this.set('isbn', result.codeResult.code);
+                    // $('#isbn').val(result.codeResult.code).trigger('change');
                     Quagga.stop();
                     setTimeout(function() {
                         $('#livestream_scanner').modal('hide');
