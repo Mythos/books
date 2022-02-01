@@ -105,15 +105,11 @@
                     <div class="error"></div>
                 </div>
                 <div class="modal-footer">
-                    <label class="btn btn-default pull-left">
-                        <i class="fa fa-camera"></i> Use camera app
-                        <input type="file" accept="image/*;capture=camera" capture="camera" class="hidden" />
-                    </label>
                     <button type="button" class="btn btn-primary" data-bs-dismiss="modal">{{ __('Close') }}</button>
                 </div>
-            </div><!-- /.modal-content -->
-        </div><!-- /.modal-dialog -->
-    </div><!-- /.modal -->
+            </div>
+        </div>
+    </div>
 
     <style>
         #interactive.viewport {
@@ -247,7 +243,6 @@
             Quagga.onDetected(function(result) {
                 if (result.codeResult.code) {
                     @this.set('isbn', result.codeResult.code);
-                    // $('#isbn').val(result.codeResult.code).trigger('change');
                     Quagga.stop();
                     setTimeout(function() {
                         $('#livestream_scanner').modal('hide');
