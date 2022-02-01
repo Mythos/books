@@ -10,7 +10,7 @@ return [
     | Current application version.
     |
     */
-    'version' => env('APP_VERSION', '1.4.1'),
+    'version' => env('APP_VERSION', '1.4.2'),
 
     /*
     |--------------------------------------------------------------------------

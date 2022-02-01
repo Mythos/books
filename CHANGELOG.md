@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.4.2 (2022-02-01)
+
+- Version notifications are now persistent
+- Notifications are now shown in the bottom right
+
 ## 1.4.1 (2022-02-01)
 
 - Fixed login redirect
