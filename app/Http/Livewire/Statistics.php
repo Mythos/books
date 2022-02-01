@@ -23,37 +23,13 @@ class Statistics extends Component
         $this->loadVolumesByStatusStatistics();
         $this->loadSeriesByPublisherStatistics();
 
-        $unreadSeries = Series::with(['category', 'volumes'])
-                                ->withCount([
-                                    'volumes as unread_sum' => function ($query): void {
-                                        $query->select(DB::raw('SUM(CASE WHEN `status` = 3 THEN 1 ELSE 0 END)'));
-                                    },
-                                ])
-                                ->whereHas('volumes', function (Builder $query): void {
-                                    $query->where('status', '=', '3');
-                                })
-                                ->orderByDesc('unread_sum')
-                                ->paginate(10, ['*'], 'unread');
-
-        $mostReadSeries = Series::with(['category', 'volumes'])
-                                  ->withCount([
-                                      'volumes as read_sum' => function ($query): void {
-                                          $query->select(DB::raw('SUM(CASE WHEN `status` = 4 THEN 1 ELSE 0 END)'));
-                                      },
-                                  ])
-                                  ->whereHas('volumes', function (Builder $query): void {
-                                      $query->where('status', '=', '4');
-                                  })
-                                  ->orderByDesc('read_sum')
-                                  ->paginate(10, ['*'], 'mostread');
-
         return view('livewire.statistics', [
-            'unreadSeries' => $unreadSeries,
-            'mostReadSeries' => $mostReadSeries,
+            'unreadSeries' => $this->getUnreadSeries(),
+            'mostReadSeries' => $this->getMostReadSeries(),
         ])->extends('layouts.app')->section('content');
     }
 
-    public function loadVolumesByStatusStatistics(): void
+    private function loadVolumesByStatusStatistics(): void
     {
         $data = DB::table('volumes')
                     ->select('status', DB::raw('count(*) as total'))
@@ -68,7 +44,7 @@ class Statistics extends Component
         ];
     }
 
-    public function loadSeriesByPublisherStatistics(): void
+    private function loadSeriesByPublisherStatistics(): void
     {
         $this->seriesByPublisherStatistics = DB::table('series')
                                                  ->join('publishers', 'series.publisher_id', '=', 'publishers.id')
@@ -77,5 +53,35 @@ class Statistics extends Component
                                                  ->get()
                                                  ->pluck('total', 'publisher')
                                                  ->toArray();
+    }
+
+    private function getMostReadSeries()
+    {
+        return Series::with(['category', 'volumes'])
+                       ->withCount([
+                           'volumes as read_sum' => function ($query): void {
+                               $query->select(DB::raw('SUM(CASE WHEN `status` = 4 THEN 1 ELSE 0 END)'));
+                           },
+                       ])
+                       ->whereHas('volumes', function (Builder $query): void {
+                           $query->where('status', '=', '4');
+                       })
+                       ->orderByDesc('read_sum')
+                       ->paginate(10, ['*'], 'mostread');
+    }
+
+    private function getUnreadSeries()
+    {
+        return Series::with(['category', 'volumes'])
+                       ->withCount([
+                           'volumes as unread_sum' => function ($query): void {
+                               $query->select(DB::raw('SUM(CASE WHEN `status` = 3 THEN 1 ELSE 0 END)'));
+                           },
+                       ])
+                       ->whereHas('volumes', function (Builder $query): void {
+                           $query->where('status', '=', '3');
+                       })
+                       ->orderByDesc('unread_sum')
+                       ->paginate(10, ['*'], 'unread');
     }
 }
