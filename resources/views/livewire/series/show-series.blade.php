@@ -31,7 +31,7 @@
                     <div>{{ __('Volumes (total)') }}: {{ isset($series->total) ? $series->total : '?' }} {{ __('Volumes') }}</div>
                     <div>{{ __('Total Worth') }}: {{ number_format($series->total_worth, 2) }} {{ config('app.currency') }}</div>
                 </div>
-                <div class="mt-3 col-sm-12 col-md-12 col-lg-4" style="height: 180px;">
+                <div class="mt-3 col-sm-12 col-md-12 col-lg-4">
                     @include('livewire.series.partials.volume-statistics')
                 </div>
             </div>
