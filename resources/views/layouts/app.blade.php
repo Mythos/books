@@ -131,11 +131,6 @@
             </ul>
         </footer>
     </div>
-    <script>
-        if ("serviceWorker" in navigator) {
-            navigator.serviceWorker.register("{{ asset('service-worker.js') }}").then(function(reg) {}).catch(function(err) {});
-        }
-    </script>
     @flasher_render
     @flasher_livewire_render
     @livewireScripts
