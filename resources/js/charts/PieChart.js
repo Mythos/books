@@ -14,9 +14,7 @@ export class PieChart {
     }
     static createAllVisible(chartId, labels, values, colors) {
         const total = values.reduce((a, v) => a + v);
-        const valuesInPercent = values.map((v) =>
-            Math.max((v / total) * 100, 1)
-        );
+        const valuesInPercent = values.map((v) => Math.max((v / total) * 100, 1));
         const data = {
             labels: labels,
             datasets: [
@@ -42,7 +40,6 @@ export class PieChart {
                 cutoutPercentage: 65,
                 plugins: {
                     htmlLegend: {
-                        // ID of the container to put the legend in
                         containerID: legendId,
                     },
                     legend: {
@@ -51,19 +48,12 @@ export class PieChart {
                         labels: {
                             generateLabels: (chart) => {
                                 const data = chart.data;
-                                if (
-                                    data.labels.length &&
-                                    data.datasets.length
-                                ) {
-                                    const {
-                                        labels: { pointStyle },
-                                    } = chart.legend.options;
+                                if (data.labels.length && data.datasets.length) {
+                                    const { labels: { pointStyle }, } = chart.legend.options;
                                     return data.labels.map((label, i) => {
                                         const meta = chart.getDatasetMeta(0);
-                                        const style =
-                                            meta.controller.getStyle(i);
-                                        const dataSet =
-                                            meta.controller.getDataset();
+                                        const style = meta.controller.getStyle(i);
+                                        const dataSet = meta.controller.getDataset();
                                         return {
                                             text: `${label} (${dataSet.data[i]})`,
                                             fillStyle: style.backgroundColor,
@@ -131,8 +121,7 @@ export class PieChart {
                 }
 
                 // Reuse the built-in legendItems generator
-                const items =
-                    chart.options.plugins.legend.labels.generateLabels(chart);
+                const items = chart.options.plugins.legend.labels.generateLabels(chart);
                 items.forEach((item) => {
                     const li = document.createElement("li");
                     li.style.alignItems = "center";
@@ -147,10 +136,7 @@ export class PieChart {
                             // Pie and doughnut charts only have a single dataset and visibility is per item
                             chart.toggleDataVisibility(item.index);
                         } else {
-                            chart.setDatasetVisibility(
-                                item.datasetIndex,
-                                !chart.isDatasetVisible(item.datasetIndex)
-                            );
+                            chart.setDatasetVisibility(item.datasetIndex, !chart.isDatasetVisible(item.datasetIndex));
                         }
                         chart.update();
                     };
@@ -170,9 +156,7 @@ export class PieChart {
                     textContainer.style.color = item.fontColor;
                     textContainer.style.margin = 0;
                     textContainer.style.padding = 0;
-                    textContainer.style.textDecoration = item.hidden
-                        ? "line-through"
-                        : "";
+                    textContainer.style.textDecoration = item.hidden ? "line-through" : "";
 
                     const text = document.createTextNode(item.text);
                     textContainer.appendChild(text);
