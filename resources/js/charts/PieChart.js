@@ -48,6 +48,36 @@ export class PieChart {
                     legend: {
                         display: false,
                         position: "right",
+                        labels: {
+                            generateLabels: (chart) => {
+                                const data = chart.data;
+                                if (
+                                    data.labels.length &&
+                                    data.datasets.length
+                                ) {
+                                    const {
+                                        labels: { pointStyle },
+                                    } = chart.legend.options;
+                                    return data.labels.map((label, i) => {
+                                        const meta = chart.getDatasetMeta(0);
+                                        const style =
+                                            meta.controller.getStyle(i);
+                                        const dataSet =
+                                            meta.controller.getDataset();
+                                        return {
+                                            text: `${label} (${dataSet.data[i]})`,
+                                            fillStyle: style.backgroundColor,
+                                            strokeStyle: style.borderColor,
+                                            lineWidth: style.borderWidth,
+                                            pointStyle: pointStyle,
+                                            hidden: !chart.getDataVisibility(i),
+                                            index: i,
+                                        };
+                                    });
+                                }
+                                return [];
+                            },
+                        },
                     },
                     datalabels: {
                         display: false,
