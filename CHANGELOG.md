@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.5.0 (2022-02-01)
+
+- Added experimental barcode scanner when creating volumes
+
 ## 1.4.2 (2022-02-01)
 
 - Version notifications are now persistent
