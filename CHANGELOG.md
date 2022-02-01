@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.4.0 (2022-02-01)
+
+- Added additional statistics
+- Added favicon
+- Added Web App Manifest to allow installation on mobile devices
+- Fonts are no longer loaded from Google
+- Fixed "No data" not spanning over all columns for volumes table inside a series
+
 ## 1.3.0 (2022-01-28)
 
 - Added publishers in the Administration menu

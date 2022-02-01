@@ -17,5 +17,13 @@ mix.js("resources/js/app.js", "public/js")
         "node_modules/@flasher/flasher-toastr/dist/flasher-toastr.min.js",
         "public/js/flasher-toastr.min.js"
     )
+    .copy("resources/fonts", "public/fonts")
+    .copy('resources/favicon/site.webmanifest', 'public/site.webmanifest')
+    .copy('resources/favicon/android-chrome-192x192.png', 'public/android-chrome-192x192.png')
+    .copy('resources/favicon/android-chrome-512x512.png', 'public/android-chrome-512x512.png')
+    .copy('resources/favicon/apple-touch-icon.png', 'public/apple-touch-icon.png')
+    .copy('resources/favicon/favicon.ico', 'public/favicon.ico')
+    .copy('resources/favicon/favicon-16x16.png', 'public/favicon-16x16.png')
+    .copy('resources/favicon/favicon-32x32.png', 'public/favicon-32x32.png')
     .sourceMaps()
     .version();

@@ -16,6 +16,7 @@ use App\Http\Livewire\Publishers\ShowPublisher;
 use App\Http\Livewire\Series\CreateSeries;
 use App\Http\Livewire\Series\EditSeries;
 use App\Http\Livewire\Series\ShowSeries;
+use App\Http\Livewire\Statistics;
 use App\Http\Livewire\Volumes\CreateVolume;
 use App\Http\Livewire\Volumes\EditVolume;
 use Illuminate\Support\Facades\Route;
@@ -45,6 +46,7 @@ Route::prefix('')->middleware(['auth'])->group(function (): void {
         Route::get('new', CreatePublisher::class)->name('publishers.create');
         Route::get('{publisher}/edit', EditPublisher::class)->name('publishers.edit');
     });
+    Route::get('statistics', Statistics::class)->name('statistics');
 
     Route::get('category/new', CreateCategory::class)->name('categories.create');
     Route::get('{category}', ShowCategory::class)->name('categories.show');

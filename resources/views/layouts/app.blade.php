@@ -10,12 +10,14 @@
 
     <title>{{ config('app.name', 'Laravel') }}</title>
 
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ mix('apple-touch-icon.png') }}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ mix('favicon-32x32.png') }}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ mix('favicon-16x16.png') }}">
+    <link rel="manifest" href="{{ mix('site.webmanifest') }}">
+    <meta name="theme-color" content="#3c8dbc">
+
     <!-- Scripts -->
     <script src="{{ mix('js/app.js') }}" defer></script>
-
-    <!-- Fonts -->
-    <link rel="dns-prefetch" href="//fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
 
     <!-- Styles -->
     @livewireStyles
@@ -24,7 +26,7 @@
 
 <body>
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
+        <nav class="navbar navbar-dark bg-dark navbar-expand-md shadow-sm">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
                     {{ config('app.name', 'Laravel') }}
@@ -56,6 +58,9 @@
                                         </a>
                                     </li>
                                 </ul>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('statistics') }}">{{ __('Statistics') }}</a>
                             </li>
                         @endauth
                     </ul>
