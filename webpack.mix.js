@@ -17,5 +17,6 @@ mix.js("resources/js/app.js", "public/js")
         "node_modules/@flasher/flasher-toastr/dist/flasher-toastr.min.js",
         "public/js/flasher-toastr.min.js"
     )
+    .copy("resources/fonts", "public/fonts")
     .sourceMaps()
     .version();
