@@ -5,13 +5,13 @@ namespace App\Http\Livewire\Volumes;
 use App\Helpers\IsbnHelpers;
 use App\Models\Series;
 use App\Models\Volume;
+use App\Rules\Isbn;
 use Illuminate\Support\Str;
-use Intervention\Validation\Rules\Isbn;
 use Livewire\Component;
 
 class CreateVolume extends Component
 {
-    public string $publish_date = '';
+    public ?string $publish_date = '';
 
     public string $isbn = '';
 
@@ -37,7 +37,7 @@ class CreateVolume extends Component
     protected function rules()
     {
         return [
-            'publish_date' => 'date',
+            'publish_date' => 'nullable|date',
             'status' => 'required|integer|min:0',
             'price' => 'nullable|regex:"^[0-9]{1,9}([,.][0-9]{1,2})?$"',
             'isbn' => ['required', 'unique:volumes,isbn,NULL,id,series_id,' . $this->series->id, new Isbn()],
@@ -70,6 +70,9 @@ class CreateVolume extends Component
             $this->price = floatval(Str::replace(',', '.', $this->price));
         } else {
             $this->price = 0;
+        }
+        if (empty($this->publish_date)) {
+            $this->publish_date = null;
         }
         $volume = new Volume([
             'series_id' => $this->series->id,

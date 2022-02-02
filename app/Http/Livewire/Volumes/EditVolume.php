@@ -6,8 +6,8 @@ use App\Helpers\IsbnHelpers;
 use App\Models\Category;
 use App\Models\Series;
 use App\Models\Volume;
+use App\Rules\Isbn;
 use Illuminate\Support\Str;
-use Intervention\Validation\Rules\Isbn;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Component;
 
@@ -31,7 +31,7 @@ class EditVolume extends Component
     protected function rules()
     {
         return [
-            'volume.publish_date' => 'date',
+            'volume.publish_date' => 'nullable|date',
             'volume.status' => 'required|integer|min:0',
             'volume.price' => 'nullable|regex:"^[0-9]{1,9}([,.][0-9]{1,2})?$"',
             'volume.isbn' => ['required', 'unique:volumes,isbn,' . $this->volume->id . ',id,series_id,' . $this->series->id, new Isbn()],
@@ -49,7 +49,7 @@ class EditVolume extends Component
             $this->validateOnly($property);
             $isbn = IsbnHelpers::convertTo13($value);
             if (!empty($isbn)) {
-                $this->volume->publish_date = IsbnHelpers::getPublishDateByIsbn($isbn) ?? '';
+                $this->volume->publish_date = IsbnHelpers::getPublishDateByIsbn($isbn) ?? null;
             }
         } else {
             $this->validateOnly($property);
@@ -71,6 +71,9 @@ class EditVolume extends Component
             $this->volume->price = floatval(Str::replace(',', '.', $this->volume->price));
         } else {
             $this->volume->price = 0;
+        }
+        if (empty($this->volume->publish_date)) {
+            $this->volume->publish_date = null;
         }
         $this->validate();
         $this->volume->save();
