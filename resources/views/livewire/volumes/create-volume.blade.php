@@ -101,8 +101,17 @@
                     <h4 class="modal-title">{{ __('Barcode Scanner') }}</h4>
                 </div>
                 <div class="modal-body" style="position: static">
-                    <div id="interactive" class="viewport"></div>
-                    <div class="error"></div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <label for="status" class="col-form-label">{{ __('Camera') }}</label>
+                            <select name="input-stream_constraints" id="deviceSelection" class="form-select">
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div id="interactive" class="viewport"></div>
+                        <div class="error"></div>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-primary" data-bs-dismiss="modal">{{ __('Close') }}</button>
@@ -137,6 +146,27 @@
 
     <script type="text/javascript">
         document.addEventListener('livewire:load', function() {
+
+            var streamLabel = Quagga.CameraAccess.getActiveStreamLabel();
+
+            Quagga.CameraAccess.enumerateVideoDevices()
+                .then(function(devices) {
+                    function pruneText(text) {
+                        return text.length > 30 ? text.substr(0, 30) : text;
+                    }
+                    var $deviceSelection = document.getElementById("deviceSelection");
+                    while ($deviceSelection.firstChild) {
+                        $deviceSelection.removeChild($deviceSelection.firstChild);
+                    }
+                    devices.forEach(function(device) {
+                        var $option = document.createElement("option");
+                        $option.value = device.deviceId || device.id;
+                        $option.appendChild(document.createTextNode(pruneText(device.label || device.deviceId || device.id)));
+                        $option.selected = streamLabel === device.label;
+                        $deviceSelection.appendChild($option);
+                    });
+                });
+
             // Create the QuaggaJS config object for the live stream
             var liveStreamConfig = {
                 frequency: 10,
@@ -153,7 +183,7 @@
                             min: 1,
                             max: 100
                         },
-                        facingMode: "environment"
+                        facingMode: "environment",
                     },
                 },
                 locator: {
@@ -179,18 +209,32 @@
             );
             // Start the live stream scanner when the modal opens
             $('#livestream_scanner').on('shown.bs.modal', function(e) {
+                initCamera();
+            });
+
+            $('#deviceSelection').change(function() {
+                var deviceId = $(this).val();
+                liveStreamConfig.inputStream.constraints.deviceId = deviceId;
+                Quagga.stop();
+                initCamera();
+            });
+
+            function initCamera() {
                 Quagga.init(
                     liveStreamConfig,
                     function(err) {
+                        debugger;
                         if (err) {
                             $('#livestream_scanner .modal-body .error').html('<div class="alert alert-danger"><strong><i class="fa fa-exclamation-triangle"></i> ' + err.name + '</strong>: ' + err.message + '</div>');
                             Quagga.stop();
                             return;
+                        } else {
+                            $('#livestream_scanner .modal-body .error').html('');
                         }
                         Quagga.start();
                     }
                 );
-            });
+            }
 
             // Make sure, QuaggaJS draws frames an lines around possible
             // barcodes on the live stream
