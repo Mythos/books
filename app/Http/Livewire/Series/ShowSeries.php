@@ -125,13 +125,12 @@ class ShowSeries extends Component
         if (empty($this->series->mangapassion_id)) {
             return;
         }
-        $response = Http::get('https://api.manga-passion.de/editions?order[titleLength]=asc&order[title]=asc&title=' . urlencode($this->series->name));
+        $response = Http::get('https://api.manga-passion.de/editions/' . $this->series->mangapassion_id);
         if ($response->successful()) {
-            $response = $response->json();
-            if (count($response) == 0) {
+            $result = $response->json();
+            if (empty($result)) {
                 return;
             }
-            $result = $response[0];
             if (!empty($result['title'])) {
                 $this->series->name = $result['title'];
             }
@@ -157,7 +156,7 @@ class ShowSeries extends Component
                 }
             }
 
-            $volumesResponse = Http::get('https://api.manga-passion.de/editions/' . $this->series->mangapassion_id . '/volumes?itemsPerPage=1');
+            $volumesResponse = Http::get('https://api.manga-passion.de/editions/' . $this->series->mangapassion_id . '/volumes?itemsPerPage=1&order[number]=asc');
             if ($volumesResponse->successful()) {
                 $volumesResult = $volumesResponse->json();
                 if (count($volumesResult) > 0) {

@@ -132,7 +132,7 @@ class CreateSeries extends Component
                 }
             }
 
-            $volumesResponse = Http::get('https://api.manga-passion.de/editions/' . $this->series->mangapassion_id . '/volumes?itemsPerPage=1');
+            $volumesResponse = Http::get('https://api.manga-passion.de/editions/' . $this->series->mangapassion_id . '/volumes?itemsPerPage=1&order[number]=asc');
             if ($volumesResponse->successful()) {
                 $volumesResult = $volumesResponse->json();
                 if (count($volumesResult) > 0) {
