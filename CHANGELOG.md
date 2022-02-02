@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.5.1 (2022-02-02)
+
+- Improved ISBN validation
+- Fixed possible errors when publish date is being empty
+
 ## 1.5.0 (2022-02-01)
 
 - Added experimental barcode scanner when creating volumes

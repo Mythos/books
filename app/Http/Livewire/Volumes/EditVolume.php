@@ -6,8 +6,8 @@ use App\Helpers\IsbnHelpers;
 use App\Models\Category;
 use App\Models\Series;
 use App\Models\Volume;
+use App\Rules\Isbn;
 use Illuminate\Support\Str;
-use Intervention\Validation\Rules\Isbn;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Component;
 

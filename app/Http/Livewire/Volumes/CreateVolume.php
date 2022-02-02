@@ -5,8 +5,8 @@ namespace App\Http\Livewire\Volumes;
 use App\Helpers\IsbnHelpers;
 use App\Models\Series;
 use App\Models\Volume;
+use App\Rules\Isbn;
 use Illuminate\Support\Str;
-use Intervention\Validation\Rules\Isbn;
 use Livewire\Component;
 
 class CreateVolume extends Component

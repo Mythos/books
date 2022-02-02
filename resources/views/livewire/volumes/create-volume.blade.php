@@ -137,9 +137,9 @@
 
     <script type="text/javascript">
         document.addEventListener('livewire:load', function() {
-            debugger;
             // Create the QuaggaJS config object for the live stream
             var liveStreamConfig = {
+                frequency: 10,
                 inputStream: {
                     type: "LiveStream",
                     constraints: {
@@ -153,19 +153,18 @@
                             min: 1,
                             max: 100
                         },
-                        facingMode: "environment" // or "user" for the front camera
-                    }
+                        facingMode: "environment"
+                    },
                 },
                 locator: {
                     patchSize: "medium",
-                    halfSample: true
+                    halfSample: true,
                 },
                 numOfWorkers: (navigator.hardwareConcurrency ? navigator.hardwareConcurrency : 4),
                 decoder: {
-                    "readers": [{
-                        "format": "ean_reader",
-                        "config": {}
-                    }]
+                    readers: [
+                        "ean_reader"
+                    ],
                 },
                 locate: true
             };
