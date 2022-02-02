@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.5.2 (2022-02-02)
+
+- Add camera selection to experimental barcode scanner
+
 ## 1.5.1 (2022-02-02)
 
 - Improved ISBN validation
