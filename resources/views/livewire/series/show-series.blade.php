@@ -13,6 +13,9 @@
             @if ($series->subscription_active)
                 <span class="badge bg-success mt-1 fs-9">{{ __('Subscription active') }}</span>
             @endif
+            @if (!empty($series->mangapassion_id))
+                <button class="btn btn-primary mt-3" wire:click="update">{{ __('Update') }}</button>
+            @endif
         </div>
         <div class="col-sm-12 col-md-12 col-lg-9 my-2 pl-4">
             <div>
