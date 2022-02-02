@@ -27,6 +27,7 @@ class CreateVolume extends Component
     {
         $this->series = $series;
         $this->price = $this->series->default_price ?? '';
+        $this->status = $series->subscription_active;
     }
 
     public function render()

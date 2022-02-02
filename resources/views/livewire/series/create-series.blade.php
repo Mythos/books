@@ -98,6 +98,19 @@
                     <div class="row mt-3">
                         <div class="col-md-12">
                             <div class="form-check">
+                                <input id="subscription_active" type="checkbox" class="form-check-input @error('series.subscription_active') is-invalid @enderror" name="subscription_active" wire:model='series.subscription_active'>
+                                <label for="subscription_active" class="form-check-label">{{ __('Subscription active') }}</label>
+                            </div>
+                            @error('series.subscription_active')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-md-12">
+                            <div class="form-check">
                                 <input id="is_nsfw" type="checkbox" class="form-check-input @error('series.is_nsfw') is-invalid @enderror" name="is_nsfw" wire:model='series.is_nsfw'>
                                 <label for="is_nsfw" class="form-check-label">{{ __('NSFW') }}</label>
                             </div>

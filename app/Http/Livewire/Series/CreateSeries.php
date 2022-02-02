@@ -27,8 +27,6 @@ class CreateSeries extends Component
 
     public string $image_url = '';
 
-    public ?int $mpId = 0;
-
     protected $rules = [
         'series.name' => 'required',
         'series.status' => 'required|integer|min:0',
@@ -37,6 +35,8 @@ class CreateSeries extends Component
         'series.is_nsfw' => 'boolean',
         'series.default_price' => 'nullable|regex:"^[0-9]{1,9}([,.][0-9]{1,2})?$"',
         'series.publisher_id' => 'nullable|exists:publishers,id',
+        'series.subscription_active' => 'boolean',
+        'series.mangapassion_id' => 'nullable|integer',
         'image_url' => 'required|url',
     ];
 
@@ -93,7 +93,7 @@ class CreateSeries extends Component
     public function fetchdata(): void
     {
         $this->validateOnly('series.name');
-        $this->mpId = null;
+        $this->series->mangapassion_id = null;
         $response = Http::get('https://api.manga-passion.de/editions?order[titleLength]=asc&order[title]=asc&title=' . urlencode($this->series->name));
         if ($response->successful()) {
             $response = $response->json();
@@ -102,7 +102,7 @@ class CreateSeries extends Component
             }
             $result = $response[0];
             if (!empty($result['id'])) {
-                $this->mpId = $result['id'];
+                $this->series->mangapassion_id = $result['id'];
             }
             if (!empty($result['title'])) {
                 $this->series->name = $result['title'];
@@ -132,7 +132,7 @@ class CreateSeries extends Component
                 }
             }
 
-            $volumesResponse = Http::get('https://api.manga-passion.de/editions/' . $this->mpId . '/volumes?itemsPerPage=1');
+            $volumesResponse = Http::get('https://api.manga-passion.de/editions/' . $this->series->mangapassion_id . '/volumes?itemsPerPage=1');
             if ($volumesResponse->successful()) {
                 $volumesResult = $volumesResponse->json();
                 if (count($volumesResult) > 0) {
@@ -179,11 +179,11 @@ class CreateSeries extends Component
 
     private function createVolumes(): void
     {
-        if (empty($this->mpId)) {
+        if (empty($this->series->mangapassion_id)) {
             return;
         }
         $seriesId = $this->series->id;
-        $volumesResponse = Http::get('https://api.manga-passion.de/editions/' . $this->mpId . '/volumes?itemsPerPage=500');
+        $volumesResponse = Http::get('https://api.manga-passion.de/editions/' . $this->series->mangapassion_id . '/volumes?itemsPerPage=500');
         if ($volumesResponse->successful()) {
             $volumesResult = $volumesResponse->json();
             if (count($volumesResult) > 0) {
@@ -198,7 +198,7 @@ class CreateSeries extends Component
                         'number' => $volumeResult['number'],
                         'publish_date' => !empty($publish_date) ? $publish_date->format('Y-m-d') : null,
                         'price' => !empty($volumeResult['price']) ? floatval($volumeResult['price']) / 100.0 : 0,
-                        'status' => 0,
+                        'status' => $this->series->subscription_active,
                     ]);
                     $volume->save();
                 }

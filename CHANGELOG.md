@@ -11,6 +11,10 @@
 
 This project's target audience is now manga readers from German speaking countries.
 
+### New Features
+
+- Added "Subscription active" to series to always create ordered volumes
+
 ## 1.5.4 (2022-02-02)
 
 - Removed aspect ratio from experimental barcode scanner to hopefully fix iOS camera issues
