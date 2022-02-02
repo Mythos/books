@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.5.4 (2022-02-02)
+
+- Removed aspect ratio from experimental barcode scanner to hopefully fix iOS camera issues
+
 ## 1.5.3 (2022-02-02)
 
 - Fixed camera selection being empty when reopening scanner

@@ -158,10 +158,6 @@
                         height: {
                             min: 480
                         },
-                        aspectRatio: {
-                            min: 1,
-                            max: 100
-                        },
                         facingMode: "environment",
                     },
                 },
