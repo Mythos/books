@@ -146,27 +146,6 @@
 
     <script type="text/javascript">
         document.addEventListener('livewire:load', function() {
-
-            var streamLabel = Quagga.CameraAccess.getActiveStreamLabel();
-
-            Quagga.CameraAccess.enumerateVideoDevices()
-                .then(function(devices) {
-                    function pruneText(text) {
-                        return text.length > 30 ? text.substr(0, 30) : text;
-                    }
-                    var $deviceSelection = document.getElementById("deviceSelection");
-                    while ($deviceSelection.firstChild) {
-                        $deviceSelection.removeChild($deviceSelection.firstChild);
-                    }
-                    devices.forEach(function(device) {
-                        var $option = document.createElement("option");
-                        $option.value = device.deviceId || device.id;
-                        $option.appendChild(document.createTextNode(pruneText(device.label || device.deviceId || device.id)));
-                        $option.selected = streamLabel === device.label;
-                        $deviceSelection.appendChild($option);
-                    });
-                });
-
             // Create the QuaggaJS config object for the live stream
             var liveStreamConfig = {
                 frequency: 10,
@@ -209,7 +188,25 @@
             );
             // Start the live stream scanner when the modal opens
             $('#livestream_scanner').on('shown.bs.modal', function(e) {
-                initCamera();
+                var streamLabel = Quagga.CameraAccess.getActiveStreamLabel();
+                Quagga.CameraAccess.enumerateVideoDevices()
+                    .then(function(devices) {
+                        function pruneText(text) {
+                            return text.length > 30 ? text.substr(0, 30) : text;
+                        }
+                        var $deviceSelection = document.getElementById("deviceSelection");
+                        while ($deviceSelection.firstChild) {
+                            $deviceSelection.removeChild($deviceSelection.firstChild);
+                        }
+                        devices.forEach(function(device) {
+                            var $option = document.createElement("option");
+                            $option.value = device.deviceId || device.id;
+                            $option.appendChild(document.createTextNode(pruneText(device.label || device.deviceId || device.id)));
+                            $option.selected = streamLabel === device.label;
+                            $deviceSelection.appendChild($option);
+                        });
+                        initCamera();
+                    });
             });
 
             $('#deviceSelection').change(function() {
@@ -223,7 +220,6 @@
                 Quagga.init(
                     liveStreamConfig,
                     function(err) {
-                        debugger;
                         if (err) {
                             $('#livestream_scanner .modal-body .error').html('<div class="alert alert-danger"><strong><i class="fa fa-exclamation-triangle"></i> ' + err.name + '</strong>: ' + err.message + '</div>');
                             Quagga.stop();
