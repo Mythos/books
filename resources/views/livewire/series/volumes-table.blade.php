@@ -1,6 +1,6 @@
 <div class="mt-3">
     <div>
-        <h2 style="display: inline;">{{ __('Volumes') }}</h2>
+        <h2 style="display: inline;">{{ __('Volumes') }} ({{ count($volumes) }})</h2>
         <div class="float-end" style="display: inline;">
             <a wire:click.prevent='toggle_reordering' href="#" title="{{ __('Reorder volumes') }}"><i class="fa fa-sort"></i></a>
             <a href="{{ route('volumes.create', [$category, $series]) }}" class="btn btn-link"><i class="fas fa-plus-circle"></i></a>
