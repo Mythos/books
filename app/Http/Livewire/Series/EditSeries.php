@@ -36,6 +36,8 @@ class EditSeries extends Component
         'series.is_nsfw' => 'boolean',
         'series.default_price' => 'nullable|regex:"^[0-9]{1,9}([,.][0-9]{1,2})?$"',
         'series.publisher_id' => 'nullable|exists:publishers,id',
+        'series.subscription_active' => 'boolean',
+        'series.mangapassion_id' => 'nullable|integer',
         'image_url' => 'url',
     ];
 

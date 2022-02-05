@@ -17,12 +17,15 @@
                     <div class="row mt-1">
                         <div class="col-md-12">
                             <label for="series.name" class="col-form-label required">{{ __('Name') }}</label>
-                            <input id="series.name" name="series.name" type="text" class="form-control @error('series.name') is-invalid @enderror" wire:model='series.name' autofocus>
-                            @error('series.name')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                            @enderror
+                            <div class="input-group">
+                                <input id="series.name" name="series.name" type="text" class="form-control @error('series.name') is-invalid @enderror" wire:model='series.name' autofocus>
+                                <button class="btn btn-outline-secondary" type="button" wire:click="fetchdata"><i class="fa fa-search"></i></button>
+                                @error('series.name')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
                         </div>
                     </div>
                     <div class="row mt-1">
@@ -86,6 +89,19 @@
                             <label for="image_url" class="col-form-label required">{{ __('Image URL') }}</label>
                             <input id="image_url" name="image_url" type="text" class="form-control @error('image_url') is-invalid @enderror" wire:model='image_url'>
                             @error('image_url')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-md-12">
+                            <div class="form-check">
+                                <input id="subscription_active" type="checkbox" class="form-check-input @error('series.subscription_active') is-invalid @enderror" name="subscription_active" wire:model='series.subscription_active'>
+                                <label for="subscription_active" class="form-check-label">{{ __('Subscription active') }}</label>
+                            </div>
+                            @error('series.subscription_active')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
                                 </span>

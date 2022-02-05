@@ -70,6 +70,8 @@ class Series extends Model
         'default_price',
         'category_id',
         'publisher_id',
+        'subscription_active',
+        'mangapassion_id',
     ];
 
     /**
