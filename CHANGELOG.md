@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.0.3 (2022-02-05)
+
+- Applied fixes from 2.0.2 to update button
+
 ## 2.0.2 (2022-02-05)
 
 - Fix volume creation when number is not set
