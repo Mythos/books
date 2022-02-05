@@ -1,6 +1,6 @@
 # Changelog
 
-## 2.0.0
+## 2.0.0 (2022-02-05)
 
 ### Breaking Changes
 
