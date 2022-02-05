@@ -29,10 +29,13 @@ MIT
 
 ### Landing page & Gallery
 
-![grafik](https://user-images.githubusercontent.com/416568/148980214-a3332b5a-6d2d-4062-8d1a-56d114c7e391.png)
-
+![Screenshot 2022-02-05 at 10-28-32 Mythos' Book Inventory System](https://user-images.githubusercontent.com/416568/152637303-94a354d9-c717-47b3-b238-c1a732339507.png)
 
 
 ### Series details page
 
-![grafik](https://user-images.githubusercontent.com/416568/148980247-7acdc972-94b6-4010-9002-1749fc6f4fe4.png)
+![Screenshot 2022-02-05 at 10-54-36 Mythos' Book Inventory System](https://user-images.githubusercontent.com/416568/152637308-217000e4-4411-434e-821c-e7aca395485b.png)
+
+### Statistics
+
+![Screenshot 2022-02-05 at 10-56-05 Mythos' Book Inventory System](https://user-images.githubusercontent.com/416568/152637314-eddaeae4-fe86-4def-b67b-65cf57f72247.png)
