@@ -1,5 +1,10 @@
 # Changelog
 
+## 2.0.2 (2022-02-05)
+
+- Fix volume creation when number is not set
+- Use number of volumes for completed series, use source for ongoing series
+
 ## 2.0.1 (2022-02-05)
 
 - Added missing translation for "Update" button in a series
