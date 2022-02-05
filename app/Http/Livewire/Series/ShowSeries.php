@@ -143,7 +143,10 @@ class ShowSeries extends Component
                     $this->series->status = 0;
                 }
             }
-            if (!empty($result['sources'])) {
+
+            if (!empty($result['status']) && $result['status'] == 2) {
+                $this->series->total = $result['numVolumes'];
+            } elseif (!empty($result['sources'])) {
                 $sourceId = $result['sources'][0]['id'];
                 $sourceResponse = Http::get('https://api.manga-passion.de/sources/' . $sourceId);
                 if ($sourceResponse->successful()) {
@@ -198,7 +201,7 @@ class ShowSeries extends Component
                     $volume = new Volume([
                         'series_id' => $this->series->id,
                         'isbn' => Isbn::of($volumeResult['isbn13'])->to13(),
-                        'number' => $volumeResult['number'],
+                        'number' => $volumeResult['number'] ?? 1,
                         'publish_date' => !empty($publish_date) ? $publish_date->format('Y-m-d') : null,
                         'price' => !empty($volumeResult['price']) ? floatval($volumeResult['price']) / 100.0 : 0,
                         'status' => $this->series->subscription_active,
