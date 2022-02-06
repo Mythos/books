@@ -40,7 +40,7 @@
                         @endif
                         <th scope="row" class="text-end">{{ $volume->number }}</th>
                         <td class="text-center"><a href="{{ route('volumes.edit', [$category, $series, $volume->number]) }}"><i class="fa fa-edit"></i></a></td>
-                        <td class="text-center">{{ $volume->publish_date }}</td>
+                        <td class="text-center">{{ $volume->publish_date->format(auth()->user()->date_format) }}</td>
                         <td>{{ $volume->isbn_formatted }}</td>
                         <td class="text-end">{{ number_format($volume->price, 2) }} {{ config('app.currency') }}</td>
                         <td class="text-center">{{ $volume->status_name }}</td>

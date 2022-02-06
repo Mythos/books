@@ -13,6 +13,7 @@ class Profile extends Component
         'user.name' => 'required',
         'user.email' => 'required|email',
         'user.format_isbns_enabled' => 'boolean',
+        'user.date_format' => 'required',
     ];
 
     public function mount(): void

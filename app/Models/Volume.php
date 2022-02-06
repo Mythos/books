@@ -60,6 +60,15 @@ class Volume extends Model
     ];
 
     /**
+     * The attributes that should be cast.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'publish_date' => 'datetime',
+    ];
+
+    /**
      * Get the volume's name.
      *
      * @return string

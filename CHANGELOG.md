@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.1.0
+
+- Added date format to user profile
+
 ## 2.0.3 (2022-02-05)
 
 - Applied fixes from 2.0.2 to update button
