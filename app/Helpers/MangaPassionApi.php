@@ -20,24 +20,17 @@ class MangaPassionApi
         }
         $result = $response[0];
         $series = [];
-        if (!empty($result['id'])) {
-            $series['mangapassion_id'] = $result['id'];
-        }
-        if (!empty($result['title'])) {
-            $series['name'] = $result['title'];
-        }
-        if (!empty($result['status'])) {
-            if ($result['status'] == 1 || $result['status'] == 2) {
-                $series['status'] = $result['status'];
-            } else {
-                $series['status'] = 0;
-            }
-        }
-        if (!empty($result['cover'])) {
-            $series['image_url'] = $result['cover'];
-        }
+        $series['mangapassion_id'] = $result['id'];
 
-        if (!empty($result['status']) && $result['status'] == 2) {
+        $series['name'] = $result['title'];
+        if ($result['status'] == 1 || $result['status'] == 2) {
+            $series['status'] = $result['status'];
+        } else {
+            $series['status'] = 0;
+        }
+        $series['image_url'] = $result['cover'];
+
+        if ($result['status'] == 2) {
             $series['total'] = $result['numVolumes'];
         } elseif (!empty($result['sources'])) {
             $sourceId = $result['sources'][0]['id'];
