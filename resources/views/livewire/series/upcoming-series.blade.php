@@ -15,7 +15,7 @@
                 <tbody>
                     @foreach ($upcoming as $volume)
                         <tr class="{{ $volume->status_class }}">
-                            <th scope="row" class="text-center">{{ $volume->publish_date->format(auth()->user()->date_format) }}</th>
+                            <th scope="row" class="text-center">{{ $volume->publish_date_formatted }}</th>
                             <td>{{ $volume->name }}</td>
                             <td>{{ $volume->isbn_formatted }}</td>
                             <td>

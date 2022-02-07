@@ -41,7 +41,7 @@ class CreateVolume extends Component
             'publish_date' => 'nullable|date',
             'status' => 'required|integer|min:0',
             'price' => 'nullable|regex:"^[0-9]{1,9}([,.][0-9]{1,2})?$"',
-            'isbn' => ['required', 'unique:volumes,isbn,NULL,id,series_id,' . $this->series->id, new Isbn()],
+            'isbn' => ['nullable', 'unique:volumes,isbn,NULL,id,series_id,' . $this->series->id, new Isbn()],
             'ignore_in_upcoming' => 'boolean',
         ];
     }

@@ -17,7 +17,18 @@
                     </div>
                     <div class="row mt-1">
                         <div class="col-md-12">
-                            <label for="volume.isbn" class="col-form-label required">{{ __('ISBN') }}</label>
+                            <label for="volume.number" class="col-form-label">{{ __('Number') }}</label>
+                            <input id="volume.number" name="volume.number" type="number" class="form-control @error('volume.number') is-invalid @enderror" wire:model='volume.number'>
+                            @error('volume.number')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+                        </div>
+                    </div>
+                    <div class="row mt-1">
+                        <div class="col-md-12">
+                            <label for="volume.isbn" class="col-form-label">{{ __('ISBN') }}</label>
                             <input id="volume.isbn" name="volume.isbn" type="text" class="form-control @error('volume.isbn') is-invalid @enderror" wire:model='volume.isbn' autofocus>
                             @error('volume.isbn')
                                 <span class="invalid-feedback" role="alert">

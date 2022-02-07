@@ -2,19 +2,17 @@
 
 namespace App\Http\Livewire\Series;
 
+use App\Helpers\MangaPassionApi;
 use App\Models\Category;
 use App\Models\Publisher;
 use App\Models\Series;
 use App\Models\Volume;
-use DateTime;
 use Exception;
-use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 use Intervention\Image\Facades\Image as FacadesImage;
 use Intervention\Image\Image;
 use Livewire\Component;
-use Nicebooks\Isbn\Isbn;
 use Storage;
 
 class CreateSeries extends Component
@@ -95,68 +93,30 @@ class CreateSeries extends Component
     {
         $this->validateOnly('series.name');
         $this->series->mangapassion_id = null;
-        $response = Http::get('https://api.manga-passion.de/editions?order[titleLength]=asc&order[title]=asc&title=' . urlencode($this->series->name));
-        if ($response->successful()) {
-            $response = $response->json();
-            if (count($response) == 0) {
-                return;
-            }
-            $result = $response[0];
-            if (!empty($result['id'])) {
-                $this->series->mangapassion_id = $result['id'];
-            }
-            if (!empty($result['title'])) {
-                $this->series->name = $result['title'];
-            }
-            if (!empty($result['status'])) {
-                if ($result['status'] == 1) {
-                    $this->series->status = 1;
-                } elseif ($result['status'] == 2) {
-                    $this->series->status = 2;
-                } else {
-                    $this->series->status = 0;
-                }
-            }
-            if (!empty($result['cover'])) {
-                $this->image_url = $result['cover'];
-            }
+        $series = MangaPassionApi::loadSeries($this->series->name);
 
-            if (!empty($result['status']) && $result['status'] == 2) {
-                $this->series->total = $result['numVolumes'];
-            } elseif (!empty($result['sources'])) {
-                $sourceId = $result['sources'][0]['id'];
-                $sourceResponse = Http::get('https://api.manga-passion.de/sources/' . $sourceId);
-                if ($sourceResponse->successful()) {
-                    $source = $sourceResponse->json();
-                    if (!empty($source)) {
-                        if (!empty($source['volumes'])) {
-                            $this->series->total = $source['volumes'];
-                        }
-                    }
-                }
-            }
+        if (empty($series)) {
+            toastr()->livewire()->addWarning(__('No entry with the title :name has been found', ['name' => $this->series->name]));
 
-            $volumesResponse = Http::get('https://api.manga-passion.de/editions/' . $this->series->mangapassion_id . '/volumes?itemsPerPage=1&order[number]=asc');
-            if ($volumesResponse->successful()) {
-                $volumesResult = $volumesResponse->json();
-                if (count($volumesResult) > 0) {
-                    foreach ($volumesResult as $volumeResult) {
-                        if (empty($volumeResult['price'])) {
-                            continue;
-                        }
-                        $this->series->default_price = !empty($volumeResult['price']) ? floatval($volumeResult['price']) / 100.0 : 0;
-                    }
-                }
-            }
+            return;
+        }
 
-            if (!empty($result['publishers'])) {
-                $publisherName = $result['publishers'][0]['name'];
-                $publisher = Publisher::whereName($publisherName)->firstOrCreate([
-                    'name' => $publisherName,
-                ]);
-                $this->publishers = Publisher::orderBy('name')->get();
-                $this->series->publisher_id = $publisher->id;
-            }
+        $this->series->mangapassion_id = $series['mangapassion_id'];
+        $this->series->name = $series['name'];
+        $this->series->status = $series['status'];
+        $this->series->total = $series['total'];
+        $this->series->default_price = $series['default_price'];
+        $this->image_url = $series['image_url'];
+
+        $publisher = Publisher::whereName($series['publisher'])->first();
+        if (!empty($publisher)) {
+            $this->series->publisher_id = $publisher->id;
+        } else {
+            $publisher = new Publisher(['name' => $series['publisher']]);
+            $publisher->save();
+
+            $this->series->publisher_id = $publisher->id;
+            $this->publishers = Publisher::orderBy('name')->get();
         }
     }
 
@@ -186,27 +146,24 @@ class CreateSeries extends Component
         if (empty($this->series->mangapassion_id)) {
             return;
         }
-        $seriesId = $this->series->id;
-        $volumesResponse = Http::get('https://api.manga-passion.de/editions/' . $this->series->mangapassion_id . '/volumes?itemsPerPage=500&order[number]=asc');
-        if ($volumesResponse->successful()) {
-            $volumesResult = $volumesResponse->json();
-            if (count($volumesResult) > 0) {
-                foreach ($volumesResult as $volumeResult) {
-                    if (empty($volumeResult['isbn13'])) {
-                        continue;
-                    }
-                    $publish_date = !empty($volumeResult['date']) ? new DateTime($volumeResult['date']) : null;
-                    $volume = new Volume([
-                        'series_id' => $seriesId,
-                        'isbn' => Isbn::of($volumeResult['isbn13'])->to13(),
-                        'number' => $volumeResult['number'] ?? 1,
-                        'publish_date' => !empty($publish_date) ? $publish_date->format('Y-m-d') : null,
-                        'price' => !empty($volumeResult['price']) ? floatval($volumeResult['price']) / 100.0 : 0,
-                        'status' => $this->series->subscription_active,
-                    ]);
-                    $volume->save();
-                }
-            }
+
+        $volumesResult = MangaPassionApi::loadVolumes($this->series->mangapassion_id);
+
+        foreach ($volumesResult as $newVolume) {
+            $number = $newVolume['number'];
+            $isbn = $newVolume['isbn'];
+            $publish_date = $newVolume['publish_date'];
+            $price = $newVolume['price'];
+
+            $volume = new Volume([
+                'series_id' => $this->series->id,
+                'isbn' => $isbn,
+                'number' => $number,
+                'publish_date' => !empty($publish_date) ? $publish_date->format('Y-m-d') : null,
+                'price' => $price,
+                'status' => $this->series->subscription_active,
+            ]);
+            $volume->save();
         }
     }
 }

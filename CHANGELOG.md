@@ -3,6 +3,9 @@
 ## 2.1.0
 
 - Added date format to user profile
+- Improve updating series and volumes data Manga Passion API
+- ISBN and Publish Date of a volume are now optional
+- Reordering volumes makes sure that no gaps are left
 
 ## 2.0.3 (2022-02-05)
 

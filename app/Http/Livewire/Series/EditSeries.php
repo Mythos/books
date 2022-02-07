@@ -2,7 +2,6 @@
 
 namespace App\Http\Livewire\Series;
 
-use App\Http\Traits\LivewireDelete;
 use App\Models\Category;
 use App\Models\Publisher;
 use App\Models\Series;

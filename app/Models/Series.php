@@ -23,6 +23,8 @@ use Spatie\Sluggable\SlugOptions;
  * @property int|null $is_nsfw
  * @property string|null $default_price
  * @property int|null $publisher_id
+ * @property int $subscription_active
+ * @property int|null $mangapassion_id
  * @property-read \App\Models\Category $category
  * @property-read string $completion_status
  * @property-read string $completion_status_class
@@ -44,10 +46,12 @@ use Spatie\Sluggable\SlugOptions;
  * @method static \Illuminate\Database\Eloquent\Builder|Series whereDefaultPrice($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Series whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Series whereIsNsfw($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Series whereMangapassionId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Series whereName($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Series wherePublisherId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Series whereSlug($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Series whereStatus($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Series whereSubscriptionActive($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Series whereTotal($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Series whereUpdatedAt($value)
  * @mixin \Eloquent
