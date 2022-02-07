@@ -1,6 +1,6 @@
 # Changelog
 
-## 2.1.0
+## 2.1.0 (2022-02-07)
 
 - Added date format to user profile
 - Improve updating series and volumes data Manga Passion API
