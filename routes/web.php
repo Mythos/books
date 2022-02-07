@@ -12,7 +12,6 @@ use App\Http\Livewire\Profile;
 use App\Http\Livewire\Publishers\CreatePublisher;
 use App\Http\Livewire\Publishers\EditPublisher;
 use App\Http\Livewire\Publishers\PublisherTable;
-use App\Http\Livewire\Publishers\ShowPublisher;
 use App\Http\Livewire\Series\CreateSeries;
 use App\Http\Livewire\Series\EditSeries;
 use App\Http\Livewire\Series\ShowSeries;

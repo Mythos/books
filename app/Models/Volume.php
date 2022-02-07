@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Helpers\IsbnHelpers;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -22,6 +23,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property int $ignore_in_upcoming
  * @property-read string $isbn_formatted
  * @property-read string $name
+ * @property-read string $publish_date_formatted
  * @property-read string $status_class
  * @property-read string $status_name
  * @property-read \App\Models\Series $series
@@ -60,6 +62,20 @@ class Volume extends Model
     ];
 
     /**
+     * Get the volume's formatted publish date.
+     *
+     * @return string
+     */
+    public function getPublishDateFormattedAttribute() : ?string
+    {
+        if (empty($this->publish_date)) {
+            return null;
+        }
+
+        return Carbon::parse($this->publish_date)->format(auth()->user()->date_format);
+    }
+
+    /**
      * Get the volume's name.
      *
      * @return string
@@ -78,7 +94,7 @@ class Volume extends Model
      *
      * @return string
      */
-    public function getIsbnFormattedAttribute(): string
+    public function getIsbnFormattedAttribute(): ?string
     {
         if (auth()->user()->format_isbns_enabled) {
             return IsbnHelpers::format($this->isbn);

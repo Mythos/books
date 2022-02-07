@@ -20,6 +20,7 @@ $finder = Symfony\Component\Finder\Finder::create()
 
 return (new PhpCsFixer\Config)
     ->setRules([
+        'no_unused_imports' => true,
         'array_indentation' => true,
         'array_syntax' => ['syntax' => 'short'],
         'binary_operator_spaces' => [

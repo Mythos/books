@@ -31,10 +31,11 @@ class EditVolume extends Component
     protected function rules()
     {
         return [
+            'volume.number' => 'required|integer|min:1',
             'volume.publish_date' => 'nullable|date',
             'volume.status' => 'required|integer|min:0',
             'volume.price' => 'nullable|regex:"^[0-9]{1,9}([,.][0-9]{1,2})?$"',
-            'volume.isbn' => ['required', 'unique:volumes,isbn,' . $this->volume->id . ',id,series_id,' . $this->series->id, new Isbn()],
+            'volume.isbn' => ['nullable', 'unique:volumes,isbn,' . $this->volume->id . ',id,series_id,' . $this->series->id, new Isbn()],
             'volume.ignore_in_upcoming' => 'boolean',
         ];
     }
@@ -77,6 +78,7 @@ class EditVolume extends Component
         }
         $this->validate();
         $this->volume->save();
+        $this->resetNumbers();
         toastr()->addSuccess(__('Volumme :number has been updated', ['number' => $this->volume->number]));
 
         return redirect()->route('series.show', [$this->category, $this->series]);
@@ -97,5 +99,16 @@ class EditVolume extends Component
         toastr()->addSuccess(__('Volumme :number has been deleted', ['number' => $this->volume->number]));
 
         return redirect()->route('series.show', [$this->category, $this->series]);
+    }
+
+    private function resetNumbers(): void
+    {
+        $volumes = Volume::whereSeriesId($this->volume->series_id)->orderBy('number')->get();
+        $number = 1;
+        foreach ($volumes as $volume) {
+            $volume->number = $number;
+            $volume->save();
+            $number++;
+        }
     }
 }

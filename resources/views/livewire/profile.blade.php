@@ -42,6 +42,30 @@
                             @enderror
                         </div>
                     </div>
+                    <div class="row mt-1">
+                        <div class="col-md-12">
+                            <label for="user.date_format" class="col-form-label required">{{ __('Date Format') }}</label>
+                            <select class="form-select @error('user.date_format') is-invalid @enderror" name="status" wire:model='user.date_format' required>
+                                <optgroup label="(Y-m-d)">
+                                    <option value="Y-m-d">{{ \Carbon\Carbon::now()->format('Y-m-d') }}</option>
+                                    <option value="y-m-d">{{ \Carbon\Carbon::now()->format('y-m-d') }}</option>
+                                </optgroup>
+                                <optgroup label="(d-m-Y)">
+                                    <option value="d.m.Y">{{ \Carbon\Carbon::now()->format('d.m.Y') }}</option>
+                                    <option value="d.m.y">{{ \Carbon\Carbon::now()->format('d.m.y') }}</option>
+                                </optgroup>
+                                <optgroup label="(Y-d-m)">
+                                    <option value="Y-d-m">{{ \Carbon\Carbon::now()->format('Y-d-m') }}</option>
+                                    <option value="y-d-m">{{ \Carbon\Carbon::now()->format('y-d-m') }}</option>
+                                </optgroup>
+                            </select>
+                            @error('user.date_format')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+                        </div>
+                    </div>
                     <div class="row mt-3">
                         <div class="col-md-12">
                             <div class="form-check">
