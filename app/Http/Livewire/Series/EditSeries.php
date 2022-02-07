@@ -66,7 +66,7 @@ class EditSeries extends Component
         return view('livewire.series.edit-series')->extends('layouts.app')->section('content');
     }
 
-    public function save(): void
+    public function save()
     {
         $this->validate();
         if (!empty($this->series->default_price)) {
@@ -78,8 +78,9 @@ class EditSeries extends Component
             $this->storeImages($image);
             $this->updatePrices();
             $this->updateStatuses();
-            toastr()->livewire()->addSuccess(__(':name has been updated', ['name' => $this->series->name]));
-            $this->reset(['image_url']);
+            toastr()->addSuccess(__(':name has been updated', ['name' => $this->series->name]));
+
+            return redirect()->route('series.show', [$this->category, $this->series]);
         } catch (Exception $exception) {
             Log::error($exception);
             toastr()->livewire()->addError(__(':name could not be updated', ['name' => $this->series->name]));
