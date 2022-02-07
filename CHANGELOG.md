@@ -6,6 +6,7 @@
 - Improve updating series and volumes data Manga Passion API
 - ISBN and Publish Date of a volume are now optional
 - Reordering volumes makes sure that no gaps are left
+- When setting a series as subscribed, all volumes with status "New" will be set to "Ordered"
 
 ## 2.0.3 (2022-02-05)
 

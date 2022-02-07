@@ -77,6 +77,7 @@ class EditSeries extends Component
             $this->series->save();
             $this->storeImages($image);
             $this->updatePrices();
+            $this->updateStatuses();
             toastr()->livewire()->addSuccess(__(':name has been updated', ['name' => $this->series->name]));
             $this->reset(['image_url']);
         } catch (Exception $exception) {
@@ -128,6 +129,13 @@ class EditSeries extends Component
     {
         if (!empty($this->series->default_price) && $this->series->default_price > 0) {
             Volume::whereSeriesId($this->series->id)->whereNull('price')->update(['price' => $this->series->default_price]);
+        }
+    }
+
+    private function updateStatuses(): void
+    {
+        if ($this->series->subscription_active) {
+            Volume::whereSeriesId($this->series->id)->where('status', '=', '0')->update(['status' => 1]);
         }
     }
 }
