@@ -85,6 +85,6 @@ class CreateArticle extends Component
         if (empty($image)) {
             return;
         }
-        Storage::put('public/articles/' . $this->article->id . '/image.jpg', $image);
+        Storage::disk('public')->put('articles/' . $this->article->id . '/image.jpg', $image);
     }
 }
