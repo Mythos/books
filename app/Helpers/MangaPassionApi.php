@@ -93,16 +93,15 @@ class MangaPassionApi
             return null;
         }
         $volumesResult = $volumesResponse->json();
-        if (count($volumesResult) > 0) {
-            foreach ($volumesResult as $volumeResult) {
-                if (empty($volumeResult['price'])) {
-                    continue;
-                }
-
-                return !empty($volumeResult['price']) ? floatval($volumeResult['price']) / 100.0 : 0;
-            }
+        if (empty($volumeResult)) {
+            return null;
         }
+        foreach ($volumesResult as $volumeResult) {
+            if (empty($volumeResult['price'])) {
+                continue;
+            }
 
-        return null;
+            return !empty($volumeResult['price']) ? floatval($volumeResult['price']) / 100.0 : 0;
+        }
     }
 }
