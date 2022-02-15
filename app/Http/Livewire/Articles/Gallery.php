@@ -23,11 +23,11 @@ class Gallery extends Component
 
     public function render()
     {
-        $articles = Article::whereCategoryId($this->category->id);
+        $this->articles = Article::whereCategoryId($this->category->id);
         if (!empty($this->search)) {
-            $articles->where('name', 'like', '%' . $this->search . '%');
+            $this->articles->where('name', 'like', '%' . $this->search . '%');
         }
-        $this->articles = $articles->orderBy('status')->orderBy('name')->get();
+        $this->articles = $this->articles->orderBy('status')->orderBy('name')->get();
 
         return view('livewire.articles.gallery');
     }
