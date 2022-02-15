@@ -144,12 +144,11 @@ class Series extends Model
      */
     public function getCompletionStatusClassAttribute(): string
     {
-        switch ($this->completion_status) {
-            case false:
-                return 'badge bg-danger';
-            case true:
-                return 'badge bg-success';
+        if ($this->completion_status) {
+            return 'badge bg-success';
         }
+
+        return 'badge bg-danger';
     }
 
     /**
@@ -159,12 +158,11 @@ class Series extends Model
      */
     public function getCompletionStatusNameAttribute(): string
     {
-        switch ($this->completion_status) {
-            case false:
-                return __('Incomplete');
-            case true:
-                return __('Complete');
+        if ($this->completion_status) {
+            return __('Complete');
         }
+
+        return __('Incomplete');
     }
 
     /**
