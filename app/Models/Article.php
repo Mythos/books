@@ -112,6 +112,8 @@ class Article extends Model
                 return __('Shipped');
             case 3:
                 return __('Delivered');
+            default:
+                return __('Unknown');
         }
     }
 
@@ -131,6 +133,8 @@ class Article extends Model
                 return 'badge bg-info';
             case 3:
                 return 'badge bg-success';
+            default:
+                return  '';
         }
     }
 }

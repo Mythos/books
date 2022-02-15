@@ -121,6 +121,8 @@ class Volume extends Model
                 return __('Delivered');
             case 4:
                 return __('Read');
+            default:
+                return __('Unknown');
         }
     }
 
@@ -142,6 +144,8 @@ class Volume extends Model
                 return 'table-primary';
             case 4:
                 return 'table-success';
+            default:
+                return '';
         }
     }
 
