@@ -106,16 +106,19 @@ class Series extends Model
      */
     public function getStatusNameAttribute(): string
     {
+        $status = '';
         switch ($this->status) {
             case 0:
-                return __('New');
+                $status = __('New');
             case 1:
-                return __('Ongoing');
+                $status = __('Ongoing');
             case 2:
-                return __('Finished');
+                $status = __('Finished');
             default:
-                return __('Unknown');
+                $status = __('Unknown');
         }
+
+        return $status;
     }
 
     /**
@@ -125,16 +128,19 @@ class Series extends Model
      */
     public function getStatusClassAttribute(): string
     {
+        $class = '';
         switch ($this->status) {
             case 0:
-                return 'badge bg-secondary';
+                $class = 'badge bg-secondary';
             case 1:
-                return 'badge bg-warning';
+                $class = 'badge bg-warning';
             case 2:
-                return 'badge bg-success';
+                $class = 'badge bg-success';
             default:
-                return '';
+                $class = '';
         }
+
+        return $class;
     }
 
     /**
@@ -144,12 +150,11 @@ class Series extends Model
      */
     public function getCompletionStatusClassAttribute(): string
     {
-        switch ($this->completion_status) {
-            case false:
-                return 'badge bg-danger';
-            case true:
-                return 'badge bg-success';
+        if ($this->completion_status) {
+            return 'badge bg-success';
         }
+
+        return 'badge bg-danger';
     }
 
     /**
@@ -159,12 +164,11 @@ class Series extends Model
      */
     public function getCompletionStatusNameAttribute(): string
     {
-        switch ($this->completion_status) {
-            case false:
-                return __('Incomplete');
-            case true:
-                return __('Complete');
+        if ($this->completion_status) {
+            return __('Complete');
         }
+
+        return __('Incomplete');
     }
 
     /**

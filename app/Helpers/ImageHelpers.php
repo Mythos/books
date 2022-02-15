@@ -13,11 +13,10 @@ class ImageHelpers
         if (empty($url)) {
             return null;
         }
-        $image = FacadesImage::make($url)->resize(null, 400, function ($constraint): void {
+
+        return FacadesImage::make($url)->resize(null, 400, function ($constraint): void {
             $constraint->aspectRatio();
         })->encode('jpg');
-
-        return $image;
     }
 
     public static function storePublicImage($image, $path): void

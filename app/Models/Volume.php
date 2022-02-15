@@ -110,20 +110,23 @@ class Volume extends Model
      */
     public function getStatusNameAttribute(): string
     {
+        $status = '';
         switch ($this->status) {
             case 0:
-                return __('New');
+                $status = __('New');
             case 1:
-                return __('Ordered');
+                $status = __('Ordered');
             case 2:
-                return __('Shipped');
+                $status = __('Shipped');
             case 3:
-                return __('Delivered');
+                $status = __('Delivered');
             case 4:
-                return __('Read');
+                $status = __('Read');
             default:
-                return __('Unknown');
+                $status = __('Unknown');
         }
+
+        return  $status;
     }
 
     /**
@@ -133,20 +136,23 @@ class Volume extends Model
      */
     public function getStatusClassAttribute(): string
     {
+        $class = '';
         switch ($this->status) {
             case 0:
-                return 'table-danger';
+                $class = 'table-danger';
             case 1:
-                return 'table-warning';
+                $class = 'table-warning';
             case 2:
-                return 'table-info';
+                $class = 'table-info';
             case 3:
-                return 'table-primary';
+                $class = 'table-primary';
             case 4:
-                return 'table-success';
+                $class = 'table-success';
             default:
-                return '';
+                $class = '';
         }
+
+        return $class;
     }
 
     /**
