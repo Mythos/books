@@ -33,15 +33,15 @@ class Overview extends Component
 
     private function getVolumeStatistics()
     {
-        $volumes = DB::table('volumes')
+        $volumeStatisticsQuery = DB::table('volumes')
                    ->join('series', 'volumes.series_id', '=', 'series.id')
                    ->leftJoin('publishers', 'series.publisher_id', '=', 'publishers.id');
         if (!empty($this->search)) {
-            $volumes->where('isbn', 'like', '%' . $this->search . '%')
-            ->orWhere('series.name', 'like', '%' . $this->search . '%')
-            ->orWhere('publishers.name', 'like', '%' . $this->search . '%');
+            $volumeStatisticsQuery->where('isbn', 'like', '%' . $this->search . '%')
+                                  ->orWhere('series.name', 'like', '%' . $this->search . '%')
+                                  ->orWhere('publishers.name', 'like', '%' . $this->search . '%');
         }
-        $volumeStatistics = $volumes->select([
+        $volumeStatisticsQuery = $volumeStatisticsQuery->select([
             DB::raw('COALESCE(sum(case when volumes.status = 0 then 1 else 0 end), 0) as new'),
             DB::raw('COALESCE(sum(case when volumes.status = 1 then 1 else 0 end), 0) as ordered'),
             DB::raw('COALESCE(sum(case when volumes.status = 2 then 1 else 0 end), 0) as shipped'),
@@ -51,16 +51,16 @@ class Overview extends Component
             DB::raw('count(*) as total'),
         ])->first();
 
-        return json_decode(json_encode($volumeStatistics), true);
+        return json_decode(json_encode($volumeStatisticsQuery), true);
     }
 
     private function getArticleStatistics()
     {
-        $articles = DB::table('articles');
+        $articleStatisticsQuery = DB::table('articles');
         if (!empty($this->search)) {
-            $articles->where('name', 'like', '%' . $this->search . '%');
+            $articleStatisticsQuery->where('name', 'like', '%' . $this->search . '%');
         }
-        $articleStatistics = $articles->select([
+        $articleStatisticsQuery = $articleStatisticsQuery->select([
             DB::raw('COALESCE(sum(case when status = 0 then 1 else 0 end), 0) as new'),
             DB::raw('COALESCE(sum(case when status = 1 then 1 else 0 end), 0) as ordered'),
             DB::raw('COALESCE(sum(case when status = 2 then 1 else 0 end), 0) as shipped'),
@@ -70,6 +70,6 @@ class Overview extends Component
             DB::raw('count(*) as total'),
         ])->first();
 
-        return json_decode(json_encode($articleStatistics), true);
+        return json_decode(json_encode($articleStatisticsQuery), true);
     }
 }
