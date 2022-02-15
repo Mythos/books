@@ -91,7 +91,7 @@ class MangaPassionApi
             return null;
         }
         $volumesResult = $volumesResponse->json();
-        if (empty($volumeResult)) {
+        if (empty($volumesResult)) {
             return null;
         }
         foreach ($volumesResult as $volumeResult) {
