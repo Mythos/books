@@ -34,13 +34,8 @@ class MangaPassionApi
             $series['total'] = $result['numVolumes'];
         } elseif (!empty($result['sources'])) {
             $sourceId = $result['sources'][0]['id'];
-            $sourceResponse = Http::get('https://api.manga-passion.de/sources/' . $sourceId);
-            if ($sourceResponse->successful()) {
-                $source = $sourceResponse->json();
-                if (!empty($source['volumes'])) {
-                    $series['total'] = $source['volumes'];
-                }
-            }
+            $sourceTotal = MangaPassionApi::loadTotalFromSource($sourceId);
+            $series['total'] = $sourceTotal;
         }
 
         $defaultPrice = MangaPassionApi::getDefaultPrice($series['mangapassion_id']);
@@ -82,6 +77,17 @@ class MangaPassionApi
         }
 
         return null;
+    }
+
+    private static function loadTotalFromSource($sourceId)
+    {
+        $sourceResponse = Http::get('https://api.manga-passion.de/sources/' . $sourceId);
+        if (!$sourceResponse->successful()) {
+            return null;
+        }
+        $source = $sourceResponse->json();
+
+        return $source['volumes'];
     }
 
     public static function getDefaultPrice($mangaPassionId): ?float
