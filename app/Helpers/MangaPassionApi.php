@@ -37,10 +37,8 @@ class MangaPassionApi
             $sourceResponse = Http::get('https://api.manga-passion.de/sources/' . $sourceId);
             if ($sourceResponse->successful()) {
                 $source = $sourceResponse->json();
-                if (!empty($source)) {
-                    if (!empty($source['volumes'])) {
-                        $series['total'] = $source['volumes'];
-                    }
+                if (!empty($source['volumes'])) {
+                    $series['total'] = $source['volumes'];
                 }
             }
         }
