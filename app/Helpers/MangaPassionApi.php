@@ -15,7 +15,7 @@ class MangaPassionApi
             return null;
         }
         $response = $response->json();
-        if (count($response) == 0) {
+        if (empty($response)) {
             return null;
         }
         $result = $response[0];

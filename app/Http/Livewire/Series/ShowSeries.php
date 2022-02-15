@@ -129,24 +129,24 @@ class ShowSeries extends Component
             return;
         }
 
-        $series = MangaPassionApi::loadSeries($this->series->name);
+        $apiSeries = MangaPassionApi::loadSeries($this->series->name);
 
-        if (empty($series)) {
+        if (empty($apiSeries)) {
             return;
         }
 
-        $this->series->mangapassion_id = $series['mangapassion_id'];
-        $this->series->name = $series['name'];
-        $this->series->status = $series['status'];
-        $this->series->total = $series['total'];
-        $this->series->default_price = $series['default_price'];
-        $this->image_url = $series['image_url'];
+        $this->series->mangapassion_id = $apiSeries['mangapassion_id'];
+        $this->series->name = $apiSeries['name'];
+        $this->series->status = $apiSeries['status'];
+        $this->series->total = $apiSeries['total'];
+        $this->series->default_price = $apiSeries['default_price'];
+        $this->image_url = $apiSeries['image_url'];
 
-        $publisher = Publisher::whereName($series['publisher'])->first();
+        $publisher = Publisher::whereName($apiSeries['publisher'])->first();
         if (!empty($publisher)) {
             $this->series->publisher_id = $publisher->id;
         } else {
-            $publisher = new Publisher(['name' => $series['publisher']]);
+            $publisher = new Publisher(['name' => $apiSeries['publisher']]);
             $publisher->save();
 
             $this->series->publisher_id = $publisher->id;
