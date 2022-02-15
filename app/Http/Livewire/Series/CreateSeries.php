@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Series;
 
+use App\Helpers\ImageHelpers;
 use App\Helpers\MangaPassionApi;
 use App\Models\Category;
 use App\Models\Publisher;
@@ -10,10 +11,7 @@ use App\Models\Volume;
 use Exception;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
-use Intervention\Image\Facades\Image as FacadesImage;
-use Intervention\Image\Image;
 use Livewire\Component;
-use Storage;
 
 class CreateSeries extends Component
 {
@@ -74,12 +72,12 @@ class CreateSeries extends Component
         }
         $this->series->category_id = $this->category->id;
         try {
-            $image = $this->getImage();
+            $image = ImageHelpers::getImage($this->image_url);
+            $nsfwImage = $image->pixelate(config('images.nsfw.pixelate', 10))->blur(config('images.nsfw.blur', 5))->encode('jpg');
             $this->series->save();
-            $this->storeImages($image);
-
+            ImageHelpers::storePublicImage($image, $this->series->image_path . '/cover_sfw.jpg');
+            ImageHelpers::storePublicImage($nsfwImage, $this->series->image_path . '/cover.jpg');
             $this->createVolumes();
-
             toastr()->addSuccess(__(':name has been created', ['name' => $this->series->name]));
 
             return redirect()->route('home');
@@ -118,27 +116,6 @@ class CreateSeries extends Component
             $this->series->publisher_id = $publisher->id;
             $this->publishers = Publisher::orderBy('name')->get();
         }
-    }
-
-    private function getImage(): ?Image
-    {
-        if (empty($this->image_url)) {
-            return null;
-        }
-        $image = FacadesImage::make($this->image_url)->resize(null, 400, function ($constraint): void {
-            $constraint->aspectRatio();
-        })->encode('jpg');
-
-        return $image;
-    }
-
-    private function storeImages($image): void
-    {
-        if (empty($image)) {
-            return;
-        }
-        Storage::disk('public')->put($this->series->image_path . '/cover.jpg', $image);
-        Storage::disk('public')->put($this->series->image_path . '/cover_sfw.jpg', $image->pixelate(config('images.nsfw.pixelate', 10))->blur(config('images.nsfw.blur', 5))->encode('jpg'));
     }
 
     private function createVolumes(): void

@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Series;
 
+use App\Helpers\ImageHelpers;
 use App\Models\Category;
 use App\Models\Publisher;
 use App\Models\Series;
@@ -9,8 +10,6 @@ use App\Models\Volume;
 use Exception;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
-use Intervention\Image\Facades\Image as FacadesImage;
-use Intervention\Image\Image;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Component;
 use Storage;
@@ -73,9 +72,11 @@ class EditSeries extends Component
             $this->series->default_price = floatval(Str::replace(',', '.', $this->series->default_price));
         }
         try {
-            $image = $this->getImage();
+            $image = ImageHelpers::getImage($this->image_url);
+            $nsfwImage = $image->pixelate(config('images.nsfw.pixelate', 10))->blur(config('images.nsfw.blur', 5))->encode('jpg');
             $this->series->save();
-            $this->storeImages($image);
+            ImageHelpers::storePublicImage($image, $this->series->image_path . '/cover_sfw.jpg');
+            ImageHelpers::storePublicImage($nsfwImage, $this->series->image_path . '/cover.jpg');
             $this->updatePrices();
             $this->updateStatuses();
             toastr()->addSuccess(__(':name has been updated', ['name' => $this->series->name]));
@@ -103,27 +104,6 @@ class EditSeries extends Component
         Storage::disk('public')->deleteDirectory($this->series->image_path);
         toastr()->addSuccess(__(':name has been deleted', ['name' => $this->series->name]));
         redirect()->route('categories.show', [$this->category]);
-    }
-
-    private function getImage(): ?Image
-    {
-        if (empty($this->image_url)) {
-            return null;
-        }
-        $image = FacadesImage::make($this->image_url)->resize(null, 400, function ($constraint): void {
-            $constraint->aspectRatio();
-        })->encode('jpg');
-
-        return $image;
-    }
-
-    private function storeImages($image): void
-    {
-        if (empty($image)) {
-            return;
-        }
-        Storage::disk('public')->put($this->series->image_path . '/cover.jpg', $image);
-        Storage::disk('public')->put($this->series->image_path . '/cover_sfw.jpg', $image->pixelate(config('images.nsfw.pixelate', 10))->blur(config('images.nsfw.blur', 5))->encode('jpg'));
     }
 
     private function updatePrices(): void

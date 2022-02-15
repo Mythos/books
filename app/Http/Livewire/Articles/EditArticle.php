@@ -2,14 +2,13 @@
 
 namespace App\Http\Livewire\Articles;
 
+use App\Helpers\ImageHelpers;
 use App\Models\Article;
 use App\Models\Category;
 use Exception;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
-use Intervention\Image\Facades\Image as FacadesImage;
-use Intervention\Image\Image;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Component;
 
@@ -59,9 +58,9 @@ class EditArticle extends Component
             $this->article->price = floatval(Str::replace(',', '.', $this->article->price));
         }
         try {
-            $image = $this->getImage();
+            $image = ImageHelpers::getImage($this->image_url);
             $this->article->save();
-            $this->storeImages($image);
+            ImageHelpers::storePublicImage($image, $this->article->image_path . '/image.jpg');
             toastr()->livewire()->addSuccess(__(':name has been updated', ['name' => $this->article->name]));
             $this->reset(['image_url']);
         } catch (Exception $exception) {
@@ -85,25 +84,5 @@ class EditArticle extends Component
         Storage::disk('public')->deleteDirectory($this->article->image_path);
         toastr()->addSuccess(__(':name has been deleted', ['name' => $this->article->name]));
         redirect()->route('categories.show', [$this->category]);
-    }
-
-    private function getImage(): ?Image
-    {
-        if (empty($this->image_url)) {
-            return null;
-        }
-        $image = FacadesImage::make($this->image_url)->resize(null, 400, function ($constraint): void {
-            $constraint->aspectRatio();
-        })->encode('jpg');
-
-        return $image;
-    }
-
-    private function storeImages($image): void
-    {
-        if (empty($image)) {
-            return;
-        }
-        Storage::disk('public')->put($this->article->image_path . '/image.jpg', $image);
     }
 }
