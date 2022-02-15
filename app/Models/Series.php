@@ -106,19 +106,16 @@ class Series extends Model
      */
     public function getStatusNameAttribute(): string
     {
-        $status = '';
         switch ($this->status) {
             case 0:
-                $status = __('New');
+                return __('New');
             case 1:
-                $status = __('Ongoing');
+                return __('Ongoing');
             case 2:
-                $status = __('Finished');
+                return __('Finished');
             default:
-                $status = __('Unknown');
+                return __('Unknown');
         }
-
-        return $status;
     }
 
     /**
@@ -128,19 +125,16 @@ class Series extends Model
      */
     public function getStatusClassAttribute(): string
     {
-        $class = '';
         switch ($this->status) {
             case 0:
-                $class = 'badge bg-secondary';
+                return 'badge bg-secondary';
             case 1:
-                $class = 'badge bg-warning';
+                return 'badge bg-warning';
             case 2:
-                $class = 'badge bg-success';
+                return 'badge bg-success';
             default:
-                $class = '';
+                return '';
         }
-
-        return $class;
     }
 
     /**
@@ -150,11 +144,12 @@ class Series extends Model
      */
     public function getCompletionStatusClassAttribute(): string
     {
-        if ($this->completion_status) {
-            return 'badge bg-success';
+        switch ($this->completion_status) {
+            case false:
+                return 'badge bg-danger';
+            case true:
+                return 'badge bg-success';
         }
-
-        return 'badge bg-danger';
     }
 
     /**
@@ -164,11 +159,12 @@ class Series extends Model
      */
     public function getCompletionStatusNameAttribute(): string
     {
-        if ($this->completion_status) {
-            return __('Complete');
+        switch ($this->completion_status) {
+            case false:
+                return __('Incomplete');
+            case true:
+                return __('Complete');
         }
-
-        return __('Incomplete');
     }
 
     /**

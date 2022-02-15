@@ -104,21 +104,18 @@ class Article extends Model
      */
     public function getStatusNameAttribute(): string
     {
-        $status = '';
         switch ($this->status) {
             case 0:
-                $status = __('New');
+                return __('New');
             case 1:
-                $status = __('Ordered');
+                return __('Ordered');
             case 2:
-                $status = __('Shipped');
+                return __('Shipped');
             case 3:
-                $status = __('Delivered');
+                return __('Delivered');
             default:
-                $status = __('Unknown');
+                return __('Unknown');
         }
-
-        return $status;
     }
 
     /**
@@ -128,21 +125,18 @@ class Article extends Model
      */
     public function getStatusClassAttribute(): string
     {
-        $class = '';
         switch ($this->status) {
             case 0:
-                $class = 'badge bg-danger';
+                return 'badge bg-danger';
             case 1:
-                $class = 'badge bg-warning';
+                return 'badge bg-warning';
             case 2:
-                $class = 'badge bg-info';
+                return 'badge bg-info';
             case 3:
-                $class = 'badge bg-success';
+                return 'badge bg-success';
             default:
-                $class = '';
+                return  '';
         }
-
-        return $class;
     }
 
     /**
