@@ -100,7 +100,7 @@ class EditSeries extends Component
     {
         Volume::whereSeriesId($this->series->id)->delete();
         $this->series->delete();
-        Storage::disk('public')->deleteDirectory('series/' . $this->series->id);
+        Storage::disk('public')->deleteDirectory($this->series->image_path);
         toastr()->addSuccess(__(':name has been deleted', ['name' => $this->series->name]));
         redirect()->route('categories.show', [$this->category]);
     }
@@ -122,8 +122,8 @@ class EditSeries extends Component
         if (empty($image)) {
             return;
         }
-        Storage::disk('public')->put('series/' . $this->series->id . '/cover.jpg', $image);
-        Storage::disk('public')->put('series/' . $this->series->id . '/cover_sfw.jpg', $image->pixelate(config('images.nsfw.pixelate', 10))->blur(config('images.nsfw.blur', 5))->encode('jpg'));
+        Storage::disk('public')->put($this->series->image_path . '/cover.jpg', $image);
+        Storage::disk('public')->put($this->series->image_path . '/cover_sfw.jpg', $image->pixelate(config('images.nsfw.pixelate', 10))->blur(config('images.nsfw.blur', 5))->encode('jpg'));
     }
 
     private function updatePrices(): void

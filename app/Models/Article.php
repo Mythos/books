@@ -37,6 +37,7 @@ use Spatie\Sluggable\SlugOptions;
  * @method static \Illuminate\Database\Eloquent\Builder|Article whereStatus($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Article whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @property-read string $image_path
  */
 class Article extends Model
 {
@@ -136,5 +137,15 @@ class Article extends Model
             default:
                 return  '';
         }
+    }
+
+    /**
+     * Get the article's image path.
+     *
+     * @return string
+     */
+    public function getImagePathAttribute(): string
+    {
+        return 'articles/' . $this->id;
     }
 }

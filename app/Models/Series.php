@@ -55,6 +55,7 @@ use Spatie\Sluggable\SlugOptions;
  * @method static \Illuminate\Database\Eloquent\Builder|Series whereTotal($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Series whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @property-read string $image_path
  */
 class Series extends Model
 {
@@ -187,7 +188,7 @@ class Series extends Model
      */
     public function getImageAttribute(): string
     {
-        $path = 'storage/series/' . $this->id . '/';
+        $path = 'storage/' . $this->image_path . '/';
         if ($this->is_nsfw && !session('show_nsfw', false)) {
             return url($path . 'cover_sfw.jpg');
         }
@@ -251,5 +252,15 @@ class Series extends Model
     public function getRouteKeyName(): string
     {
         return 'slug';
+    }
+
+    /**
+     * Get the series' image path.
+     *
+     * @return string
+     */
+    public function getImagePathAttribute(): string
+    {
+        return 'series/' . $this->id;
     }
 }

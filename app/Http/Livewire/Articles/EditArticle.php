@@ -82,7 +82,7 @@ class EditArticle extends Component
     public function confirmedDelete(): void
     {
         $this->article->delete();
-        Storage::disk('public')->deleteDirectory('articles/' . $this->article->id);
+        Storage::disk('public')->deleteDirectory($this->article->image_path);
         toastr()->addSuccess(__(':name has been deleted', ['name' => $this->article->name]));
         redirect()->route('categories.show', [$this->category]);
     }
@@ -104,6 +104,6 @@ class EditArticle extends Component
         if (empty($image)) {
             return;
         }
-        Storage::disk('public')->put('articles/' . $this->article->id . '/image.jpg', $image);
+        Storage::disk('public')->put($this->article->image_path . '/image.jpg', $image);
     }
 }
