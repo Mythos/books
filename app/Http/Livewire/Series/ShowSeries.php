@@ -4,10 +4,12 @@ namespace App\Http\Livewire\Series;
 
 use App\Helpers\MangaPassionApi;
 use App\Models\Category;
-use App\Models\Publisher;
 use App\Models\Series;
 use App\Models\Volume;
+use App\Services\SeriesService;
+use Exception;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Log;
 use Livewire\Component;
 
 class ShowSeries extends Component
@@ -125,36 +127,16 @@ class ShowSeries extends Component
 
     public function update():void
     {
-        if (empty($this->series->mangapassion_id)) {
-            return;
+        try {
+            $service = new SeriesService();
+            $this->series = $service->refreshMetadata($this->series);
+            $this->series->save();
+            $this->updateVolumes();
+            toastr()->livewire()->addSuccess(__(':name has been updated', ['name' => $this->series->name]));
+        } catch (Exception $exception) {
+            Log::error('Error while updating series via API', ['exception' => $exception]);
+            toastr()->livewire()->addError(__(':name could not be updated', ['name' => $this->series->name]));
         }
-
-        $apiSeries = MangaPassionApi::loadSeries($this->series->name);
-
-        if (empty($apiSeries)) {
-            return;
-        }
-
-        $this->series->mangapassion_id = $apiSeries['mangapassion_id'];
-        $this->series->name = $apiSeries['name'];
-        $this->series->status = $apiSeries['status'];
-        $this->series->total = $apiSeries['total'];
-        $this->series->default_price = $apiSeries['default_price'];
-        $this->image_url = $apiSeries['image_url'];
-
-        $publisher = Publisher::whereName($apiSeries['publisher'])->first();
-        if (!empty($publisher)) {
-            $this->series->publisher_id = $publisher->id;
-        } else {
-            $publisher = new Publisher(['name' => $apiSeries['publisher']]);
-            $publisher->save();
-
-            $this->series->publisher_id = $publisher->id;
-        }
-        $this->series->save();
-
-        $this->updateVolumes();
-        toastr()->livewire()->addSuccess(__(':name has been updated', ['name' => $this->series->name]));
     }
 
     private function updateVolumes(): void
