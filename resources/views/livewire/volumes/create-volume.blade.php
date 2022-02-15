@@ -20,7 +20,7 @@
                             <label for="isbn" class="col-form-label">{{ __('ISBN') }}</label>
                             <div class="input-group">
                                 <input id="isbn" name="isbn" type="text" class="form-control @error('isbn') is-invalid @enderror" wire:model='isbn' autofocus>
-                                <button class="btn btn-outline-secondary" type="button" data-bs-toggle="modal" data-bs-target="#livestream_scanner"><i class="fa fa-barcode"></i></button>
+                                <button class="btn btn-outline-secondary" type="button" data-bs-toggle="modal" data-bs-target="#livestream_scanner"><span class="fa fa-barcode"></span></button>
                                 @error('isbn')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -217,7 +217,7 @@
                     liveStreamConfig,
                     function(err) {
                         if (err) {
-                            $('#livestream_scanner .modal-body .error').html('<div class="alert alert-danger"><strong><i class="fa fa-exclamation-triangle"></i> ' + err.name + '</strong>: ' + err.message + '</div>');
+                            $('#livestream_scanner .modal-body .error').html('<div class="alert alert-danger"><strong><span class="fa fa-exclamation-triangle"></span> ' + err.name + '</strong>: ' + err.message + '</div>');
                             Quagga.stop();
                             return;
                         } else {

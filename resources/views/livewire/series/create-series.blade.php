@@ -19,7 +19,7 @@
                             <label for="series.name" class="col-form-label required">{{ __('Name') }}</label>
                             <div class="input-group">
                                 <input id="series.name" name="series.name" type="text" class="form-control @error('series.name') is-invalid @enderror" wire:model='series.name' autofocus>
-                                <button class="btn btn-outline-secondary" type="button" wire:click="fetchdata"><i class="fa fa-search"></i></button>
+                                <button class="btn btn-outline-secondary" type="button" wire:click="fetchdata"><span class="fa fa-search"></span></button>
                                 @error('series.name')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
