@@ -167,6 +167,10 @@ class ShowSeries extends Component
                 continue;
             }
 
+            if ($volume->status == 0) {
+                $volume->price = $price;
+            }
+
             $volume->number = $number;
             $volume->publish_date = !empty($publish_date) ? $publish_date->format('Y-m-d') : null;
             if (!empty($isbn)) {
