@@ -3,7 +3,7 @@
 ## 2.2.0
 
 - Updating a series via Manga Passion API now updates the price for volumes with status "New"
-- Updated to latest Laravel version, now requiring PHP 8.0.3 or greater
+- Updated to latest Laravel version, now requiring PHP 8.0.2 or greater
 - Fixed semantic layout errors
 - Updated translations
 
