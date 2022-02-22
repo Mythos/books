@@ -37,6 +37,7 @@ class EditVolume extends Component
             'volume.price' => 'nullable|regex:"^[0-9]{1,9}([,.][0-9]{1,2})?$"',
             'volume.isbn' => ['nullable', 'unique:volumes,isbn,' . $this->volume->id . ',id,series_id,' . $this->series->id, new Isbn()],
             'volume.ignore_in_upcoming' => 'boolean',
+            'volume.series_id' => 'required|exists:series,id',
         ];
     }
 
