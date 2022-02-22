@@ -1,5 +1,12 @@
 # Changelog
 
+## 2.2.0
+
+- Updating a series via Manga Passion API now updates the price for volumes with status "New"
+- Updated to latest Laravel version, now requiring PHP 8.0.3 or greater
+- Fixed semantic layout errors
+- Updated translations
+
 ## 2.1.0 (2022-02-07)
 
 - Added date format to user profile
