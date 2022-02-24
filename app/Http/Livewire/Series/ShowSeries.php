@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Series;
 
+use App\Helpers\ImageHelpers;
 use App\Helpers\MangaPassionApi;
 use App\Models\Category;
 use App\Models\Series;
@@ -125,14 +126,25 @@ class ShowSeries extends Component
         toastr()->livewire()->addSuccess(__(':name has been updated', ['name' => $volume->series->name . ' ' . $volume->number]));
     }
 
-    public function update():void
+    public function update()
     {
         try {
             $service = new SeriesService();
             $this->series = $service->refreshMetadata($this->series);
             $this->series->save();
+
+            $image = ImageHelpers::getImage($this->series->image_url);
+            if (!empty($image)) {
+                ImageHelpers::storePublicImage($image, $this->series->image_path . '/cover.jpg');
+                $nsfwImage = $image->pixelate(config('images.nsfw.pixelate', 10))->blur(config('images.nsfw.blur', 5))->encode('jpg');
+                ImageHelpers::storePublicImage($nsfwImage, $this->series->image_path . '/cover_sfw.jpg');
+            }
+
             $this->updateVolumes();
-            toastr()->livewire()->addSuccess(__(':name has been updated', ['name' => $this->series->name]));
+
+            toastr()->addSuccess(__(':name has been updated', ['name' => $this->series->name]));
+
+            return redirect()->route('series.show', [$this->category, $this->series]);
         } catch (Exception $exception) {
             Log::error('Error while updating series via API', ['exception' => $exception]);
             toastr()->livewire()->addError(__(':name could not be updated', ['name' => $this->series->name]));

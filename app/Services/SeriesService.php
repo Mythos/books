@@ -26,6 +26,7 @@ class SeriesService
         $series->status = $apiSeries['status'];
         $series->total = $apiSeries['total'];
         $series->default_price = $apiSeries['default_price'];
+        $series->image_url = $apiSeries['image_url'];
 
         $publisher = Publisher::whereName($apiSeries['publisher'])->first();
         if (!empty($publisher)) {

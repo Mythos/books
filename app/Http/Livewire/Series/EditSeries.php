@@ -36,7 +36,7 @@ class EditSeries extends Component
         'series.publisher_id' => 'nullable|exists:publishers,id',
         'series.subscription_active' => 'boolean',
         'series.mangapassion_id' => 'nullable|integer',
-        'image_url' => 'url',
+        'series.image_url' => 'required|url',
     ];
 
     protected $listeners = [
@@ -72,7 +72,7 @@ class EditSeries extends Component
             $this->series->default_price = floatval(Str::replace(',', '.', $this->series->default_price));
         }
         try {
-            $image = ImageHelpers::getImage($this->image_url);
+            $image = ImageHelpers::getImage($this->series->image_url);
             $this->series->save();
             if (!empty($image)) {
                 ImageHelpers::storePublicImage($image, $this->series->image_path . '/cover.jpg');

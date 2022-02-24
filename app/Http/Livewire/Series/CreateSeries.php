@@ -21,8 +21,6 @@ class CreateSeries extends Component
 
     public Series $series;
 
-    public string $image_url = '';
-
     protected $rules = [
         'series.name' => 'required',
         'series.status' => 'required|integer|min:0',
@@ -33,7 +31,7 @@ class CreateSeries extends Component
         'series.publisher_id' => 'nullable|exists:publishers,id',
         'series.subscription_active' => 'boolean',
         'series.mangapassion_id' => 'nullable|integer',
-        'image_url' => 'required|url',
+        'series.image_url' => 'required|url',
     ];
 
     public function updated($property, $value): void
@@ -72,7 +70,7 @@ class CreateSeries extends Component
         }
         $this->series->category_id = $this->category->id;
         try {
-            $image = ImageHelpers::getImage($this->image_url);
+            $image = ImageHelpers::getImage($this->series->image_url);
             $this->series->save();
             if (!empty($image)) {
                 ImageHelpers::storePublicImage($image, $this->series->image_path . '/cover.jpg');
@@ -106,7 +104,7 @@ class CreateSeries extends Component
         $this->series->status = $apiSeries['status'];
         $this->series->total = $apiSeries['total'];
         $this->series->default_price = $apiSeries['default_price'];
-        $this->image_url = $apiSeries['image_url'];
+        $this->series->image_url = $apiSeries['image_url'];
 
         $publisher = Publisher::whereName($apiSeries['publisher'])->first();
         if (!empty($publisher)) {
