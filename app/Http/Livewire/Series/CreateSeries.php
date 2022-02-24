@@ -75,8 +75,8 @@ class CreateSeries extends Component
             $image = ImageHelpers::getImage($this->image_url);
             $nsfwImage = $image->pixelate(config('images.nsfw.pixelate', 10))->blur(config('images.nsfw.blur', 5))->encode('jpg');
             $this->series->save();
-            ImageHelpers::storePublicImage($image, $this->series->image_path . '/cover_sfw.jpg');
-            ImageHelpers::storePublicImage($nsfwImage, $this->series->image_path . '/cover.jpg');
+            ImageHelpers::storePublicImage($image, $this->series->image_path . '/cover.jpg');
+            ImageHelpers::storePublicImage($nsfwImage, $this->series->image_path . '/cover_sfw.jpg');
             $this->createVolumes();
             toastr()->addSuccess(__(':name has been created', ['name' => $this->series->name]));
 
