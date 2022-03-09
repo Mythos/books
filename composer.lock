@@ -1126,16 +1126,16 @@
         },
         {
             "name": "laravel/framework",
-            "version": "v9.3.1",
+            "version": "v9.4.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "c1c4404511b83fbf90ccbcdf864d4a85537f35e4"
+                "reference": "29f0aaade82eadd20ef881b4efb88b0dad4e9a5b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/c1c4404511b83fbf90ccbcdf864d4a85537f35e4",
-                "reference": "c1c4404511b83fbf90ccbcdf864d4a85537f35e4",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/29f0aaade82eadd20ef881b4efb88b0dad4e9a5b",
+                "reference": "29f0aaade82eadd20ef881b4efb88b0dad4e9a5b",
                 "shasum": ""
             },
             "require": {
@@ -1301,7 +1301,7 @@
                 "issues": "https://github.com/laravel/framework/issues",
                 "source": "https://github.com/laravel/framework"
             },
-            "time": "2022-03-03T15:15:10+00:00"
+            "time": "2022-03-08T16:17:00+00:00"
         },
         {
             "name": "laravel/sanctum",
@@ -3568,16 +3568,16 @@
         },
         {
             "name": "spatie/laravel-sluggable",
-            "version": "3.3.0",
+            "version": "3.3.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/laravel-sluggable.git",
-                "reference": "92770711866e16cc4b71db587e152e2345e89aeb"
+                "reference": "9eba691f8ce88481b949887a0f694b69c812168c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-sluggable/zipball/92770711866e16cc4b71db587e152e2345e89aeb",
-                "reference": "92770711866e16cc4b71db587e152e2345e89aeb",
+                "url": "https://api.github.com/repos/spatie/laravel-sluggable/zipball/9eba691f8ce88481b949887a0f694b69c812168c",
+                "reference": "9eba691f8ce88481b949887a0f694b69c812168c",
                 "shasum": ""
             },
             "require": {
@@ -3588,7 +3588,7 @@
             "require-dev": {
                 "orchestra/testbench": "^6.23|^7.0",
                 "phpunit/phpunit": "^9.5.1",
-                "spatie/laravel-translatable": "^5.0"
+                "spatie/laravel-translatable": "^5.0|^6.0"
             },
             "type": "library",
             "autoload": {
@@ -3616,7 +3616,7 @@
             ],
             "support": {
                 "issues": "https://github.com/spatie/laravel-sluggable/issues",
-                "source": "https://github.com/spatie/laravel-sluggable/tree/3.3.0"
+                "source": "https://github.com/spatie/laravel-sluggable/tree/3.3.1"
             },
             "funding": [
                 {
@@ -3624,7 +3624,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2022-01-13T11:33:08+00:00"
+            "time": "2022-03-09T07:24:43+00:00"
         },
         {
             "name": "symfony/console",
@@ -5850,16 +5850,16 @@
         },
         {
             "name": "voku/portable-ascii",
-            "version": "2.0.0",
+            "version": "2.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/voku/portable-ascii.git",
-                "reference": "9bd89e83cecdf8c37b64909454249eaed98b2c89"
+                "reference": "b56450eed252f6801410d810c8e1727224ae0743"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/voku/portable-ascii/zipball/9bd89e83cecdf8c37b64909454249eaed98b2c89",
-                "reference": "9bd89e83cecdf8c37b64909454249eaed98b2c89",
+                "url": "https://api.github.com/repos/voku/portable-ascii/zipball/b56450eed252f6801410d810c8e1727224ae0743",
+                "reference": "b56450eed252f6801410d810c8e1727224ae0743",
                 "shasum": ""
             },
             "require": {
@@ -5896,7 +5896,7 @@
             ],
             "support": {
                 "issues": "https://github.com/voku/portable-ascii/issues",
-                "source": "https://github.com/voku/portable-ascii/tree/2.0.0"
+                "source": "https://github.com/voku/portable-ascii/tree/2.0.1"
             },
             "funding": [
                 {
@@ -5920,7 +5920,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-01-24T18:59:03+00:00"
+            "time": "2022-03-08T17:03:00+00:00"
         },
         {
             "name": "webmozart/assert",
