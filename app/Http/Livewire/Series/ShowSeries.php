@@ -126,7 +126,7 @@ class ShowSeries extends Component
         toastr()->livewire()->addSuccess(__(':name has been updated', ['name' => $volume->series->name . ' ' . $volume->number]));
     }
 
-    public function update()
+    public function update(): void
     {
         try {
             $service = new SeriesService();
@@ -142,9 +142,7 @@ class ShowSeries extends Component
 
             $this->updateVolumes();
 
-            toastr()->addSuccess(__(':name has been updated', ['name' => $this->series->name]));
-
-            return redirect()->route('series.show', [$this->category, $this->series]);
+            toastr()->livewire()->addSuccess(__(':name has been updated', ['name' => $this->series->name]));
         } catch (Exception $exception) {
             Log::error('Error while updating series via API', ['exception' => $exception]);
             toastr()->livewire()->addError(__(':name could not be updated', ['name' => $this->series->name]));
