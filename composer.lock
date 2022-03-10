@@ -2409,16 +2409,16 @@
         },
         {
             "name": "php-flasher/flasher",
-            "version": "v0.9.6",
+            "version": "v0.9.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-flasher/flasher.git",
-                "reference": "2f024db71d13ab0fcbe95d2558acc2952967e548"
+                "reference": "07c043e4be6143fe8b4c59ffc8af7dd42ba04c4e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-flasher/flasher/zipball/2f024db71d13ab0fcbe95d2558acc2952967e548",
-                "reference": "2f024db71d13ab0fcbe95d2558acc2952967e548",
+                "url": "https://api.github.com/repos/php-flasher/flasher/zipball/07c043e4be6143fe8b4c59ffc8af7dd42ba04c4e",
+                "reference": "07c043e4be6143fe8b4c59ffc8af7dd42ba04c4e",
                 "shasum": ""
             },
             "require": {
@@ -2466,7 +2466,7 @@
             ],
             "support": {
                 "issues": "https://github.com/php-flasher/flasher/issues",
-                "source": "https://github.com/php-flasher/flasher/tree/v0.9.6"
+                "source": "https://github.com/php-flasher/flasher/tree/v0.9.8"
             },
             "funding": [
                 {
@@ -2486,20 +2486,20 @@
                     "type": "patreon"
                 }
             ],
-            "time": "2021-10-24T22:18:23+00:00"
+            "time": "2022-03-08T15:15:29+00:00"
         },
         {
             "name": "php-flasher/flasher-laravel",
-            "version": "v0.9.6",
+            "version": "v0.9.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-flasher/flasher-laravel.git",
-                "reference": "c95372eb2f7ad48be582fb94867ef1217e4413e6"
+                "reference": "247b28cfa9471ce6eef61673eb7574a5ba48ac91"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-flasher/flasher-laravel/zipball/c95372eb2f7ad48be582fb94867ef1217e4413e6",
-                "reference": "c95372eb2f7ad48be582fb94867ef1217e4413e6",
+                "url": "https://api.github.com/repos/php-flasher/flasher-laravel/zipball/247b28cfa9471ce6eef61673eb7574a5ba48ac91",
+                "reference": "247b28cfa9471ce6eef61673eb7574a5ba48ac91",
                 "shasum": ""
             },
             "require": {
@@ -2558,7 +2558,7 @@
             ],
             "support": {
                 "issues": "https://github.com/php-flasher/flasher-laravel/issues",
-                "source": "https://github.com/php-flasher/flasher-laravel/tree/v0.9.6"
+                "source": "https://github.com/php-flasher/flasher-laravel/tree/v0.9.8"
             },
             "funding": [
                 {
@@ -2578,11 +2578,11 @@
                     "type": "patreon"
                 }
             ],
-            "time": "2021-10-27T19:21:05+00:00"
+            "time": "2022-03-09T07:43:55+00:00"
         },
         {
             "name": "php-flasher/flasher-livewire",
-            "version": "v0.9.6",
+            "version": "v0.9.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-flasher/flasher-livewire.git",
@@ -2645,7 +2645,7 @@
             ],
             "support": {
                 "issues": "https://github.com/php-flasher/flasher-livewire/issues",
-                "source": "https://github.com/php-flasher/flasher-livewire/tree/v0.9.6"
+                "source": "https://github.com/php-flasher/flasher-livewire/tree/v0.9.8"
             },
             "funding": [
                 {
