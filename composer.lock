@@ -2304,7 +2304,7 @@
         },
         {
             "name": "nicebooks/isbn",
-            "version": "0.3.15",
+            "version": "0.3.16",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nicebooks-com/isbn.git",
@@ -2347,7 +2347,7 @@
             ],
             "support": {
                 "issues": "https://github.com/nicebooks-com/isbn/issues",
-                "source": "https://github.com/nicebooks-com/isbn/tree/0.3.15"
+                "source": "https://github.com/nicebooks-com/isbn/tree/0.3.16"
             },
             "time": "2022-02-18T22:51:36+00:00"
         },
