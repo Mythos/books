@@ -26,7 +26,7 @@
 
 <body>
     <div id="app">
-        <nav class="navbar navbar-dark bg-dark navbar-expand-md shadow-sm">
+        <nav class="navbar navbar-dark bg-dark navbar-expand-md fixed-top shadow-sm">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
                     {{ config('app.name', 'Laravel') }}
@@ -115,7 +115,7 @@
                 </div>
             </div>
         </nav>
-        <main class="py-4" style="background-color: #F0F0F0;">
+        <main class="pb-4" style="padding-top: 70px; background-color: #F0F0F0;">
             @yield('content')
         </main>
         <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 border-top">
