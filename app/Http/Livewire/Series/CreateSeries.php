@@ -91,7 +91,7 @@ class CreateSeries extends Component
     {
         $this->validateOnly('series.name');
         $this->series->mangapassion_id = null;
-        $apiSeries = MangaPassionApi::loadSeries($this->series->name);
+        $apiSeries = MangaPassionApi::loadSeriesByTitle($this->series->name);
 
         if (empty($apiSeries)) {
             toastr()->livewire()->addWarning(__('No entry with the title :name has been found', ['name' => $this->series->name]));

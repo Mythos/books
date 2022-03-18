@@ -22,6 +22,7 @@ use Spatie\Sluggable\SlugOptions;
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \App\Models\Category $category
  * @property-read string $image
+ * @property-read string $image_path
  * @property-read string $status_class
  * @property-read string $status_name
  * @method static \Illuminate\Database\Eloquent\Builder|Article newModelQuery()
@@ -37,7 +38,6 @@ use Spatie\Sluggable\SlugOptions;
  * @method static \Illuminate\Database\Eloquent\Builder|Article whereStatus($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Article whereUpdatedAt($value)
  * @mixin \Eloquent
- * @property-read string $image_path
  */
 class Article extends Model
 {

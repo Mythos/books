@@ -13,6 +13,16 @@
             @if ($series->subscription_active)
                 <span class="badge bg-success mt-1 fs-9">{{ __('Subscription active') }}</span>
             @endif
+            <span class="mt-2">
+                @foreach ($series->genres->where('type', '0')->sortBy('name') as $genre)
+                    <span class="{{ $genre->type_class }}">{{ $genre->name }}</span>
+                @endforeach
+            </span>
+            <span class="mt-2">
+                @foreach ($series->genres->where('type', '1')->sortBy('name') as $genre)
+                    <span class="{{ $genre->type_class }}">{{ $genre->name }}</span>
+                @endforeach
+            </span>
             @if (!empty($series->mangapassion_id))
                 <button class="btn btn-primary mt-3" wire:click="update">{{ __('Update') }}</button>
             @endif

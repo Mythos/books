@@ -16,12 +16,25 @@ class UpcomingSeries extends Component
 
     public function render()
     {
-        $upcoming = Volume::with('series.publisher')->where('ignore_in_upcoming', 'false')->whereIn('status', [0, 1, 2])->whereNotNull('publish_date')->orderBy('publish_date')->get();
+        $upcoming = Volume::with(['series.publisher', 'series.genres'])
+        ->where('ignore_in_upcoming', 'false')
+        ->whereIn('status', [0, 1, 2])
+        ->whereNotNull('publish_date')
+        ->orderBy('publish_date')
+        ->get();
         if (!empty($this->search)) {
             $upcoming = $upcoming->filter(function ($volume) {
-                return Str::contains(Str::lower($volume->name), Str::lower($this->search))
-                || Str::contains(Str::lower($volume->isbn), Str::lower($this->search))
-                || Str::contains(Str::lower($volume->series->publisher?->name), Str::lower($this->search));
+                $volumeNameMatch = Str::contains(Str::lower($volume->name), Str::lower($this->search));
+                $volumeIsbnMatch = Str::contains(Str::lower($volume->isbn), Str::lower($this->search));
+                $seriesPublisherMatch = Str::contains(Str::lower($volume->series->publisher?->name), Str::lower($this->search));
+                $seriesGenreMatch = $volume->series->genres->filter(function ($genre) {
+                    return Str::contains(Str::lower($genre->name), Str::lower($this->search));
+                })->count() > 0;
+
+                return $volumeNameMatch
+                || $volumeIsbnMatch
+                || $seriesPublisherMatch
+                || $seriesGenreMatch;
             });
         }
         $this->upcoming = $upcoming;

@@ -8,6 +8,7 @@ use App\Http\Livewire\Categories\CreateCategory;
 use App\Http\Livewire\Categories\EditCategory;
 use App\Http\Livewire\Categories\ShowCategory;
 use App\Http\Livewire\ChangePassword;
+use App\Http\Livewire\Genres\GenreTable;
 use App\Http\Livewire\Profile;
 use App\Http\Livewire\Publishers\CreatePublisher;
 use App\Http\Livewire\Publishers\EditPublisher;
@@ -44,6 +45,9 @@ Route::prefix('')->middleware(['auth'])->group(function (): void {
         Route::get('/', PublisherTable::class)->name('publishers.index');
         Route::get('new', CreatePublisher::class)->name('publishers.create');
         Route::get('{publisher}/edit', EditPublisher::class)->name('publishers.edit');
+    });
+    Route::prefix('genres')->group(function (): void {
+        Route::get('/', GenreTable::class)->name('genres.index');
     });
     Route::get('statistics', Statistics::class)->name('statistics');
 

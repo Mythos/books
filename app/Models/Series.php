@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
@@ -25,11 +26,15 @@ use Spatie\Sluggable\SlugOptions;
  * @property int|null $publisher_id
  * @property int $subscription_active
  * @property int|null $mangapassion_id
+ * @property string|null $image_url
  * @property-read \App\Models\Category $category
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Genre[] $genres
+ * @property-read int|null $genres_count
  * @property-read string $completion_status
  * @property-read string $completion_status_class
  * @property-read string $completion_status_name
  * @property-read string $image
+ * @property-read string $image_path
  * @property-read string $read_volumes_count
  * @property-read string $status_class
  * @property-read string $status_name
@@ -45,6 +50,7 @@ use Spatie\Sluggable\SlugOptions;
  * @method static \Illuminate\Database\Eloquent\Builder|Series whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Series whereDefaultPrice($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Series whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Series whereImageUrl($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Series whereIsNsfw($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Series whereMangapassionId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Series whereName($value)
@@ -55,7 +61,6 @@ use Spatie\Sluggable\SlugOptions;
  * @method static \Illuminate\Database\Eloquent\Builder|Series whereTotal($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Series whereUpdatedAt($value)
  * @mixin \Eloquent
- * @property-read string $image_path
  */
 class Series extends Model
 {
@@ -232,6 +237,16 @@ class Series extends Model
     public function publisher(): BelongsTo
     {
         return $this->belongsTo(Publisher::class);
+    }
+
+    /**
+     * Get the genres associated with the Series
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function genres(): BelongsToMany
+    {
+        return $this->belongsToMany(Genre::class);
     }
 
     /**

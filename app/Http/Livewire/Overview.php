@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+use App\Models\Volume;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 
@@ -33,15 +34,21 @@ class Overview extends Component
 
     private function getVolumeStatistics()
     {
-        $volumeStatisticsQuery = DB::table('volumes')
-                   ->join('series', 'volumes.series_id', '=', 'series.id')
-                   ->leftJoin('publishers', 'series.publisher_id', '=', 'publishers.id');
+        $volumes = Volume::with(['series.publisher', 'series.genres']);
+
         if (!empty($this->search)) {
-            $volumeStatisticsQuery->where('isbn', 'like', '%' . $this->search . '%')
-                                  ->orWhere('series.name', 'like', '%' . $this->search . '%')
-                                  ->orWhere('publishers.name', 'like', '%' . $this->search . '%');
+            $volumes->where('isbn', 'like', '%' . $this->search . '%')
+                    ->orWhereHas('series', function ($query): void {
+                        $query->where('name', 'like', '%' . $this->search . '%')
+                              ->orWhereHas('publisher', function ($query): void {
+                                  $query->where('name', 'like', '%' . $this->search . '%');
+                              })
+                              ->orWhereHas('genres', function ($query): void {
+                                  $query->where('name', 'like', '%' . $this->search . '%');
+                              });
+                    });
         }
-        $volumeStatisticsQuery = $volumeStatisticsQuery->select([
+        $volumes = $volumes->select([
             DB::raw('COALESCE(sum(case when volumes.status = 0 then 1 else 0 end), 0) as new'),
             DB::raw('COALESCE(sum(case when volumes.status = 1 then 1 else 0 end), 0) as ordered'),
             DB::raw('COALESCE(sum(case when volumes.status = 2 then 1 else 0 end), 0) as shipped'),
@@ -51,7 +58,7 @@ class Overview extends Component
             DB::raw('count(*) as total'),
         ])->first();
 
-        return json_decode(json_encode($volumeStatisticsQuery), true);
+        return json_decode(json_encode($volumes->toArray()), true);
     }
 
     private function getArticleStatistics()

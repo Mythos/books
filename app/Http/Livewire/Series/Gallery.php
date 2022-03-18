@@ -31,6 +31,9 @@ class Gallery extends Component
                    })
                    ->orWhereHas('publisher', function ($query): void {
                        $query->where('name', 'like', '%' . $this->search . '%');
+                   })
+                   ->orWhereHas('genres', function ($query): void {
+                       $query->where('name', 'like', '%' . $this->search . '%');
                    });
         }
         $this->series = $this->series->orderBy('status')->orderBy('name')->get();

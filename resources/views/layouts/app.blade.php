@@ -45,6 +45,11 @@
 
                                 <ul class="dropdown-menu dropdown-menu-end">
                                     <li>
+                                        <a class="dropdown-item" href="{{ route('genres.index') }}">
+                                            {{ __('Genres') }}
+                                        </a>
+                                    </li>
+                                    <li>
                                         <a class="dropdown-item" href="{{ route('publishers.index') }}">
                                             {{ __('Publishers') }}
                                         </a>

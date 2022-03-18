@@ -8,7 +8,7 @@ use Nicebooks\Isbn\Isbn;
 
 class MangaPassionApi
 {
-    public static function loadSeries($title)
+    public static function loadSeriesByTitle(string $title)
     {
         $response = Http::get('https://api.manga-passion.de/editions?order[titleLength]=asc&order[title]=asc&title=' . urlencode($title));
         if (!$response->successful()) {
@@ -22,6 +22,22 @@ class MangaPassionApi
         $series = [];
         $series['mangapassion_id'] = $result['id'];
 
+        return MangaPassionApi::loadSeriesById($result['id']);
+    }
+
+    public static function loadSeriesById(int $mangaPassionId)
+    {
+        $response = Http::get('https://api.manga-passion.de/editions/' . $mangaPassionId);
+        if (!$response->successful()) {
+            return null;
+        }
+        $result = $response->json();
+        if (empty($result)) {
+            return null;
+        }
+        $series = [];
+        $series['mangapassion_id'] = $result['id'];
+
         $series['name'] = $result['title'];
         if ($result['status'] == 1 || $result['status'] == 2) {
             $series['status'] = $result['status'];
@@ -32,10 +48,17 @@ class MangaPassionApi
 
         if ($result['status'] == 2) {
             $series['total'] = $result['numVolumes'];
-        } elseif (!empty($result['sources'])) {
-            $sourceId = $result['sources'][0]['id'];
-            $sourceTotal = MangaPassionApi::loadTotalFromSource($sourceId);
-            $series['total'] = $sourceTotal;
+        }
+        if (!empty($result['sources'])) {
+            $source = $result['sources'][0];
+            if ($result['status'] != 2) {
+                $series['total'] = $source['volumes'];
+            }
+            if (!empty($source['tags'])) {
+                $tags = collect($source['tags']);
+                $series['demographics'] = $tags->where('type', '=', '0')->pluck('name')->first();
+                $series['genres'] = $tags->where('type', '=', '1')->pluck('name');
+            }
         }
 
         $defaultPrice = MangaPassionApi::getDefaultPrice($series['mangapassion_id']);
