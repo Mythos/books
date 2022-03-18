@@ -39,9 +39,11 @@
             </div>
             <div class="row">
                 <div class="mt-3 col-sm-12 col-md-12 col-lg-8">
-                    <p class="pe-3">
-                        {{ $series->description }}
-                    </p>
+                    @if (!empty($series->description))
+                        <p class="pe-3">
+                            {{ $series->description }}
+                        </p>
+                    @endif
                     <div>{{ __('Total Worth') }}: {{ number_format($series->total_worth, 2) }} {{ config('app.currency') }}</div>
                 </div>
                 <div class="mt-3 col-sm-12 col-md-12 col-lg-4">
