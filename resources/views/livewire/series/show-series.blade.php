@@ -37,7 +37,7 @@
                     <a href="https://www.amazon.de/s?k={{ urlencode($series->name) }}&i=stripbooks&s=date-desc-rank" class="btn btn-link" target="_blank"><span class="fab fa-amazon"></span></a>
                 </div>
             </div>
-            <div class="row">
+            <div class="row" style="width: 100%;">
                 <div class="mt-3 col-sm-12 col-md-12 col-lg-8">
                     @if (!empty($series->description))
                         <p class="pe-3">
