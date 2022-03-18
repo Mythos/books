@@ -24,6 +24,7 @@ class SeriesService
 
         $series->mangapassion_id = $apiSeries['mangapassion_id'];
         $series->name = $apiSeries['name'];
+        $series->description = $apiSeries['description'];
         $series->status = $apiSeries['status'];
         $series->total = $apiSeries['total'];
         $series->default_price = $apiSeries['default_price'];

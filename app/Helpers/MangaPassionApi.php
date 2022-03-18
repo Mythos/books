@@ -39,6 +39,7 @@ class MangaPassionApi
         $series['mangapassion_id'] = $result['id'];
 
         $series['name'] = $result['title'];
+        $series['description'] = $result['description'];
         if ($result['status'] == 1 || $result['status'] == 2) {
             $series['status'] = $result['status'];
         } else {

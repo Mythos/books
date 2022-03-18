@@ -10,19 +10,20 @@
         <div class="col-sm-12 col-md-12 col-lg-3 d-flex flex-column align-items-center text-center my-2">
             <img src="{{ $series->image }}" alt="{{ $series->name }}" class="card-img-top" style="max-height: 400px; object-fit: contain;">
             <span class="mt-2 fs-4">{{ $series->publisher?->name }}</span>
+            <span class="{{ $series->status_class }}">{{ $series->status_name }}</span>
             @if ($series->subscription_active)
                 <span class="badge bg-success mt-1 fs-9">{{ __('Subscription active') }}</span>
             @endif
-            <span class="mt-2">
-                @foreach ($series->genres->where('type', '0')->sortBy('name') as $genre)
-                    <span class="{{ $genre->type_class }}">{{ $genre->name }}</span>
-                @endforeach
-            </span>
-            <span class="mt-2">
-                @foreach ($series->genres->where('type', '1')->sortBy('name') as $genre)
-                    <span class="{{ $genre->type_class }}">{{ $genre->name }}</span>
-                @endforeach
-            </span>
+            @if (!empty($series->demographics))
+                <span class="mt-4 {{ $series->demographics->type_class }}">{{ $series->demographics->name }}</span>
+            @endif
+            @if ($series->genre_tags->count() > 0)
+                <span class="mt-2">
+                    @foreach ($series->genre_tags as $genre)
+                        <span class="{{ $genre->type_class }}">{{ $genre->name }}</span>
+                    @endforeach
+                </span>
+            @endif
             @if (!empty($series->mangapassion_id))
                 <button class="btn btn-primary mt-3" wire:click="update">{{ __('Update') }}</button>
             @endif
@@ -38,13 +39,9 @@
             </div>
             <div class="row">
                 <div class="mt-3 col-sm-12 col-md-12 col-lg-8">
-                    <div>{{ __('Status') }}: <span class="{{ $series->status_class }}">{{ $series->status_name }}</span></div>
-                    <div>{{ __('New') }}: <span class="badge rounded-pill bg-danger">{{ $new }} {{ __('Volumes') }}</span></div>
-                    <div>{{ __('Ordered') }}: <span class="badge rounded-pill bg-warning">{{ $ordered }} {{ __('Volumes') }}</span></div>
-                    <div>{{ __('Shipped') }}: <span class="badge rounded-pill bg-info">{{ $shipped }} {{ __('Volumes') }}</span></div>
-                    <div>{{ __('Delivered') }}: <span class="badge rounded-pill bg-primary">{{ $delivered }} {{ __('Volumes') }}</span></div>
-                    <div>{{ __('Read') }}: <span class="badge rounded-pill bg-success">{{ $read }} {{ __('Volumes') }}</span></div>
-                    <div>{{ __('Volumes (total)') }}: {{ isset($series->total) ? $series->total : '?' }} {{ __('Volumes') }}</div>
+                    <p class="pe-3">
+                        {{ $series->description }}
+                    </p>
                     <div>{{ __('Total Worth') }}: {{ number_format($series->total_worth, 2) }} {{ config('app.currency') }}</div>
                 </div>
                 <div class="mt-3 col-sm-12 col-md-12 col-lg-4">

@@ -27,6 +27,7 @@ use Spatie\Sluggable\SlugOptions;
  * @property int $subscription_active
  * @property int|null $mangapassion_id
  * @property string|null $image_url
+ * @property string|null $description
  * @property-read \App\Models\Category $category
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Genre[] $genres
  * @property-read int|null $genres_count
@@ -49,6 +50,7 @@ use Spatie\Sluggable\SlugOptions;
  * @method static \Illuminate\Database\Eloquent\Builder|Series whereCategoryId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Series whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Series whereDefaultPrice($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Series whereDescription($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Series whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Series whereImageUrl($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Series whereIsNsfw($value)
@@ -74,6 +76,7 @@ class Series extends Model
      */
     protected $fillable = [
         'name',
+        'description',
         'status',
         'total',
         'is_nsfw',
@@ -207,6 +210,22 @@ class Series extends Model
     public function getTotalWorthAttribute(): string
     {
         return $this->volumes->whereIn('status', ['3', '4'])->sum('price');
+    }
+
+    /**
+     * Get the series' demographics.
+     */
+    public function getDemographicsAttribute()
+    {
+        return $this->genres->where('type', '0')->sortBy('name')->first();
+    }
+
+    /**
+     * Get the series' genres.
+     */
+    public function getGenreTagsAttribute()
+    {
+        return $this->genres->where('type', '1')->sortBy('name');
     }
 
     /**
