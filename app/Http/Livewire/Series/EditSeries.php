@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Series;
 
 use App\Helpers\ImageHelpers;
 use App\Models\Category;
+use App\Models\GenreSeries;
 use App\Models\Publisher;
 use App\Models\Series;
 use App\Models\Volume;
@@ -102,6 +103,7 @@ class EditSeries extends Component
 
     public function confirmedDelete(): void
     {
+        GenreSeries::whereSeriesId($this->series->id)->delete();
         Volume::whereSeriesId($this->series->id)->delete();
         $this->series->delete();
         Storage::disk('public')->deleteDirectory($this->series->image_path);
