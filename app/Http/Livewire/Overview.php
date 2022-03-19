@@ -48,7 +48,7 @@ class Overview extends Component
                               });
                     });
         }
-        $volumes = $volumes->select([
+        $volumes = $volumes->WhereNotNull('isbn')->select([
             DB::raw('COALESCE(sum(case when volumes.status = 0 then 1 else 0 end), 0) as new'),
             DB::raw('COALESCE(sum(case when volumes.status = 1 then 1 else 0 end), 0) as ordered'),
             DB::raw('COALESCE(sum(case when volumes.status = 2 then 1 else 0 end), 0) as shipped'),
