@@ -8,7 +8,7 @@ use Nicebooks\Isbn\Isbn;
 
 class MangaPassionApi
 {
-    public const API_URL = 'https://api.manga-passion.de';
+    private const API_URL = 'https://api.manga-passion.de';
 
     public static function loadSeriesByTitle(string $title)
     {
@@ -29,7 +29,7 @@ class MangaPassionApi
 
     public static function loadSeriesById(int $mangaPassionId)
     {
-        $response = Http::get(MangaPassionApi::API_URL . '/editions/' . $mangaPassionId);
+        $response = self::request($mangaPassionId);
         if (!$response->successful()) {
             return null;
         }
@@ -77,8 +77,7 @@ class MangaPassionApi
     public static function loadVolumes($mangaPassionId)
     {
         $result = [];
-        $url = MangaPassionApi::API_URL . '/editions/' . $mangaPassionId . '/volumes?itemsPerPage=500&order[number]=asc';
-        $response = Http::get($url);
+        $response = self::request($mangaPassionId, 'volumes?itemsPerPage=500&order[number]=asc');
         if ($response->successful()) {
             $responseBody = $response->json();
 
@@ -107,7 +106,7 @@ class MangaPassionApi
 
     public static function getDefaultPrice($mangaPassionId): ?float
     {
-        $volumesResponse = Http::get(MangaPassionApi::API_URL . '/editions/' . $mangaPassionId . '/volumes?itemsPerPage=1&order[number]=asc');
+        $volumesResponse = self::request($mangaPassionId, 'volumes?itemsPerPage=1&order[number]=asc');
         if (!$volumesResponse->successful()) {
             return null;
         }
@@ -122,5 +121,16 @@ class MangaPassionApi
 
             return !empty($volumeResult['price']) ? floatval($volumeResult['price']) / 100.0 : 0;
         }
+    }
+
+    private static function request($mangaPassionId, $additionalParameters = null)
+    {
+        $url = MangaPassionApi::API_URL . '/editions/' . $mangaPassionId;
+        if (!empty($additionalParameters)) {
+            $url .= '/' . $additionalParameters;
+        }
+        $response = Http::get($url);
+
+        return $response;
     }
 }
