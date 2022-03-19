@@ -28,6 +28,7 @@ class EditSeries extends Component
 
     protected $rules = [
         'series.name' => 'required',
+        'series.description' => 'nullable',
         'series.status' => 'required|integer|min:0',
         'series.total' => 'nullable|integer|min:1',
         'series.category_id' => 'required|exists:categories,id',

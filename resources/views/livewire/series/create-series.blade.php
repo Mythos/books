@@ -30,6 +30,18 @@
                     </div>
                     <div class="row mt-1">
                         <div class="col-md-12">
+                            <label for="series.description" class="col-form-label required">{{ __('Description') }}</label>
+                            <textarea id="series.description" name="series.description" type="text" class="form-control @error('series.description') is-invalid @enderror" wire:model='series.description'>
+                            </textarea>
+                            @error('series.description')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+                        </div>
+                    </div>
+                    <div class="row mt-1">
+                        <div class="col-md-12">
                             <label for="series.publisher_id" class="col-form-label">{{ __('Publisher') }}</label>
                             <select class="form-select @error('series.publisher_id') is-invalid @enderror" name="status" wire:model='series.publisher_id'>
                                 <option></option>
