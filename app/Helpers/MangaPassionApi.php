@@ -103,17 +103,6 @@ class MangaPassionApi
         return null;
     }
 
-    private static function loadTotalFromSource($sourceId)
-    {
-        $sourceResponse = Http::get('https://api.manga-passion.de/sources/' . $sourceId);
-        if (!$sourceResponse->successful()) {
-            return null;
-        }
-        $source = $sourceResponse->json();
-
-        return $source['volumes'];
-    }
-
     public static function getDefaultPrice($mangaPassionId): ?float
     {
         $volumesResponse = Http::get('https://api.manga-passion.de/editions/' . $mangaPassionId . '/volumes?itemsPerPage=1&order[number]=asc');
