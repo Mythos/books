@@ -18,10 +18,13 @@ class Statistics extends Component
 
     public $seriesByPublisherStatistics;
 
+    public $seriesByGenreStatistics;
+
     public function render()
     {
         $this->loadVolumesByStatusStatistics();
         $this->loadSeriesByPublisherStatistics();
+        $this->loadSeriesByGenre();
 
         return view('livewire.statistics', [
             'unreadSeries' => $this->getUnreadSeries(),
@@ -50,8 +53,23 @@ class Statistics extends Component
                                                  ->join('publishers', 'series.publisher_id', '=', 'publishers.id')
                                                  ->select('publishers.name as publisher', DB::raw('count(*) as total'))
                                                  ->groupBy('publishers.name')
+                                                 ->orderBy('publishers.name')
                                                  ->get()
                                                  ->pluck('total', 'publisher')
+                                                 ->toArray();
+    }
+
+    private function loadSeriesByGenre(): void
+    {
+        $this->seriesByGenreStatistics = DB::table('series')
+                                                 ->join('genre_series', 'genre_series.series_id', '=', 'series.id')
+                                                 ->join('genres', 'genre_series.genre_id', '=', 'genres.id')
+                                                 ->where('genres.type', '=', '1')
+                                                 ->select('genres.name as genre', DB::raw('count(*) as total'))
+                                                 ->groupBy('genres.name')
+                                                 ->orderByDesc('total')
+                                                 ->get()
+                                                 ->pluck('total', 'genre')
                                                  ->toArray();
     }
 
