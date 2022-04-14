@@ -37,7 +37,7 @@
                     <div class="row mt-1">
                         <div class="col-md-12">
                             <label for="category.type" class="col-form-label required">{{ __('Status') }}</label>
-                            <select class="form-select @error('category.type') is-invalid @enderror" name="status" wire:model='category.type' required>
+                            <select id="category.type" name="category.type" class="form-select @error('category.type') is-invalid @enderror" wire:model='category.type' required>
                                 <option value="0">{{ __('Books') }}</option>
                                 <option value="1">{{ __('Articles') }}</option>
                             </select>
@@ -61,3 +61,4 @@
         </div>
     </form>
 </div>
+@include('scripts.select2')

@@ -56,7 +56,7 @@
                     <div class="row mt-1">
                         <div class="col-md-12">
                             <label for="volume.status" class="col-form-label required">{{ __('Status') }}</label>
-                            <select class="form-select @error('volume.status') is-invalid @enderror" name="volume.status" wire:model='volume.status' required>
+                            <select id="volume.status" name="volume.status" class="form-select @error('volume.status') is-invalid @enderror" wire:model='volume.status' required>
                                 <option value="0">{{ __('New') }}</option>
                                 <option value="1">{{ __('Ordered') }}</option>
                                 <option value="2">{{ __('Shipped') }}</option>
@@ -102,8 +102,8 @@
                 <div class="modal-body" style="position: static">
                     <div class="row">
                         <div class="col-md-12">
-                            <label for="status" class="col-form-label">{{ __('Camera') }}</label>
-                            <select name="input-stream_constraints" id="deviceSelection" class="form-select">
+                            <label for="input-stream_constraints" class="col-form-label">{{ __('Camera') }}</label>
+                            <select id="input-stream_constraints" name="input-stream_constraints" id="deviceSelection" class="form-select">
                             </select>
                         </div>
                     </div>
@@ -305,3 +305,4 @@
         });
     </script>
 </div>
+@include('scripts.select2')

@@ -65,7 +65,7 @@
                     <div class="row mt-1">
                         <div class="col-md-12">
                             <label for="volume.status" class="col-form-label required">{{ __('Status') }}</label>
-                            <select class="form-select @error('volume.status') is-invalid @enderror" name="status" wire:model='volume.status' required>
+                            <select id="input-volume.status" name="input-volume.status" class="form-select @error('volume.status') is-invalid @enderror" wire:model='volume.status' required>
                                 <option value="0">{{ __('New') }}</option>
                                 <option value="1">{{ __('Ordered') }}</option>
                                 <option value="2">{{ __('Shipped') }}</option>
@@ -105,3 +105,4 @@
         </div>
     </form>
 </div>
+@include('scripts.select2')

@@ -45,7 +45,7 @@
                     <div class="row mt-1">
                         <div class="col-md-12">
                             <label for="user.date_format" class="col-form-label required">{{ __('Date Format') }}</label>
-                            <select class="form-select @error('user.date_format') is-invalid @enderror" name="status" wire:model='user.date_format' required>
+                            <select id="user.date_format" name="user.date_format" class="form-select @error('user.date_format') is-invalid @enderror" wire:model='user.date_format' required>
                                 <optgroup label="(Y-m-d)">
                                     <option value="Y-m-d">{{ \Carbon\Carbon::now()->format('Y-m-d') }}</option>
                                     <option value="y-m-d">{{ \Carbon\Carbon::now()->format('y-m-d') }}</option>
@@ -87,3 +87,4 @@
         </div>
     </form>
 </div>
+@include('scripts.select2')

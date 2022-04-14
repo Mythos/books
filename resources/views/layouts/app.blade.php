@@ -145,6 +145,7 @@
     @flasher_livewire_render
     @livewireScripts
     <x-livewire-alert::scripts />
+    @stack('scripts')
 </body>
 
 </html>

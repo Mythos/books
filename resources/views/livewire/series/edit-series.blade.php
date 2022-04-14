@@ -40,7 +40,7 @@
                     <div class="row mt-1">
                         <div class="col-md-12">
                             <label for="series.publisher_id" class="col-form-label">{{ __('Publisher') }}</label>
-                            <select class="form-select @error('series.publisher_id') is-invalid @enderror" name="status" wire:model='series.publisher_id'>
+                            <select id="series.publisher_id" name="series.publisher_id" class="form-select @error('series.publisher_id') is-invalid @enderror" wire:model='series.publisher_id' data-allow-clear="true">
                                 <option></option>
                                 @foreach ($publishers as $publisher)
                                     <option value="{{ $publisher->id }}">{{ $publisher->name }}</option>
@@ -56,7 +56,7 @@
                     <div class="row mt-1">
                         <div class="col-md-12">
                             <label for="series.status" class="col-form-label required">{{ __('Status') }}</label>
-                            <select class="form-select @error('series.status') is-invalid @enderror" name="status" wire:model='series.status' required>
+                            <select id="series.status" name="series.status" class="form-select @error('series.status') is-invalid @enderror" wire:model='series.status' required>
                                 <option value="0">{{ __('New') }}</option>
                                 <option value="1">{{ __('Ongoing') }}</option>
                                 <option value="2">{{ __('Finished') }}</option>
@@ -107,8 +107,8 @@
                     <div class="row mt-3">
                         <div class="col-md-12">
                             <div class="form-check">
-                                <input id="subscription_active" type="checkbox" class="form-check-input @error('series.subscription_active') is-invalid @enderror" name="subscription_active" wire:model='series.subscription_active'>
-                                <label for="subscription_active" class="form-check-label">{{ __('Subscription active') }}</label>
+                                <input id="series.subscription_active" type="checkbox" class="form-check-input @error('series.subscription_active') is-invalid @enderror" name="series.subscription_active" wire:model='series.subscription_active'>
+                                <label for="series.subscription_active" class="form-check-label">{{ __('Subscription active') }}</label>
                             </div>
                             @error('series.subscription_active')
                                 <span class="invalid-feedback" role="alert">
@@ -120,8 +120,8 @@
                     <div class="row mt-3">
                         <div class="col-md-12">
                             <div class="form-check">
-                                <input id="is_nsfw" type="checkbox" class="form-check-input @error('series.is_nsfw') is-invalid @enderror" name="is_nsfw" wire:model='series.is_nsfw'>
-                                <label for="is_nsfw" class="form-check-label">{{ __('NSFW') }}</label>
+                                <input id="series.is_nsfw" type="checkbox" class="form-check-input @error('series.is_nsfw') is-invalid @enderror" name="series.is_nsfw" wire:model='series.is_nsfw'>
+                                <label for="series.is_nsfw" class="form-check-label">{{ __('NSFW') }}</label>
                             </div>
                             @error('series.is_nsfw')
                                 <span class="invalid-feedback" role="alert">
@@ -143,3 +143,4 @@
         </div>
     </form>
 </div>
+@include('scripts.select2')
