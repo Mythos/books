@@ -1,3 +1,7 @@
+@section('title')
+    {{ $article->name }}
+@endsection
+
 <div class="container">
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">

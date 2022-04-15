@@ -1,3 +1,8 @@
+@section('title')
+    {{ __('Create Series') }}
+@endsection
+
+
 <div class="container">
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">

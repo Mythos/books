@@ -5,6 +5,8 @@
 - Updating a series via Manga Passion API now updates the price for volumes with status "New"
 - Added demographics and genres which are fetched via Manga Passion API
 - Added series description which are fetched via Manga Passion API
+- Added Select2 to replace native dropdowns
+- Added context information to website title
 - Navbar is now sticky for easier access on mobiles devices
 - Image-Sources are now stored in the database and updated via Manga Passion API
 - Updated to latest Laravel version, now requiring PHP 8.0.2 or greater

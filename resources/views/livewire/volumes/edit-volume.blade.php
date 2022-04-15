@@ -1,3 +1,8 @@
+@section('title')
+    {{ __('Volume :number', ['number' => $volume->number]) }} - {{ $series->name }}
+@endsection
+
+
 <div class="container">
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">

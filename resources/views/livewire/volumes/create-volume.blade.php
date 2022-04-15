@@ -1,3 +1,7 @@
+@section('title')
+    {{ __('Create Volume') }}
+@endsection
+
 <div class="container">
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">

@@ -1,3 +1,7 @@
+@section('title')
+    {{ __('Create Category') }}
+@endsection
+
 <div class="container">
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">

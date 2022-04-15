@@ -1,3 +1,7 @@
+@section('title')
+    {{ __('Statistics') }}
+@endsection
+
 <div class="container">
 
     <nav aria-label="breadcrumb">
