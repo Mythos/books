@@ -13,7 +13,7 @@
         <div class="row bg-white shadow-sm rounded">
             <div class="col-md-3">
                 <div class="d-flex flex-column align-items-center text-center p-3 py-3">
-                    <img class="rounded-circle" width="150px" src="https://www.gravatar.com/avatar/{{ md5(auth()->user()->email) }}?s=150" alt="{{ auth()->user()->email }}">
+                    <img class="rounded-circle" width="150px" src="{{ auth()->user()->avatar_profile }}">
                     <span class="font-weight-bold">{{ auth()->user()->name }}</span>
                     <span class="text-black-50">{{ auth()->user()->email }}</span>
                 </div>
