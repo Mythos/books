@@ -1,7 +1,12 @@
-<div class="col-sm-12 col-md-12 col-lg-6" style="max-height: 200px;">
-    <canvas id="volumesByStatusStatistics"></canvas>
+<div class="col-sm-12 col-md-6 col-lg-4">
+    <h2>{{ __('Volumes per status') }}</h2>
+    <div class="row py-3 px-1">
+        <div class="col-sm-12 col-md-12 col-lg-6" style="max-height: 200px;">
+            <canvas id="volumesByStatusStatistics"></canvas>
+        </div>
+        <div id="volumesByStatusStatistics-legend" class="col-sm-12 col-md-12 col-lg-6 chart-legend" style="max-height: 200px; overflow-y: auto;"></div>
+    </div>
 </div>
-<div id="volumesByStatusStatistics-legend" class="col-sm-12 col-md-12 col-lg-6 chart-legend" style="max-height: 200px; overflow-y: auto;"></div>
 
 <script>
     let volumesByStatusStatistics = null;
