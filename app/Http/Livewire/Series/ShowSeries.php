@@ -3,7 +3,6 @@
 namespace App\Http\Livewire\Series;
 
 use App\Helpers\ImageHelpers;
-use App\Helpers\MangaPassionApi;
 use App\Models\Category;
 use App\Models\Series;
 use App\Models\Volume;
@@ -90,7 +89,7 @@ class ShowSeries extends Component
         $this->enable_reordering = !$this->enable_reordering;
     }
 
-    public function move_up(int $id): void
+    public function move_up(int $id, SeriesService $seriesService): void
     {
         $volume = Volume::find($id);
         if ($volume->number <= 1) {
@@ -103,12 +102,12 @@ class ShowSeries extends Component
         $volume->save();
         $predecessor->save();
 
-        $this->resetNumbers();
+        $seriesService->resetNumbers($this->series->id);
 
         toastr()->livewire()->addSuccess(__(':name has been updated', ['name' => $volume->series->name . ' ' . $volume->number]));
     }
 
-    public function move_down(int $id): void
+    public function move_down(int $id, SeriesService $seriesService): void
     {
         $volume = Volume::find($id);
         if ($volume->number >= $this->volumes->max('number')) {
@@ -121,16 +120,15 @@ class ShowSeries extends Component
         $volume->save();
         $successor->save();
 
-        $this->resetNumbers();
+        $seriesService->resetNumbers($this->series->id);
 
         toastr()->livewire()->addSuccess(__(':name has been updated', ['name' => $volume->series->name . ' ' . $volume->number]));
     }
 
-    public function update(): void
+    public function update(SeriesService $seriesService): void
     {
         try {
-            $service = new SeriesService();
-            $this->series = $service->refreshMetadata($this->series);
+            $this->series = $seriesService->refreshMetadata($this->series);
             $this->series->save();
 
             $image = ImageHelpers::getImage($this->series->image_url);
@@ -140,83 +138,12 @@ class ShowSeries extends Component
                 ImageHelpers::storePublicImage($nsfwImage, $this->series->image_path . '/cover_sfw.jpg');
             }
 
-            $this->updateVolumes();
+            $seriesService->updateVolumes($this->series);
 
             toastr()->livewire()->addSuccess(__(':name has been updated', ['name' => $this->series->name]));
         } catch (Exception $exception) {
             Log::error('Error while updating series via API', ['exception' => $exception]);
             toastr()->livewire()->addError(__(':name could not be updated', ['name' => $this->series->name]));
-        }
-    }
-
-    private function updateVolumes(): void
-    {
-        if (empty($this->series->mangapassion_id)) {
-            return;
-        }
-        $volumes = Volume::whereSeriesId($this->series->id)->get();
-
-        $volumesResult = MangaPassionApi::loadVolumes($this->series->mangapassion_id);
-        $newVolumes = [];
-
-        foreach ($volumesResult as $volumeResult) {
-            $number = $volumeResult['number'];
-            $isbn = $volumeResult['isbn'];
-            $publish_date = $volumeResult['publish_date'];
-            $price = $volumeResult['price'];
-
-            $volume = null;
-            if (!empty($isbn)) {
-                $volume = $volumes->firstWhere('isbn', $isbn);
-            }
-            if (!empty($number)) {
-                $volume = $volumes->firstWhere('number', $number);
-            }
-            if (empty($volume)) {
-                $newVolumes[] = $volumeResult;
-                continue;
-            }
-
-            if ($volume->status == 0) {
-                $volume->price = $price;
-            }
-
-            $volume->number = $number;
-            $volume->publish_date = !empty($publish_date) ? $publish_date->format('Y-m-d') : null;
-            if (!empty($isbn)) {
-                $volume->isbn = $isbn;
-            }
-            $volume->save();
-        }
-
-        foreach ($newVolumes as $newVolume) {
-            $number = $newVolume['number'];
-            $isbn = $newVolume['isbn'];
-            $publish_date = $newVolume['publish_date'];
-            $price = $newVolume['price'];
-
-            $volume = new Volume([
-                'series_id' => $this->series->id,
-                'isbn' => $isbn,
-                'number' => $number,
-                'publish_date' => !empty($publish_date) ? $publish_date->format('Y-m-d') : null,
-                'price' => $price,
-                'status' => $this->series->subscription_active,
-            ]);
-            $volume->save();
-        }
-
-        $this->resetNumbers();
-    }
-
-    private function resetNumbers(): void
-    {
-        $volumes = Volume::whereSeriesId($this->series->id)->orderBy('number')->get();
-        $number = 1;
-        foreach ($volumes as $volume) {
-            $volume->number = $number;
-            $volume->save();
-            $number++;
         }
     }
 }

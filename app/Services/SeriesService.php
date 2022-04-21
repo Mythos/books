@@ -6,6 +6,7 @@ use App\Helpers\MangaPassionApi;
 use App\Models\Genre;
 use App\Models\Publisher;
 use App\Models\Series;
+use App\Models\Volume;
 use Exception;
 
 class SeriesService
@@ -60,5 +61,76 @@ class SeriesService
         $series->genres()->sync($genres);
 
         return $series;
+    }
+
+    public function updateVolumes(Series $series): void
+    {
+        if (empty($series->mangapassion_id)) {
+            return;
+        }
+        $volumes = Volume::whereSeriesId($series->id)->get();
+
+        $volumesResult = MangaPassionApi::loadVolumes($series->mangapassion_id);
+        $newVolumes = [];
+
+        foreach ($volumesResult as $volumeResult) {
+            $number = $volumeResult['number'];
+            $isbn = $volumeResult['isbn'];
+            $publish_date = $volumeResult['publish_date'];
+            $price = $volumeResult['price'];
+
+            $volume = null;
+            if (!empty($isbn)) {
+                $volume = $volumes->firstWhere('isbn', $isbn);
+            }
+            if (!empty($number)) {
+                $volume = $volumes->firstWhere('number', $number);
+            }
+            if (empty($volume)) {
+                $newVolumes[] = $volumeResult;
+                continue;
+            }
+
+            if ($volume->status == 0) {
+                $volume->price = $price;
+            }
+
+            $volume->number = $number;
+            $volume->publish_date = !empty($publish_date) ? $publish_date->format('Y-m-d') : null;
+            if (!empty($isbn)) {
+                $volume->isbn = $isbn;
+            }
+            $volume->save();
+        }
+
+        foreach ($newVolumes as $newVolume) {
+            $number = $newVolume['number'];
+            $isbn = $newVolume['isbn'];
+            $publish_date = $newVolume['publish_date'];
+            $price = $newVolume['price'];
+
+            $volume = new Volume([
+                'series_id' => $series->id,
+                'isbn' => $isbn,
+                'number' => $number,
+                'publish_date' => !empty($publish_date) ? $publish_date->format('Y-m-d') : null,
+                'price' => $price,
+                'status' => $series->subscription_active,
+            ]);
+            $volume->save();
+        }
+
+        $this->resetNumbers($series->id);
+    }
+
+    public function resetNumbers(int $seriesId): void
+    {
+        $volumes = Volume::whereSeriesId($seriesId)->orderBy('number')->get();
+        $number = 1;
+        foreach ($volumes as $volume) {
+            $volume->number = $number;
+            $volume->save();
+            $number++;
+        }
     }
 }
