@@ -68,12 +68,11 @@ class MangaPassionUpdateJob implements ShouldQueue
                         $changeLog[$s->name]['volumes'] = $changes['volumes'];
                     }
                 }
-
-                $this->sendEmail($changeLog);
             } catch (Exception $exception) {
                 Log::error('Error while updating series via API', ['exception' => $exception]);
             }
         }
+        $this->sendEmail($changeLog);
         Log::info('Finished updating series metadata');
     }
 
