@@ -63,10 +63,11 @@ class SeriesService
         return $series;
     }
 
-    public function updateVolumes(Series $series): void
+    public function updateVolumes(Series $series): array
     {
+        $data = [];
         if (empty($series->mangapassion_id)) {
-            return;
+            return [];
         }
         $volumes = Volume::whereSeriesId($series->id)->get();
 
@@ -101,6 +102,7 @@ class SeriesService
                 $volume->isbn = $isbn;
             }
             $volume->save();
+            $data[] = $volume;
         }
 
         foreach ($newVolumes as $newVolume) {
@@ -118,9 +120,11 @@ class SeriesService
                 'status' => $series->subscription_active,
             ]);
             $volume->save();
+            $data[] = $volume;
         }
-
         $this->resetNumbers($series->id);
+
+        return $data;
     }
 
     public function resetNumbers(int $seriesId): void

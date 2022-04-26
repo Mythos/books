@@ -1,4 +1,5 @@
 {
+    ":name changed from :old to :new": ":name wurde von :old auf :new geändert",
     ":name could not be created": ":name konnte nicht angelegt werden",
     ":name could not be updated": ":name konnte nicht aktualisiert werden",
     ":name has been created": ":name wurde angelegt",
@@ -33,6 +34,7 @@
     "Delete": "Löschen",
     "Delivered": "Geliefert",
     "Demographics": "Demografie",
+    "Description": "Beschreibung",
     "E-Mail Address": "E-Mail-Adresse",
     "Edit Category": "Kategorie bearbeiten",
     "Edit Series": "Reihe bearbeiten",
@@ -56,6 +58,7 @@
     "Moves the volume up": "Verschiebt den Band nach oben",
     "Name": "Name",
     "New Password": "Neues Passwort",
+    "New Volume :number (ISBN: :isbn, Publish Date: :publish_date, Price: :price)": "Neuer Band :number (ISBN: :isbn, Erscheinungsdatum: :publish_date, Preis: :price)",
     "New": "Neu",
     "No data": "Keine Daten",
     "No entry with the title :name has been found": "Es wurde kein Eintrag mit dem Titel :name gefunden",
