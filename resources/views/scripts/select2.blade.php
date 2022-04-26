@@ -5,8 +5,8 @@
             placeholder: "{{ __('Not set') }}"
         };
         document.addEventListener('livewire:load', function() {
-            $('select').select2(select2Options);
-            $('select').on('change', function(e) {
+            $('select:visible').select2(select2Options);
+            $('select:visible').on('change', function(e) {
                 var $element = $(this);
                 var field = $element.attr('name');
                 var data = $element.select2('val');
@@ -17,7 +17,7 @@
             });
         });
         document.addEventListener('livewire:update', function() {
-            $('select').select2(select2Options);
+            $('select:visible').select2(select2Options);
         });
     </script>
 @endpush
