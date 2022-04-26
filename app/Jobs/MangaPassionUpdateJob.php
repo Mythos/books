@@ -91,6 +91,11 @@ class MangaPassionUpdateJob implements ShouldQueue
                 }
                 $oldValue = $original[$key] ?? 'NULL';
                 $newValue = $new[$key] ?? 'NULL';
+                if (is_numeric($oldValue) && is_numeric($newValue)) {
+                    if (intval($oldValue) == intval($newValue) && floatval($oldValue) == floatval($newValue)) {
+                        continue;
+                    }
+                }
                 $seriesChanges[] = __(':name changed from :old to :new', ['name' => $name, 'old' => $oldValue, 'new' => $newValue]);
             }
         }
@@ -110,6 +115,11 @@ class MangaPassionUpdateJob implements ShouldQueue
                         }
                         $oldValue = $original[$key] ?? 'NULL';
                         $newValue = $new[$key] ?? 'NULL';
+                        if (is_numeric($oldValue) && is_numeric($newValue)) {
+                            if (intval($oldValue) == intval($newValue) && floatval($oldValue) == floatval($newValue)) {
+                                continue;
+                            }
+                        }
                         $volumeChanges[__('Volume :number', ['number' => $new['number']])][] = __(':name changed from :old to :new', ['name' => $name, 'old' => $oldValue ?? 'NULL', 'new' => $newValue ?? 'NULL']);
                     }
                 }
