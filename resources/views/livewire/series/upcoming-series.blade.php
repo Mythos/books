@@ -8,7 +8,8 @@
                         <th scope="col" class="text-center" style="width: 7rem; min-width: 7rem;">{{ __('Publish Date') }}</th>
                         <th scope="col" style="min-width: 25rem;">{{ __('Title') }}</th>
                         <th scope="col" class="text-center"></th>
-                        <th scope="col" style="min-width: 10rem;">{{ __('ISBN') }}</th>
+                        <th scope="col" style="min-width: 7rem;">{{ __('ISBN') }}</th>
+                        <th scope="col" class="text-end" style="min-width: 5rem;">{{ __('Price') }}</th>
                         <th scope="col" class="text-center">{{ __('Status') }}</th>
                     </tr>
                 </thead>
@@ -21,6 +22,7 @@
                                 <a href="{{ route('series.show', [$volume->series->category, $volume->series]) }}"><span class="fa fa-book"></span></a>
                             </td>
                             <td>{{ $volume->isbn_formatted }}</td>
+                            <td class="text-end">{{ number_format($volume->price, 2) }} {{ config('app.currency') }}</td>
                             <td class="text-center">
                                 @if ($volume->status == 0)
                                     <a wire:click.prevent='ordered({{ $volume->id }})' href="#" title="{{ __('Sets the status to Ordered') }}"><span class="fa fa-shopping-cart"></span></a>
