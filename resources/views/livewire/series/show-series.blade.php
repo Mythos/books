@@ -37,6 +37,9 @@
                 <h1 style="display: inline;">{{ $series->name }}</h1>
                 <div class="float-end" style="display: inline;">
                     <a href="{{ route('series.edit', [$category, $series]) }}" class="btn btn-link"><span class="fas fa-edit"></span></a>
+                    @if (!empty($series->mangapassion_id))
+                        <a href="https://www.manga-passion.de/editions/{{ $series->mangapassion_id }}" class="btn btn-link" target="_blank"><span class="fas fa-book"></span></a>
+                    @endif
                     <a href="https://www.thalia.de/suche?sq={{ urlencode($series->name) }}&sort=sfed&allayout=FLAT" class="btn btn-link" target="_blank"><span class="fas fa-search"></span></a>
                     <a href="https://www.amazon.de/s?k={{ urlencode($series->name) }}&i=stripbooks&s=date-desc-rank" class="btn btn-link" target="_blank"><span class="fab fa-amazon"></span></a>
                 </div>
