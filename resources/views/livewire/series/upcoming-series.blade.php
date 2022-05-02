@@ -5,16 +5,19 @@
             <table class="table table-hover mb-0">
                 <thead class="table-dark" style="position: sticky; top: 0;">
                     <tr>
+                        <th scope="col"></th>
                         <th scope="col" class="text-center" style="width: 7rem; min-width: 7rem;">{{ __('Publish Date') }}</th>
                         <th scope="col" style="min-width: 25rem;">{{ __('Title') }}</th>
                         <th scope="col" style="min-width: 10rem;">{{ __('ISBN') }}</th>
                         <th scope="col"></th>
-
                     </tr>
                 </thead>
                 <tbody>
                     @foreach ($upcoming as $volume)
                         <tr class="{{ $volume->status_class }}">
+                            <td>
+                                <a href="{{ route('series.show', [$volume->series->category, $volume->series]) }}"><span class="fa fa-arrow-right"></span></a>
+                            </td>
                             <th scope="row" class="text-center">{{ $volume->publish_date_formatted }}</th>
                             <td>{{ $volume->name }}</td>
                             <td>{{ $volume->isbn_formatted }}</td>
