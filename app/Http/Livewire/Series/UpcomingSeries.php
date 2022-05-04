@@ -21,8 +21,11 @@ class UpcomingSeries extends Component
         ->whereRelation('series', 'status', '<>', '3')
         ->whereIn('status', [0, 1, 2])
         ->whereNotNull('publish_date')
-        ->orderBy('publish_date')
-        ->get();
+        ->get()
+        ->sortBy([
+            ['publish_date', 'asc'],
+            ['series.name', 'asc'],
+        ]);
         if (!empty($this->search)) {
             $upcoming = $upcoming->filter(function ($volume) {
                 $volumeNameMatch = Str::contains(Str::lower($volume->name), Str::lower($this->search));
