@@ -4,7 +4,8 @@
 
 - Updating a series via Manga Passion API now updates the price for volumes with status "New"
 - Added demographics and genres which are fetched via Manga Passion API
-- Added series description which are fetched via Manga Passion API
+- Added series descriptions which are fetched via Manga Passion API
+- Added cron job and email notification for updating metadata via Manga Passion API
 - Added Select2 to replace native dropdowns
 - Added context information to website title
 - Navbar is now sticky for easier access on mobiles devices
@@ -16,7 +17,7 @@
 ## 2.1.0 (2022-02-07)
 
 - Added date format to user profile
-- Improve updating series and volumes data Manga Passion API
+- Improve updating series and volumes data via Manga Passion API
 - ISBN and Publish Date of a volume are now optional
 - Reordering volumes makes sure that no gaps are left
 - When setting a series as subscribed, all volumes with status "New" will be set to "Ordered"
