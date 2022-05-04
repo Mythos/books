@@ -12,8 +12,11 @@ class VolumesPerStatus extends Component
     public function render()
     {
         $data = DB::table('volumes')
-                    ->select('status', DB::raw('count(*) as total'))
-                    ->groupBy('status')
+                    ->join('series', 'volumes.series_id', '=', 'series.id')
+                    ->whereNotNull('volumes.isbn')
+                    ->where('series.status', '<>', '3')
+                    ->select('volumes.status', DB::raw('count(*) as total'))
+                    ->groupBy('volumes.status')
                     ->get();
         $this->volumesByStatusStatistics = [
             __('New') => $data->where('status', '=', '0')->first()?->total ?? 0,

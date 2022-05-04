@@ -64,6 +64,7 @@
                                 <option value="0">{{ __('New') }}</option>
                                 <option value="1">{{ __('Ongoing') }}</option>
                                 <option value="2">{{ __('Finished') }}</option>
+                                <option value="3">{{ __('Canceled') }}</option>
                             </select>
                             @error('series.status')
                                 <span class="invalid-feedback" role="alert">
@@ -111,7 +112,7 @@
                     <div class="row mt-3">
                         <div class="col-md-12">
                             <div class="form-check">
-                                <input id="series.subscription_active" type="checkbox" class="form-check-input @error('series.subscription_active') is-invalid @enderror" name="series.subscription_active" wire:model='series.subscription_active'>
+                                <input id="series.subscription_active" type="checkbox" class="form-check-input @error('series.subscription_active') is-invalid @enderror" name="series.subscription_active" wire:model='series.subscription_active' @if ($series->status == 3) disabled @endif>
                                 <label for="series.subscription_active" class="form-check-label">{{ __('Subscription active') }}</label>
                             </div>
                             @error('series.subscription_active')

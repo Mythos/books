@@ -121,6 +121,8 @@ class Series extends Model
                 return __('Ongoing');
             case 2:
                 return __('Finished');
+            case 3:
+                return __('Canceled');
             default:
                 return __('Unknown');
         }
@@ -140,6 +142,8 @@ class Series extends Model
                 return 'badge bg-warning';
             case 2:
                 return 'badge bg-success';
+            case 3:
+                return 'badge bg-danger';
             default:
                 return '';
         }

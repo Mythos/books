@@ -25,6 +25,7 @@ class Statistics extends Component
     private function getMostReadSeries()
     {
         return Series::with(['category', 'volumes'])
+                       ->where('status', '<>', '3')
                        ->withCount([
                            'volumes as read_sum' => function ($query): void {
                                $query->select(DB::raw('SUM(CASE WHEN `status` = 4 THEN 1 ELSE 0 END)'));
@@ -40,6 +41,7 @@ class Statistics extends Component
     private function getUnreadSeries()
     {
         return Series::with(['category', 'volumes'])
+                       ->where('status', '<>', '3')
                        ->withCount([
                            'volumes as unread_sum' => function ($query): void {
                                $query->select(DB::raw('SUM(CASE WHEN `status` = 3 THEN 1 ELSE 0 END)'));
