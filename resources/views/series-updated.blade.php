@@ -1,5 +1,5 @@
 @component('mail::message')
-# {{ __('Series Changes') }}
+# {{ __('Summary of changes') }}
 
 @foreach ($changes as $series => $seriesChanges)
 @if (!empty($seriesChanges['series']) || !empty($seriesChanges['volumes']))
