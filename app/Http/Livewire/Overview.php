@@ -55,7 +55,7 @@ class Overview extends Component
             DB::raw('COALESCE(sum(case when volumes.status = 3 then 1 else 0 end), 0) as delivered'),
             DB::raw('COALESCE(sum(case when volumes.status = 4 then 1 else 0 end), 0) as `read`'),
             DB::raw('COALESCE(sum(case when volumes.status = 3 OR volumes.status = 4 then price else 0 end), 0) as price'),
-            DB::raw('count(*) as total'),
+            DB::raw('COALESCE(sum(case when series.status <> 3 or volumes.status = 3 or volumes.status = 4 then 1 else 0 end), 0) as total'),
         ])->first();
 
         return json_decode(json_encode($volumes->toArray()), true);
