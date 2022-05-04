@@ -133,7 +133,7 @@ class MangaPassionUpdateJob implements ShouldQueue
     {
         switch ($key) {
             case 'name': return __('Name');
-            case 'status': return __('status');
+            case 'status': return __('Status');
             case 'total': return __('Total');
             case 'default_prices': return __('Default price');
             case 'description': return __('Description');
