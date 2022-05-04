@@ -113,6 +113,7 @@
                                 <ul class="dropdown-menu dropdown-menu-end">
                                     <li><a class="dropdown-item" href="{{ route('profile') }}">{{ __('Profile') }}</a></li>
                                     <li>@livewire('nsfw-toggle')</li>
+                                    <li>@livewire('canceled-series-toggle')</li>
                                     <li>
                                         <hr class="dropdown-divider">
                                     </li>
