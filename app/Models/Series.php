@@ -160,11 +160,16 @@ class Series extends Model
      */
     public function getCompletionStatusClassAttribute(): string
     {
-        if ($this->completion_status) {
-            return 'badge bg-success';
+        switch ($this->completion_status) {
+            case 0:
+                return 'badge bg-danger';
+            case 1:
+                return 'badge bg-primary';
+            case 2:
+                return 'badge bg-success';
+            default:
+                return '';
         }
-
-        return 'badge bg-danger';
     }
 
     /**
@@ -174,25 +179,42 @@ class Series extends Model
      */
     public function getCompletionStatusNameAttribute(): string
     {
-        if ($this->completion_status) {
-            return __('Complete');
+        switch ($this->completion_status) {
+            case 1:
+            case 2:
+                return __('Complete');
+            default:
+                return __('Incomplete');
         }
-
-        return __('Incomplete');
     }
 
     /**
      * Get the series' completion status.
      *
-     * @return string
+     * @return int
      */
-    public function getCompletionStatusAttribute(): bool
+    public function getCompletionStatusAttribute(): int
     {
         if (empty($this->total)) {
             return false;
         }
 
-        return $this->total == $this->volumes->whereIn('status', ['3', '4'])->count();
+        $volumes = $this->volumes->whereNotNull('publish_date')
+        ->filter(function ($volume) {
+            return $volume->publish_date <= now() || $volume->status > 0;
+        });
+        $total = $volumes->count();
+        $possessed = $volumes->whereIn('status', ['3', '4'])->count();
+        $read = $volumes->where('status', '4')->count();
+
+        if ($total == 0) {
+            return 0;
+        }
+        if ($total - $read == 0) {
+            return 2;
+        }
+
+        return $total - $possessed == 0;
     }
 
     /**
