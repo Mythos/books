@@ -122,6 +122,8 @@ class Series extends Model
             case 2:
                 return __('Finished');
             case 3:
+                return __('Paused');
+            case 4:
                 return __('Canceled');
             default:
                 return __('Unknown');
@@ -139,10 +141,12 @@ class Series extends Model
             case 0:
                 return 'badge bg-secondary';
             case 1:
-                return 'badge bg-warning';
+                return 'badge bg-primary';
             case 2:
                 return 'badge bg-success';
             case 3:
+                return 'badge bg-warning';
+            case 4:
                 return 'badge bg-danger';
             default:
                 return '';

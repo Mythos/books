@@ -1,4 +1,4 @@
-<div class="col-sm-12 col-md-6 col-lg-3 d-flex align-self-stretch @if ($item->status == 3) opacity-50 @endif">
+<div class="col-sm-12 col-md-6 col-lg-3 d-flex align-self-stretch @if ($item->status == 4) opacity-50 @endif">
     <div class="card shadow-sm mb-4" style="width: 30rem;">
         <img src="{{ $item->image }}" alt="{{ $item->name }}" class="card-img-top" style="max-height: 400px; object-fit: contain;">
         <div class="card-body d-flex flex-column">
