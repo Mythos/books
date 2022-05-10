@@ -82,7 +82,7 @@ class MangaPassionUpdateJob implements ShouldQueue
         $volumeChanges = [];
         $original = $originalSeries->toArray();
         $new = $newSeries->toArray();
-        $differences = array_diff($new, $original);
+        $differences = array_diff_assoc($new, $original);
         if (!empty($differences)) {
             foreach ($differences as $key => $value) {
                 $name = $this->getChangedName($key);
@@ -106,7 +106,7 @@ class MangaPassionUpdateJob implements ShouldQueue
                 $volumeChanges[__('Volume :number', ['number' => $new['number']])] = __('New Volume :number (ISBN: :isbn, Publish Date: :publish_date, Price: :price)', ['number' => $new['number'] ?? 'NULL', 'isbn' => $new['isbn'] ?? 'NULL', 'publish_date' => $new['publish_date'] ?? 'NULL', 'price' => $new['price'] ?? 'NULL']);
             } else {
                 $original = $originalVolume->toArray();
-                $differences = array_diff($new, $original);
+                $differences = array_diff_assoc($new, $original);
                 if (!empty($differences)) {
                     foreach ($differences as $key => $value) {
                         $name = $this->getChangedName($key);
