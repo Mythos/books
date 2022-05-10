@@ -201,7 +201,7 @@ class Series extends Model
 
         $volumes = $this->volumes->whereNotNull('publish_date')
         ->filter(function ($volume) {
-            return $volume->publish_date <= now() || $volume->status > 0;
+            return $volume->publish_date <= now() || (!$this->subscription_active && $volume->status > 0);
         });
         $total = $volumes->count();
         $possessed = $volumes->whereIn('status', ['3', '4'])->count();
