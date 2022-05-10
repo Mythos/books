@@ -18,7 +18,7 @@ class UpcomingSeries extends Component
     {
         $upcoming = Volume::with(['series', 'series.publisher', 'series.genres', 'series.category'])
         ->where('ignore_in_upcoming', 'false')
-        ->whereRelation('series', 'status', '<>', '3')
+        ->whereRelation('series', 'status', '<>', '4')
         ->whereIn('status', [0, 1, 2])
         ->whereNotNull('publish_date')
         ->get()
