@@ -92,7 +92,7 @@ class SeriesService
                 continue;
             }
 
-            if ($volume->status == 0) {
+            if ($volume->status == 0 || ($volume->series->subscription_active && $volume->status == 1)) {
                 $volume->price = $price;
             }
 
