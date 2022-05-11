@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Series;
 
+use App\Constants\VolumeStatus;
 use App\Helpers\ImageHelpers;
 use App\Models\Category;
 use App\Models\Series;
@@ -42,38 +43,38 @@ class ShowSeries extends Component
     {
         $this->series = Series::with('genres')->find($this->series->id);
         $this->volumes = Volume::whereSeriesId($this->series->id)->orderBy('number')->get();
-        $this->new = $this->volumes->where('status', '0')->count();
-        $this->ordered = $this->volumes->where('status', '1')->count();
-        $this->shipped = $this->volumes->where('status', '2')->count();
-        $this->delivered = $this->volumes->where('status', '3')->count();
-        $this->read = $this->volumes->where('status', '4')->count();
+        $this->new = $this->volumes->where('status', VolumeStatus::New)->count();
+        $this->ordered = $this->volumes->where('status', VolumeStatus::Ordered)->count();
+        $this->shipped = $this->volumes->where('status', VolumeStatus::Shipped)->count();
+        $this->delivered = $this->volumes->where('status', VolumeStatus::Delivered)->count();
+        $this->read = $this->volumes->where('status', VolumeStatus::Read)->count();
 
         return view('livewire.series.show-series')->extends('layouts.app')->section('content');
     }
 
     public function canceled(int $id): void
     {
-        $this->setStatus($id, 0);
+        $this->setStatus($id, VolumeStatus::New);
     }
 
     public function ordered(int $id): void
     {
-        $this->setStatus($id, 1);
+        $this->setStatus($id, VolumeStatus::Ordered);
     }
 
     public function shipped(int $id): void
     {
-        $this->setStatus($id, 2);
+        $this->setStatus($id, VolumeStatus::Shipped);
     }
 
     public function delivered(int $id): void
     {
-        $this->setStatus($id, 3);
+        $this->setStatus($id, VolumeStatus::Delivered);
     }
 
     public function read(int $id): void
     {
-        $this->setStatus($id, 4);
+        $this->setStatus($id, VolumeStatus::Read);
     }
 
     private function setStatus(int $id, int $status): void

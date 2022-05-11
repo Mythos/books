@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Statistics;
 
+use App\Constants\SeriesStatus;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 
@@ -13,7 +14,7 @@ class SeriesPerPublisher extends Component
     {
         $this->seriesByPublisherStatistics = DB::table('series')
                                                  ->join('publishers', 'series.publisher_id', '=', 'publishers.id')
-                                                 ->where('series.status', '<>', '3')
+                                                 ->where('series.status', '<>', SeriesStatus::Canceled)
                                                  ->select('publishers.name as publisher', DB::raw('count(*) as total'))
                                                  ->groupBy('publishers.name')
                                                  ->orderByDesc('total')

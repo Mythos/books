@@ -2,6 +2,8 @@
 
 namespace App\Http\Livewire\Series;
 
+use App\Constants\SeriesStatus;
+use App\Constants\VolumeStatus;
 use App\Helpers\ImageHelpers;
 use App\Models\Category;
 use App\Models\GenreSeries;
@@ -53,7 +55,7 @@ class EditSeries extends Component
         if ($property == 'series.publisher_id' && empty($value)) {
             $this->series->publisher_id = null;
         }
-        if ($property == 'series.status' && $value == 4 && $this->series->subscription_active) {
+        if ($property == 'series.status' && $value == SeriesStatus::Canceled && $this->series->subscription_active) {
             $this->series->subscription_active = false;
         }
         $this->validateOnly($property);
@@ -124,7 +126,7 @@ class EditSeries extends Component
     private function updateStatuses(): void
     {
         if ($this->series->subscription_active) {
-            Volume::whereSeriesId($this->series->id)->where('status', '=', '0')->update(['status' => 1]);
+            Volume::whereSeriesId($this->series->id)->where('status', '=', VolumeStatus::New)->update(['status' => VolumeStatus::Ordered]);
         }
     }
 }

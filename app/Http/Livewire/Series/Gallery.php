@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Series;
 
+use App\Constants\SeriesStatus;
 use App\Models\Category;
 use App\Models\Series;
 use Livewire\Component;
@@ -26,7 +27,7 @@ class Gallery extends Component
         $this->series = Series::whereCategoryId($this->category->id)->with(['volumes', 'publisher']);
         $show_canceled_series = session('show_canceled_series') ?? false;
         if (!$show_canceled_series) {
-            $this->series->where('status', '<>', 4);
+            $this->series->where('status', '<>', SeriesStatus::Canceled);
         }
         if (!empty($this->search)) {
             $this->series->where('name', 'like', '%' . $this->search . '%')

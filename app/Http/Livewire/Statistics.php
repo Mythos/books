@@ -2,6 +2,8 @@
 
 namespace App\Http\Livewire;
 
+use App\Constants\SeriesStatus;
+use App\Constants\VolumeStatus;
 use App\Models\Series;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\DB;
@@ -25,14 +27,14 @@ class Statistics extends Component
     private function getMostReadSeries()
     {
         return Series::with(['category', 'volumes'])
-                       ->where('status', '<>', '3')
+                       ->where('status', '<>', SeriesStatus::Canceled)
                        ->withCount([
                            'volumes as read_sum' => function ($query): void {
-                               $query->select(DB::raw('SUM(CASE WHEN `status` = 4 THEN 1 ELSE 0 END)'));
+                               $query->select(DB::raw('SUM(CASE WHEN `status` = ' . VolumeStatus::Read . ' THEN 1 ELSE 0 END)'));
                            },
                        ])
                        ->whereHas('volumes', function (Builder $query): void {
-                           $query->where('status', '=', '4');
+                           $query->where('status', '=', VolumeStatus::Read);
                        })
                        ->orderByDesc('read_sum')
                        ->paginate(10, ['*'], 'mostread');
@@ -41,14 +43,14 @@ class Statistics extends Component
     private function getUnreadSeries()
     {
         return Series::with(['category', 'volumes'])
-                       ->where('status', '<>', '3')
+                       ->where('status', '<>', SeriesStatus::Canceled)
                        ->withCount([
                            'volumes as unread_sum' => function ($query): void {
-                               $query->select(DB::raw('SUM(CASE WHEN `status` = 3 THEN 1 ELSE 0 END)'));
+                               $query->select(DB::raw('SUM(CASE WHEN `status` = ' . VolumeStatus::Delivered . ' THEN 1 ELSE 0 END)'));
                            },
                        ])
                        ->whereHas('volumes', function (Builder $query): void {
-                           $query->where('status', '=', '3');
+                           $query->where('status', '=', VolumeStatus::Delivered);
                        })
                        ->orderByDesc('unread_sum')
                        ->paginate(10, ['*'], 'unread');

@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Constants\SeriesStatus;
+use App\Constants\VolumeStatus;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -94,7 +96,7 @@ class Series extends Model
      */
     public function getUnreadVolumesCountAttribute(): ?int
     {
-        return $this->volumes->where('status', '=', '3')->count();
+        return $this->volumes->where('status', '=', VolumeStatus::Delivered)->count();
     }
 
     /**
@@ -104,7 +106,7 @@ class Series extends Model
      */
     public function getReadVolumesCountAttribute(): ?int
     {
-        return $this->volumes->where('status', '=', '4')->count();
+        return $this->volumes->where('status', '=', VolumeStatus::Read)->count();
     }
 
     /**
@@ -115,15 +117,15 @@ class Series extends Model
     public function getStatusNameAttribute(): string
     {
         switch ($this->status) {
-            case 0:
+            case SeriesStatus::New:
                 return __('New');
-            case 1:
+            case SeriesStatus::Ongoing:
                 return __('Ongoing');
-            case 2:
+            case SeriesStatus::Finished:
                 return __('Finished');
-            case 3:
+            case SeriesStatus::Paused:
                 return __('Paused');
-            case 4:
+            case SeriesStatus::Canceled:
                 return __('Canceled');
             default:
                 return __('Unknown');
@@ -138,15 +140,15 @@ class Series extends Model
     public function getStatusClassAttribute(): string
     {
         switch ($this->status) {
-            case 0:
+            case SeriesStatus::New:
                 return 'badge bg-secondary';
-            case 1:
+            case SeriesStatus::Ongoing:
                 return 'badge bg-primary';
-            case 2:
+            case SeriesStatus::Finished:
                 return 'badge bg-success';
-            case 3:
+            case SeriesStatus::Paused:
                 return 'badge bg-warning';
-            case 4:
+            case SeriesStatus::Canceled:
                 return 'badge bg-danger';
             default:
                 return '';
@@ -201,13 +203,13 @@ class Series extends Model
 
         $volumes = $this->volumes->whereNotNull('publish_date')
         ->filter(function ($volume) {
-            return $volume->status == 2 || $volume->status == 3 || $volume->status == 4
+            return $volume->status == VolumeStatus::Shipped || $volume->status == VolumeStatus::Delivered || $volume->status == VolumeStatus::Read
                 || $volume->publish_date <= now()
-                || (!$this->subscription_active && $volume->status == 1);
+                || (!$this->subscription_active && $volume->status == VolumeStatus::Ordered);
         });
         $total = $volumes->count();
-        $possessed = $volumes->whereIn('status', ['3', '4'])->count();
-        $read = $volumes->where('status', '4')->count();
+        $possessed = $volumes->whereIn('status', [VolumeStatus::Delivered, VolumeStatus::Read])->count();
+        $read = $volumes->where('status', VolumeStatus::Read)->count();
 
         if ($total == 0) {
             return 0;
@@ -241,7 +243,7 @@ class Series extends Model
      */
     public function getTotalWorthAttribute(): string
     {
-        return $this->volumes->whereIn('status', ['3', '4'])->sum('price');
+        return $this->volumes->whereIn('status', [VolumeStatus::Delivered, VolumeStatus::Read])->sum('price');
     }
 
     /**

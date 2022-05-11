@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Series;
 
+use App\Constants\SeriesStatus;
 use App\Helpers\ImageHelpers;
 use App\Helpers\MangaPassionApi;
 use App\Models\Category;
@@ -46,7 +47,7 @@ class CreateSeries extends Component
         if ($property == 'series.publisher_id' && empty($value)) {
             $this->series->publisher_id = null;
         }
-        if ($property == 'series.status' && $value == 4 && $this->series->subscription_active) {
+        if ($property == 'series.status' && $value == SeriesStatus::Canceled && $this->series->subscription_active) {
             $this->series->subscription_active = false;
         }
         $this->validateOnly($property);
@@ -57,7 +58,7 @@ class CreateSeries extends Component
         $this->publishers = Publisher::orderBy('name')->get();
         $this->category = $category;
         $this->series = new Series([
-            'status' => 0,
+            'status' => SeriesStatus::New,
             'category_id' => $category->id,
             'is_nsfw' => false,
             'subscription_active' => false,

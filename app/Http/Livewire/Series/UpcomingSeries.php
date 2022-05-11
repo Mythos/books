@@ -2,6 +2,8 @@
 
 namespace App\Http\Livewire\Series;
 
+use App\Constants\SeriesStatus;
+use App\Constants\VolumeStatus;
 use App\Models\Volume;
 use Illuminate\Support\Str;
 use Livewire\Component;
@@ -18,8 +20,8 @@ class UpcomingSeries extends Component
     {
         $upcoming = Volume::with(['series', 'series.publisher', 'series.genres', 'series.category'])
         ->where('ignore_in_upcoming', 'false')
-        ->whereRelation('series', 'status', '<>', '4')
-        ->whereIn('status', [0, 1, 2])
+        ->whereRelation('series', 'status', '<>', SeriesStatus::Canceled)
+        ->whereIn('status', [VolumeStatus::New, VolumeStatus::Ordered, VolumeStatus::Shipped])
         ->whereNotNull('publish_date')
         ->get()
         ->sortBy([
@@ -48,17 +50,17 @@ class UpcomingSeries extends Component
 
     public function ordered(int $id): void
     {
-        $this->setStatus($id, 1);
+        $this->setStatus($id, VolumeStatus::Ordered);
     }
 
     public function shipped(int $id): void
     {
-        $this->setStatus($id, 2);
+        $this->setStatus($id, VolumeStatus::Shipped);
     }
 
     public function delivered(int $id): void
     {
-        $this->setStatus($id, 3);
+        $this->setStatus($id, VolumeStatus::Delivered);
     }
 
     private function setStatus(int $id, int $status): void

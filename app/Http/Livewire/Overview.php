@@ -2,6 +2,8 @@
 
 namespace App\Http\Livewire;
 
+use App\Constants\SeriesStatus;
+use App\Constants\VolumeStatus;
 use App\Models\Volume;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
@@ -49,13 +51,13 @@ class Overview extends Component
                     });
         }
         $volumes = $volumes->join('series', 'volumes.series_id', '=', 'series.id')->WhereNotNull('isbn')->select([
-            DB::raw('COALESCE(sum(case when volumes.status = 0 AND series.status <> 3 then 1 else 0 end), 0) as new'),
-            DB::raw('COALESCE(sum(case when volumes.status = 1 AND series.status <> 3 then 1 else 0 end), 0) as ordered'),
-            DB::raw('COALESCE(sum(case when volumes.status = 2 then 1 else 0 end), 0) as shipped'),
-            DB::raw('COALESCE(sum(case when volumes.status = 3 then 1 else 0 end), 0) as delivered'),
-            DB::raw('COALESCE(sum(case when volumes.status = 4 then 1 else 0 end), 0) as `read`'),
-            DB::raw('COALESCE(sum(case when volumes.status = 3 OR volumes.status = 4 then price else 0 end), 0) as price'),
-            DB::raw('COALESCE(sum(case when series.status <> 3 or volumes.status = 3 or volumes.status = 4 then 1 else 0 end), 0) as total'),
+            DB::raw('COALESCE(sum(case when volumes.status = ' . VolumeStatus::New . ' AND series.status <> ' . SeriesStatus::Canceled . ' then 1 else 0 end), 0) as new'),
+            DB::raw('COALESCE(sum(case when volumes.status = ' . VolumeStatus::Ordered . ' AND series.status <> ' . SeriesStatus::Canceled . ' then 1 else 0 end), 0) as ordered'),
+            DB::raw('COALESCE(sum(case when volumes.status = ' . VolumeStatus::Shipped . ' then 1 else 0 end), 0) as shipped'),
+            DB::raw('COALESCE(sum(case when volumes.status = ' . VolumeStatus::Delivered . ' then 1 else 0 end), 0) as delivered'),
+            DB::raw('COALESCE(sum(case when volumes.status = ' . VolumeStatus::Read . ' then 1 else 0 end), 0) as `read`'),
+            DB::raw('COALESCE(sum(case when volumes.status = ' . VolumeStatus::Delivered . ' OR volumes.status = ' . VolumeStatus::Read . ' then price else 0 end), 0) as price'),
+            DB::raw('COALESCE(sum(case when series.status <> ' . SeriesStatus::Canceled . ' or volumes.status = ' . VolumeStatus::Delivered . ' or volumes.status = ' . VolumeStatus::Read . ' then 1 else 0 end), 0) as total'),
         ])->first();
 
         return json_decode(json_encode($volumes->toArray()), true);

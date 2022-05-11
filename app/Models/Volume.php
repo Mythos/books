@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Constants\VolumeStatus;
 use App\Helpers\IsbnHelpers;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -111,15 +112,15 @@ class Volume extends Model
     public function getStatusNameAttribute(): string
     {
         switch ($this->status) {
-            case 0:
+            case VolumeStatus::New:
                 return __('New');
-            case 1:
+            case VolumeStatus::Ordered:
                 return __('Ordered');
-            case 2:
+            case VolumeStatus::Shipped:
                 return __('Shipped');
-            case 3:
+            case VolumeStatus::Delivered:
                 return __('Delivered');
-            case 4:
+            case VolumeStatus::Read:
                 return __('Read');
             default:
                 return __('Unknown');
@@ -134,15 +135,15 @@ class Volume extends Model
     public function getStatusClassAttribute(): string
     {
         switch ($this->status) {
-            case 0:
+            case VolumeStatus::New:
                 return 'table-danger';
-            case 1:
+            case VolumeStatus::Ordered:
                 return 'table-warning';
-            case 2:
+            case VolumeStatus::Shipped:
                 return 'table-info';
-            case 3:
+            case VolumeStatus::Delivered:
                 return 'table-primary';
-            case 4:
+            case VolumeStatus::Read:
                 return 'table-success';
             default:
                 return '';

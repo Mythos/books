@@ -2,6 +2,7 @@
 
 namespace App\Jobs;
 
+use App\Constants\SeriesStatus;
 use App\Helpers\ImageHelpers;
 use App\Mail\SeriesUpdated;
 use App\Models\Series;
@@ -41,7 +42,7 @@ class MangaPassionUpdateJob implements ShouldQueue
         $changeLog = [];
         $originalSeries = Series::all();
         $originalVolumes = Volume::all();
-        $series = Series::whereNotNull('mangapassion_id')->whereNot('status', '2')->orderBy('name')->get();
+        $series = Series::whereNotNull('mangapassion_id')->whereNotIn('status', [SeriesStatus::Finished, SeriesStatus::Canceled])->orderBy('name')->get();
         foreach ($series as $s) {
             try {
                 Log::info("Updating series metadata for {$s->name}...");
