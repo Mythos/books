@@ -8,6 +8,8 @@
 - Added cron job and email notification for updating metadata via Manga Passion API
 - Added Select2 to replace native dropdowns
 - Added context information to website title
+- Series can now be paused or canceled
+- Changed series' completion status to be more dynamic
 - Navbar is now sticky for easier access on mobiles devices
 - Image-Sources are now stored in the database and updated via Manga Passion API
 - Updated to latest Laravel version, now requiring PHP 8.0.2 or greater
