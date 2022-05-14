@@ -36,6 +36,10 @@
             <div>
                 <h1 style="display: inline;">{{ $series->name }}</h1>
                 <div class="float-end" style="display: inline;">
+                    @if (config('app.debug'))
+                        <span class="badge bg-secondary">ID: {{ $series->id }}</span>
+                        <span class="badge bg-secondary">MP-ID: {{ $series->mangapassion_id }}</span>
+                    @endif
                     <a href="{{ route('series.edit', [$category, $series]) }}" class="btn btn-link"><span class="fas fa-edit"></span></a>
                     @if (!empty($series->mangapassion_id))
                         <a href="https://www.manga-passion.de/editions/{{ $series->mangapassion_id }}" class="btn btn-link" target="_blank"><span class="fas fa-book"></span></a>
