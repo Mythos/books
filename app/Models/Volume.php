@@ -8,6 +8,7 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Storage;
 
 /**
  * App\Models\Volume
@@ -194,5 +195,22 @@ class Volume extends Model
         }
 
         return url($path . 'cover.jpg');
+    }
+
+    /**
+     * Get the volumes' image status.
+     *
+     * @return bool
+     */
+    public function getImageExistsAttribute(): bool
+    {
+        $path = $this->image_path . '/';
+        if ($this->is_nsfw && !session('show_nsfw', false)) {
+            $path = $path . 'cover_sfw.jpg';
+        } else {
+            $path = $path . 'cover.jpg';
+        }
+
+        return Storage::disk('public')->exists($path);
     }
 }

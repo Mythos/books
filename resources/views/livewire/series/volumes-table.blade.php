@@ -16,6 +16,7 @@
                     @endif
                     <th scope="col" class="text-end" style="width: 2rem; min-width: 2rem;">{{ __('#') }}</th>
                     <th scope="col" class="text-center" style="width: 2rem; min-width: 2rem;"></th>
+                    <th scope="col" class="text-center" style="width: 2rem; min-width: 2rem;"></th>
                     <th scope="col" class="text-center" style="width: 7rem; min-width: 7rem;">{{ __('Publish Date') }}</th>
                     <th scope="col" style="min-width: 10rem;">{{ __('ISBN') }}</th>
                     <th scope="col" class="text-end" style="width: 5rem; min-width: 5rem;">{{ __('Price') }}</th>
@@ -40,6 +41,11 @@
                         @endif
                         <th scope="row" class="text-end">{{ $volume->number }}</th>
                         <td class="text-center"><a href="{{ route('volumes.edit', [$category, $series, $volume->number]) }}"><span class="fa fa-edit"></span></a></td>
+                        <td class="text-center">
+                            @if ($volume->image_exists)
+                                <img src="{{ $volume->image }}" alt="{{ $volume->name }}" class="volume-cover" style="max-height: 50px; object-fit: contain;">
+                            @endif
+                        </td>
                         <td class="text-center">{{ $volume->publish_date_formatted }}</td>
                         <td>{{ $volume->isbn_formatted }}</td>
                         <td class="text-end">{{ number_format($volume->price, 2) }} {{ config('app.currency') }}</td>
