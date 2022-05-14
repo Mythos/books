@@ -41,9 +41,9 @@
                         @endif
                         <th scope="row" class="text-end">{{ $volume->number }}</th>
                         <td class="text-center"><a href="{{ route('volumes.edit', [$category, $series, $volume->number]) }}"><span class="fa fa-edit"></span></a></td>
-                        <td class="text-center">
+                        <td class="text-center" style="padding: 3px;">
                             @if ($volume->image_exists)
-                                <img src="{{ $volume->image }}" alt="{{ $volume->name }}" class="volume-cover" style="max-height: 50px; object-fit: contain;">
+                                <img src="{{ $volume->image }}" alt="{{ $volume->name }}" class="volume-cover" style="max-height: 33px; object-fit: contain;">
                             @endif
                         </td>
                         <td class="text-center">{{ $volume->publish_date_formatted }}</td>
