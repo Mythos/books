@@ -142,6 +142,7 @@ class MangaPassionUpdateJob implements ShouldQueue
             case 'publish_date': return __('Publish Date');
             case 'isbn': return __('ISBN');
             case 'price': return __('Price');
+            case 'image_url': return __('Image URL');
             default: return null;
         }
     }
