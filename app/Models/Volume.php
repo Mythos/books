@@ -191,7 +191,7 @@ class Volume extends Model
     public function getImageAttribute(): string
     {
         $path = 'storage/' . $this->image_path . '/';
-        if ($this->is_nsfw && !session('show_nsfw', false)) {
+        if ($this->series->is_nsfw && !session('show_nsfw', false)) {
             return url($path . 'cover_sfw.jpg');
         }
 
