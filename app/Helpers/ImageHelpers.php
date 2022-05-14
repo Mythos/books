@@ -28,7 +28,7 @@ class ImageHelpers
         if (!$generateThumbnail) {
             return;
         }
-        $thumbnail = FacadesImage::make($image)->resize(null, 50, function ($constraint): void {
+        $thumbnail = FacadesImage::make(clone $image)->resize(null, 50, function ($constraint): void {
             $constraint->aspectRatio();
         })->encode('jpg');
         Storage::disk('public')->put('thumbnails/' . $path, $thumbnail);
