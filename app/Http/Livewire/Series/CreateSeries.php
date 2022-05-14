@@ -141,6 +141,7 @@ class CreateSeries extends Component
             $isbn = $newVolume['isbn'];
             $publish_date = $newVolume['publish_date'];
             $price = $newVolume['price'];
+            $image_url = $newVolume['image_url'];
 
             $volume = new Volume([
                 'series_id' => $this->series->id,
@@ -149,8 +150,20 @@ class CreateSeries extends Component
                 'publish_date' => !empty($publish_date) ? $publish_date->format('Y-m-d') : null,
                 'price' => $price,
                 'status' => $this->series->subscription_active,
+                'image_url' => $image_url,
             ]);
+
             $volume->save();
+
+            if (empty($image_url)) {
+                continue;
+            }
+            $image = ImageHelpers::getImage($image_url);
+            if (!empty($image)) {
+                ImageHelpers::storePublicImage($image, $volume->image_path . '/cover.jpg');
+                $nsfwImage = $image->pixelate(config('images.nsfw.pixelate', 10))->blur(config('images.nsfw.blur', 5))->encode('jpg');
+                ImageHelpers::storePublicImage($nsfwImage, $volume->image_path . '/cover_sfw.jpg');
+            }
         }
     }
 

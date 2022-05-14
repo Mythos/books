@@ -60,6 +60,7 @@ class Volume extends Model
         'price',
         'ignore_in_upcoming',
         'series_id',
+        'image_url',
     ];
 
     /**
@@ -168,5 +169,30 @@ class Volume extends Model
     public function getRouteKeyName(): string
     {
         return 'number';
+    }
+
+    /**
+     * Get the volumes' image path.
+     *
+     * @return string
+     */
+    public function getImagePathAttribute(): string
+    {
+        return 'series/' . $this->series_id . '/volumes/' . $this->id;
+    }
+
+    /**
+     * Get the volumes' image.
+     *
+     * @return string
+     */
+    public function getImageAttribute(): string
+    {
+        $path = 'storage/' . $this->image_path . '/';
+        if ($this->is_nsfw && !session('show_nsfw', false)) {
+            return url($path . 'cover_sfw.jpg');
+        }
+
+        return url($path . 'cover.jpg');
     }
 }

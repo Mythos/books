@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Volumes;
 
+use App\Helpers\ImageHelpers;
 use App\Helpers\IsbnHelpers;
 use App\Models\Category;
 use App\Models\Series;
@@ -41,6 +42,7 @@ class EditVolume extends Component
             'volume.isbn' => ['nullable', 'unique:volumes,isbn,' . $this->volume->id . ',id,series_id,' . $this->series->id, new Isbn()],
             'volume.ignore_in_upcoming' => 'boolean',
             'volume.series_id' => 'required|exists:series,id',
+            'volume.image_url' => 'nullable|url',
         ];
     }
 
@@ -82,6 +84,16 @@ class EditVolume extends Component
         }
         $this->validate();
         $this->volume->save();
+
+        if (!empty($this->volume->image_url)) {
+            $image = ImageHelpers::getImage($this->volume->image_url);
+            if (!empty($image)) {
+                ImageHelpers::storePublicImage($image, $this->volume->image_path . '/cover.jpg');
+                $nsfwImage = $image->pixelate(config('images.nsfw.pixelate', 10))->blur(config('images.nsfw.blur', 5))->encode('jpg');
+                ImageHelpers::storePublicImage($nsfwImage, $this->volume->image_path . '/cover_sfw.jpg');
+            }
+        }
+
         $seriesService->resetNumbers($this->volume->series_id);
         toastr()->addSuccess(__('Volumme :number has been updated', ['number' => $this->volume->number]));
 

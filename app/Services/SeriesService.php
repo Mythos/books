@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Helpers\ImageHelpers;
 use App\Helpers\MangaPassionApi;
 use App\Models\Genre;
 use App\Models\Publisher;
@@ -79,6 +80,7 @@ class SeriesService
             $isbn = $volumeResult['isbn'];
             $publish_date = $volumeResult['publish_date'];
             $price = $volumeResult['price'];
+            $image_url = $volumeResult['image_url'];
 
             $volume = null;
             if (!empty($isbn)) {
@@ -101,8 +103,19 @@ class SeriesService
             if (!empty($isbn)) {
                 $volume->isbn = $isbn;
             }
+            $volume->image_url = $image_url;
             $volume->save();
             $data[] = $volume;
+
+            if (empty($image_url)) {
+                continue;
+            }
+            $image = ImageHelpers::getImage($image_url);
+            if (!empty($image)) {
+                ImageHelpers::storePublicImage($image, $volume->image_path . '/cover.jpg');
+                $nsfwImage = $image->pixelate(config('images.nsfw.pixelate', 10))->blur(config('images.nsfw.blur', 5))->encode('jpg');
+                ImageHelpers::storePublicImage($nsfwImage, $volume->image_path . '/cover_sfw.jpg');
+            }
         }
 
         foreach ($newVolumes as $newVolume) {
@@ -110,6 +123,7 @@ class SeriesService
             $isbn = $newVolume['isbn'];
             $publish_date = $newVolume['publish_date'];
             $price = $newVolume['price'];
+            $image_url = $volumeResult['image_url'];
 
             $volume = new Volume([
                 'series_id' => $series->id,
@@ -118,9 +132,20 @@ class SeriesService
                 'publish_date' => !empty($publish_date) ? $publish_date->format('Y-m-d') : null,
                 'price' => $price,
                 'status' => $series->subscription_active,
+                'image_url' => $image_url,
             ]);
             $volume->save();
             $data[] = $volume;
+
+            if (empty($image_url)) {
+                continue;
+            }
+            $image = ImageHelpers::getImage($image_url);
+            if (!empty($image)) {
+                ImageHelpers::storePublicImage($image, $volume->image_path . '/cover.jpg');
+                $nsfwImage = $image->pixelate(config('images.nsfw.pixelate', 10))->blur(config('images.nsfw.blur', 5))->encode('jpg');
+                ImageHelpers::storePublicImage($nsfwImage, $volume->image_path . '/cover_sfw.jpg');
+            }
         }
         $this->resetNumbers($series->id);
 

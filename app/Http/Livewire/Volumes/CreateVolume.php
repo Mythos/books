@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Volumes;
 
+use App\Helpers\ImageHelpers;
 use App\Helpers\IsbnHelpers;
 use App\Models\Series;
 use App\Models\Volume;
@@ -35,6 +36,7 @@ class CreateVolume extends Component
             'volume.isbn' => ['nullable', 'unique:volumes,isbn,NULL,id,series_id,' . $this->series->id, new Isbn()],
             'volume.ignore_in_upcoming' => 'boolean',
             'volume.series_id' => 'required|exists:series,id',
+            'volume.image_url' => 'nullable|url',
         ];
     }
 
@@ -69,7 +71,17 @@ class CreateVolume extends Component
             $this->volume->publish_date = null;
         }
         $this->volume->save();
-        toastr()->livewire()->addSuccess(__('Volumme :number has been created', ['number' => $number]));
+
+        if (!empty($this->volume->image_url)) {
+            $image = ImageHelpers::getImage($this->volume->image_url);
+            if (!empty($image)) {
+                ImageHelpers::storePublicImage($image, $this->volume->image_path . '/cover.jpg');
+                $nsfwImage = $image->pixelate(config('images.nsfw.pixelate', 10))->blur(config('images.nsfw.blur', 5))->encode('jpg');
+                ImageHelpers::storePublicImage($nsfwImage, $this->volume->image_path . '/cover_sfw.jpg');
+            }
+        }
+
+        toastr()->livewire()->addSuccess(__('Volumme :number has been created', ['number' => $this->volume->number]));
         $this->volume = $this->getModelInstance();
     }
 

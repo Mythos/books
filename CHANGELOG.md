@@ -1,5 +1,10 @@
 # Changelog
 
+## 2.3.0
+
+- Added cover images for volumes
+- Cover images for volumes are now fetched via Manga Passion API
+
 ## 2.2.0 (2022-05-14)
 
 - Updating a series via Manga Passion API now updates the price for volumes with status "New"

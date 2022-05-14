@@ -88,13 +88,14 @@ class MangaPassionApi
                     $publish_date = !empty($responseItem['date']) ? new DateTime($responseItem['date']) : null;
                 }
                 $isbn = !empty($responseItem['isbn13']) ? (string) Isbn::of($responseItem['isbn13'])->to13() : null;
-                $price = !empty($responseItem['price']) ? floatval($responseItem['price']) / 100.0 : 0;
+                $price = !empty($responseItem['price']) ? floatval($responseItem['price']) / 100.0 : 0.00;
 
                 $result[] = [
                     'number' => $number,
                     'isbn' => $isbn,
                     'publish_date' => $publish_date,
                     'price' => $price,
+                    'image_url' => $responseItem['cover'],
                 ];
             }
 
@@ -119,7 +120,7 @@ class MangaPassionApi
                 continue;
             }
 
-            return !empty($volumeResult['price']) ? floatval($volumeResult['price']) / 100.0 : 0;
+            return !empty($volumeResult['price']) ? floatval($volumeResult['price']) / 100.0 : 0.00;
         }
     }
 
