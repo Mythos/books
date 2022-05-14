@@ -43,7 +43,7 @@
                         <td class="text-center"><a href="{{ route('volumes.edit', [$category, $series, $volume->number]) }}"><span class="fa fa-edit"></span></a></td>
                         <td class="text-center" style="padding: 3px;">
                             @if ($volume->image_exists)
-                                <img src="{{ $volume->image_thumbnail }}" alt="{{ $volume->name }}" class="volume-cover" style="max-height: 33px; object-fit: contain;">
+                                <img src="{{ $volume->image_thumbnail }}" alt="{{ $volume->name }}" class="volume-cover" style="max-height: 33px; object-fit: contain;" data-image-url="{{ $volume->image }}">
                             @endif
                         </td>
                         <td class="text-center">{{ $volume->publish_date_formatted }}</td>

@@ -14,7 +14,7 @@ volumeCoverElements.map(function (popoverTriggerEl) {
         trigger: 'hover',
         container: 'body',
         content: function () {
-            return '<img src="' + popoverTriggerEl.src + '" alt="' + popoverTriggerEl.alt + '" class="img-fluid" />';
+            return '<img src="' + popoverTriggerEl.dataset.imageUrl + '" alt="' + popoverTriggerEl.alt + '" class="img-fluid" />';
         }
     })
 });
