@@ -5,6 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Cache;
+use Intervention\Image\Facades\Image;
 use Laravel\Sanctum\HasApiTokens;
 
 /**
@@ -74,4 +76,35 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function getAvatarProfileAttribute()
+    {
+        return $this->getGravatar("avatar.{$this->email}.profile", 150);
+    }
+
+    public function getAvatarNavbarAttribute()
+    {
+        return $this->getGravatar("avatar.{$this->email}.navbar", 20);
+    }
+
+    private function getGravatar($cacheKey, $avatarSize)
+    {
+        if (empty($this->id)) {
+            return;
+        }
+
+        return Cache::remember($cacheKey, config('cache.duration'), function () use ($avatarSize) {
+            $hash = md5($this->email);
+            $url = "https://www.gravatar.com/avatar/{$hash}?s={$avatarSize}";
+            if (empty($url)) {
+                return null;
+            }
+
+            $image = Image::make($url)->resize(null, $avatarSize, function ($constraint): void {
+                $constraint->aspectRatio();
+            })->encode('jpg');
+
+            return $image->encode('data-url')->__toString();
+        });
+    }
 }

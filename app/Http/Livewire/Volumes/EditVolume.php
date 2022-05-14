@@ -7,6 +7,7 @@ use App\Models\Category;
 use App\Models\Series;
 use App\Models\Volume;
 use App\Rules\Isbn;
+use App\Services\SeriesService;
 use Illuminate\Support\Str;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Component;
@@ -20,6 +21,8 @@ class EditVolume extends Component
     public Series $series;
 
     public Volume $volume;
+
+    public $seriesService;
 
     public function mount(Category $category, Series $series, int $number): void
     {
@@ -37,6 +40,7 @@ class EditVolume extends Component
             'volume.price' => 'nullable|regex:"^[0-9]{1,9}([,.][0-9]{1,2})?$"',
             'volume.isbn' => ['nullable', 'unique:volumes,isbn,' . $this->volume->id . ',id,series_id,' . $this->series->id, new Isbn()],
             'volume.ignore_in_upcoming' => 'boolean',
+            'volume.series_id' => 'required|exists:series,id',
         ];
     }
 
@@ -62,7 +66,7 @@ class EditVolume extends Component
         return view('livewire.volumes.edit-volume')->extends('layouts.app')->section('content');
     }
 
-    public function save()
+    public function save(SeriesService $seriesService)
     {
         $isbn = IsbnHelpers::convertTo13($this->volume->isbn);
         if (!empty($isbn)) {
@@ -78,7 +82,7 @@ class EditVolume extends Component
         }
         $this->validate();
         $this->volume->save();
-        $this->resetNumbers();
+        $seriesService->resetNumbers($this->volume->series_id);
         toastr()->addSuccess(__('Volumme :number has been updated', ['number' => $this->volume->number]));
 
         return redirect()->route('series.show', [$this->category, $this->series]);
@@ -99,16 +103,5 @@ class EditVolume extends Component
         toastr()->addSuccess(__('Volumme :number has been deleted', ['number' => $this->volume->number]));
 
         return redirect()->route('series.show', [$this->category, $this->series]);
-    }
-
-    private function resetNumbers(): void
-    {
-        $volumes = Volume::whereSeriesId($this->volume->series_id)->orderBy('number')->get();
-        $number = 1;
-        foreach ($volumes as $volume) {
-            $volume->number = $number;
-            $volume->save();
-            $number++;
-        }
     }
 }

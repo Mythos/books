@@ -2,9 +2,12 @@
 
 namespace App\Models;
 
+use App\Constants\SeriesStatus;
+use App\Constants\VolumeStatus;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
@@ -25,11 +28,16 @@ use Spatie\Sluggable\SlugOptions;
  * @property int|null $publisher_id
  * @property int $subscription_active
  * @property int|null $mangapassion_id
+ * @property string|null $image_url
+ * @property string|null $description
  * @property-read \App\Models\Category $category
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Genre[] $genres
+ * @property-read int|null $genres_count
  * @property-read string $completion_status
  * @property-read string $completion_status_class
  * @property-read string $completion_status_name
  * @property-read string $image
+ * @property-read string $image_path
  * @property-read string $read_volumes_count
  * @property-read string $status_class
  * @property-read string $status_name
@@ -44,7 +52,9 @@ use Spatie\Sluggable\SlugOptions;
  * @method static \Illuminate\Database\Eloquent\Builder|Series whereCategoryId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Series whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Series whereDefaultPrice($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Series whereDescription($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Series whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Series whereImageUrl($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Series whereIsNsfw($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Series whereMangapassionId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Series whereName($value)
@@ -68,6 +78,7 @@ class Series extends Model
      */
     protected $fillable = [
         'name',
+        'description',
         'status',
         'total',
         'is_nsfw',
@@ -85,7 +96,7 @@ class Series extends Model
      */
     public function getUnreadVolumesCountAttribute(): ?int
     {
-        return $this->volumes->where('status', '=', '3')->count();
+        return $this->volumes->where('status', '=', VolumeStatus::Delivered)->count();
     }
 
     /**
@@ -95,7 +106,7 @@ class Series extends Model
      */
     public function getReadVolumesCountAttribute(): ?int
     {
-        return $this->volumes->where('status', '=', '4')->count();
+        return $this->volumes->where('status', '=', VolumeStatus::Read)->count();
     }
 
     /**
@@ -106,12 +117,18 @@ class Series extends Model
     public function getStatusNameAttribute(): string
     {
         switch ($this->status) {
-            case 0:
+            case SeriesStatus::New:
                 return __('New');
-            case 1:
+            case SeriesStatus::Ongoing:
                 return __('Ongoing');
-            case 2:
+            case SeriesStatus::Finished:
                 return __('Finished');
+            case SeriesStatus::Paused:
+                return __('Paused');
+            case SeriesStatus::Canceled:
+                return __('Canceled');
+            default:
+                return __('Unknown');
         }
     }
 
@@ -123,12 +140,18 @@ class Series extends Model
     public function getStatusClassAttribute(): string
     {
         switch ($this->status) {
-            case 0:
+            case SeriesStatus::New:
                 return 'badge bg-secondary';
-            case 1:
-                return 'badge bg-warning';
-            case 2:
+            case SeriesStatus::Ongoing:
+                return 'badge bg-primary';
+            case SeriesStatus::Finished:
                 return 'badge bg-success';
+            case SeriesStatus::Paused:
+                return 'badge bg-warning';
+            case SeriesStatus::Canceled:
+                return 'badge bg-danger';
+            default:
+                return '';
         }
     }
 
@@ -140,10 +163,14 @@ class Series extends Model
     public function getCompletionStatusClassAttribute(): string
     {
         switch ($this->completion_status) {
-            case false:
+            case 0:
                 return 'badge bg-danger';
-            case true:
+            case 1:
+                return 'badge bg-primary';
+            case 2:
                 return 'badge bg-success';
+            default:
+                return '';
         }
     }
 
@@ -155,25 +182,43 @@ class Series extends Model
     public function getCompletionStatusNameAttribute(): string
     {
         switch ($this->completion_status) {
-            case false:
-                return __('Incomplete');
-            case true:
+            case 1:
+            case 2:
                 return __('Complete');
+            default:
+                return __('Incomplete');
         }
     }
 
     /**
      * Get the series' completion status.
      *
-     * @return string
+     * @return int
      */
-    public function getCompletionStatusAttribute(): bool
+    public function getCompletionStatusAttribute(): int
     {
         if (empty($this->total)) {
             return false;
         }
 
-        return $this->total == $this->volumes->whereIn('status', ['3', '4'])->count();
+        $volumes = $this->volumes->whereNotNull('publish_date')
+        ->filter(function ($volume) {
+            return $volume->status == VolumeStatus::Shipped || $volume->status == VolumeStatus::Delivered || $volume->status == VolumeStatus::Read
+                || $volume->publish_date <= now()
+                || (!$this->subscription_active && $volume->status == VolumeStatus::Ordered);
+        });
+        $total = $volumes->count();
+        $possessed = $volumes->whereIn('status', [VolumeStatus::Delivered, VolumeStatus::Read])->count();
+        $read = $volumes->where('status', VolumeStatus::Read)->count();
+
+        if ($total == 0) {
+            return 0;
+        }
+        if ($total - $read == 0) {
+            return 2;
+        }
+
+        return $total - $possessed == 0;
     }
 
     /**
@@ -183,7 +228,7 @@ class Series extends Model
      */
     public function getImageAttribute(): string
     {
-        $path = 'storage/series/' . $this->id . '/';
+        $path = 'storage/' . $this->image_path . '/';
         if ($this->is_nsfw && !session('show_nsfw', false)) {
             return url($path . 'cover_sfw.jpg');
         }
@@ -198,7 +243,23 @@ class Series extends Model
      */
     public function getTotalWorthAttribute(): string
     {
-        return $this->volumes->whereIn('status', ['3', '4'])->sum('price');
+        return $this->volumes->whereIn('status', [VolumeStatus::Delivered, VolumeStatus::Read])->sum('price');
+    }
+
+    /**
+     * Get the series' demographics.
+     */
+    public function getDemographicsAttribute()
+    {
+        return $this->genres->where('type', '0')->sortBy('name')->first();
+    }
+
+    /**
+     * Get the series' genres.
+     */
+    public function getGenreTagsAttribute()
+    {
+        return $this->genres->where('type', '1')->sortBy('name');
     }
 
     /**
@@ -232,6 +293,16 @@ class Series extends Model
     }
 
     /**
+     * Get the genres associated with the Series
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function genres(): BelongsToMany
+    {
+        return $this->belongsToMany(Genre::class);
+    }
+
+    /**
      * Get the options for generating the slug.
      */
     public function getSlugOptions(): SlugOptions
@@ -247,5 +318,15 @@ class Series extends Model
     public function getRouteKeyName(): string
     {
         return 'slug';
+    }
+
+    /**
+     * Get the series' image path.
+     *
+     * @return string
+     */
+    public function getImagePathAttribute(): string
+    {
+        return 'series/' . $this->id;
     }
 }

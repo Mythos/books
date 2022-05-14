@@ -11,23 +11,14 @@ use Livewire\Component;
 
 class CreateVolume extends Component
 {
-    public ?string $publish_date = '';
-
-    public string $isbn = '';
-
-    public int $status = 0;
-
-    public string $price = '';
-
-    public bool $ignore_in_upcoming = false;
+    public Volume $volume;
 
     public Series $series;
 
     public function mount(Series $series): void
     {
         $this->series = $series;
-        $this->price = $this->series->default_price ?? '';
-        $this->status = $series->subscription_active;
+        $this->volume = $this->getModelInstance();
     }
 
     public function render()
@@ -38,21 +29,22 @@ class CreateVolume extends Component
     protected function rules()
     {
         return [
-            'publish_date' => 'nullable|date',
-            'status' => 'required|integer|min:0',
-            'price' => 'nullable|regex:"^[0-9]{1,9}([,.][0-9]{1,2})?$"',
-            'isbn' => ['nullable', 'unique:volumes,isbn,NULL,id,series_id,' . $this->series->id, new Isbn()],
-            'ignore_in_upcoming' => 'boolean',
+            'volume.publish_date' => 'nullable|date',
+            'volume.status' => 'required|integer|min:0',
+            'volume.price' => 'nullable|regex:"^[0-9]{1,9}([,.][0-9]{1,2})?$"',
+            'volume.isbn' => ['nullable', 'unique:volumes,isbn,NULL,id,series_id,' . $this->series->id, new Isbn()],
+            'volume.ignore_in_upcoming' => 'boolean',
+            'volume.series_id' => 'required|exists:series,id',
         ];
     }
 
     public function updated($property, $value): void
     {
-        if ($property == 'isbn') {
+        if ($property == 'volume.isbn') {
             $this->validateOnly($property);
             $isbn = IsbnHelpers::convertTo13($value);
             if (!empty($isbn)) {
-                $this->publish_date = IsbnHelpers::getPublishDateByIsbn($isbn) ?? '';
+                $this->volume->publish_date = IsbnHelpers::getPublishDateByIsbn($isbn) ?? '';
             }
         } else {
             $this->validateOnly($property);
@@ -61,31 +53,33 @@ class CreateVolume extends Component
 
     public function save(): void
     {
-        $isbn = IsbnHelpers::convertTo13($this->isbn);
+        $isbn = IsbnHelpers::convertTo13($this->volume->isbn);
         if (!empty($isbn)) {
-            $this->isbn = $isbn;
+            $this->volume->isbn = $isbn;
         }
         $this->validate();
         $number = Volume::whereSeriesId($this->series->id)->max('number') ?? 0;
-        if (!empty($this->price)) {
-            $this->price = floatval(Str::replace(',', '.', $this->price));
+        $this->volume->number = $number + 1;
+        if (!empty($this->volume->price)) {
+            $this->volume->price = floatval(Str::replace(',', '.', $this->volume->price));
         } else {
-            $this->price = 0;
+            $this->volume->price = 0;
         }
-        if (empty($this->publish_date)) {
-            $this->publish_date = null;
+        if (empty($this->volume->publish_date)) {
+            $this->volume->publish_date = null;
         }
-        $volume = new Volume([
-            'series_id' => $this->series->id,
-            'number' => ++$number,
-            'publish_date' => $this->publish_date,
-            'isbn' => $this->isbn,
-            'status' => $this->status,
-            'price' => $this->price,
-            'ignore_in_upcoming' => $this->ignore_in_upcoming,
-        ]);
-        $volume->save();
+        $this->volume->save();
         toastr()->livewire()->addSuccess(__('Volumme :number has been created', ['number' => $number]));
-        $this->resetExcept('series');
+        $this->volume = $this->getModelInstance();
+    }
+
+    private function getModelInstance(): Volume
+    {
+        return new Volume([
+            'series_id' => $this->series->id,
+            'price' => $this->series->default_price ?? '',
+            'status' => $this->series->subscription_active,
+            'ignore_in_upcoming' => false,
+        ]);
     }
 }

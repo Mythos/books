@@ -1,3 +1,7 @@
+@section('title')
+    {{ __('Profile') }}
+@endsection
+
 <div class="container">
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
@@ -9,7 +13,7 @@
         <div class="row bg-white shadow-sm rounded">
             <div class="col-md-3">
                 <div class="d-flex flex-column align-items-center text-center p-3 py-3">
-                    <img class="rounded-circle" width="150px" src="https://www.gravatar.com/avatar/{{ md5(auth()->user()->email) }}?s=150">
+                    <img class="rounded-circle" width="150px" src="{{ auth()->user()->avatar_profile }}" alt="{{ auth()->user()->email }}">
                     <span class="font-weight-bold">{{ auth()->user()->name }}</span>
                     <span class="text-black-50">{{ auth()->user()->email }}</span>
                 </div>
@@ -45,7 +49,7 @@
                     <div class="row mt-1">
                         <div class="col-md-12">
                             <label for="user.date_format" class="col-form-label required">{{ __('Date Format') }}</label>
-                            <select class="form-select @error('user.date_format') is-invalid @enderror" name="status" wire:model='user.date_format' required>
+                            <select id="user.date_format" name="user.date_format" class="form-select @error('user.date_format') is-invalid @enderror" wire:model='user.date_format' required>
                                 <optgroup label="(Y-m-d)">
                                     <option value="Y-m-d">{{ \Carbon\Carbon::now()->format('Y-m-d') }}</option>
                                     <option value="y-m-d">{{ \Carbon\Carbon::now()->format('y-m-d') }}</option>
@@ -87,3 +91,4 @@
         </div>
     </form>
 </div>
+@include('scripts.select2')

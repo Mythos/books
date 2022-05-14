@@ -2,15 +2,17 @@
 
 namespace App\Http\Livewire\Series;
 
+use App\Constants\SeriesStatus;
+use App\Constants\VolumeStatus;
+use App\Helpers\ImageHelpers;
 use App\Models\Category;
+use App\Models\GenreSeries;
 use App\Models\Publisher;
 use App\Models\Series;
 use App\Models\Volume;
 use Exception;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
-use Intervention\Image\Facades\Image as FacadesImage;
-use Intervention\Image\Image;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Component;
 use Storage;
@@ -29,6 +31,7 @@ class EditSeries extends Component
 
     protected $rules = [
         'series.name' => 'required',
+        'series.description' => 'nullable',
         'series.status' => 'required|integer|min:0',
         'series.total' => 'nullable|integer|min:1',
         'series.category_id' => 'required|exists:categories,id',
@@ -37,7 +40,7 @@ class EditSeries extends Component
         'series.publisher_id' => 'nullable|exists:publishers,id',
         'series.subscription_active' => 'boolean',
         'series.mangapassion_id' => 'nullable|integer',
-        'image_url' => 'url',
+        'series.image_url' => 'required|url',
     ];
 
     protected $listeners = [
@@ -51,6 +54,9 @@ class EditSeries extends Component
         }
         if ($property == 'series.publisher_id' && empty($value)) {
             $this->series->publisher_id = null;
+        }
+        if ($property == 'series.status' && $value == SeriesStatus::Canceled && $this->series->subscription_active) {
+            $this->series->subscription_active = false;
         }
         $this->validateOnly($property);
     }
@@ -73,9 +79,13 @@ class EditSeries extends Component
             $this->series->default_price = floatval(Str::replace(',', '.', $this->series->default_price));
         }
         try {
-            $image = $this->getImage();
+            $image = ImageHelpers::getImage($this->series->image_url);
             $this->series->save();
-            $this->storeImages($image);
+            if (!empty($image)) {
+                ImageHelpers::storePublicImage($image, $this->series->image_path . '/cover.jpg');
+                $nsfwImage = $image->pixelate(config('images.nsfw.pixelate', 10))->blur(config('images.nsfw.blur', 5))->encode('jpg');
+                ImageHelpers::storePublicImage($nsfwImage, $this->series->image_path . '/cover_sfw.jpg');
+            }
             $this->updatePrices();
             $this->updateStatuses();
             toastr()->addSuccess(__(':name has been updated', ['name' => $this->series->name]));
@@ -98,32 +108,12 @@ class EditSeries extends Component
 
     public function confirmedDelete(): void
     {
+        GenreSeries::whereSeriesId($this->series->id)->delete();
         Volume::whereSeriesId($this->series->id)->delete();
         $this->series->delete();
-        Storage::deleteDirectory('public/series/' . $this->series->id);
+        Storage::disk('public')->deleteDirectory($this->series->image_path);
         toastr()->addSuccess(__(':name has been deleted', ['name' => $this->series->name]));
         redirect()->route('categories.show', [$this->category]);
-    }
-
-    private function getImage(): ?Image
-    {
-        if (empty($this->image_url)) {
-            return null;
-        }
-        $image = FacadesImage::make($this->image_url)->resize(null, 400, function ($constraint): void {
-            $constraint->aspectRatio();
-        })->encode('jpg');
-
-        return $image;
-    }
-
-    private function storeImages($image): void
-    {
-        if (empty($image)) {
-            return;
-        }
-        Storage::put('public/series/' . $this->series->id . '/cover.jpg', $image);
-        Storage::put('public/series/' . $this->series->id . '/cover_sfw.jpg', $image->pixelate(config('images.nsfw.pixelate', 10))->blur(config('images.nsfw.blur', 5))->encode('jpg'));
     }
 
     private function updatePrices(): void
@@ -136,7 +126,7 @@ class EditSeries extends Component
     private function updateStatuses(): void
     {
         if ($this->series->subscription_active) {
-            Volume::whereSeriesId($this->series->id)->where('status', '=', '0')->update(['status' => 1]);
+            Volume::whereSeriesId($this->series->id)->where('status', '=', VolumeStatus::New)->update(['status' => VolumeStatus::Ordered]);
         }
     }
 }

@@ -1,3 +1,7 @@
+@section('title')
+    {{ $article->name }}
+@endsection
+
 <div class="container">
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
@@ -14,8 +18,8 @@
             <div>
                 <h1 style="display: inline;">{{ $article->name }}</h1>
                 <div class="float-end" style="display: inline;">
-                    <a href="{{ route('article.edit', [$category, $article]) }}" class="btn btn-link"><i class="fas fa-edit"></i></a>
-                    <a href="https://www.amazon.de/s?k={{ urlencode($article->name) }}" class="btn btn-link" target="_blank"><i class="fab fa-amazon"></i></a>
+                    <a href="{{ route('article.edit', [$category, $article]) }}" class="btn btn-link"><span class="fas fa-edit"></span></a>
+                    <a href="https://www.amazon.de/s?k={{ urlencode($article->name) }}" class="btn btn-link" target="_blank"><span class="fab fa-amazon"></span></a>
                 </div>
             </div>
             <div class="mt-3">

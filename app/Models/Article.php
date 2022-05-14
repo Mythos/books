@@ -22,6 +22,7 @@ use Spatie\Sluggable\SlugOptions;
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \App\Models\Category $category
  * @property-read string $image
+ * @property-read string $image_path
  * @property-read string $status_class
  * @property-read string $status_name
  * @method static \Illuminate\Database\Eloquent\Builder|Article newModelQuery()
@@ -112,6 +113,8 @@ class Article extends Model
                 return __('Shipped');
             case 3:
                 return __('Delivered');
+            default:
+                return __('Unknown');
         }
     }
 
@@ -131,6 +134,18 @@ class Article extends Model
                 return 'badge bg-info';
             case 3:
                 return 'badge bg-success';
+            default:
+                return  '';
         }
+    }
+
+    /**
+     * Get the article's image path.
+     *
+     * @return string
+     */
+    public function getImagePathAttribute(): string
+    {
+        return 'articles/' . $this->id;
     }
 }

@@ -7,9 +7,10 @@
                     <tr>
                         <th scope="col" class="text-center" style="width: 7rem; min-width: 7rem;">{{ __('Publish Date') }}</th>
                         <th scope="col" style="min-width: 25rem;">{{ __('Title') }}</th>
-                        <th scope="col" style="min-width: 10rem;">{{ __('ISBN') }}</th>
-                        <th scope="col"></th>
-
+                        <th scope="col" class="text-center"></th>
+                        <th scope="col" style="min-width: 7rem;">{{ __('ISBN') }}</th>
+                        <th scope="col" class="text-end" style="min-width: 5rem;">{{ __('Price') }}</th>
+                        <th scope="col" class="text-center">{{ __('Status') }}</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -17,11 +18,21 @@
                         <tr class="{{ $volume->status_class }}">
                             <th scope="row" class="text-center">{{ $volume->publish_date_formatted }}</th>
                             <td>{{ $volume->name }}</td>
+                            <td class="text-center">
+                                <a href="{{ route('series.show', [$volume->series->category, $volume->series]) }}"><span class="fa fa-book"></span></a>
+                            </td>
                             <td>{{ $volume->isbn_formatted }}</td>
-                            <td>
-                                @if ($volume->status == 0)<a wire:click.prevent='ordered({{ $volume->id }})' href="#" title="{{ __('Sets the status to Ordered') }}"><i class="fa fa-shopping-cart"></i></a>@endif
-                                @if ($volume->status == 1)<a wire:click.prevent='shipped({{ $volume->id }})' href="#" title="{{ __('Sets the status to Shipped') }}"><i class="fa fa-truck"></i></a>@endif
-                                @if ($volume->status == 2)<a wire:click.prevent='delivered({{ $volume->id }})' href="#" title="{{ __('Sets the status to Delivered') }}"><i class="fa fa-check"></i></a>@endif
+                            <td class="text-end">{{ number_format($volume->price, 2) }} {{ config('app.currency') }}</td>
+                            <td class="text-center">
+                                @if ($volume->status == 0)
+                                    <a wire:click.prevent='ordered({{ $volume->id }})' href="#" title="{{ __('Sets the status to Ordered') }}"><span class="fa fa-shopping-cart"></span></a>
+                                @endif
+                                @if ($volume->status == 1)
+                                    <a wire:click.prevent='shipped({{ $volume->id }})' href="#" title="{{ __('Sets the status to Shipped') }}"><span class="fa fa-truck"></span></a>
+                                @endif
+                                @if ($volume->status == 2)
+                                    <a wire:click.prevent='delivered({{ $volume->id }})' href="#" title="{{ __('Sets the status to Delivered') }}"><span class="fa fa-check"></span></a>
+                                @endif
                             </td>
                         </tr>
                     @endforeach

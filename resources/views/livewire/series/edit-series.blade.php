@@ -1,3 +1,7 @@
+@section('title')
+    {{ $series->name }}
+@endsection
+
 <div class="container">
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
@@ -27,8 +31,20 @@
                     </div>
                     <div class="row mt-1">
                         <div class="col-md-12">
+                            <label for="series.description" class="col-form-label required">{{ __('Description') }}</label>
+                            <textarea id="series.description" name="series.description" type="text" class="form-control @error('series.description') is-invalid @enderror" wire:model='series.description'>
+                            </textarea>
+                            @error('series.description')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+                        </div>
+                    </div>
+                    <div class="row mt-1">
+                        <div class="col-md-12">
                             <label for="series.publisher_id" class="col-form-label">{{ __('Publisher') }}</label>
-                            <select class="form-select @error('series.publisher_id') is-invalid @enderror" name="status" wire:model='series.publisher_id'>
+                            <select id="series.publisher_id" name="series.publisher_id" class="form-select @error('series.publisher_id') is-invalid @enderror" wire:model='series.publisher_id' data-allow-clear="true">
                                 <option></option>
                                 @foreach ($publishers as $publisher)
                                     <option value="{{ $publisher->id }}">{{ $publisher->name }}</option>
@@ -44,10 +60,12 @@
                     <div class="row mt-1">
                         <div class="col-md-12">
                             <label for="series.status" class="col-form-label required">{{ __('Status') }}</label>
-                            <select class="form-select @error('series.status') is-invalid @enderror" name="status" wire:model='series.status' required>
+                            <select id="series.status" name="series.status" class="form-select @error('series.status') is-invalid @enderror" wire:model='series.status' required>
                                 <option value="0">{{ __('New') }}</option>
                                 <option value="1">{{ __('Ongoing') }}</option>
                                 <option value="2">{{ __('Finished') }}</option>
+                                <option value="3">{{ __('Paused') }}</option>
+                                <option value="4">{{ __('Canceled') }}</option>
                             </select>
                             @error('series.status')
                                 <span class="invalid-feedback" role="alert">
@@ -83,9 +101,9 @@
                     </div>
                     <div class="row mt-1">
                         <div class="col-md-12">
-                            <label for="image_url" class="col-form-label">{{ __('Image URL') }}</label>
-                            <input id="image_url" name="image_url" type="text" class="form-control @error('image_url') is-invalid @enderror" wire:model='image_url'>
-                            @error('image_url')
+                            <label for="series.image_url" class="col-form-label">{{ __('Image URL') }}</label>
+                            <input id="series.image_url" name="series.image_url" type="text" class="form-control @error('series.image_url') is-invalid @enderror" wire:model='series.image_url'>
+                            @error('series.image_url')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
                                 </span>
@@ -95,8 +113,8 @@
                     <div class="row mt-3">
                         <div class="col-md-12">
                             <div class="form-check">
-                                <input id="subscription_active" type="checkbox" class="form-check-input @error('series.subscription_active') is-invalid @enderror" name="subscription_active" wire:model='series.subscription_active'>
-                                <label for="subscription_active" class="form-check-label">{{ __('Subscription active') }}</label>
+                                <input id="series.subscription_active" type="checkbox" class="form-check-input @error('series.subscription_active') is-invalid @enderror" name="series.subscription_active" wire:model='series.subscription_active' @if ($series->status == 4) disabled @endif>
+                                <label for="series.subscription_active" class="form-check-label">{{ __('Subscription active') }}</label>
                             </div>
                             @error('series.subscription_active')
                                 <span class="invalid-feedback" role="alert">
@@ -108,8 +126,8 @@
                     <div class="row mt-3">
                         <div class="col-md-12">
                             <div class="form-check">
-                                <input id="is_nsfw" type="checkbox" class="form-check-input @error('series.is_nsfw') is-invalid @enderror" name="is_nsfw" wire:model='series.is_nsfw'>
-                                <label for="is_nsfw" class="form-check-label">{{ __('NSFW') }}</label>
+                                <input id="series.is_nsfw" type="checkbox" class="form-check-input @error('series.is_nsfw') is-invalid @enderror" name="series.is_nsfw" wire:model='series.is_nsfw'>
+                                <label for="series.is_nsfw" class="form-check-label">{{ __('NSFW') }}</label>
                             </div>
                             @error('series.is_nsfw')
                                 <span class="invalid-feedback" role="alert">
@@ -131,3 +149,4 @@
         </div>
     </form>
 </div>
+@include('scripts.select2')

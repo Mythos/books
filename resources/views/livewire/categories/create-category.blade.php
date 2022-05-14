@@ -1,3 +1,7 @@
+@section('title')
+    {{ __('Create Category') }}
+@endsection
+
 <div class="container">
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
@@ -37,7 +41,7 @@
                     <div class="row mt-1">
                         <div class="col-md-12">
                             <label for="type" class="col-form-label required">{{ __('Type') }}</label>
-                            <select class="form-select @error('type') is-invalid @enderror" name="status" wire:model='type' required>
+                            <select id="type" name="type" class="form-select @error('type') is-invalid @enderror" wire:model='type' required>
                                 <option value="0">{{ __('Books') }}</option>
                                 <option value="1">{{ __('Articles') }}</option>
                             </select>
@@ -58,3 +62,4 @@
         </div>
     </form>
 </div>
+@include('scripts.select2')

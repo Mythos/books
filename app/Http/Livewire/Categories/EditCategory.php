@@ -71,7 +71,7 @@ class EditCategory extends Component
         foreach ($series as $s) {
             Volume::whereSeriesId($s->id)->delete();
             $s->delete();
-            Storage::deleteDirectory('public/series/' . $s->id);
+            Storage::disk('public')->deleteDirectory($s->image_path);
         }
     }
 
@@ -80,7 +80,7 @@ class EditCategory extends Component
         $articles = Article::whereCategoryId($this->category->id)->get();
         foreach ($articles as $article) {
             $article->delete();
-            Storage::deleteDirectory('public/articles/' . $article->id);
+            Storage::disk('public')->deleteDirectory($article->image_path);
         }
     }
 }

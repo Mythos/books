@@ -8,7 +8,15 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    @hasSection('title')
+        <title>
+            @yield('title') - {{ config('app.name', 'Laravel') }}
+        </title>
+    @else
+        <title>
+            {{ config('app.name', 'Laravel') }}
+        </title>
+    @endif
 
     <link rel="apple-touch-icon" sizes="180x180" href="{{ mix('apple-touch-icon.png') }}">
     <link rel="icon" type="image/png" sizes="32x32" href="{{ mix('favicon-32x32.png') }}">
@@ -26,7 +34,7 @@
 
 <body>
     <div id="app">
-        <nav class="navbar navbar-dark bg-dark navbar-expand-md shadow-sm">
+        <nav class="navbar navbar-dark bg-dark navbar-expand-md fixed-top shadow-sm">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
                     {{ config('app.name', 'Laravel') }}
@@ -44,6 +52,11 @@
                                 </a>
 
                                 <ul class="dropdown-menu dropdown-menu-end">
+                                    <li>
+                                        <a class="dropdown-item" href="{{ route('genres.index') }}">
+                                            {{ __('Genres') }}
+                                        </a>
+                                    </li>
                                     <li>
                                         <a class="dropdown-item" href="{{ route('publishers.index') }}">
                                             {{ __('Publishers') }}
@@ -84,7 +97,7 @@
                             </li>
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    <i class="fas fa-plus"></i>
+                                    <span class="fas fa-plus"></span>
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-end">
                                     <a class="dropdown-item" href="{{ route('categories.create') }}">
@@ -94,11 +107,13 @@
                             </li>
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                    <img class="rounded-circle" width="20px" src="{{ auth()->user()->avatar_navbar }}" alt="{{ auth()->user()->email }}">
                                     {{ Auth::user()->name }}
                                 </a>
                                 <ul class="dropdown-menu dropdown-menu-end">
                                     <li><a class="dropdown-item" href="{{ route('profile') }}">{{ __('Profile') }}</a></li>
                                     <li>@livewire('nsfw-toggle')</li>
+                                    <li>@livewire('canceled-series-toggle')</li>
                                     <li>
                                         <hr class="dropdown-divider">
                                     </li>
@@ -115,7 +130,7 @@
                 </div>
             </div>
         </nav>
-        <main class="py-4" style="background-color: #F0F0F0;">
+        <main class="pb-4" style="padding-top: 70px; background-color: #F0F0F0;">
             @yield('content')
         </main>
         <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 border-top">
@@ -140,6 +155,7 @@
     @flasher_livewire_render
     @livewireScripts
     <x-livewire-alert::scripts />
+    @stack('scripts')
 </body>
 
 </html>

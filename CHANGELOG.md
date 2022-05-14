@@ -1,9 +1,25 @@
 # Changelog
 
+## 2.2.0 (2022-05-14)
+
+- Updating a series via Manga Passion API now updates the price for volumes with status "New"
+- Added demographics and genres which are fetched via Manga Passion API
+- Added series descriptions which are fetched via Manga Passion API
+- Added cron job and email notification for updating metadata via Manga Passion API
+- Added Select2 to replace native dropdowns
+- Added context information to website title
+- Series can now be paused or canceled
+- Changed series' completion status to be more dynamic
+- Navbar is now sticky for easier access on mobiles devices
+- Image-Sources are now stored in the database and updated via Manga Passion API
+- Updated to latest Laravel version, now requiring PHP 8.0.2 or greater
+- Fixed semantic layout errors
+- Updated translations
+
 ## 2.1.0 (2022-02-07)
 
 - Added date format to user profile
-- Improve updating series and volumes data Manga Passion API
+- Improve updating series and volumes data via Manga Passion API
 - ISBN and Publish Date of a volume are now optional
 - Reordering volumes makes sure that no gaps are left
 - When setting a series as subscribed, all volumes with status "New" will be set to "Ordered"

@@ -1,3 +1,7 @@
+@section('title')
+    {{ $publisher->name }}
+@endsection
+
 <div class="container">
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">

@@ -2,12 +2,15 @@
 
 namespace App\Http\Livewire\Series;
 
-use App\Helpers\MangaPassionApi;
+use App\Constants\VolumeStatus;
+use App\Helpers\ImageHelpers;
 use App\Models\Category;
-use App\Models\Publisher;
 use App\Models\Series;
 use App\Models\Volume;
+use App\Services\SeriesService;
+use Exception;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Log;
 use Livewire\Component;
 
 class ShowSeries extends Component
@@ -38,40 +41,40 @@ class ShowSeries extends Component
 
     public function render()
     {
-        $this->series = Series::find($this->series->id);
+        $this->series = Series::with('genres')->find($this->series->id);
         $this->volumes = Volume::whereSeriesId($this->series->id)->orderBy('number')->get();
-        $this->new = $this->volumes->where('status', '0')->count();
-        $this->ordered = $this->volumes->where('status', '1')->count();
-        $this->shipped = $this->volumes->where('status', '2')->count();
-        $this->delivered = $this->volumes->where('status', '3')->count();
-        $this->read = $this->volumes->where('status', '4')->count();
+        $this->new = $this->volumes->where('status', VolumeStatus::New)->count();
+        $this->ordered = $this->volumes->where('status', VolumeStatus::Ordered)->count();
+        $this->shipped = $this->volumes->where('status', VolumeStatus::Shipped)->count();
+        $this->delivered = $this->volumes->where('status', VolumeStatus::Delivered)->count();
+        $this->read = $this->volumes->where('status', VolumeStatus::Read)->count();
 
         return view('livewire.series.show-series')->extends('layouts.app')->section('content');
     }
 
     public function canceled(int $id): void
     {
-        $this->setStatus($id, 0);
+        $this->setStatus($id, VolumeStatus::New);
     }
 
     public function ordered(int $id): void
     {
-        $this->setStatus($id, 1);
+        $this->setStatus($id, VolumeStatus::Ordered);
     }
 
     public function shipped(int $id): void
     {
-        $this->setStatus($id, 2);
+        $this->setStatus($id, VolumeStatus::Shipped);
     }
 
     public function delivered(int $id): void
     {
-        $this->setStatus($id, 3);
+        $this->setStatus($id, VolumeStatus::Delivered);
     }
 
     public function read(int $id): void
     {
-        $this->setStatus($id, 4);
+        $this->setStatus($id, VolumeStatus::Read);
     }
 
     private function setStatus(int $id, int $status): void
@@ -87,7 +90,7 @@ class ShowSeries extends Component
         $this->enable_reordering = !$this->enable_reordering;
     }
 
-    public function move_up(int $id): void
+    public function move_up(int $id, SeriesService $seriesService): void
     {
         $volume = Volume::find($id);
         if ($volume->number <= 1) {
@@ -100,12 +103,12 @@ class ShowSeries extends Component
         $volume->save();
         $predecessor->save();
 
-        $this->resetNumbers();
+        $seriesService->resetNumbers($this->series->id);
 
         toastr()->livewire()->addSuccess(__(':name has been updated', ['name' => $volume->series->name . ' ' . $volume->number]));
     }
 
-    public function move_down(int $id): void
+    public function move_down(int $id, SeriesService $seriesService): void
     {
         $volume = Volume::find($id);
         if ($volume->number >= $this->volumes->max('number')) {
@@ -118,109 +121,30 @@ class ShowSeries extends Component
         $volume->save();
         $successor->save();
 
-        $this->resetNumbers();
+        $seriesService->resetNumbers($this->series->id);
 
         toastr()->livewire()->addSuccess(__(':name has been updated', ['name' => $volume->series->name . ' ' . $volume->number]));
     }
 
-    public function update():void
+    public function update(SeriesService $seriesService): void
     {
-        if (empty($this->series->mangapassion_id)) {
-            return;
-        }
+        try {
+            $this->series = $seriesService->refreshMetadata($this->series);
+            $this->series->save();
 
-        $series = MangaPassionApi::loadSeries($this->series->name);
-
-        if (empty($series)) {
-            return;
-        }
-
-        $this->series->mangapassion_id = $series['mangapassion_id'];
-        $this->series->name = $series['name'];
-        $this->series->status = $series['status'];
-        $this->series->total = $series['total'];
-        $this->series->default_price = $series['default_price'];
-        $this->image_url = $series['image_url'];
-
-        $publisher = Publisher::whereName($series['publisher'])->first();
-        if (!empty($publisher)) {
-            $this->series->publisher_id = $publisher->id;
-        } else {
-            $publisher = new Publisher(['name' => $series['publisher']]);
-            $publisher->save();
-
-            $this->series->publisher_id = $publisher->id;
-        }
-        $this->series->save();
-
-        $this->updateVolumes();
-        toastr()->livewire()->addSuccess(__(':name has been updated', ['name' => $this->series->name]));
-    }
-
-    private function updateVolumes(): void
-    {
-        if (empty($this->series->mangapassion_id)) {
-            return;
-        }
-        $volumes = Volume::whereSeriesId($this->series->id)->get();
-
-        $volumesResult = MangaPassionApi::loadVolumes($this->series->mangapassion_id);
-        $newVolumes = [];
-
-        foreach ($volumesResult as $volumeResult) {
-            $number = $volumeResult['number'];
-            $isbn = $volumeResult['isbn'];
-            $publish_date = $volumeResult['publish_date'];
-            $price = $volumeResult['price'];
-
-            $volume = null;
-            if (!empty($isbn)) {
-                $volume = $volumes->firstWhere('isbn', $isbn);
-            }
-            if (!empty($number)) {
-                $volume = $volumes->firstWhere('number', $number);
-            }
-            if (empty($volume)) {
-                $newVolumes[] = $volumeResult;
-                continue;
+            $image = ImageHelpers::getImage($this->series->image_url);
+            if (!empty($image)) {
+                ImageHelpers::storePublicImage($image, $this->series->image_path . '/cover.jpg');
+                $nsfwImage = $image->pixelate(config('images.nsfw.pixelate', 10))->blur(config('images.nsfw.blur', 5))->encode('jpg');
+                ImageHelpers::storePublicImage($nsfwImage, $this->series->image_path . '/cover_sfw.jpg');
             }
 
-            $volume->number = $number;
-            $volume->publish_date = !empty($publish_date) ? $publish_date->format('Y-m-d') : null;
-            if (!empty($isbn)) {
-                $volume->isbn = $isbn;
-            }
-            $volume->save();
-        }
+            $seriesService->updateVolumes($this->series);
 
-        foreach ($newVolumes as $newVolume) {
-            $number = $newVolume['number'];
-            $isbn = $newVolume['isbn'];
-            $publish_date = $newVolume['publish_date'];
-            $price = $newVolume['price'];
-
-            $volume = new Volume([
-                'series_id' => $this->series->id,
-                'isbn' => $isbn,
-                'number' => $number,
-                'publish_date' => !empty($publish_date) ? $publish_date->format('Y-m-d') : null,
-                'price' => $price,
-                'status' => $this->series->subscription_active,
-            ]);
-            $volume->save();
-        }
-
-        $this->resetNumbers();
-    }
-
-    private function resetNumbers(): void
-    {
-        $volumes = Volume::whereSeriesId($this->series->id)->orderBy('number')->get();
-        $number = 1;
-        foreach ($volumes as $volume) {
-            $volume->number = $number;
-            $volume->save();
-            $number++;
+            toastr()->livewire()->addSuccess(__(':name has been updated', ['name' => $this->series->name]));
+        } catch (Exception $exception) {
+            Log::error('Error while updating series via API', ['exception' => $exception]);
+            toastr()->livewire()->addError(__(':name could not be updated', ['name' => $this->series->name]));
         }
     }
 }

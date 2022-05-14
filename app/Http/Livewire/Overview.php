@@ -2,6 +2,9 @@
 
 namespace App\Http\Livewire;
 
+use App\Constants\SeriesStatus;
+use App\Constants\VolumeStatus;
+use App\Models\Volume;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 
@@ -33,34 +36,40 @@ class Overview extends Component
 
     private function getVolumeStatistics()
     {
-        $volumes = DB::table('volumes')
-                   ->join('series', 'volumes.series_id', '=', 'series.id')
-                   ->leftJoin('publishers', 'series.publisher_id', '=', 'publishers.id');
+        $volumes = Volume::with(['series.publisher', 'series.genres']);
+
         if (!empty($this->search)) {
             $volumes->where('isbn', 'like', '%' . $this->search . '%')
-            ->orWhere('series.name', 'like', '%' . $this->search . '%')
-            ->orWhere('publishers.name', 'like', '%' . $this->search . '%');
+                    ->orWhereHas('series', function ($query): void {
+                        $query->where('name', 'like', '%' . $this->search . '%')
+                              ->orWhereHas('publisher', function ($query): void {
+                                  $query->where('name', 'like', '%' . $this->search . '%');
+                              })
+                              ->orWhereHas('genres', function ($query): void {
+                                  $query->where('name', 'like', '%' . $this->search . '%');
+                              });
+                    });
         }
-        $volumeStatistics = $volumes->select([
-            DB::raw('COALESCE(sum(case when volumes.status = 0 then 1 else 0 end), 0) as new'),
-            DB::raw('COALESCE(sum(case when volumes.status = 1 then 1 else 0 end), 0) as ordered'),
-            DB::raw('COALESCE(sum(case when volumes.status = 2 then 1 else 0 end), 0) as shipped'),
-            DB::raw('COALESCE(sum(case when volumes.status = 3 then 1 else 0 end), 0) as delivered'),
-            DB::raw('COALESCE(sum(case when volumes.status = 4 then 1 else 0 end), 0) as `read`'),
-            DB::raw('COALESCE(sum(case when volumes.status = 3 OR volumes.status = 4 then price else 0 end), 0) as price'),
-            DB::raw('count(*) as total'),
+        $volumes = $volumes->join('series', 'volumes.series_id', '=', 'series.id')->WhereNotNull('isbn')->select([
+            DB::raw('COALESCE(sum(case when volumes.status = ' . VolumeStatus::New . ' AND series.status <> ' . SeriesStatus::Canceled . ' then 1 else 0 end), 0) as new'),
+            DB::raw('COALESCE(sum(case when volumes.status = ' . VolumeStatus::Ordered . ' AND series.status <> ' . SeriesStatus::Canceled . ' then 1 else 0 end), 0) as ordered'),
+            DB::raw('COALESCE(sum(case when volumes.status = ' . VolumeStatus::Shipped . ' then 1 else 0 end), 0) as shipped'),
+            DB::raw('COALESCE(sum(case when volumes.status = ' . VolumeStatus::Delivered . ' then 1 else 0 end), 0) as delivered'),
+            DB::raw('COALESCE(sum(case when volumes.status = ' . VolumeStatus::Read . ' then 1 else 0 end), 0) as `read`'),
+            DB::raw('COALESCE(sum(case when volumes.status = ' . VolumeStatus::Delivered . ' OR volumes.status = ' . VolumeStatus::Read . ' then price else 0 end), 0) as price'),
+            DB::raw('COALESCE(sum(case when series.status <> ' . SeriesStatus::Canceled . ' or volumes.status = ' . VolumeStatus::Delivered . ' or volumes.status = ' . VolumeStatus::Read . ' then 1 else 0 end), 0) as total'),
         ])->first();
 
-        return json_decode(json_encode($volumeStatistics), true);
+        return json_decode(json_encode($volumes->toArray()), true);
     }
 
     private function getArticleStatistics()
     {
-        $articles = DB::table('articles');
+        $articleStatisticsQuery = DB::table('articles');
         if (!empty($this->search)) {
-            $articles->where('name', 'like', '%' . $this->search . '%');
+            $articleStatisticsQuery->where('name', 'like', '%' . $this->search . '%');
         }
-        $articleStatistics = $articles->select([
+        $articleStatisticsQuery = $articleStatisticsQuery->select([
             DB::raw('COALESCE(sum(case when status = 0 then 1 else 0 end), 0) as new'),
             DB::raw('COALESCE(sum(case when status = 1 then 1 else 0 end), 0) as ordered'),
             DB::raw('COALESCE(sum(case when status = 2 then 1 else 0 end), 0) as shipped'),
@@ -70,6 +79,6 @@ class Overview extends Component
             DB::raw('count(*) as total'),
         ])->first();
 
-        return json_decode(json_encode($articleStatistics), true);
+        return json_decode(json_encode($articleStatisticsQuery), true);
     }
 }

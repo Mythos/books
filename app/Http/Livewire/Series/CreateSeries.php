@@ -2,18 +2,18 @@
 
 namespace App\Http\Livewire\Series;
 
+use App\Constants\SeriesStatus;
+use App\Helpers\ImageHelpers;
 use App\Helpers\MangaPassionApi;
 use App\Models\Category;
+use App\Models\Genre;
 use App\Models\Publisher;
 use App\Models\Series;
 use App\Models\Volume;
 use Exception;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
-use Intervention\Image\Facades\Image as FacadesImage;
-use Intervention\Image\Image;
 use Livewire\Component;
-use Storage;
 
 class CreateSeries extends Component
 {
@@ -23,10 +23,11 @@ class CreateSeries extends Component
 
     public Series $series;
 
-    public string $image_url = '';
+    public $apiSeries;
 
     protected $rules = [
         'series.name' => 'required',
+        'series.description' => 'nullable',
         'series.status' => 'required|integer|min:0',
         'series.total' => 'nullable|integer|min:1',
         'series.category_id' => 'required|exists:categories,id',
@@ -35,7 +36,7 @@ class CreateSeries extends Component
         'series.publisher_id' => 'nullable|exists:publishers,id',
         'series.subscription_active' => 'boolean',
         'series.mangapassion_id' => 'nullable|integer',
-        'image_url' => 'required|url',
+        'series.image_url' => 'required|url',
     ];
 
     public function updated($property, $value): void
@@ -46,6 +47,9 @@ class CreateSeries extends Component
         if ($property == 'series.publisher_id' && empty($value)) {
             $this->series->publisher_id = null;
         }
+        if ($property == 'series.status' && $value == SeriesStatus::Canceled && $this->series->subscription_active) {
+            $this->series->subscription_active = false;
+        }
         $this->validateOnly($property);
     }
 
@@ -54,7 +58,7 @@ class CreateSeries extends Component
         $this->publishers = Publisher::orderBy('name')->get();
         $this->category = $category;
         $this->series = new Series([
-            'status' => 0,
+            'status' => SeriesStatus::New,
             'category_id' => $category->id,
             'is_nsfw' => false,
             'subscription_active' => false,
@@ -74,12 +78,15 @@ class CreateSeries extends Component
         }
         $this->series->category_id = $this->category->id;
         try {
-            $image = $this->getImage();
+            $image = ImageHelpers::getImage($this->series->image_url);
             $this->series->save();
-            $this->storeImages($image);
-
+            if (!empty($image)) {
+                ImageHelpers::storePublicImage($image, $this->series->image_path . '/cover.jpg');
+                $nsfwImage = $image->pixelate(config('images.nsfw.pixelate', 10))->blur(config('images.nsfw.blur', 5))->encode('jpg');
+                ImageHelpers::storePublicImage($nsfwImage, $this->series->image_path . '/cover_sfw.jpg');
+            }
+            $this->createGenres();
             $this->createVolumes();
-
             toastr()->addSuccess(__(':name has been created', ['name' => $this->series->name]));
 
             return redirect()->route('home');
@@ -93,52 +100,32 @@ class CreateSeries extends Component
     {
         $this->validateOnly('series.name');
         $this->series->mangapassion_id = null;
-        $series = MangaPassionApi::loadSeries($this->series->name);
+        $this->apiSeries = MangaPassionApi::loadSeriesByTitle($this->series->name);
 
-        if (empty($series)) {
+        if (empty($this->apiSeries)) {
             toastr()->livewire()->addWarning(__('No entry with the title :name has been found', ['name' => $this->series->name]));
 
             return;
         }
 
-        $this->series->mangapassion_id = $series['mangapassion_id'];
-        $this->series->name = $series['name'];
-        $this->series->status = $series['status'];
-        $this->series->total = $series['total'];
-        $this->series->default_price = $series['default_price'];
-        $this->image_url = $series['image_url'];
+        $this->series->mangapassion_id = $this->apiSeries['mangapassion_id'];
+        $this->series->name = $this->apiSeries['name'];
+        $this->series->description = $this->apiSeries['description'];
+        $this->series->status = $this->apiSeries['status'];
+        $this->series->total = $this->apiSeries['total'];
+        $this->series->default_price = $this->apiSeries['default_price'];
+        $this->series->image_url = $this->apiSeries['image_url'];
 
-        $publisher = Publisher::whereName($series['publisher'])->first();
+        $publisher = Publisher::whereName($this->apiSeries['publisher'])->first();
         if (!empty($publisher)) {
             $this->series->publisher_id = $publisher->id;
         } else {
-            $publisher = new Publisher(['name' => $series['publisher']]);
+            $publisher = new Publisher(['name' => $this->apiSeries['publisher']]);
             $publisher->save();
 
             $this->series->publisher_id = $publisher->id;
             $this->publishers = Publisher::orderBy('name')->get();
         }
-    }
-
-    private function getImage(): ?Image
-    {
-        if (empty($this->image_url)) {
-            return null;
-        }
-        $image = FacadesImage::make($this->image_url)->resize(null, 400, function ($constraint): void {
-            $constraint->aspectRatio();
-        })->encode('jpg');
-
-        return $image;
-    }
-
-    private function storeImages($image): void
-    {
-        if (empty($image)) {
-            return;
-        }
-        Storage::put('public/series/' . $this->series->id . '/cover.jpg', $image);
-        Storage::put('public/series/' . $this->series->id . '/cover_sfw.jpg', $image->pixelate(config('images.nsfw.pixelate', 10))->blur(config('images.nsfw.blur', 5))->encode('jpg'));
     }
 
     private function createVolumes(): void
@@ -165,5 +152,27 @@ class CreateSeries extends Component
             ]);
             $volume->save();
         }
+    }
+
+    private function createGenres(): void
+    {
+        $genres = [];
+        if (!empty($this->apiSeries['demographics'])) {
+            $demographics = Genre::whereType(0)->firstOrCreate([
+                'name' => $this->apiSeries['demographics'],
+                'type' => 0,
+            ]);
+            $genres[] = $demographics->id;
+        }
+        if (!empty($this->apiSeries['genres'])) {
+            foreach ($this->apiSeries['genres'] as $genreName) {
+                $genre = Genre::whereType(1)->firstOrCreate([
+                    'name' => $genreName,
+                    'type' => 1,
+                ]);
+                $genres[] = $genre->id;
+            }
+        }
+        $this->series->genres()->sync($genres);
     }
 }

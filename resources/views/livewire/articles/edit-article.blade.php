@@ -1,3 +1,7 @@
+@section('title')
+    {{ $article->name }}
+@endsection
+
 <div class="container">
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
@@ -53,7 +57,7 @@
                     <div class="row mt-1">
                         <div class="col-md-12">
                             <label for="article.status" class="col-form-label required">{{ __('Status') }}</label>
-                            <select class="form-select @error('article.status') is-invalid @enderror" name="status" wire:model='article.status' required>
+                            <select id="article.status" name="article.status" class="form-select @error('article.status') is-invalid @enderror" wire:model='article.status' required>
                                 <option value="0">{{ __('New') }}</option>
                                 <option value="1">{{ __('Ordered') }}</option>
                                 <option value="2">{{ __('Shipped') }}</option>
@@ -90,3 +94,4 @@
         </div>
     </form>
 </div>
+@include('scripts.select2')

@@ -2,14 +2,12 @@
 
 namespace App\Http\Livewire\Articles;
 
+use App\Helpers\ImageHelpers;
 use App\Models\Article;
 use App\Models\Category;
 use Exception;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
-use Intervention\Image\Facades\Image as FacadesImage;
-use Intervention\Image\Image;
 use Livewire\Component;
 
 class CreateArticle extends Component
@@ -56,9 +54,9 @@ class CreateArticle extends Component
         }
         $this->article->category_id = $this->category->id;
         try {
-            $image = $this->getImage();
+            $image = ImageHelpers::getImage($this->image_url);
             $this->article->save();
-            $this->storeImages($image);
+            ImageHelpers::storePublicImage($image, $this->article->image_path . '/image.jpg');
             toastr()->addSuccess(__(':name has been created', ['name' => $this->article->name]));
 
             return redirect()->route('home');
@@ -66,25 +64,5 @@ class CreateArticle extends Component
             Log::error($exception);
             toastr()->livewire()->addError(__(':name could not be created', ['name' => $this->article->name]));
         }
-    }
-
-    private function getImage(): ?Image
-    {
-        if (empty($this->image_url)) {
-            return null;
-        }
-        $image = FacadesImage::make($this->image_url)->resize(null, 400, function ($constraint): void {
-            $constraint->aspectRatio();
-        })->encode('jpg');
-
-        return $image;
-    }
-
-    private function storeImages($image): void
-    {
-        if (empty($image)) {
-            return;
-        }
-        Storage::put('public/articles/' . $this->article->id . '/image.jpg', $image);
     }
 }

@@ -64,8 +64,8 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        if (config('auth.registration_enabled') != true) {
-            return;
+        if (!config('auth.registration_enabled')) {
+            return null;
         }
 
         return User::create([

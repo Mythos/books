@@ -1,3 +1,7 @@
+@section('title')
+    {{ __('Create Volume') }}
+@endsection
+
 <div class="container">
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
@@ -8,7 +12,6 @@
         </ol>
     </nav>
     <form method="POST" wire:submit.prevent='save'>
-        <input id="series_id" type="hidden" name="series_id" wire:model='series_id' />
         <div class="row bg-white shadow-sm rounded">
             <div class="col-md-12">
                 <div class="p-3 py-3">
@@ -17,11 +20,11 @@
                     </div>
                     <div class="row mt-1">
                         <div class="col-md-12">
-                            <label for="isbn" class="col-form-label">{{ __('ISBN') }}</label>
+                            <label for="volume.isbn" class="col-form-label">{{ __('ISBN') }}</label>
                             <div class="input-group">
-                                <input id="isbn" name="isbn" type="text" class="form-control @error('isbn') is-invalid @enderror" wire:model='isbn' autofocus>
-                                <button class="btn btn-outline-secondary" type="button" data-bs-toggle="modal" data-bs-target="#livestream_scanner"><i class="fa fa-barcode"></i></button>
-                                @error('isbn')
+                                <input id="volume.isbn" name="volume.isbn" type="text" class="form-control @error('volume.isbn') is-invalid @enderror" wire:model='volume.isbn' autofocus>
+                                <button class="btn btn-outline-secondary" type="button" data-bs-toggle="modal" data-bs-target="#livestream_scanner"><span class="fa fa-barcode"></span></button>
+                                @error('volume.isbn')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
@@ -31,9 +34,9 @@
                     </div>
                     <div class="row mt-1">
                         <div class="col-md-12">
-                            <label for="publish_date" class="col-form-label">{{ __('Publish Date') }}</label>
-                            <input id="publish_date" name="publish_date" type="date" class="form-control @error('publish_date') is-invalid @enderror" wire:model='publish_date' autofocus>
-                            @error('publish_date')
+                            <label for="volume.publish_date" class="col-form-label">{{ __('Publish Date') }}</label>
+                            <input id="volume.publish_date" name="volume.publish_date" type="date" class="form-control @error('volume.publish_date') is-invalid @enderror" wire:model='volume.publish_date' autofocus>
+                            @error('volume.publish_date')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
                                 </span>
@@ -42,11 +45,11 @@
                     </div>
                     <div class="row mt-1">
                         <div class="col-md-12">
-                            <label for="price" class="col-form-label">{{ __('Price') }}</label>
+                            <label for="volume.price" class="col-form-label">{{ __('Price') }}</label>
                             <div class="input-group">
-                                <input id="price" name="price" type="text" class="form-control @error('price') is-invalid @enderror" wire:model='price'>
+                                <input id="volume.price" name="volume.price" type="text" class="form-control @error('volume.price') is-invalid @enderror" wire:model='volume.price'>
                                 <span class="input-group-text">{{ config('app.currency') }}</span>
-                                @error('price')
+                                @error('volume.price')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
@@ -56,15 +59,15 @@
                     </div>
                     <div class="row mt-1">
                         <div class="col-md-12">
-                            <label for="status" class="col-form-label required">{{ __('Status') }}</label>
-                            <select class="form-select @error('status') is-invalid @enderror" name="status" wire:model='status' required>
+                            <label for="volume.status" class="col-form-label required">{{ __('Status') }}</label>
+                            <select id="volume.status" name="volume.status" class="form-select @error('volume.status') is-invalid @enderror" wire:model='volume.status' required>
                                 <option value="0">{{ __('New') }}</option>
                                 <option value="1">{{ __('Ordered') }}</option>
                                 <option value="2">{{ __('Shipped') }}</option>
                                 <option value="3">{{ __('Delivered') }}</option>
                                 <option value="4">{{ __('Read') }}</option>
                             </select>
-                            @error('status')
+                            @error('volume.status')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
                                 </span>
@@ -74,10 +77,10 @@
                     <div class="row mt-3">
                         <div class="col-md-12">
                             <div class="form-check">
-                                <input id="ignore_in_upcoming" type="checkbox" class="form-check-input @error('ignore_in_upcoming') is-invalid @enderror" name="ignore_in_upcoming" wire:model='ignore_in_upcoming'>
-                                <label for="ignore_in_upcoming" class="form-check-label">{{ __('Hide in upcoming releases') }}</label>
+                                <input id="volume.ignore_in_upcoming" type="checkbox" class="form-check-input @error('volume.ignore_in_upcoming') is-invalid @enderror" name="volume.ignore_in_upcoming" wire:model='volume.ignore_in_upcoming'>
+                                <label for="volume.ignore_in_upcoming" class="form-check-label">{{ __('Hide in upcoming releases') }}</label>
                             </div>
-                            @error('ignore_in_upcoming')
+                            @error('volume.ignore_in_upcoming')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
                                 </span>
@@ -103,8 +106,8 @@
                 <div class="modal-body" style="position: static">
                     <div class="row">
                         <div class="col-md-12">
-                            <label for="status" class="col-form-label">{{ __('Camera') }}</label>
-                            <select name="input-stream_constraints" id="deviceSelection" class="form-select">
+                            <label for="input-stream_constraints" class="col-form-label">{{ __('Camera') }}</label>
+                            <select id="input-stream_constraints" name="input-stream_constraints" id="deviceSelection" class="form-select">
                             </select>
                         </div>
                     </div>
@@ -217,7 +220,7 @@
                     liveStreamConfig,
                     function(err) {
                         if (err) {
-                            $('#livestream_scanner .modal-body .error').html('<div class="alert alert-danger"><strong><i class="fa fa-exclamation-triangle"></i> ' + err.name + '</strong>: ' + err.message + '</div>');
+                            $('#livestream_scanner .modal-body .error').html('<div class="alert alert-danger"><strong><span class="fa fa-exclamation-triangle"></span> ' + err.name + '</strong>: ' + err.message + '</div>');
                             Quagga.stop();
                             return;
                         } else {
@@ -306,3 +309,4 @@
         });
     </script>
 </div>
+@include('scripts.select2')

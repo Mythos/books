@@ -1,3 +1,7 @@
+@section('title')
+    {{ __('Publishers') }}
+@endsection
+
 <div class="container">
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
@@ -10,7 +14,7 @@
         <div>
             <h2 style="display: inline;">{{ __('Publishers') }}</h2>
             <div class="float-end" style="display: inline;">
-                <a href="{{ route('publishers.create') }}" class="btn btn-link"><i class="fas fa-plus-circle"></i></a>
+                <a href="{{ route('publishers.create') }}" class="btn btn-link"><span class="fas fa-plus-circle"></span></a>
             </div>
         </div>
         <div class="table-responsive my-2" style="width: 100%;">
@@ -24,7 +28,7 @@
                 <tbody>
                     @foreach ($publishers as $publisher)
                         <tr>
-                            <td class="text-center"><a href="{{ route('publishers.edit', [$publisher]) }}"><i class="fa fa-edit"></i></a></td>
+                            <td class="text-center"><a href="{{ route('publishers.edit', [$publisher]) }}"><span class="fa fa-edit"></span></a></td>
                             <td>{{ $publisher->name }}</td>
                         </tr>
                     @endforeach
