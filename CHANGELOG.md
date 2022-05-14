@@ -1,6 +1,6 @@
 # Changelog
 
-## 2.2.0
+## 2.2.0 (2022-05-14)
 
 - Updating a series via Manga Passion API now updates the price for volumes with status "New"
 - Added demographics and genres which are fetched via Manga Passion API
