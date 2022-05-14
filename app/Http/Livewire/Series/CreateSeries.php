@@ -81,9 +81,9 @@ class CreateSeries extends Component
             $image = ImageHelpers::getImage($this->series->image_url);
             $this->series->save();
             if (!empty($image)) {
-                ImageHelpers::storePublicImage($image, $this->series->image_path . '/cover.jpg');
+                ImageHelpers::storePublicImage($image, $this->series->image_path . '/cover.jpg', true);
                 $nsfwImage = $image->pixelate(config('images.nsfw.pixelate', 10))->blur(config('images.nsfw.blur', 5))->encode('jpg');
-                ImageHelpers::storePublicImage($nsfwImage, $this->series->image_path . '/cover_sfw.jpg');
+                ImageHelpers::storePublicImage($nsfwImage, $this->series->image_path . '/cover_sfw.jpg', true);
             }
             $this->createGenres();
             $this->createVolumes();
@@ -160,9 +160,9 @@ class CreateSeries extends Component
             }
             $image = ImageHelpers::getImage($image_url);
             if (!empty($image)) {
-                ImageHelpers::storePublicImage($image, $volume->image_path . '/cover.jpg');
+                ImageHelpers::storePublicImage($image, $volume->image_path . '/cover.jpg', true);
                 $nsfwImage = $image->pixelate(config('images.nsfw.pixelate', 10))->blur(config('images.nsfw.blur', 5))->encode('jpg');
-                ImageHelpers::storePublicImage($nsfwImage, $volume->image_path . '/cover_sfw.jpg');
+                ImageHelpers::storePublicImage($nsfwImage, $volume->image_path . '/cover_sfw.jpg', true);
             }
         }
     }

@@ -8,6 +8,7 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Image;
 use Storage;
 
 /**
@@ -204,13 +205,25 @@ class Volume extends Model
      */
     public function getImageExistsAttribute(): bool
     {
-        $path = $this->image_path . '/';
-        if ($this->is_nsfw && !session('show_nsfw', false)) {
-            $path = $path . 'cover_sfw.jpg';
-        } else {
-            $path = $path . 'cover.jpg';
+        return Storage::disk('public')->exists($this->image_path);
+    }
+
+    /**
+     * Get the volumes' image thumbnail.
+     *
+     * @return bool
+     */
+    public function getImageThumbnailAttribute(): ?string
+    {
+        if (!$this->image_exists) {
+            return null;
         }
 
-        return Storage::disk('public')->exists($path);
+        $path = 'storage/thumbnails/' . $this->image_path . '/';
+        if ($this->is_nsfw && !session('show_nsfw', false)) {
+            return url($path . 'cover_sfw.jpg');
+        }
+
+        return url($path . 'cover.jpg');
     }
 }

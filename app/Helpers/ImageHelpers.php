@@ -19,11 +19,18 @@ class ImageHelpers
         })->encode('jpg');
     }
 
-    public static function storePublicImage($image, $path): void
+    public static function storePublicImage($image, $path, $generateThumbnail): void
     {
         if (empty($image)) {
             return;
         }
         Storage::disk('public')->put($path, $image);
+        if (!$generateThumbnail) {
+            return;
+        }
+        $thumbnail = FacadesImage::make($image)->resize(null, 50, function ($constraint): void {
+            $constraint->aspectRatio();
+        })->encode('jpg');
+        Storage::disk('public')->put('thumbnails/' . $path, $thumbnail);
     }
 }

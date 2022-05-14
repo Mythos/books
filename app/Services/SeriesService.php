@@ -112,9 +112,9 @@ class SeriesService
             }
             $image = ImageHelpers::getImage($image_url);
             if (!empty($image)) {
-                ImageHelpers::storePublicImage($image, $volume->image_path . '/cover.jpg');
+                ImageHelpers::storePublicImage($image, $volume->image_path . '/cover.jpg', true);
                 $nsfwImage = $image->pixelate(config('images.nsfw.pixelate', 10))->blur(config('images.nsfw.blur', 5))->encode('jpg');
-                ImageHelpers::storePublicImage($nsfwImage, $volume->image_path . '/cover_sfw.jpg');
+                ImageHelpers::storePublicImage($nsfwImage, $volume->image_path . '/cover_sfw.jpg', true);
             }
         }
 
@@ -142,9 +142,9 @@ class SeriesService
             }
             $image = ImageHelpers::getImage($image_url);
             if (!empty($image)) {
-                ImageHelpers::storePublicImage($image, $volume->image_path . '/cover.jpg');
+                ImageHelpers::storePublicImage($image, $volume->image_path . '/cover.jpg', true);
                 $nsfwImage = $image->pixelate(config('images.nsfw.pixelate', 10))->blur(config('images.nsfw.blur', 5))->encode('jpg');
-                ImageHelpers::storePublicImage($nsfwImage, $volume->image_path . '/cover_sfw.jpg');
+                ImageHelpers::storePublicImage($nsfwImage, $volume->image_path . '/cover_sfw.jpg', true);
             }
         }
         $this->resetNumbers($series->id);
