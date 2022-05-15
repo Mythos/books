@@ -20,7 +20,7 @@ class Gallery extends Component
         $this->category = $category;
     }
 
-    protected $listeners = ['search' => 'filter'];
+    protected $listeners = ['search' => 'filter', 'show_nsfw' => '$refresh', 'show_canceled_series' => '$refresh'];
 
     public function render()
     {

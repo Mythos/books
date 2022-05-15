@@ -39,6 +39,8 @@ class ShowSeries extends Component
         $this->series = $series;
     }
 
+    protected $listeners = ['show_nsfw' => '$refresh'];
+
     public function render()
     {
         $this->series = Series::with('genres')->find($this->series->id);

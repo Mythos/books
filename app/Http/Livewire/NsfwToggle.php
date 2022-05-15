@@ -15,11 +15,10 @@ class NsfwToggle extends Component
         return view('livewire.nsfw-toggle');
     }
 
-    public function toggle()
+    public function toggle(): void
     {
         $this->show_nsfw = !$this->show_nsfw;
         session()->put('show_nsfw', $this->show_nsfw);
-
-        return redirect(request()->header('Referer'));
+        $this->emit('show_nsfw');
     }
 }
