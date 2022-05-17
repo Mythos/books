@@ -44,7 +44,7 @@
                     @endforeach
                     @if (count($upcoming) == 0)
                         <tr>
-                            <td colspan="4" style="text-align: center;">{{ __('No data') }}</td>
+                            <td colspan="7" style="text-align: center;">{{ __('No data') }}</td>
                         </tr>
                     @endif
                 </tbody>
