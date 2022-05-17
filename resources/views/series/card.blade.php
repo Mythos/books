@@ -18,18 +18,3 @@
         </div>
     </div>
 </div>
-
-<style>
-    .new {
-        color: red;
-    }
-
-    .ordered {
-        color: orange;
-    }
-
-    .delivered {
-        color: green;
-    }
-
-</style>
