@@ -2,24 +2,17 @@
 
 namespace App\Http\Livewire\Articles;
 
+use App\Http\Livewire\DeferredComponent;
 use App\Models\Article;
 use App\Models\Category;
-use Livewire\Component;
 
-class Gallery extends Component
+class Gallery extends DeferredComponent
 {
     public $articles = [];
 
     public string $search = '';
 
     public Category $category;
-
-    public $ready = false;
-
-    public function load(): void
-    {
-        $this->ready = true;
-    }
 
     public function mount(Category $category): void
     {
@@ -30,7 +23,7 @@ class Gallery extends Component
 
     public function render()
     {
-        if ($this->ready) {
+        if ($this->loaded) {
             $this->articles = Article::whereCategoryId($this->category->id);
             if (!empty($this->search)) {
                 $this->articles->where('name', 'like', '%' . $this->search . '%');

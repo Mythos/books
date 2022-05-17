@@ -4,38 +4,31 @@ namespace App\Http\Livewire\Series;
 
 use App\Constants\SeriesStatus;
 use App\Constants\VolumeStatus;
+use App\Http\Livewire\DeferredComponent;
 use App\Models\Volume;
 use Illuminate\Support\Str;
-use Livewire\Component;
 
-class UpcomingSeries extends Component
+class UpcomingSeries extends DeferredComponent
 {
     public $upcoming;
 
     public string $search;
 
-    public $ready = false;
-
-    public function load(): void
-    {
-        $this->ready = true;
-    }
-
     protected $listeners = ['search' => 'filter'];
 
     public function render()
     {
-        if ($this->ready) {
+        if ($this->loaded) {
             $upcoming = Volume::with(['series', 'series.publisher', 'series.genres', 'series.category'])
-        ->where('ignore_in_upcoming', 'false')
-        ->whereRelation('series', 'status', '<>', SeriesStatus::Canceled)
-        ->whereIn('status', [VolumeStatus::New, VolumeStatus::Ordered, VolumeStatus::Shipped])
-        ->whereNotNull('publish_date')
-        ->get()
-        ->sortBy([
-            ['publish_date', 'asc'],
-            ['series.name', 'asc'],
-        ]);
+                                ->where('ignore_in_upcoming', 'false')
+                                ->whereRelation('series', 'status', '<>', SeriesStatus::Canceled)
+                                ->whereIn('status', [VolumeStatus::New, VolumeStatus::Ordered, VolumeStatus::Shipped])
+                                ->whereNotNull('publish_date')
+                                ->get()
+                                ->sortBy([
+                                    ['publish_date', 'asc'],
+                                    ['series.name', 'asc'],
+                                ]);
             if (!empty($this->search)) {
                 $upcoming = $upcoming->filter(function ($volume) {
                     $volumeNameMatch = Str::contains(Str::lower($volume->name), Str::lower($this->search));

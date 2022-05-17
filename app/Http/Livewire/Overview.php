@@ -6,22 +6,14 @@ use App\Constants\SeriesStatus;
 use App\Constants\VolumeStatus;
 use App\Models\Volume;
 use Illuminate\Support\Facades\DB;
-use Livewire\Component;
 
-class Overview extends Component
+class Overview extends DeferredComponent
 {
     public $volumeStatistics = [];
 
     public $articleStatistics = [];
 
     public string $search;
-
-    public $ready = false;
-
-    public function load(): void
-    {
-        $this->ready = true;
-    }
 
     protected $listeners = [
         '$refresh',
@@ -30,7 +22,7 @@ class Overview extends Component
 
     public function render()
     {
-        if ($this->ready) {
+        if ($this->loaded) {
             $this->volumeStatistics = $this->getVolumeStatistics();
             $this->articleStatistics = $this->getArticleStatistics();
         } else {

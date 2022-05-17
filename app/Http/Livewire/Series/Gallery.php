@@ -3,17 +3,15 @@
 namespace App\Http\Livewire\Series;
 
 use App\Constants\SeriesStatus;
+use App\Http\Livewire\DeferredComponent;
 use App\Models\Category;
 use App\Models\Series;
-use Livewire\Component;
 
-class Gallery extends Component
+class Gallery extends DeferredComponent
 {
     public $series = [];
 
     public string $search = '';
-
-    public $ready = false;
 
     public Category $category;
 
@@ -24,14 +22,9 @@ class Gallery extends Component
 
     protected $listeners = ['search' => 'filter', 'show_nsfw' => '$refresh', 'show_canceled_series' => '$refresh'];
 
-    public function load(): void
-    {
-        $this->ready = true;
-    }
-
     public function render()
     {
-        if ($this->ready) {
+        if ($this->loaded) {
             $this->series = Series::whereCategoryId($this->category->id)->with(['volumes', 'publisher']);
             $show_canceled_series = session('show_canceled_series') ?? false;
             if (!$show_canceled_series) {
