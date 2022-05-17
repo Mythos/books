@@ -2,12 +2,15 @@
 
 namespace App\Http\Livewire\Articles;
 
-use App\Http\Livewire\DeferredComponent;
+use App\Http\Livewire\DeferredLoading;
 use App\Models\Article;
 use App\Models\Category;
+use Livewire\Component;
 
-class Gallery extends DeferredComponent
+class Gallery extends Component
 {
+    use DeferredLoading;
+
     public $articles = [];
 
     public string $search = '';

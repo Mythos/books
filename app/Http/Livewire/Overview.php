@@ -6,9 +6,12 @@ use App\Constants\SeriesStatus;
 use App\Constants\VolumeStatus;
 use App\Models\Volume;
 use Illuminate\Support\Facades\DB;
+use Livewire\Component;
 
-class Overview extends DeferredComponent
+class Overview extends Component
 {
+    use DeferredLoading;
+
     public $volumeStatistics = [];
 
     public $articleStatistics = [];

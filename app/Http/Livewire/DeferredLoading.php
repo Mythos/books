@@ -2,9 +2,7 @@
 
 namespace App\Http\Livewire;
 
-use Livewire\Component;
-
-abstract class DeferredComponent extends Component
+trait DeferredLoading
 {
     public bool $loaded = false;
 

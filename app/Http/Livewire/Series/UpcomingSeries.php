@@ -4,12 +4,15 @@ namespace App\Http\Livewire\Series;
 
 use App\Constants\SeriesStatus;
 use App\Constants\VolumeStatus;
-use App\Http\Livewire\DeferredComponent;
+use App\Http\Livewire\DeferredLoading;
 use App\Models\Volume;
 use Illuminate\Support\Str;
+use Livewire\Component;
 
-class UpcomingSeries extends DeferredComponent
+class UpcomingSeries extends Component
 {
+    use DeferredLoading;
+
     public $upcoming;
 
     public string $search;

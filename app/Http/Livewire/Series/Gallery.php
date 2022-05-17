@@ -3,12 +3,15 @@
 namespace App\Http\Livewire\Series;
 
 use App\Constants\SeriesStatus;
-use App\Http\Livewire\DeferredComponent;
+use App\Http\Livewire\DeferredLoading;
 use App\Models\Category;
 use App\Models\Series;
+use Livewire\Component;
 
-class Gallery extends DeferredComponent
+class Gallery extends Component
 {
+    use DeferredLoading;
+
     public $series = [];
 
     public string $search = '';
