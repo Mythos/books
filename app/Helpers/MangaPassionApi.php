@@ -122,6 +122,8 @@ class MangaPassionApi
 
             return !empty($volumeResult['price']) ? floatval($volumeResult['price']) / 100.0 : 0.00;
         }
+
+        return null;
     }
 
     private static function request($mangaPassionId, $additionalParameters = null)
