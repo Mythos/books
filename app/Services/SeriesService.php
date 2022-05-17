@@ -123,7 +123,7 @@ class SeriesService
             $isbn = $newVolume['isbn'];
             $publish_date = $newVolume['publish_date'];
             $price = $newVolume['price'];
-            $image_url = $volumeResult['image_url'];
+            $image_url = $newVolume['image_url'];
 
             $volume = new Volume([
                 'series_id' => $series->id,
