@@ -31,15 +31,23 @@ class Overview extends Component
         } else {
             $this->volumeStatistics = $this->getVolumeStatistics();
             $this->volumeStatistics = [
-                'new' => '',
-                'ordered' => '',
-                'shipped' => '',
-                'delivered' => '',
-                'read' => '',
-                'price' => '',
-                'total' => '',
+                'new' => 0,
+                'ordered' => 0,
+                'shipped' => 0,
+                'delivered' => 0,
+                'read' => 0,
+                'price' => 0,
+                'total' => 0,
             ];
-            $this->articleStatistics = [];
+            $this->articleStatistics = [
+                'new' => 0,
+                'ordered' => 0,
+                'shipped' => 0,
+                'delivered' => 0,
+                'read' => 0,
+                'price' => 0,
+                'total' => 0,
+            ];
         }
 
         return view('livewire.overview');
