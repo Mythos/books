@@ -2,7 +2,7 @@
     {{ __('Publishers') }}
 @endsection
 
-<div class="container">
+<div class="container" wire:init='load'>
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{ route('home') }}">{{ __('Home') }}</a></li>
@@ -32,7 +32,7 @@
                             <td>{{ $publisher->name }}</td>
                         </tr>
                     @endforeach
-                    @if ($publishers->count() == 0)
+                    @if (count($publishers) == 0)
                         <tr>
                             <td colspan="5" style="text-align: center;">{{ __('No data') }}</td>
                         </tr>

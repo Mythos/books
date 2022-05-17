@@ -2,7 +2,7 @@
     {{ __('Genres') }}
 @endsection
 
-<div class="container">
+<div class="container" wire:init='load'>
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{ route('home') }}">{{ __('Home') }}</a></li>
@@ -33,7 +33,7 @@
                             <td class="text-end" style="width: 7rem; min-width: 7rem;">{{ $genre->series->count() }}</span></td>
                         </tr>
                     @endforeach
-                    @if ($genres->count() == 0)
+                    @if (count($genres) == 0)
                         <tr>
                             <td colspan="5" style="text-align: center;">{{ __('No data') }}</td>
                         </tr>
