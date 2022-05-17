@@ -81,7 +81,7 @@ class CreateVolume extends Component
             }
         }
 
-        toastr()->livewire()->addSuccess(__('Volumme :number has been created', ['number' => $this->volume->number]));
+        toastr()->addSuccess(__('Volumme :number has been created', ['number' => $this->volume->number]));
         $this->volume = $this->getModelInstance();
     }
 

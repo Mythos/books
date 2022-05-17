@@ -62,7 +62,7 @@ class CreateArticle extends Component
             return redirect()->route('home');
         } catch (Exception $exception) {
             Log::error($exception);
-            toastr()->livewire()->addError(__(':name could not be created', ['name' => $this->article->name]));
+            toastr()->addError(__(':name could not be created', ['name' => $this->article->name]));
         }
     }
 }

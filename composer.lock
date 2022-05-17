@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "4db49c09b942ee4293808d7ff98157eb",
+    "content-hash": "e3ffa9fe54a2a105853ca003671b4878",
     "packages": [
         {
             "name": "brick/math",
@@ -3410,16 +3410,16 @@
         },
         {
             "name": "php-flasher/flasher",
-            "version": "v0.9.8",
+            "version": "v1.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-flasher/flasher.git",
-                "reference": "07c043e4be6143fe8b4c59ffc8af7dd42ba04c4e"
+                "reference": "c35cdf16fdc9cabcd0a94709365eca1a4bb12473"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-flasher/flasher/zipball/07c043e4be6143fe8b4c59ffc8af7dd42ba04c4e",
-                "reference": "07c043e4be6143fe8b4c59ffc8af7dd42ba04c4e",
+                "url": "https://api.github.com/repos/php-flasher/flasher/zipball/c35cdf16fdc9cabcd0a94709365eca1a4bb12473",
+                "reference": "c35cdf16fdc9cabcd0a94709365eca1a4bb12473",
                 "shasum": ""
             },
             "require": {
@@ -3427,9 +3427,6 @@
             },
             "type": "library",
             "autoload": {
-                "files": [
-                    "helpers.php"
-                ],
                 "psr-4": {
                     "Flasher\\Prime\\": ""
                 }
@@ -3440,14 +3437,14 @@
             ],
             "authors": [
                 {
-                    "name": "Younes Khoubza",
+                    "name": "Younes KHOUBZA",
                     "email": "younes.khoubza@gmail.com",
-                    "homepage": "https://github.com/yoeunes",
+                    "homepage": "https://www.linkedin.com/in/younes-khoubza",
                     "role": "Developer"
                 }
             ],
-            "description": "A powerful and flexible flash notifications system for PHP",
-            "homepage": "https://php-flasher.github.io/",
+            "description": "A powerful and flexible flash notification system for PHP",
+            "homepage": "https://php-flasher.io",
             "keywords": [
                 "Flasher",
                 "alerts",
@@ -3467,7 +3464,7 @@
             ],
             "support": {
                 "issues": "https://github.com/php-flasher/flasher/issues",
-                "source": "https://github.com/php-flasher/flasher/tree/v0.9.8"
+                "source": "https://github.com/php-flasher/flasher/tree/v1.0.3"
             },
             "funding": [
                 {
@@ -3487,26 +3484,26 @@
                     "type": "patreon"
                 }
             ],
-            "time": "2022-03-08T15:15:29+00:00"
+            "time": "2022-05-18T04:23:34+00:00"
         },
         {
             "name": "php-flasher/flasher-laravel",
-            "version": "v0.9.8",
+            "version": "v1.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-flasher/flasher-laravel.git",
-                "reference": "247b28cfa9471ce6eef61673eb7574a5ba48ac91"
+                "reference": "9b9a1388ac09846b531a36ad6863cd46d479c051"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-flasher/flasher-laravel/zipball/247b28cfa9471ce6eef61673eb7574a5ba48ac91",
-                "reference": "247b28cfa9471ce6eef61673eb7574a5ba48ac91",
+                "url": "https://api.github.com/repos/php-flasher/flasher-laravel/zipball/9b9a1388ac09846b531a36ad6863cd46d479c051",
+                "reference": "9b9a1388ac09846b531a36ad6863cd46d479c051",
                 "shasum": ""
             },
             "require": {
                 "illuminate/support": "^4.0|^5.0|^6.0|^7.0|^8.0|^9.0",
                 "php": ">=5.3",
-                "php-flasher/flasher": "^0.9"
+                "php-flasher/flasher": "^1.0"
             },
             "type": "library",
             "extra": {
@@ -3521,7 +3518,7 @@
             },
             "autoload": {
                 "files": [
-                    "helpers.php"
+                    "flasher.php"
                 ],
                 "psr-4": {
                     "Flasher\\Laravel\\": ""
@@ -3533,14 +3530,14 @@
             ],
             "authors": [
                 {
-                    "name": "Younes Khoubza",
+                    "name": "Younes KHOUBZA",
                     "email": "younes.khoubza@gmail.com",
-                    "homepage": "https://github.com/yoeunes",
+                    "homepage": "https://www.linkedin.com/in/younes-khoubza",
                     "role": "Developer"
                 }
             ],
             "description": "Laravel package integrating PHP Flasher into Laravel applications",
-            "homepage": "https://php-flasher.github.io/",
+            "homepage": "https://php-flasher.io",
             "keywords": [
                 "Flasher",
                 "alerts",
@@ -3559,7 +3556,7 @@
             ],
             "support": {
                 "issues": "https://github.com/php-flasher/flasher-laravel/issues",
-                "source": "https://github.com/php-flasher/flasher-laravel/tree/v0.9.8"
+                "source": "https://github.com/php-flasher/flasher-laravel/tree/v1.0.3"
             },
             "funding": [
                 {
@@ -3579,112 +3576,25 @@
                     "type": "patreon"
                 }
             ],
-            "time": "2022-03-09T07:43:55+00:00"
-        },
-        {
-            "name": "php-flasher/flasher-livewire",
-            "version": "v0.9.8",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/php-flasher/flasher-livewire.git",
-                "reference": "ffd9bc9c4e77d478ba4c194072f4c1da2fd6f14c"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/php-flasher/flasher-livewire/zipball/ffd9bc9c4e77d478ba4c194072f4c1da2fd6f14c",
-                "reference": "ffd9bc9c4e77d478ba4c194072f4c1da2fd6f14c",
-                "shasum": ""
-            },
-            "require": {
-                "livewire/livewire": "^2.0",
-                "php": ">=7.2.5",
-                "php-flasher/flasher-laravel": "^0.9"
-            },
-            "type": "library",
-            "extra": {
-                "laravel": {
-                    "providers": [
-                        "Flasher\\Livewire\\FlasherLivewireServiceProvider"
-                    ]
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Flasher\\Livewire\\": ""
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Younes Khoubza",
-                    "email": "younes.khoubza@gmail.com",
-                    "homepage": "https://github.com/yoeunes",
-                    "role": "Developer"
-                }
-            ],
-            "description": "Laravel package integrating PHP Flasher into Livewire applications",
-            "homepage": "https://php-flasher.github.io/",
-            "keywords": [
-                "Flasher",
-                "alerts",
-                "bundle",
-                "flex",
-                "laravel",
-                "livewire",
-                "lumen",
-                "messages",
-                "notifications",
-                "notify",
-                "php",
-                "pnotify",
-                "symfony",
-                "toastr",
-                "yoeunes"
-            ],
-            "support": {
-                "issues": "https://github.com/php-flasher/flasher-livewire/issues",
-                "source": "https://github.com/php-flasher/flasher-livewire/tree/v0.9.8"
-            },
-            "funding": [
-                {
-                    "url": "https://www.paypal.com/paypalme/yoeunes",
-                    "type": "custom"
-                },
-                {
-                    "url": "https://ko-fi.com/yoeunes",
-                    "type": "ko_fi"
-                },
-                {
-                    "url": "https://opencollective.com/php-flasher",
-                    "type": "open_collective"
-                },
-                {
-                    "url": "https://www.patreon.com/yoeunes",
-                    "type": "patreon"
-                }
-            ],
-            "time": "2021-10-23T16:20:51+00:00"
+            "time": "2022-05-18T04:23:34+00:00"
         },
         {
             "name": "php-flasher/flasher-toastr",
-            "version": "v0.9.8",
+            "version": "v1.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-flasher/flasher-toastr.git",
-                "reference": "46e1afd5a7e1e4da652cde041469b826b485d971"
+                "reference": "101e35874e1d2dcfde64a08160633513aca47bb6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-flasher/flasher-toastr/zipball/46e1afd5a7e1e4da652cde041469b826b485d971",
-                "reference": "46e1afd5a7e1e4da652cde041469b826b485d971",
+                "url": "https://api.github.com/repos/php-flasher/flasher-toastr/zipball/101e35874e1d2dcfde64a08160633513aca47bb6",
+                "reference": "101e35874e1d2dcfde64a08160633513aca47bb6",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3",
-                "php-flasher/flasher": "^0.9"
+                "php-flasher/flasher": "^1.0"
             },
             "type": "library",
             "autoload": {
@@ -3698,14 +3608,14 @@
             ],
             "authors": [
                 {
-                    "name": "Younes Khoubza",
+                    "name": "Younes KHOUBZA",
                     "email": "younes.khoubza@gmail.com",
-                    "homepage": "https://github.com/yoeunes",
+                    "homepage": "https://www.linkedin.com/in/younes-khoubza",
                     "role": "Developer"
                 }
             ],
             "description": "PHP Flasher adapter for Toastr",
-            "homepage": "https://php-flasher.github.io/",
+            "homepage": "https://php-flasher.io",
             "keywords": [
                 "alerts",
                 "laravel",
@@ -3720,7 +3630,7 @@
             ],
             "support": {
                 "issues": "https://github.com/php-flasher/flasher-toastr/issues",
-                "source": "https://github.com/php-flasher/flasher-toastr/tree/v0.9.8"
+                "source": "https://github.com/php-flasher/flasher-toastr/tree/v1.0.3"
             },
             "funding": [
                 {
@@ -3740,26 +3650,26 @@
                     "type": "patreon"
                 }
             ],
-            "time": "2022-03-08T15:15:29+00:00"
+            "time": "2022-05-16T07:18:15+00:00"
         },
         {
             "name": "php-flasher/flasher-toastr-laravel",
-            "version": "v0.9.8",
+            "version": "v1.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-flasher/flasher-toastr-laravel.git",
-                "reference": "dd19eb6c33ae3ee7e8df1b1dc8ab700cbb507e9b"
+                "reference": "37b3a7dcae25696404eef697d515be9a2a9f215e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-flasher/flasher-toastr-laravel/zipball/dd19eb6c33ae3ee7e8df1b1dc8ab700cbb507e9b",
-                "reference": "dd19eb6c33ae3ee7e8df1b1dc8ab700cbb507e9b",
+                "url": "https://api.github.com/repos/php-flasher/flasher-toastr-laravel/zipball/37b3a7dcae25696404eef697d515be9a2a9f215e",
+                "reference": "37b3a7dcae25696404eef697d515be9a2a9f215e",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3",
-                "php-flasher/flasher-laravel": "^0.9",
-                "php-flasher/flasher-toastr": "^0.9"
+                "php-flasher/flasher-laravel": "^1.0",
+                "php-flasher/flasher-toastr": "^1.0"
             },
             "type": "library",
             "extra": {
@@ -3774,7 +3684,7 @@
             },
             "autoload": {
                 "files": [
-                    "Resources/functions/toastr.php"
+                    "toastr.php"
                 ],
                 "psr-4": {
                     "Flasher\\Toastr\\Laravel\\": ""
@@ -3786,14 +3696,14 @@
             ],
             "authors": [
                 {
-                    "name": "Younes Khoubza",
+                    "name": "Younes KHOUBZA",
                     "email": "younes.khoubza@gmail.com",
-                    "homepage": "https://github.com/yoeunes",
+                    "homepage": "https://www.linkedin.com/in/younes-khoubza",
                     "role": "Developer"
                 }
             ],
             "description": "PHP Flasher Laravel adapter for Toastr",
-            "homepage": "https://php-flasher.github.io/",
+            "homepage": "https://php-flasher.io",
             "keywords": [
                 "alerts",
                 "bundle",
@@ -3811,7 +3721,7 @@
             ],
             "support": {
                 "issues": "https://github.com/php-flasher/flasher-toastr-laravel/issues",
-                "source": "https://github.com/php-flasher/flasher-toastr-laravel/tree/v0.9.8"
+                "source": "https://github.com/php-flasher/flasher-toastr-laravel/tree/v1.0.3"
             },
             "funding": [
                 {
@@ -3831,7 +3741,7 @@
                     "type": "patreon"
                 }
             ],
-            "time": "2021-10-23T16:20:51+00:00"
+            "time": "2022-05-16T07:18:15+00:00"
         },
         {
             "name": "phpoption/phpoption",
@@ -10692,5 +10602,5 @@
         "php": "^8.0.2"
     },
     "platform-dev": [],
-    "plugin-api-version": "2.2.0"
+    "plugin-api-version": "2.3.0"
 }

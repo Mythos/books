@@ -92,7 +92,7 @@ class CreateSeries extends Component
             return redirect()->route('home');
         } catch (Exception $exception) {
             Log::error($exception);
-            toastr()->livewire()->addError(__(':name could not be created', ['name' => $this->series->name]));
+            toastr()->addError(__(':name could not be created', ['name' => $this->series->name]));
         }
     }
 
@@ -103,7 +103,7 @@ class CreateSeries extends Component
         $this->apiSeries = MangaPassionApi::loadSeriesByTitle($this->series->name);
 
         if (empty($this->apiSeries)) {
-            toastr()->livewire()->addWarning(__('No entry with the title :name has been found', ['name' => $this->series->name]));
+            toastr()->addWarning(__('No entry with the title :name has been found', ['name' => $this->series->name]));
 
             return;
         }

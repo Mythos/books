@@ -23,7 +23,7 @@ class RegenerateImages extends Component
                 $this->createAndSaveImage($volume);
             }
         }
-        toastr()->livewire()->addSuccess(__('Images have been updated'));
+        toastr()->addSuccess(__('Images have been updated'));
     }
 
     private function createAndSaveImage($item): void

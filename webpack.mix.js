@@ -14,6 +14,10 @@ const mix = require("laravel-mix");
 mix.js("resources/js/app.js", "public/js")
     .sass("resources/sass/app.scss", "public/css")
     .copy(
+        "node_modules/@flasher/flasher/dist/flasher.min.js",
+        "public/js/flasher.min.js"
+    )
+    .copy(
         "node_modules/@flasher/flasher-toastr/dist/flasher-toastr.min.js",
         "public/js/flasher-toastr.min.js"
     )

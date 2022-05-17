@@ -40,7 +40,7 @@ class EditCategory extends Component
     {
         $this->validate();
         $this->category->save();
-        toastr()->livewire()->addSuccess(__(':name has been updated', ['name' => $this->category->name]));
+        toastr()->addSuccess(__(':name has been updated', ['name' => $this->category->name]));
     }
 
     public function delete(): void
