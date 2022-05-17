@@ -1,4 +1,4 @@
-<div class="col-sm-12 col-md-12 col-lg-9">
+<div class="col-sm-12 col-md-12 col-lg-9" wire:init="load">
     <div class="card shadow-sm mb-2">
         <div class="card-header">{{ __('Upcoming Releases') }}</div>
         <div class="card-body d-flex flex-column table-responsive p-0" style="height: 280px; overflow-y: scroll;">

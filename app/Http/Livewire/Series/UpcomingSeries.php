@@ -14,11 +14,19 @@ class UpcomingSeries extends Component
 
     public string $search;
 
+    public $ready = false;
+
+    public function load(): void
+    {
+        $this->ready = true;
+    }
+
     protected $listeners = ['search' => 'filter'];
 
     public function render()
     {
-        $upcoming = Volume::with(['series', 'series.publisher', 'series.genres', 'series.category'])
+        if ($this->ready) {
+            $upcoming = Volume::with(['series', 'series.publisher', 'series.genres', 'series.category'])
         ->where('ignore_in_upcoming', 'false')
         ->whereRelation('series', 'status', '<>', SeriesStatus::Canceled)
         ->whereIn('status', [VolumeStatus::New, VolumeStatus::Ordered, VolumeStatus::Shipped])
@@ -28,22 +36,25 @@ class UpcomingSeries extends Component
             ['publish_date', 'asc'],
             ['series.name', 'asc'],
         ]);
-        if (!empty($this->search)) {
-            $upcoming = $upcoming->filter(function ($volume) {
-                $volumeNameMatch = Str::contains(Str::lower($volume->name), Str::lower($this->search));
-                $volumeIsbnMatch = Str::contains(Str::lower($volume->isbn), Str::lower($this->search));
-                $seriesPublisherMatch = Str::contains(Str::lower($volume->series->publisher?->name), Str::lower($this->search));
-                $seriesGenreMatch = $volume->series->genres->filter(function ($genre) {
-                    return Str::contains(Str::lower($genre->name), Str::lower($this->search));
-                })->count() > 0;
+            if (!empty($this->search)) {
+                $upcoming = $upcoming->filter(function ($volume) {
+                    $volumeNameMatch = Str::contains(Str::lower($volume->name), Str::lower($this->search));
+                    $volumeIsbnMatch = Str::contains(Str::lower($volume->isbn), Str::lower($this->search));
+                    $seriesPublisherMatch = Str::contains(Str::lower($volume->series->publisher?->name), Str::lower($this->search));
+                    $seriesGenreMatch = $volume->series->genres->filter(function ($genre) {
+                        return Str::contains(Str::lower($genre->name), Str::lower($this->search));
+                    })->count() > 0;
 
-                return $volumeNameMatch
+                    return $volumeNameMatch
                 || $volumeIsbnMatch
                 || $seriesPublisherMatch
                 || $seriesGenreMatch;
-            });
+                });
+            }
+            $this->upcoming = $upcoming;
+        } else {
+            $this->upcoming = [];
         }
-        $this->upcoming = $upcoming;
 
         return view('livewire.series.upcoming-series');
     }

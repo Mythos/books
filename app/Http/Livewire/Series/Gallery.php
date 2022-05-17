@@ -13,6 +13,8 @@ class Gallery extends Component
 
     public string $search = '';
 
+    public $ready = false;
+
     public Category $category;
 
     public function mount(Category $category): void
@@ -22,15 +24,21 @@ class Gallery extends Component
 
     protected $listeners = ['search' => 'filter', 'show_nsfw' => '$refresh', 'show_canceled_series' => '$refresh'];
 
+    public function load(): void
+    {
+        $this->ready = true;
+    }
+
     public function render()
     {
-        $this->series = Series::whereCategoryId($this->category->id)->with(['volumes', 'publisher']);
-        $show_canceled_series = session('show_canceled_series') ?? false;
-        if (!$show_canceled_series) {
-            $this->series->where('status', '<>', SeriesStatus::Canceled);
-        }
-        if (!empty($this->search)) {
-            $this->series->where('name', 'like', '%' . $this->search . '%')
+        if ($this->ready) {
+            $this->series = Series::whereCategoryId($this->category->id)->with(['volumes', 'publisher']);
+            $show_canceled_series = session('show_canceled_series') ?? false;
+            if (!$show_canceled_series) {
+                $this->series->where('status', '<>', SeriesStatus::Canceled);
+            }
+            if (!empty($this->search)) {
+                $this->series->where('name', 'like', '%' . $this->search . '%')
                    ->orWhereHas('volumes', function ($query): void {
                        $query->where('isbn', 'like', '%' . $this->search . '%');
                    })
@@ -40,8 +48,11 @@ class Gallery extends Component
                    ->orWhereHas('genres', function ($query): void {
                        $query->where('name', 'like', '%' . $this->search . '%');
                    });
+            }
+            $this->series = $this->series->orderBy('status')->orderBy('name')->get();
+        } else {
+            $this->series = [];
         }
-        $this->series = $this->series->orderBy('status')->orderBy('name')->get();
 
         return view('livewire.series.gallery');
     }

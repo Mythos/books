@@ -16,6 +16,13 @@ class Overview extends Component
 
     public string $search;
 
+    public $ready = false;
+
+    public function load(): void
+    {
+        $this->ready = true;
+    }
+
     protected $listeners = [
         '$refresh',
         'search' => 'filter',
@@ -23,8 +30,22 @@ class Overview extends Component
 
     public function render()
     {
-        $this->volumeStatistics = $this->getVolumeStatistics();
-        $this->articleStatistics = $this->getArticleStatistics();
+        if ($this->ready) {
+            $this->volumeStatistics = $this->getVolumeStatistics();
+            $this->articleStatistics = $this->getArticleStatistics();
+        } else {
+            $this->volumeStatistics = $this->getVolumeStatistics();
+            $this->volumeStatistics = [
+                'new' => '',
+                'ordered' => '',
+                'shipped' => '',
+                'delivered' => '',
+                'read' => '',
+                'price' => '',
+                'total' => '',
+            ];
+            $this->articleStatistics = [];
+        }
 
         return view('livewire.overview');
     }

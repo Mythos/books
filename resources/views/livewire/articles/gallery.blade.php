@@ -1,4 +1,4 @@
-<div class="bg-white shadow-sm rounded my-2 px-3 py-2">
+<div class="bg-white shadow-sm rounded my-2 px-3 py-2" wire:init='load'>
     <div class="my-2">
         <h1 style="display: inline;"><a class="text-dark text-decoration-none" href="{{ route('categories.show', [$category]) }}">{{ $category->name }} <small class="text-muted">({{ count($articles) }} {{ __('Articles') }})</small></a></h1>
         <div class="float-end">

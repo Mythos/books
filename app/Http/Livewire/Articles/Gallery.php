@@ -14,6 +14,13 @@ class Gallery extends Component
 
     public Category $category;
 
+    public $ready = false;
+
+    public function load(): void
+    {
+        $this->ready = true;
+    }
+
     public function mount(Category $category): void
     {
         $this->category = $category;
@@ -23,11 +30,15 @@ class Gallery extends Component
 
     public function render()
     {
-        $this->articles = Article::whereCategoryId($this->category->id);
-        if (!empty($this->search)) {
-            $this->articles->where('name', 'like', '%' . $this->search . '%');
+        if ($this->ready) {
+            $this->articles = Article::whereCategoryId($this->category->id);
+            if (!empty($this->search)) {
+                $this->articles->where('name', 'like', '%' . $this->search . '%');
+            }
+            $this->articles = $this->articles->orderBy('status')->orderBy('name')->get();
+        } else {
+            $this->articles = [];
         }
-        $this->articles = $this->articles->orderBy('status')->orderBy('name')->get();
 
         return view('livewire.articles.gallery');
     }
