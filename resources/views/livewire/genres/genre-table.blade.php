@@ -25,17 +25,23 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($genres as $genre)
+                    @if ($loaded)
+                        @foreach ($genres as $genre)
+                            <tr>
+                                {{-- <td class="text-center"><a href="{{ route('genres.edit', [$genre]) }}"><span class="fa fa-edit"></span></a></td> --}}
+                                <td>{{ $genre->name }}</td>
+                                <td class="text-center" style="width: 7rem; min-width: 7rem;"><span class="{{ $genre->type_class }}">{{ $genre->type_name }}</span></td>
+                                <td class="text-end" style="width: 7rem; min-width: 7rem;">{{ $genre->series->count() }}</span></td>
+                            </tr>
+                        @endforeach
+                        @if (count($genres) == 0)
+                            <tr>
+                                <td colspan="5" style="text-align: center;">{{ __('No data') }}</td>
+                            </tr>
+                        @endif
+                    @else
                         <tr>
-                            {{-- <td class="text-center"><a href="{{ route('genres.edit', [$genre]) }}"><span class="fa fa-edit"></span></a></td> --}}
-                            <td>{{ $genre->name }}</td>
-                            <td class="text-center" style="width: 7rem; min-width: 7rem;"><span class="{{ $genre->type_class }}">{{ $genre->type_name }}</span></td>
-                            <td class="text-end" style="width: 7rem; min-width: 7rem;">{{ $genre->series->count() }}</span></td>
-                        </tr>
-                    @endforeach
-                    @if (count($genres) == 0)
-                        <tr>
-                            <td colspan="5" style="text-align: center;">{{ __('No data') }}</td>
+                            <td colspan="5" style="text-align: center;">{{ __('Loading...') }}</td>
                         </tr>
                     @endif
                 </tbody>

@@ -26,15 +26,21 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($publishers as $publisher)
+                    @if ($loaded)
+                        @foreach ($publishers as $publisher)
+                            <tr>
+                                <td class="text-center"><a href="{{ route('publishers.edit', [$publisher]) }}"><span class="fa fa-edit"></span></a></td>
+                                <td>{{ $publisher->name }}</td>
+                            </tr>
+                        @endforeach
+                        @if (count($publishers) == 0)
+                            <tr>
+                                <td colspan="5" style="text-align: center;">{{ __('No data') }}</td>
+                            </tr>
+                        @endif
+                    @else
                         <tr>
-                            <td class="text-center"><a href="{{ route('publishers.edit', [$publisher]) }}"><span class="fa fa-edit"></span></a></td>
-                            <td>{{ $publisher->name }}</td>
-                        </tr>
-                    @endforeach
-                    @if (count($publishers) == 0)
-                        <tr>
-                            <td colspan="5" style="text-align: center;">{{ __('No data') }}</td>
+                            <td colspan="5" style="text-align: center;">{{ __('Loading...') }}</td>
                         </tr>
                     @endif
                 </tbody>
