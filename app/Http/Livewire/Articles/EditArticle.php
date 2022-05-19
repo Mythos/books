@@ -61,11 +61,11 @@ class EditArticle extends Component
             $image = ImageHelpers::getImage($this->image_url);
             $this->article->save();
             ImageHelpers::storePublicImage($image, $this->article->image_path . '/image.jpg', true);
-            toastr()->livewire()->addSuccess(__(':name has been updated', ['name' => $this->article->name]));
+            toastr()->addSuccess(__(':name has been updated', ['name' => $this->article->name]));
             $this->reset(['image_url']);
         } catch (Exception $exception) {
             Log::error($exception);
-            toastr()->livewire()->addError(__(':name could not be updated', ['name' => $this->article->name]));
+            toastr()->addError(__(':name could not be updated', ['name' => $this->article->name]));
         }
     }
 

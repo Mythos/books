@@ -26,8 +26,6 @@ window.axios.defaults.headers.common["X-Requested-With"] = "XMLHttpRequest";
 
 window.Swal = require("sweetalert2");
 
-window.Flasher = require("@flasher/flasher");
-
 import Quagga from '@ericblade/quagga2';
 window.Quagga = Quagga;
 

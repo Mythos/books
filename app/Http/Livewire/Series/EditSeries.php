@@ -93,7 +93,7 @@ class EditSeries extends Component
             return redirect()->route('series.show', [$this->category, $this->series]);
         } catch (Exception $exception) {
             Log::error($exception);
-            toastr()->livewire()->addError(__(':name could not be updated', ['name' => $this->series->name]));
+            toastr()->addError(__(':name could not be updated', ['name' => $this->series->name]));
         }
     }
 

@@ -29,6 +29,7 @@
 
     <!-- Styles -->
     @livewireStyles
+    @flasher_render
     <link href="{{ mix('css/app.css') }}" rel="stylesheet">
 </head>
 
@@ -151,8 +152,6 @@
             navigator.serviceWorker.register("service-worker.js").then(function(reg) {}).catch(function(err) {});
         }
     </script>
-    @flasher_render
-    @flasher_livewire_render
     @livewireScripts
     <x-livewire-alert::scripts />
     @stack('scripts')

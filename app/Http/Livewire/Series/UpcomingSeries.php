@@ -76,7 +76,7 @@ class UpcomingSeries extends Component
         $volume->status = $status;
         $volume->save();
         $this->emitTo('overview', '$refresh');
-        toastr()->livewire()->addSuccess(__(':name has been updated', ['name' => $volume->series->name . ' ' . $volume->number]));
+        toastr()->addSuccess(__(':name has been updated', ['name' => $volume->series->name . ' ' . $volume->number]));
     }
 
     public function filter($filter): void

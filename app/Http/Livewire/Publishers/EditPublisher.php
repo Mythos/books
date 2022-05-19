@@ -41,7 +41,7 @@ class EditPublisher extends Component
         $this->validate();
 
         $this->publisher->save();
-        toastr()->livewire()->addSuccess(__(':name has been updated', ['name' => $this->publisher->name]));
+        toastr()->addSuccess(__(':name has been updated', ['name' => $this->publisher->name]));
     }
 
     public function delete(): void
