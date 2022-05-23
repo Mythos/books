@@ -3410,16 +3410,16 @@
         },
         {
             "name": "php-flasher/flasher",
-            "version": "v1.0.4",
+            "version": "v1.0.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-flasher/flasher.git",
-                "reference": "c35cdf16fdc9cabcd0a94709365eca1a4bb12473"
+                "reference": "b0ac0e8c40ce856cc56bf7753737438568862f7c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-flasher/flasher/zipball/c35cdf16fdc9cabcd0a94709365eca1a4bb12473",
-                "reference": "c35cdf16fdc9cabcd0a94709365eca1a4bb12473",
+                "url": "https://api.github.com/repos/php-flasher/flasher/zipball/b0ac0e8c40ce856cc56bf7753737438568862f7c",
+                "reference": "b0ac0e8c40ce856cc56bf7753737438568862f7c",
                 "shasum": ""
             },
             "require": {
@@ -3464,7 +3464,7 @@
             ],
             "support": {
                 "issues": "https://github.com/php-flasher/flasher/issues",
-                "source": "https://github.com/php-flasher/flasher/tree/v1.0.4"
+                "source": "https://github.com/php-flasher/flasher/tree/v1.0.7"
             },
             "funding": [
                 {
@@ -3484,11 +3484,11 @@
                     "type": "patreon"
                 }
             ],
-            "time": "2022-05-18T04:23:34+00:00"
+            "time": "2022-05-22T12:07:55+00:00"
         },
         {
             "name": "php-flasher/flasher-laravel",
-            "version": "v1.0.4",
+            "version": "v1.0.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-flasher/flasher-laravel.git",
@@ -3556,7 +3556,7 @@
             ],
             "support": {
                 "issues": "https://github.com/php-flasher/flasher-laravel/issues",
-                "source": "https://github.com/php-flasher/flasher-laravel/tree/v1.0.4"
+                "source": "https://github.com/php-flasher/flasher-laravel/tree/v1.0.7"
             },
             "funding": [
                 {
@@ -3580,16 +3580,16 @@
         },
         {
             "name": "php-flasher/flasher-toastr",
-            "version": "v1.0.4",
+            "version": "v1.0.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-flasher/flasher-toastr.git",
-                "reference": "101e35874e1d2dcfde64a08160633513aca47bb6"
+                "reference": "840ea7b71831cd3158328ff9ff02313f0ca2ba6c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-flasher/flasher-toastr/zipball/101e35874e1d2dcfde64a08160633513aca47bb6",
-                "reference": "101e35874e1d2dcfde64a08160633513aca47bb6",
+                "url": "https://api.github.com/repos/php-flasher/flasher-toastr/zipball/840ea7b71831cd3158328ff9ff02313f0ca2ba6c",
+                "reference": "840ea7b71831cd3158328ff9ff02313f0ca2ba6c",
                 "shasum": ""
             },
             "require": {
@@ -3630,7 +3630,7 @@
             ],
             "support": {
                 "issues": "https://github.com/php-flasher/flasher-toastr/issues",
-                "source": "https://github.com/php-flasher/flasher-toastr/tree/v1.0.4"
+                "source": "https://github.com/php-flasher/flasher-toastr/tree/v1.0.7"
             },
             "funding": [
                 {
@@ -3650,11 +3650,11 @@
                     "type": "patreon"
                 }
             ],
-            "time": "2022-05-16T07:18:15+00:00"
+            "time": "2022-05-22T12:07:55+00:00"
         },
         {
             "name": "php-flasher/flasher-toastr-laravel",
-            "version": "v1.0.4",
+            "version": "v1.0.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-flasher/flasher-toastr-laravel.git",
@@ -3721,7 +3721,7 @@
             ],
             "support": {
                 "issues": "https://github.com/php-flasher/flasher-toastr-laravel/issues",
-                "source": "https://github.com/php-flasher/flasher-toastr-laravel/tree/v1.0.4"
+                "source": "https://github.com/php-flasher/flasher-toastr-laravel/tree/v1.0.7"
             },
             "funding": [
                 {
@@ -10602,5 +10602,5 @@
         "php": "^8.0.2"
     },
     "platform-dev": [],
-    "plugin-api-version": "2.2.0"
+    "plugin-api-version": "2.3.0"
 }
