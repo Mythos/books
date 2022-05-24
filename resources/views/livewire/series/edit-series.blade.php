@@ -34,7 +34,6 @@
                             <label for="series.source_name" class="col-form-label required">{{ __('Original Title') }}</label>
                             <div class="input-group">
                                 <input id="series.source_name" name="series.source_name" type="text" class="form-control @error('series.source_name') is-invalid @enderror" wire:model='series.source_name' autofocus>
-                                <button class="btn btn-outline-secondary" type="button" wire:click="fetchdata"><span class="fa fa-search"></span></button>
                                 @error('series.source_name')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -48,7 +47,6 @@
                             <label for="series.source_name_romaji" class="col-form-label required">{{ __('Original Title (Romaji)') }}</label>
                             <div class="input-group">
                                 <input id="series.source_name_romaji" name="series.source_name_romaji" type="text" class="form-control @error('series.source_name_romaji') is-invalid @enderror" wire:model='series.source_name_romaji' autofocus>
-                                <button class="btn btn-outline-secondary" type="button" wire:click="fetchdata"><span class="fa fa-search"></span></button>
                                 @error('series.source_name_romaji')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
