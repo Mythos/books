@@ -30,12 +30,17 @@ use Spatie\Sluggable\SlugOptions;
  * @property int|null $mangapassion_id
  * @property string|null $image_url
  * @property string|null $description
+ * @property int|null $source_status
+ * @property string|null $source_name
+ * @property string|null $source_name_romaji
  * @property-read \App\Models\Category $category
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Genre[] $genres
  * @property-read int|null $genres_count
- * @property-read string $completion_status
+ * @property-read int $completion_status
  * @property-read string $completion_status_class
  * @property-read string $completion_status_name
+ * @property-read mixed $demographics
+ * @property-read mixed $genre_tags
  * @property-read string $image
  * @property-read string $image_path
  * @property-read string $read_volumes_count
@@ -60,6 +65,9 @@ use Spatie\Sluggable\SlugOptions;
  * @method static \Illuminate\Database\Eloquent\Builder|Series whereName($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Series wherePublisherId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Series whereSlug($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Series whereSourceName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Series whereSourceNameRomaji($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Series whereSourceStatus($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Series whereStatus($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Series whereSubscriptionActive($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Series whereTotal($value)

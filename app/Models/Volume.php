@@ -24,6 +24,11 @@ use Storage;
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property string|null $price
  * @property int $ignore_in_upcoming
+ * @property string|null $image_url
+ * @property-read string $image
+ * @property-read bool $image_exists
+ * @property-read string $image_path
+ * @property-read bool $image_thumbnail
  * @property-read string $isbn_formatted
  * @property-read string $name
  * @property-read string $publish_date_formatted
@@ -36,6 +41,7 @@ use Storage;
  * @method static \Illuminate\Database\Eloquent\Builder|Volume whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Volume whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Volume whereIgnoreInUpcoming($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Volume whereImageUrl($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Volume whereIsbn($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Volume whereNumber($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Volume wherePrice($value)

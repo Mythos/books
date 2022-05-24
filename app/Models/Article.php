@@ -24,6 +24,7 @@ use Spatie\Sluggable\SlugOptions;
  * @property-read \App\Models\Category $category
  * @property-read string $image
  * @property-read string $image_path
+ * @property-read string $release_date_formatted
  * @property-read string $status_class
  * @property-read string $status_name
  * @method static \Illuminate\Database\Eloquent\Builder|Article newModelQuery()
