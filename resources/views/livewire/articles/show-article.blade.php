@@ -24,7 +24,7 @@
             </div>
             <div class="mt-3">
                 <div>{{ __('Price') }}: <span>{{ number_format($article->price, 2) }} {{ config('app.currency') }}</span></div>
-                <div>{{ __('Release Date') }}: <span>{{ $article->release_date }}</span></div>
+                <div>{{ __('Release Date') }}: <span>{{ $article->release_date_formatted }}</span></div>
                 <div>{{ __('Status') }}: <span class="{{ $article->status_class }}">{{ $article->status_name }}</span></div>
             </div>
         </div>

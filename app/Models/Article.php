@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -147,5 +148,19 @@ class Article extends Model
     public function getImagePathAttribute(): string
     {
         return 'articles/' . $this->id;
+    }
+
+    /**
+     * Get the article's formatted release date.
+     *
+     * @return string
+     */
+    public function getReleaseDateFormattedAttribute() : ?string
+    {
+        if (empty($this->release_date)) {
+            return null;
+        }
+
+        return Carbon::parse($this->release_date)->format(auth()->user()->date_format);
     }
 }
