@@ -15,12 +15,15 @@
             <img src="{{ $article->image }}" alt="{{ $article->name }}" class="card-img-top" style="max-height: 400px; object-fit: contain;">
         </div>
         <div class="col-sm-12 col-md-12 col-lg-9 my-2 pl-4">
+            <div class="text-end">
+                @if (config('app.debug'))
+                    <span class="badge bg-secondary">ID: {{ $article->id }}</span>
+                @endif
+                <a href="{{ route('article.edit', [$category, $article]) }}" class="btn btn-link py-0 px-2"><span class="fas fa-edit"></span></a>
+                <a href="https://www.amazon.de/s?k={{ urlencode($article->name) }}" class="btn btn-link py-0 px-2" target="_blank"><span class="fab fa-amazon"></span></a>
+            </div>
             <div>
-                <h1 style="display: inline;">{{ $article->name }}</h1>
-                <div class="float-end" style="display: inline;">
-                    <a href="{{ route('article.edit', [$category, $article]) }}" class="btn btn-link"><span class="fas fa-edit"></span></a>
-                    <a href="https://www.amazon.de/s?k={{ urlencode($article->name) }}" class="btn btn-link" target="_blank"><span class="fab fa-amazon"></span></a>
-                </div>
+                <h1 class="my-0">{{ $article->name }}</h1>
             </div>
             <div class="mt-3">
                 <div>{{ __('Price') }}: <span>{{ number_format($article->price, 2) }} {{ config('app.currency') }}</span></div>

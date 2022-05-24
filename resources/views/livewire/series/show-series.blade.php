@@ -33,34 +33,39 @@
             @endif
         </div>
         <div class="col-sm-12 col-md-12 col-lg-9 my-2 pl-4">
-            <div>
-                <div class="float-end" style="display: inline;">
-                    @if (config('app.debug'))
-                        <span class="badge bg-secondary">ID: {{ $series->id }}</span>
-                        <span class="badge bg-secondary">MP-ID: {{ $series->mangapassion_id }}</span>
-                    @endif
-                    <a href="{{ route('series.edit', [$category, $series]) }}" class="btn btn-link"><span class="fas fa-edit"></span></a>
+            <div class="text-end">
+                @if (config('app.debug'))
+                    <span class="badge bg-secondary">ID: {{ $series->id }}</span>
+                    <span class="badge bg-secondary">MP-ID: {{ $series->mangapassion_id ?? 'NULL' }}</span>
+                @endif
+                <a href="{{ route('series.edit', [$category, $series]) }}" class="btn btn-link py-0 px-2"><span class="fas fa-edit"></span></a>
+                <a href="#" class="dropdown-toggle text-decoration-none" id="series-search" data-bs-toggle="dropdown" aria-expanded="false">
+                    <span class="fas fa-search"></span>
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="series-search">
+                    <li><a class="dropdown-item" href="https://www.amazon.de/s?k={{ urlencode($series->name) }}&i=stripbooks&s=date-desc-rank" target="_blank">Amazon.de</a></li>
+                    <li><a class="dropdown-item" href="https://www.bookdepository.com/search?searchTerm={{ urlencode($series->name) }}&ageRangesTotal=0&searchSortBy=pubdate_high_low" target="_blank">Book Depository</a></li>
+                    <li><a class="dropdown-item" href="https://www.thalia.de/suche?sq={{ urlencode($series->name) }}&sort=sfed&allayout=FLAT" target="_blank">Thalia.de</a></li>
                     @if (!empty($series->mangapassion_id))
-                        <a href="https://www.manga-passion.de/editions/{{ $series->mangapassion_id }}" class="btn btn-link" target="_blank"><span class="fas fa-book"></span></a>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li><a class="dropdown-item" href="https://www.manga-passion.de/editions/{{ $series->mangapassion_id }}" target="_blank">Manga Passion</a></li>
                     @endif
-                    <a href="https://www.thalia.de/suche?sq={{ urlencode($series->name) }}&sort=sfed&allayout=FLAT" class="btn btn-link" target="_blank"><span class="fas fa-search"></span></a>
-                    <a href="https://www.amazon.de/s?k={{ urlencode($series->name) }}&i=stripbooks&s=date-desc-rank" class="btn btn-link" target="_blank"><span class="fab fa-amazon"></span></a>
-                </div>
-                <h1 style="display: inline;">{{ $series->name }}</h1>
+                </ul>
             </div>
-            @if (auth()->user()->secondary_title_preference == 1)
-                @if (!empty($series->source_name))
-                    <div>
-                        <span class="text-secondary fs-4" data-bs-toggle="tooltip" title="{{ $series->source_name_romaji }}">{{ $series->source_name }}</span>
-                    </div>
+            <div>
+                <h1 class="my-0">{{ $series->name }}</h1>
+                @if (auth()->user()->secondary_title_preference == 1)
+                    @if (!empty($series->source_name))
+                        <span class="text-secondary my-0 fs-4" data-bs-toggle="tooltip" title="{{ $series->source_name_romaji }}">{{ $series->source_name }}</span>
+                    @endif
+                @elseif (auth()->user()->secondary_title_preference == 2)
+                    @if (!empty($series->source_name_romaji))
+                        <span class="text-secondary my-0 fs-4" data-bs-toggle="tooltip" title="{{ $series->source_name }}">{{ $series->source_name_romaji }}</span>
+                    @endif
                 @endif
-            @elseif (auth()->user()->secondary_title_preference == 2)
-                @if (!empty($series->source_name_romaji))
-                    <div>
-                        <span class="text-secondary fs-4" data-bs-toggle="tooltip" title="{{ $series->source_name }}">{{ $series->source_name_romaji }}</span>
-                    </div>
-                @endif
-            @endif
+            </div>
             <div class="row" style="width: 100%;">
                 <div class="mt-3 col-sm-12 col-md-12 col-lg-8">
                     @if (!empty($series->description))

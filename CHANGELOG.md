@@ -5,6 +5,7 @@
 - Added cover images for volumes
 - Added subscription indicator in upcoming releases
 - Added source titles which can be fetched via Manga Passion API
+- Added Book Depository to series lookup options
 - Improved rendering times by introducing deferred loading
 - Release dates of articles are now formatted
 - Cover images for volumes are now fetched via Manga Passion API
