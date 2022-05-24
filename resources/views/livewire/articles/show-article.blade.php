@@ -14,7 +14,7 @@
         <div class="col-sm-12 col-md-12 col-lg-3 d-flex align-self-stretch justify-content-center my-2">
             <img src="{{ $article->image }}" alt="{{ $article->name }}" class="card-img-top" style="max-height: 400px; object-fit: contain;">
         </div>
-        <div class="col-sm-12 col-md-12 col-lg-9 my-2 pl-4">
+        <div class="col-sm-12 col-md-12 col-lg-9 mb-2 pl-4">
             <div class="text-end">
                 @if (config('app.debug'))
                     <span class="badge bg-secondary">ID: {{ $article->id }}</span>

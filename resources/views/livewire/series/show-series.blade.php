@@ -32,7 +32,7 @@
                 <button class="btn btn-primary btn-sm mt-3" wire:click="update">{{ __('Update') }}</button>
             @endif
         </div>
-        <div class="col-sm-12 col-md-12 col-lg-9 my-2 pl-4">
+        <div class="col-sm-12 col-md-12 col-lg-9 mb-2 pl-4">
             <div class="text-end">
                 @if (config('app.debug'))
                     <span class="badge bg-secondary">ID: {{ $series->id }}</span>
