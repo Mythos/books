@@ -50,6 +50,7 @@ class Gallery extends Component
             }
             $this->series = $this->series->orderBy('status')->orderBy('name')->get();
         } else {
+            $this->placeholders = Series::whereCategoryId($this->category->id)->count();
             $this->series = [];
         }
 

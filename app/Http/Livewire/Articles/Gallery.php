@@ -33,6 +33,7 @@ class Gallery extends Component
             }
             $this->articles = $this->articles->orderBy('status')->orderBy('name')->get();
         } else {
+            $this->placeholders = Article::whereCategoryId($this->category->id)->count();
             $this->articles = [];
         }
 
