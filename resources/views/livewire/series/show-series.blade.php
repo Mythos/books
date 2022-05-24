@@ -34,7 +34,6 @@
         </div>
         <div class="col-sm-12 col-md-12 col-lg-9 my-2 pl-4">
             <div>
-                <h1 style="display: inline;">{{ $series->name }}</h1>
                 <div class="float-end" style="display: inline;">
                     @if (config('app.debug'))
                         <span class="badge bg-secondary">ID: {{ $series->id }}</span>
@@ -47,6 +46,7 @@
                     <a href="https://www.thalia.de/suche?sq={{ urlencode($series->name) }}&sort=sfed&allayout=FLAT" class="btn btn-link" target="_blank"><span class="fas fa-search"></span></a>
                     <a href="https://www.amazon.de/s?k={{ urlencode($series->name) }}&i=stripbooks&s=date-desc-rank" class="btn btn-link" target="_blank"><span class="fab fa-amazon"></span></a>
                 </div>
+                <h1 style="display: inline;">{{ $series->name }}</h1>
             </div>
             <div class="row" style="width: 100%;">
                 <div class="mt-3 col-sm-12 col-md-12 col-lg-8">
