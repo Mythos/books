@@ -74,6 +74,7 @@ class EditCategory extends Component
             Volume::whereSeriesId($s->id)->delete();
             $s->delete();
             Storage::disk('public')->deleteDirectory($s->image_path);
+            Storage::disk('public')->deleteDirectory('thumbnails/' . $s->image_path);
         }
     }
 

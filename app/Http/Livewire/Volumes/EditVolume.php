@@ -9,6 +9,7 @@ use App\Models\Series;
 use App\Models\Volume;
 use App\Rules\Isbn;
 use App\Services\SeriesService;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Component;
@@ -112,6 +113,8 @@ class EditVolume extends Component
     public function confirmedDelete()
     {
         $this->volume->delete();
+        Storage::disk('public')->deleteDirectory($this->volume->image_path);
+        Storage::disk('public')->deleteDirectory('thumbnails/' . $this->volume->image_path);
         toastr()->addSuccess(__('Volumme :number has been deleted', ['number' => $this->volume->number]));
 
         return redirect()->route('series.show', [$this->category, $this->series]);

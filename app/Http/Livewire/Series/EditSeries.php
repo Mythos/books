@@ -112,6 +112,7 @@ class EditSeries extends Component
         Volume::whereSeriesId($this->series->id)->delete();
         $this->series->delete();
         Storage::disk('public')->deleteDirectory($this->series->image_path);
+        Storage::disk('public')->deleteDirectory('thumbnails/series/' . $this->series->id);
         toastr()->addSuccess(__(':name has been deleted', ['name' => $this->series->name]));
         redirect()->route('categories.show', [$this->category]);
     }
