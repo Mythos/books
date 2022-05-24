@@ -11,7 +11,7 @@
     },
     "devDependencies": {
         "@ericblade/quagga2": "^1.6.0",
-        "@flasher/flasher-toastr": "^1.0.7",
+        "@flasher/flasher-toastr": "^1.0.15",
         "@fortawesome/fontawesome-free": "^6.0.0",
         "axios": "^0.27",
         "bootstrap": "^5.1.0",
