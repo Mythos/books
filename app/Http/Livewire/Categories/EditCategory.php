@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Categories;
 
 use App\Models\Article;
 use App\Models\Category;
+use App\Models\GenreSeries;
 use App\Models\Series;
 use App\Models\Volume;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
@@ -69,6 +70,7 @@ class EditCategory extends Component
     {
         $series = Series::whereCategoryId($this->category->id)->get();
         foreach ($series as $s) {
+            GenreSeries::whereSeriesId($s->id)->delete();
             Volume::whereSeriesId($s->id)->delete();
             $s->delete();
             Storage::disk('public')->deleteDirectory($s->image_path);

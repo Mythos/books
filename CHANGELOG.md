@@ -4,6 +4,7 @@
 
 - Added cover images for volumes
 - Cover images for volumes are now fetched via Manga Passion API
+- Fixed category deletion when genres are assigned to series
 
 ## 2.2.0 (2022-05-14)
 
