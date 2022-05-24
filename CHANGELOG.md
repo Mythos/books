@@ -3,6 +3,8 @@
 ## 2.3.0
 
 - Added cover images for volumes
+- Added subscription indicator in upcoming releases
+- Improved rendering times by introducing deferred loading
 - Cover images for volumes are now fetched via Manga Passion API
 - Fixed category deletion when genres are assigned to series
 
