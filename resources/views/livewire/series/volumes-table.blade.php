@@ -1,4 +1,4 @@
-<div class="mt-3">
+<div class="mt-3" wire:init='load'>
     <div>
         <h2 style="display: inline;">{{ __('Volumes') }} ({{ count($volumes) }})</h2>
         <div class="float-end" style="display: inline;">
@@ -25,53 +25,59 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($volumes as $volume)
-                    <tr class="{{ $volume->status_class }}">
-                        @if ($enable_reordering)
-                            <td class="text-center">
-                                @if ($volume->number > 1)
-                                    <a wire:click.prevent='move_up({{ $volume->id }})' href="#" title="{{ __('Moves the volume up') }}"><span class="fa fa-arrow-up"></span></a>
+                @if ($loaded)
+                    @foreach ($volumes as $volume)
+                        <tr class="{{ $volume->status_class }}">
+                            @if ($enable_reordering)
+                                <td class="text-center">
+                                    @if ($volume->number > 1)
+                                        <a wire:click.prevent='move_up({{ $volume->id }})' href="#" title="{{ __('Moves the volume up') }}"><span class="fa fa-arrow-up"></span></a>
+                                    @endif
+                                </td>
+                                <td class="text-center">
+                                    @if ($volume->number < $volumes->max('number'))
+                                        <a wire:click.prevent='move_down({{ $volume->id }})' href="#" title="{{ __('Moves the volume down') }}"><span class="fa fa-arrow-down"></span></a>
+                                    @endif
+                                </td>
+                            @endif
+                            <th scope="row" class="text-end">{{ $volume->number }}</th>
+                            <td class="text-center"><a href="{{ route('volumes.edit', [$category, $series, $volume->number]) }}"><span class="fa fa-edit"></span></a></td>
+                            <td class="text-center" style="padding: 3px;">
+                                @if ($volume->image_exists)
+                                    <img src="{{ $volume->image_thumbnail }}" alt="{{ $volume->name }}" class="volume-cover" style="max-height: 33px; object-fit: contain;" data-image-url="{{ $volume->image }}">
                                 @endif
                             </td>
+                            <td class="text-center">{{ $volume->publish_date_formatted }}</td>
+                            <td>{{ $volume->isbn_formatted }}</td>
+                            <td class="text-end">{{ number_format($volume->price, 2) }} {{ config('app.currency') }}</td>
+                            <td class="text-center">{{ $volume->status_name }}</td>
                             <td class="text-center">
-                                @if ($volume->number < $volumes->max('number'))
-                                    <a wire:click.prevent='move_down({{ $volume->id }})' href="#" title="{{ __('Moves the volume down') }}"><span class="fa fa-arrow-down"></span></a>
+                                @if ($volume->status == 0)
+                                    <a wire:click.prevent='ordered({{ $volume->id }})' href="#" title="{{ __('Sets the status to Ordered') }}"><span class="fa fa-shopping-cart"></span></a>
+                                @endif
+                                @if ($volume->status == 1)
+                                    <a wire:click.prevent='shipped({{ $volume->id }})' href="#" title="{{ __('Sets the status to Shipped') }}"><span class="fa fa-truck"></span></a>
+                                @endif
+                                @if ($volume->status == 2)
+                                    <a wire:click.prevent='delivered({{ $volume->id }})' href="#" title="{{ __('Sets the status to Delivered') }}"><span class="fa fa-check"></span></a>
+                                @endif
+                                @if ($volume->status == 3)
+                                    <a wire:click.prevent='read({{ $volume->id }})' href="#" title="{{ __('Sets the status to Read') }}"><span class="fa fa-book"></span></a>
+                                @endif
+                                @if ($volume->status == 1 || $volume->status == 2 || $volume->status == 3 || $volume->status == 4)
+                                    <a wire:click.prevent='canceled({{ $volume->id }})' href="#" title="{{ __('Sets the status to New') }}"><span class="fa fa-ban"></span></a>
                                 @endif
                             </td>
-                        @endif
-                        <th scope="row" class="text-end">{{ $volume->number }}</th>
-                        <td class="text-center"><a href="{{ route('volumes.edit', [$category, $series, $volume->number]) }}"><span class="fa fa-edit"></span></a></td>
-                        <td class="text-center" style="padding: 3px;">
-                            @if ($volume->image_exists)
-                                <img src="{{ $volume->image_thumbnail }}" alt="{{ $volume->name }}" class="volume-cover" style="max-height: 33px; object-fit: contain;" data-image-url="{{ $volume->image }}">
-                            @endif
-                        </td>
-                        <td class="text-center">{{ $volume->publish_date_formatted }}</td>
-                        <td>{{ $volume->isbn_formatted }}</td>
-                        <td class="text-end">{{ number_format($volume->price, 2) }} {{ config('app.currency') }}</td>
-                        <td class="text-center">{{ $volume->status_name }}</td>
-                        <td class="text-center">
-                            @if ($volume->status == 0)
-                                <a wire:click.prevent='ordered({{ $volume->id }})' href="#" title="{{ __('Sets the status to Ordered') }}"><span class="fa fa-shopping-cart"></span></a>
-                            @endif
-                            @if ($volume->status == 1)
-                                <a wire:click.prevent='shipped({{ $volume->id }})' href="#" title="{{ __('Sets the status to Shipped') }}"><span class="fa fa-truck"></span></a>
-                            @endif
-                            @if ($volume->status == 2)
-                                <a wire:click.prevent='delivered({{ $volume->id }})' href="#" title="{{ __('Sets the status to Delivered') }}"><span class="fa fa-check"></span></a>
-                            @endif
-                            @if ($volume->status == 3)
-                                <a wire:click.prevent='read({{ $volume->id }})' href="#" title="{{ __('Sets the status to Read') }}"><span class="fa fa-book"></span></a>
-                            @endif
-                            @if ($volume->status == 1 || $volume->status == 2 || $volume->status == 3 || $volume->status == 4)
-                                <a wire:click.prevent='canceled({{ $volume->id }})' href="#" title="{{ __('Sets the status to New') }}"><span class="fa fa-ban"></span></a>
-                            @endif
-                        </td>
-                    </tr>
-                @endforeach
-                @if ($volumes->count() == 0)
+                        </tr>
+                    @endforeach
+                    @if ($volumes->count() == 0)
+                        <tr>
+                            <td colspan="@if ($enable_reordering) 9 @else 8 @endif" style="text-align: center;">{{ __('No data') }}</td>
+                        </tr>
+                    @endif
+                @else
                     <tr>
-                        <td colspan="@if ($enable_reordering) 9 @else 8 @endif" style="text-align: center;">{{ __('No data') }}</td>
+                        <td colspan="8" style="text-align: center;">{{ __('Loading...') }}</td>
                     </tr>
                 @endif
             </tbody>

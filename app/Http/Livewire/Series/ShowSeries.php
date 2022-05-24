@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Series;
 
 use App\Constants\VolumeStatus;
 use App\Helpers\ImageHelpers;
+use App\Http\Livewire\DeferredLoading;
 use App\Models\Category;
 use App\Models\Series;
 use App\Models\Volume;
@@ -15,6 +16,8 @@ use Livewire\Component;
 
 class ShowSeries extends Component
 {
+    use DeferredLoading;
+
     public Category $category;
 
     public Series $series;
@@ -44,12 +47,21 @@ class ShowSeries extends Component
     public function render()
     {
         $this->series = Series::with('genres')->find($this->series->id);
-        $this->volumes = Volume::whereSeriesId($this->series->id)->orderBy('number')->get();
-        $this->new = $this->volumes->where('status', VolumeStatus::New)->count();
-        $this->ordered = $this->volumes->where('status', VolumeStatus::Ordered)->count();
-        $this->shipped = $this->volumes->where('status', VolumeStatus::Shipped)->count();
-        $this->delivered = $this->volumes->where('status', VolumeStatus::Delivered)->count();
-        $this->read = $this->volumes->where('status', VolumeStatus::Read)->count();
+        if ($this->loaded) {
+            $this->volumes = Volume::whereSeriesId($this->series->id)->orderBy('number')->get();
+            $this->new = $this->volumes->where('status', VolumeStatus::New)->count();
+            $this->ordered = $this->volumes->where('status', VolumeStatus::Ordered)->count();
+            $this->shipped = $this->volumes->where('status', VolumeStatus::Shipped)->count();
+            $this->delivered = $this->volumes->where('status', VolumeStatus::Delivered)->count();
+            $this->read = $this->volumes->where('status', VolumeStatus::Read)->count();
+        } else {
+            $this->volumes = collect([]);
+            $this->new = 0;
+            $this->ordered = 0;
+            $this->shipped = 0;
+            $this->delivered = 0;
+            $this->read = 0;
+        }
 
         return view('livewire.series.show-series')->extends('layouts.app')->section('content');
     }
