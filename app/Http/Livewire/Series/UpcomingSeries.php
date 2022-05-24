@@ -25,19 +25,18 @@ class UpcomingSeries extends Component
 
         if (!empty($this->search)) {
             $upcoming->where(function ($query): void {
-                $query->where('number', 'like', '%' . $this->search . '%')
-                ->orWhere('isbn', 'like', '%' . $this->search . '%')
-                ->orWhereHas('series', function ($query): void {
-                    $query->where('name', 'like', '%' . $this->search . '%')
-                          ->orwhere('source_name', 'like', '%' . $this->search . '%')
-                          ->orWhere('source_name_romaji', 'like', '%' . $this->search . '%')
-                          ->orWhereHas('publisher', function ($query): void {
-                              $query->where('name', 'like', '%' . $this->search . '%');
-                          })
-                          ->orWhereHas('genres', function ($query): void {
-                              $query->where('name', 'like', '%' . $this->search . '%');
-                          });
-                });
+                $query->where('isbn', 'like', '%' . $this->search . '%')
+                      ->orWhereHas('series', function ($query): void {
+                          $query->where('name', 'like', '%' . $this->search . '%')
+                              ->orwhere('source_name', 'like', '%' . $this->search . '%')
+                              ->orWhere('source_name_romaji', 'like', '%' . $this->search . '%')
+                              ->orWhereHas('publisher', function ($query): void {
+                                  $query->where('name', 'like', '%' . $this->search . '%');
+                              })
+                              ->orWhereHas('genres', function ($query): void {
+                                  $query->where('name', 'like', '%' . $this->search . '%');
+                              });
+                      });
             });
         }
         $this->upcoming = $upcoming->get()
