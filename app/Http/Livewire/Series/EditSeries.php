@@ -41,6 +41,9 @@ class EditSeries extends Component
         'series.subscription_active' => 'boolean',
         'series.mangapassion_id' => 'nullable|integer',
         'series.image_url' => 'required|url',
+        'series.source_name' => 'required|integer|min:0',
+        'series.source_name' => 'nullable',
+        'series.source_name_romaji' => 'nullable',
     ];
 
     protected $listeners = [

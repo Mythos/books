@@ -143,6 +143,9 @@ class MangaPassionUpdateJob implements ShouldQueue
             case 'isbn': return __('ISBN');
             case 'price': return __('Price');
             case 'image_url': return __('Image URL');
+            case 'source_status': return __('Status (Source)');
+            case 'source_name': return __('Original Title');
+            case 'source_name_romaji': return __('Original Title (Romaji)');
             default: return null;
         }
     }

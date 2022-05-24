@@ -37,6 +37,9 @@ class CreateSeries extends Component
         'series.subscription_active' => 'boolean',
         'series.mangapassion_id' => 'nullable|integer',
         'series.image_url' => 'required|url',
+        'series.source_name' => 'required|integer|min:0',
+        'series.source_name' => 'nullable',
+        'series.source_name_romaji' => 'nullable',
     ];
 
     public function updated($property, $value): void
@@ -115,6 +118,9 @@ class CreateSeries extends Component
         $this->series->total = $this->apiSeries['total'];
         $this->series->default_price = $this->apiSeries['default_price'];
         $this->series->image_url = $this->apiSeries['image_url'];
+        $this->series->source_status = $this->apiSeries['source_status'];
+        $this->series->source_name = $this->apiSeries['source_name'];
+        $this->series->source_name_romaji = $this->apiSeries['source_name_romaji'];
 
         $publisher = Publisher::whereName($this->apiSeries['publisher'])->first();
         if (!empty($publisher)) {

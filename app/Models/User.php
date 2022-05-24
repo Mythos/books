@@ -56,6 +56,7 @@ class User extends Authenticatable
         'email',
         'password',
         'format_isbns_enabled',
+        'secondary_title_preference',
     ];
 
     /**

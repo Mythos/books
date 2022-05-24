@@ -34,6 +34,7 @@ class UpcomingSeries extends Component
                                 ]);
             if (!empty($this->search)) {
                 $upcoming = $upcoming->filter(function ($volume) {
+                    $seriesNameMatch = Str::contains(Str::lower($volume->series->source_name), Str::lower($this->search)) || Str::contains(Str::lower($volume->series->source_name_romaji), Str::lower($this->search));
                     $volumeNameMatch = Str::contains(Str::lower($volume->name), Str::lower($this->search));
                     $volumeIsbnMatch = Str::contains(Str::lower($volume->isbn), Str::lower($this->search));
                     $seriesPublisherMatch = Str::contains(Str::lower($volume->series->publisher?->name), Str::lower($this->search));
@@ -42,9 +43,10 @@ class UpcomingSeries extends Component
                     })->count() > 0;
 
                     return $volumeNameMatch
-                || $volumeIsbnMatch
-                || $seriesPublisherMatch
-                || $seriesGenreMatch;
+                        || $seriesNameMatch
+                        || $volumeIsbnMatch
+                        || $seriesPublisherMatch
+                        || $seriesGenreMatch;
                 });
             }
             $this->upcoming = $upcoming;

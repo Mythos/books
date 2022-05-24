@@ -48,6 +48,19 @@
                 </div>
                 <h1 style="display: inline;">{{ $series->name }}</h1>
             </div>
+            @if (auth()->user()->secondary_title_preference == 1)
+                @if (!empty($series->source_name))
+                    <div>
+                        <span class="text-secondary fs-4" data-bs-toggle="tooltip" title="{{ $series->source_name_romaji }}">{{ $series->source_name }}</span>
+                    </div>
+                @endif
+            @elseif (auth()->user()->secondary_title_preference == 2)
+                @if (!empty($series->source_name_romaji))
+                    <div>
+                        <span class="text-secondary fs-4" data-bs-toggle="tooltip" title="{{ $series->source_name }}">{{ $series->source_name_romaji }}</span>
+                    </div>
+                @endif
+            @endif
             <div class="row" style="width: 100%;">
                 <div class="mt-3 col-sm-12 col-md-12 col-lg-8">
                     @if (!empty($series->description))

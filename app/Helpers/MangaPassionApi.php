@@ -54,9 +54,10 @@ class MangaPassionApi
         }
         if (!empty($result['sources'])) {
             $source = $result['sources'][0];
-            if ($result['status'] != 2) {
-                $series['total'] = $source['volumes'];
-            }
+            $series['total'] = $source['volumes'];
+            $series['source_status'] = $source['status'];
+            $series['source_name'] = $source['title'];
+            $series['source_name_romaji'] = $source['romaji'];
             if (!empty($source['tags'])) {
                 $tags = collect($source['tags']);
                 $series['demographics'] = $tags->where('type', '=', '0')->pluck('name')->first();

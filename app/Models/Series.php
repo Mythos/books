@@ -87,6 +87,9 @@ class Series extends Model
         'publisher_id',
         'subscription_active',
         'mangapassion_id',
+        'source_status',
+        'source_name',
+        'source_name_romaji',
     ];
 
     /**

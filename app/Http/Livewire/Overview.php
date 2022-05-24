@@ -66,6 +66,8 @@ class Overview extends Component
             $volumes->where('isbn', 'like', '%' . $this->search . '%')
                     ->orWhereHas('series', function ($query): void {
                         $query->where('name', 'like', '%' . $this->search . '%')
+                              ->orWhere('source_name', 'like', '%' . $this->search . '%')
+                              ->orWhere('source_name_romaji', 'like', '%' . $this->search . '%')
                               ->orWhereHas('publisher', function ($query): void {
                                   $query->where('name', 'like', '%' . $this->search . '%');
                               })

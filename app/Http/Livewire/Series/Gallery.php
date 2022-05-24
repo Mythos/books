@@ -34,7 +34,10 @@ class Gallery extends Component
                 $this->series->where('status', '<>', SeriesStatus::Canceled);
             }
             if (!empty($this->search)) {
-                $this->series->where('name', 'like', '%' . $this->search . '%')
+                $this->series
+                   ->where('name', 'like', '%' . $this->search . '%')
+                   ->orWhere('source_name', 'like', '%' . $this->search . '%')
+                   ->orWhere('source_name_romaji', 'like', '%' . $this->search . '%')
                    ->orWhereHas('volumes', function ($query): void {
                        $query->where('isbn', 'like', '%' . $this->search . '%');
                    })
