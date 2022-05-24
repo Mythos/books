@@ -2,15 +2,12 @@
 
 namespace App\Http\Livewire\Articles;
 
-use App\Http\Livewire\DeferredLoading;
 use App\Models\Article;
 use App\Models\Category;
 use Livewire\Component;
 
 class Gallery extends Component
 {
-    use DeferredLoading;
-
     public $articles = [];
 
     public string $search = '';
@@ -26,16 +23,11 @@ class Gallery extends Component
 
     public function render()
     {
-        if ($this->loaded) {
-            $this->articles = Article::whereCategoryId($this->category->id);
-            if (!empty($this->search)) {
-                $this->articles->where('name', 'like', '%' . $this->search . '%');
-            }
-            $this->articles = $this->articles->orderBy('status')->orderBy('name')->get();
-        } else {
-            $this->placeholders = Article::whereCategoryId($this->category->id)->count();
-            $this->articles = [];
+        $this->articles = Article::whereCategoryId($this->category->id);
+        if (!empty($this->search)) {
+            $this->articles->where('name', 'like', '%' . $this->search . '%');
         }
+        $this->articles = $this->articles->orderBy('status')->orderBy('name')->get();
 
         return view('livewire.articles.gallery');
     }

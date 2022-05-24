@@ -10,8 +10,6 @@ use Livewire\Component;
 
 class Overview extends Component
 {
-    use DeferredLoading;
-
     public $volumeStatistics = [];
 
     public $articleStatistics = [];
@@ -25,30 +23,8 @@ class Overview extends Component
 
     public function render()
     {
-        if ($this->loaded) {
-            $this->volumeStatistics = $this->getVolumeStatistics();
-            $this->articleStatistics = $this->getArticleStatistics();
-        } else {
-            $this->volumeStatistics = $this->getVolumeStatistics();
-            $this->volumeStatistics = [
-                'new' => 0,
-                'ordered' => 0,
-                'shipped' => 0,
-                'delivered' => 0,
-                'read' => 0,
-                'price' => 0,
-                'total' => 0,
-            ];
-            $this->articleStatistics = [
-                'new' => 0,
-                'ordered' => 0,
-                'shipped' => 0,
-                'delivered' => 0,
-                'read' => 0,
-                'price' => 0,
-                'total' => 0,
-            ];
-        }
+        $this->volumeStatistics = $this->getVolumeStatistics();
+        $this->articleStatistics = $this->getArticleStatistics();
 
         return view('livewire.overview');
     }
@@ -63,9 +39,10 @@ class Overview extends Component
         $volumes = Volume::with(['series.publisher', 'series.genres']);
 
         if (!empty($this->search)) {
-            $volumes->where('isbn', 'like', '%' . $this->search . '%')
-                    ->orWhereHas('series', function ($query): void {
-                        $query->where('name', 'like', '%' . $this->search . '%')
+            $volumes->where(function ($query): void {
+                $query->where('isbn', 'like', '%' . $this->search . '%')
+                      ->orWhereHas('series', function ($query): void {
+                          $query->where('name', 'like', '%' . $this->search . '%')
                               ->orWhere('source_name', 'like', '%' . $this->search . '%')
                               ->orWhere('source_name_romaji', 'like', '%' . $this->search . '%')
                               ->orWhereHas('publisher', function ($query): void {
@@ -74,7 +51,8 @@ class Overview extends Component
                               ->orWhereHas('genres', function ($query): void {
                                   $query->where('name', 'like', '%' . $this->search . '%');
                               });
-                    });
+                      });
+            });
         }
         $volumes = $volumes->join('series', 'volumes.series_id', '=', 'series.id')->WhereNotNull('isbn')->select([
             DB::raw('COALESCE(sum(case when volumes.status = ' . VolumeStatus::New . ' AND series.status <> ' . SeriesStatus::Canceled . ' then 1 else 0 end), 0) as new'),

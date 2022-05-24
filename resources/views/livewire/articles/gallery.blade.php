@@ -1,11 +1,10 @@
-<div class="bg-white shadow-sm rounded my-2 px-3 py-2" wire:init='load'>
+<div class="bg-white shadow-sm rounded my-2 px-3 py-2">
     <div class="my-2">
         <h1 style="display: inline;">
             <a class="text-dark text-decoration-none" href="{{ route('categories.show', [$category]) }}">
                 {{ $category->name }}
-                @if ($loaded)
-                    <small class="text-muted">({{ count($articles) }} {{ __('Articles') }})</small>
-                @endif
+
+                <small class="text-muted">({{ count($articles) }} {{ __('Articles') }})</small>
             </a>
         </h1>
         <div class="float-end">
@@ -18,37 +17,27 @@
         </div>
     </div>
     <div class="row mt-2">
-        @if ($loaded)
-            @if (count($articles) == 0)
-                <div class="text-center">
-                    {{ __('No data') }}
-                </div>
-            @else
-                @foreach ($articles as $article)
-                    <div class="col-sm-12 col-md-6 col-lg-3 d-flex align-self-stretch">
-                        <div class="card shadow-sm mb-4" style="width: 30rem;">
-                            <img src="{{ $article->image }}" alt="{{ $article->name }}" class="card-img-top" style="height: 400px; object-fit: contain;">
-                            <div class="card-body d-flex flex-column">
-                                <h5 class="card-title text-uppercase">{{ $article->name }}</h5>
-                                <div class="mt-auto">
-                                    <div class="float-start">
-                                        <span class="{{ $article->status_class }}">{{ $article->status_name }}</span>
-                                    </div>
+        @if (count($articles) == 0)
+            <div class="text-center">
+                {{ __('No data') }}
+            </div>
+        @else
+            @foreach ($articles as $article)
+                <div class="col-sm-12 col-md-6 col-lg-3 d-flex align-self-stretch">
+                    <div class="card shadow-sm mb-4" style="width: 30rem;">
+                        <img src="{{ $article->image }}" alt="{{ $article->name }}" class="card-img-top" style="height: 400px; object-fit: contain;">
+                        <div class="card-body d-flex flex-column">
+                            <h5 class="card-title text-uppercase">{{ $article->name }}</h5>
+                            <div class="mt-auto">
+                                <div class="float-start">
+                                    <span class="{{ $article->status_class }}">{{ $article->status_name }}</span>
                                 </div>
-                                <a href="{{ route('article.show', [$category, $article]) }}" class="stretched-link"></a>
                             </div>
+                            <a href="{{ route('article.show', [$category, $article]) }}" class="stretched-link"></a>
                         </div>
                     </div>
-                @endforeach
-            @endif
-        @else
-            @for ($i = 0; $i <= $placeholders; $i++)
-                <div class="col-sm-12 col-md-6 col-lg-3 d-flex align-self-stretch">
-                    <div class="card shadow-sm mb-4" style="width: 30rem; height: 400px;">
-                        {{ __('Loading...') }}
-                    </div>
                 </div>
-            @endfor
+            @endforeach
         @endif
     </div>
 </div>

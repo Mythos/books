@@ -2,7 +2,7 @@
     {{ __('Genres') }}
 @endsection
 
-<div class="container" wire:init='load'>
+<div class="container">
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{ route('home') }}">{{ __('Home') }}</a></li>
@@ -18,30 +18,22 @@
             <table class="table table-hover">
                 <thead class="table-dark">
                     <tr>
-                        {{-- <th scope="col" class="text-center" style="width: 2rem; min-width: 2rem;"></th> --}}
                         <th>{{ __('Name') }}</th>
                         <th class="text-center" style="width: 7rem; min-width: 7rem;">{{ __('Type') }}</th>
                         <th class="text-end" style="width: 7rem; min-width: 7rem;">{{ __('SeriesPlural') }}</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @if ($loaded)
-                        @foreach ($genres as $genre)
-                            <tr>
-                                {{-- <td class="text-center"><a href="{{ route('genres.edit', [$genre]) }}"><span class="fa fa-edit"></span></a></td> --}}
-                                <td>{{ $genre->name }}</td>
-                                <td class="text-center" style="width: 7rem; min-width: 7rem;"><span class="{{ $genre->type_class }}">{{ $genre->type_name }}</span></td>
-                                <td class="text-end" style="width: 7rem; min-width: 7rem;">{{ $genre->series->count() }}</span></td>
-                            </tr>
-                        @endforeach
-                        @if (count($genres) == 0)
-                            <tr>
-                                <td colspan="5" style="text-align: center;">{{ __('No data') }}</td>
-                            </tr>
-                        @endif
-                    @else
+                    @foreach ($genres as $genre)
                         <tr>
-                            <td colspan="5" style="text-align: center;">{{ __('Loading...') }}</td>
+                            <td>{{ $genre->name }}</td>
+                            <td class="text-center" style="width: 7rem; min-width: 7rem;"><span class="{{ $genre->type_class }}">{{ $genre->type_name }}</span></td>
+                            <td class="text-end" style="width: 7rem; min-width: 7rem;">{{ $genre->series->count() }}</span></td>
+                        </tr>
+                    @endforeach
+                    @if (count($genres) == 0)
+                        <tr>
+                            <td colspan="5" style="text-align: center;">{{ __('No data') }}</td>
                         </tr>
                     @endif
                 </tbody>

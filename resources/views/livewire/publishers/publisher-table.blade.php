@@ -2,7 +2,7 @@
     {{ __('Publishers') }}
 @endsection
 
-<div class="container" wire:init='load'>
+<div class="container">
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{ route('home') }}">{{ __('Home') }}</a></li>
@@ -26,21 +26,15 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @if ($loaded)
-                        @foreach ($publishers as $publisher)
-                            <tr>
-                                <td class="text-center"><a href="{{ route('publishers.edit', [$publisher]) }}"><span class="fa fa-edit"></span></a></td>
-                                <td>{{ $publisher->name }}</td>
-                            </tr>
-                        @endforeach
-                        @if (count($publishers) == 0)
-                            <tr>
-                                <td colspan="5" style="text-align: center;">{{ __('No data') }}</td>
-                            </tr>
-                        @endif
-                    @else
+                    @foreach ($publishers as $publisher)
                         <tr>
-                            <td colspan="5" style="text-align: center;">{{ __('Loading...') }}</td>
+                            <td class="text-center"><a href="{{ route('publishers.edit', [$publisher]) }}"><span class="fa fa-edit"></span></a></td>
+                            <td>{{ $publisher->name }}</td>
+                        </tr>
+                    @endforeach
+                    @if (count($publishers) == 0)
+                        <tr>
+                            <td colspan="5" style="text-align: center;">{{ __('No data') }}</td>
                         </tr>
                     @endif
                 </tbody>
