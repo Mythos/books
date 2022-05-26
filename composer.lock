@@ -1948,16 +1948,16 @@
         },
         {
             "name": "laravel/framework",
-            "version": "v9.13.0",
+            "version": "v9.14.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "87b6cc8bc41d1cf85c7c1401cddde8570a3b95bb"
+                "reference": "2ca86f96118635a79ee3389013ccab110ae14bea"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/87b6cc8bc41d1cf85c7c1401cddde8570a3b95bb",
-                "reference": "87b6cc8bc41d1cf85c7c1401cddde8570a3b95bb",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/2ca86f96118635a79ee3389013ccab110ae14bea",
+                "reference": "2ca86f96118635a79ee3389013ccab110ae14bea",
                 "shasum": ""
             },
             "require": {
@@ -2123,7 +2123,7 @@
                 "issues": "https://github.com/laravel/framework/issues",
                 "source": "https://github.com/laravel/framework"
             },
-            "time": "2022-05-17T14:07:43+00:00"
+            "time": "2022-05-25T18:18:07+00:00"
         },
         {
             "name": "laravel/sanctum",
@@ -2568,16 +2568,16 @@
         },
         {
             "name": "league/flysystem",
-            "version": "3.0.19",
+            "version": "3.0.20",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/flysystem.git",
-                "reference": "670df21225d68d165a8df38587ac3f41caf608f8"
+                "reference": "42a2f47dcf39944e2aee1b660ee55ab6ef69b535"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/flysystem/zipball/670df21225d68d165a8df38587ac3f41caf608f8",
-                "reference": "670df21225d68d165a8df38587ac3f41caf608f8",
+                "url": "https://api.github.com/repos/thephpleague/flysystem/zipball/42a2f47dcf39944e2aee1b660ee55ab6ef69b535",
+                "reference": "42a2f47dcf39944e2aee1b660ee55ab6ef69b535",
                 "shasum": ""
             },
             "require": {
@@ -2638,7 +2638,7 @@
             ],
             "support": {
                 "issues": "https://github.com/thephpleague/flysystem/issues",
-                "source": "https://github.com/thephpleague/flysystem/tree/3.0.19"
+                "source": "https://github.com/thephpleague/flysystem/tree/3.0.20"
             },
             "funding": [
                 {
@@ -2654,7 +2654,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-05-03T21:19:02+00:00"
+            "time": "2022-05-25T19:18:39+00:00"
         },
         {
             "name": "league/mime-type-detection",
@@ -3410,16 +3410,16 @@
         },
         {
             "name": "php-flasher/flasher",
-            "version": "v1.0.4",
+            "version": "v1.0.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-flasher/flasher.git",
-                "reference": "c35cdf16fdc9cabcd0a94709365eca1a4bb12473"
+                "reference": "81b2393f40fb03a99793c0558ecc8cb8d6d91abd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-flasher/flasher/zipball/c35cdf16fdc9cabcd0a94709365eca1a4bb12473",
-                "reference": "c35cdf16fdc9cabcd0a94709365eca1a4bb12473",
+                "url": "https://api.github.com/repos/php-flasher/flasher/zipball/81b2393f40fb03a99793c0558ecc8cb8d6d91abd",
+                "reference": "81b2393f40fb03a99793c0558ecc8cb8d6d91abd",
                 "shasum": ""
             },
             "require": {
@@ -3464,7 +3464,7 @@
             ],
             "support": {
                 "issues": "https://github.com/php-flasher/flasher/issues",
-                "source": "https://github.com/php-flasher/flasher/tree/v1.0.4"
+                "source": "https://github.com/php-flasher/flasher/tree/v1.0.8"
             },
             "funding": [
                 {
@@ -3484,20 +3484,20 @@
                     "type": "patreon"
                 }
             ],
-            "time": "2022-05-18T04:23:34+00:00"
+            "time": "2022-05-26T07:17:06+00:00"
         },
         {
             "name": "php-flasher/flasher-laravel",
-            "version": "v1.0.4",
+            "version": "v1.0.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-flasher/flasher-laravel.git",
-                "reference": "09764e0178974af5dd6731be0e5b842bfacea064"
+                "reference": "e79b89179616d003b979c585ed59883269933664"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-flasher/flasher-laravel/zipball/09764e0178974af5dd6731be0e5b842bfacea064",
-                "reference": "09764e0178974af5dd6731be0e5b842bfacea064",
+                "url": "https://api.github.com/repos/php-flasher/flasher-laravel/zipball/e79b89179616d003b979c585ed59883269933664",
+                "reference": "e79b89179616d003b979c585ed59883269933664",
                 "shasum": ""
             },
             "require": {
@@ -3556,7 +3556,7 @@
             ],
             "support": {
                 "issues": "https://github.com/php-flasher/flasher-laravel/issues",
-                "source": "https://github.com/php-flasher/flasher-laravel/tree/v1.0.4"
+                "source": "https://github.com/php-flasher/flasher-laravel/tree/v1.0.8"
             },
             "funding": [
                 {
@@ -3576,20 +3576,20 @@
                     "type": "patreon"
                 }
             ],
-            "time": "2022-05-19T07:19:15+00:00"
+            "time": "2022-05-26T07:01:34+00:00"
         },
         {
             "name": "php-flasher/flasher-toastr",
-            "version": "v1.0.4",
+            "version": "v1.0.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-flasher/flasher-toastr.git",
-                "reference": "101e35874e1d2dcfde64a08160633513aca47bb6"
+                "reference": "ec2f8cc6a44f1328bda680766beb40142e3edee6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-flasher/flasher-toastr/zipball/101e35874e1d2dcfde64a08160633513aca47bb6",
-                "reference": "101e35874e1d2dcfde64a08160633513aca47bb6",
+                "url": "https://api.github.com/repos/php-flasher/flasher-toastr/zipball/ec2f8cc6a44f1328bda680766beb40142e3edee6",
+                "reference": "ec2f8cc6a44f1328bda680766beb40142e3edee6",
                 "shasum": ""
             },
             "require": {
@@ -3630,7 +3630,7 @@
             ],
             "support": {
                 "issues": "https://github.com/php-flasher/flasher-toastr/issues",
-                "source": "https://github.com/php-flasher/flasher-toastr/tree/v1.0.4"
+                "source": "https://github.com/php-flasher/flasher-toastr/tree/v1.0.8"
             },
             "funding": [
                 {
@@ -3650,11 +3650,11 @@
                     "type": "patreon"
                 }
             ],
-            "time": "2022-05-16T07:18:15+00:00"
+            "time": "2022-05-26T07:17:06+00:00"
         },
         {
             "name": "php-flasher/flasher-toastr-laravel",
-            "version": "v1.0.4",
+            "version": "v1.0.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-flasher/flasher-toastr-laravel.git",
@@ -3721,7 +3721,7 @@
             ],
             "support": {
                 "issues": "https://github.com/php-flasher/flasher-toastr-laravel/issues",
-                "source": "https://github.com/php-flasher/flasher-toastr-laravel/tree/v1.0.4"
+                "source": "https://github.com/php-flasher/flasher-toastr-laravel/tree/v1.0.8"
             },
             "funding": [
                 {
@@ -10602,5 +10602,5 @@
         "php": "^8.0.2"
     },
     "platform-dev": [],
-    "plugin-api-version": "2.2.0"
+    "plugin-api-version": "2.3.0"
 }
