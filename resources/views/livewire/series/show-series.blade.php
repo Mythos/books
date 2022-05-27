@@ -51,6 +51,8 @@
                             <hr class="dropdown-divider">
                         </li>
                         <li><a class="dropdown-item" href="https://www.manga-passion.de/editions/{{ $series->mangapassion_id }}" target="_blank">Manga Passion</a></li>
+                        <li><a class="dropdown-item" href="https://anilist.co/search/manga?search={{ urlencode($series->source_name_romaji ?? ($series->source_name ?? $series->name)) }}" target="_blank">AniList</a></li>
+                        <li><a class="dropdown-item" href="https://myanimelist.net/manga.php?q={{ urlencode($series->source_name_romaji ?? ($series->source_name ?? $series->name)) }}" target="_blank">MyAnimeList.net</a></li>
                     @endif
                 </ul>
             </div>
