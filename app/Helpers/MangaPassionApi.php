@@ -2,6 +2,7 @@
 
 namespace App\Helpers;
 
+use App\Constants\SeriesStatus;
 use DateTime;
 use Illuminate\Support\Facades\Http;
 use Nicebooks\Isbn\Isbn;
@@ -42,16 +43,9 @@ class MangaPassionApi
 
         $series['name'] = $result['title'];
         $series['description'] = $result['description'];
-        if ($result['status'] == 1 || $result['status'] == 2) {
-            $series['status'] = $result['status'];
-        } else {
-            $series['status'] = 0;
-        }
+        $series['status'] = $result['status'] ?? SeriesStatus::New;
         $series['image_url'] = $result['cover'];
-
-        if ($result['status'] == 2) {
-            $series['total'] = $result['numVolumes'];
-        }
+        $series['total'] = $result['numVolumes'];
         if (!empty($result['sources'])) {
             $source = $result['sources'][0];
             $series['total'] = $source['volumes'] ?? null;

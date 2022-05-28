@@ -10,7 +10,7 @@ class SeriesStatus
 
     public const Finished = 2;
 
-    public const Paused = 3;
+    public const Paused = 4;
 
-    public const Canceled = 4;
+    public const Canceled = 3;
 }

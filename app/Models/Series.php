@@ -129,7 +129,7 @@ class Series extends Model
     {
         switch ($this->status) {
             case SeriesStatus::New:
-                return __('New');
+                return __('Announced');
             case SeriesStatus::Ongoing:
                 return __('Ongoing');
             case SeriesStatus::Finished:

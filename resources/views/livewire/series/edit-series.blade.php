@@ -87,11 +87,11 @@
                         <div class="col-md-12">
                             <label for="series.status" class="col-form-label required">{{ __('Status') }}</label>
                             <select id="series.status" name="series.status" class="form-select @error('series.status') is-invalid @enderror" wire:model='series.status' required>
-                                <option value="0">{{ __('New') }}</option>
+                                <option value="0">{{ __('Announced') }}</option>
                                 <option value="1">{{ __('Ongoing') }}</option>
                                 <option value="2">{{ __('Finished') }}</option>
-                                <option value="3">{{ __('Paused') }}</option>
-                                <option value="4">{{ __('Canceled') }}</option>
+                                <option value="3">{{ __('Canceled') }}</option>
+                                <option value="4">{{ __('Paused') }}</option>
                             </select>
                             @error('series.status')
                                 <span class="invalid-feedback" role="alert">
