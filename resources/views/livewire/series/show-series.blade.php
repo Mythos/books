@@ -46,14 +46,14 @@
                     <li><a class="dropdown-item" href="https://www.amazon.de/s?k={{ urlencode($series->name) }}&i=stripbooks&s=date-desc-rank" target="_blank">Amazon.de</a></li>
                     <li><a class="dropdown-item" href="https://www.bookdepository.com/search?searchTerm={{ urlencode($series->name) }}&ageRangesTotal=0&searchSortBy=pubdate_high_low" target="_blank">Book Depository</a></li>
                     <li><a class="dropdown-item" href="https://www.thalia.de/suche?sq={{ urlencode($series->name) }}&sort=sfed&allayout=FLAT" target="_blank">Thalia.de</a></li>
+                    <li>
+                        <hr class="dropdown-divider">
+                    </li>
                     @if (!empty($series->mangapassion_id))
-                        <li>
-                            <hr class="dropdown-divider">
-                        </li>
                         <li><a class="dropdown-item" href="https://www.manga-passion.de/editions/{{ $series->mangapassion_id }}" target="_blank">Manga Passion</a></li>
-                        <li><a class="dropdown-item" href="https://anilist.co/search/manga?search={{ urlencode($series->source_name_romaji ?? ($series->source_name ?? $series->name)) }}" target="_blank">AniList</a></li>
-                        <li><a class="dropdown-item" href="https://myanimelist.net/manga.php?q={{ urlencode($series->source_name_romaji ?? ($series->source_name ?? $series->name)) }}" target="_blank">MyAnimeList.net</a></li>
                     @endif
+                    <li><a class="dropdown-item" href="https://anilist.co/search/manga?search={{ urlencode($series->source_name_romaji ?? ($series->source_name ?? $series->name)) }}" target="_blank">AniList</a></li>
+                    <li><a class="dropdown-item" href="https://myanimelist.net/manga.php?q={{ urlencode($series->source_name_romaji ?? ($series->source_name ?? $series->name)) }}" target="_blank">MyAnimeList.net</a></li>
                 </ul>
             </div>
             <div>
