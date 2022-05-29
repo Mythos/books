@@ -29,7 +29,7 @@
                 </span>
             @endif
             @if (!empty($series->mangapassion_id))
-                <button class="btn btn-primary btn-sm mt-3" wire:click="update">{{ __('Update') }}</button>
+                <button class="btn btn-primary btn-sm mt-3" wire:click="update" wire:loading.attr='disabled'>{{ __('Update') }}</button>
             @endif
         </div>
         <div class="col-sm-12 col-md-12 col-lg-9 mb-2 pl-4">
