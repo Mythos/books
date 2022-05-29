@@ -191,6 +191,7 @@ return (new PhpCsFixer\Config)
         ],
         'single_quote' => true,
         'space_after_semicolon' => true,
+        'standardize_increment' => true,
         'standardize_not_equals' => true,
         'switch_case_semicolon_to_colon' => true,
         'switch_case_space' => true,
