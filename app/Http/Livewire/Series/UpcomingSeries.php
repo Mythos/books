@@ -63,6 +63,11 @@ class UpcomingSeries extends Component
         $this->setStatus($id, VolumeStatus::DELIVERED);
     }
 
+    public function filter($filter): void
+    {
+        $this->search = $filter;
+    }
+
     private function setStatus(int $id, int $status): void
     {
         $volume = Volume::find($id);
@@ -70,10 +75,5 @@ class UpcomingSeries extends Component
         $volume->save();
         $this->emitTo('overview', '$refresh');
         toastr()->addSuccess(__(':name has been updated', ['name' => $volume->series->name . ' ' . $volume->number]));
-    }
-
-    public function filter($filter): void
-    {
-        $this->search = $filter;
     }
 }

@@ -14,12 +14,12 @@ class Gallery extends Component
 
     public Category $category;
 
+    protected $listeners = ['search' => 'filter'];
+
     public function mount(Category $category): void
     {
         $this->category = $category;
     }
-
-    protected $listeners = ['search' => 'filter'];
 
     public function render()
     {

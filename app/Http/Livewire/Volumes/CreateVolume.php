@@ -27,19 +27,6 @@ class CreateVolume extends Component
         return view('livewire.volumes.create-volume')->extends('layouts.app')->section('content');
     }
 
-    protected function rules()
-    {
-        return [
-            'volume.publish_date' => 'nullable|date',
-            'volume.status' => 'required|integer|min:0',
-            'volume.price' => 'nullable|regex:"^[0-9]{1,9}([,.][0-9]{1,2})?$"',
-            'volume.isbn' => ['nullable', 'unique:volumes,isbn,NULL,id,series_id,' . $this->series->id, new Isbn()],
-            'volume.ignore_in_upcoming' => 'boolean',
-            'volume.series_id' => 'required|exists:series,id',
-            'volume.image_url' => 'nullable|url',
-        ];
-    }
-
     public function updated($property, $value): void
     {
         if ($property == 'volume.isbn') {
@@ -75,6 +62,19 @@ class CreateVolume extends Component
 
         toastr()->addSuccess(__('Volumme :number has been created', ['number' => $this->volume->number]));
         $this->volume = $this->getModelInstance();
+    }
+
+    protected function rules()
+    {
+        return [
+            'volume.publish_date' => 'nullable|date',
+            'volume.status' => 'required|integer|min:0',
+            'volume.price' => 'nullable|regex:"^[0-9]{1,9}([,.][0-9]{1,2})?$"',
+            'volume.isbn' => ['nullable', 'unique:volumes,isbn,NULL,id,series_id,' . $this->series->id, new Isbn()],
+            'volume.ignore_in_upcoming' => 'boolean',
+            'volume.series_id' => 'required|exists:series,id',
+            'volume.image_url' => 'nullable|url',
+        ];
     }
 
     private function getModelInstance(): Volume

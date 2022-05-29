@@ -32,13 +32,13 @@ class ShowSeries extends Component
 
     public int $read;
 
+    protected $listeners = ['show_nsfw' => '$refresh'];
+
     public function mount(Category $category, Series $series): void
     {
         $this->category = $category;
         $this->series = $series;
     }
-
-    protected $listeners = ['show_nsfw' => '$refresh'];
 
     public function render()
     {
@@ -76,14 +76,6 @@ class ShowSeries extends Component
     public function read(int $id): void
     {
         $this->setStatus($id, VolumeStatus::READ);
-    }
-
-    private function setStatus(int $id, int $status): void
-    {
-        $volume = Volume::find($id);
-        $volume->status = $status;
-        $volume->save();
-        toastr()->addSuccess(__(':name has been updated', ['name' => $volume->series->name . ' ' . $volume->number]));
     }
 
     public function toggle_reordering(): void
@@ -140,5 +132,13 @@ class ShowSeries extends Component
             Log::error('Error while updating series via API', ['exception' => $exception]);
             toastr()->addError(__(':name could not be updated', ['name' => $this->series->name]));
         }
+    }
+
+    private function setStatus(int $id, int $status): void
+    {
+        $volume = Volume::find($id);
+        $volume->status = $status;
+        $volume->save();
+        toastr()->addSuccess(__(':name has been updated', ['name' => $volume->series->name . ' ' . $volume->number]));
     }
 }
