@@ -10,6 +10,8 @@ use Intervention\Image\Image;
 
 class ImageHelpers
 {
+    private const THUMBNAIL_FOLDER = 'thumbnails/';
+
     public static function getImage($url): ?Image
     {
         if (empty($url)) {
@@ -33,7 +35,7 @@ class ImageHelpers
         $thumbnail = FacadesImage::make(clone $image)->resize(null, 50, function ($constraint): void {
             $constraint->aspectRatio();
         })->encode('jpg');
-        Storage::disk('public')->put('thumbnails/' . $path, $thumbnail);
+        Storage::disk('public')->put(static::THUMBNAIL_FOLDER . $path, $thumbnail);
     }
 
     public static function updateSeriesImage(Series $series, $wasCreated = false): void
@@ -49,7 +51,7 @@ class ImageHelpers
         }
 
         $path = $series->image_path;
-        $thumbnailPath = 'thumbnails/' . $series->image_path;
+        $thumbnailPath = static::THUMBNAIL_FOLDER . $series->image_path;
         Storage::disk('public')->delete([
             $path . '/cover.jpg',
             $path . '/cover_sfw.jpg',
@@ -70,7 +72,7 @@ class ImageHelpers
             return;
         }
         $path = $volume->image_path;
-        $thumbnailPath = 'thumbnails/' . $volume->image_path;
+        $thumbnailPath = static::THUMBNAIL_FOLDER . $volume->image_path;
         Storage::disk('public')->delete([
             $path . '/cover.jpg',
             $path . '/cover_sfw.jpg',
