@@ -12,7 +12,7 @@ use Exception;
 
 class SeriesService
 {
-    public function refreshMetadata(Series $series)
+    public function refreshMetadata(Series $series): void
     {
         if (empty($series->mangapassion_id)) {
             throw new Exception('Manga Passion ID not set');
@@ -30,6 +30,7 @@ class SeriesService
         $series->status = $apiSeries['status'];
         $series->total = $apiSeries['total'];
         $series->default_price = $apiSeries['default_price'];
+        $imageChanged = $series->image_url != $apiSeries['image_url'];
         $series->image_url = $apiSeries['image_url'];
         $series->source_status = $apiSeries['source_status'];
         $series->source_name = $apiSeries['source_name'];
@@ -64,7 +65,17 @@ class SeriesService
         }
         $series->genres()->sync($genres);
 
-        return $series;
+        $series->save();
+
+        if (empty($series->image_url) || !$imageChanged) {
+            return;
+        }
+        $image = ImageHelpers::getImage($series->image_url);
+        if (!empty($image)) {
+            ImageHelpers::storePublicImage($image, $series->image_path . '/cover.jpg', true);
+            $nsfwImage = $image->pixelate(config('images.nsfw.pixelate', 10))->blur(config('images.nsfw.blur', 5))->encode('jpg');
+            ImageHelpers::storePublicImage($nsfwImage, $series->image_path . '/cover_sfw.jpg', true);
+        }
     }
 
     public function updateVolumes(Series $series): array
@@ -106,11 +117,14 @@ class SeriesService
             if (!empty($isbn)) {
                 $volume->isbn = $isbn;
             }
+
+            $imageChanged = $volume->image_url != $image_url;
+
             $volume->image_url = $image_url;
             $volume->save();
             $data[] = $volume;
 
-            if (empty($image_url)) {
+            if (empty($image_url) || !$imageChanged) {
                 continue;
             }
             $image = ImageHelpers::getImage($image_url);
@@ -121,6 +135,25 @@ class SeriesService
             }
         }
 
+        $this->createNewVolumes($series, $newVolumes);
+        $this->resetNumbers($series->id);
+
+        return $data;
+    }
+
+    public function resetNumbers(int $seriesId): void
+    {
+        $volumes = Volume::whereSeriesId($seriesId)->orderBy('number')->get();
+        $number = 1;
+        foreach ($volumes as $volume) {
+            $volume->number = $number;
+            $volume->save();
+            $number++;
+        }
+    }
+
+    private function createNewVolumes($series, $newVolumes): void
+    {
         foreach ($newVolumes as $newVolume) {
             $number = $newVolume['number'];
             $isbn = $newVolume['isbn'];
@@ -149,20 +182,6 @@ class SeriesService
                 $nsfwImage = $image->pixelate(config('images.nsfw.pixelate', 10))->blur(config('images.nsfw.blur', 5))->encode('jpg');
                 ImageHelpers::storePublicImage($nsfwImage, $volume->image_path . '/cover_sfw.jpg', true);
             }
-        }
-        $this->resetNumbers($series->id);
-
-        return $data;
-    }
-
-    public function resetNumbers(int $seriesId): void
-    {
-        $volumes = Volume::whereSeriesId($seriesId)->orderBy('number')->get();
-        $number = 1;
-        foreach ($volumes as $volume) {
-            $volume->number = $number;
-            $volume->save();
-            $number++;
         }
     }
 }

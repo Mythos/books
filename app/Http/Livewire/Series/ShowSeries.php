@@ -3,7 +3,6 @@
 namespace App\Http\Livewire\Series;
 
 use App\Constants\VolumeStatus;
-use App\Helpers\ImageHelpers;
 use App\Models\Category;
 use App\Models\Series;
 use App\Models\Volume;
@@ -131,16 +130,7 @@ class ShowSeries extends Component
     public function update(SeriesService $seriesService)
     {
         try {
-            $this->series = $seriesService->refreshMetadata($this->series);
-            $this->series->save();
-
-            $image = ImageHelpers::getImage($this->series->image_url);
-            if (!empty($image)) {
-                ImageHelpers::storePublicImage($image, $this->series->image_path . '/cover.jpg', true);
-                $nsfwImage = $image->pixelate(config('images.nsfw.pixelate', 10))->blur(config('images.nsfw.blur', 5))->encode('jpg');
-                ImageHelpers::storePublicImage($nsfwImage, $this->series->image_path . '/cover_sfw.jpg', true);
-            }
-
+            $seriesService->refreshMetadata($this->series);
             $seriesService->updateVolumes($this->series);
 
             toastr()->addSuccess(__(':name has been updated', ['name' => $this->series->name]));

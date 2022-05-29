@@ -3,7 +3,6 @@
 namespace App\Jobs;
 
 use App\Constants\SeriesStatus;
-use App\Helpers\ImageHelpers;
 use App\Mail\SeriesUpdated;
 use App\Models\Series;
 use App\Models\User;
@@ -48,16 +47,9 @@ class MangaPassionUpdateJob implements ShouldQueue
                 Log::info("Updating series metadata for {$s->name}...");
                 $originalS = $originalSeries->where('id', $s->id)->first();
                 $originalV = $originalVolumes->where('series_id', $s->id);
-                $s = $seriesService->refreshMetadata($s);
-                $s->save();
 
-                Log::info("Updating image for {$s->name}...");
-                $image = ImageHelpers::getImage($s->image_url);
-                if (!empty($image)) {
-                    ImageHelpers::storePublicImage($image, $s->image_path . '/cover.jpg', true);
-                    $nsfwImage = $image->pixelate(config('images.nsfw.pixelate', 10))->blur(config('images.nsfw.blur', 5))->encode('jpg');
-                    ImageHelpers::storePublicImage($nsfwImage, $s->image_path . '/cover_sfw.jpg', true);
-                }
+                $seriesService->refreshMetadata($s);
+
                 Log::info("Updating volumes for {$s->name}...");
                 $volumes = $seriesService->updateVolumes($s);
                 $changes = $this->check_for_changes($originalS, $s, $originalV, $volumes);
