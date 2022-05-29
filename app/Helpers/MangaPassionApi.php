@@ -43,7 +43,7 @@ class MangaPassionApi
 
         $series['name'] = $result['title'];
         $series['description'] = $result['description'];
-        $series['status'] = $result['status'] ?? SeriesStatus::New;
+        $series['status'] = $result['status'] ?? SeriesStatus::NEW;
         $series['image_url'] = $result['cover'];
         $series['total'] = $result['numVolumes'];
         if (!empty($result['sources'])) {

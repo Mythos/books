@@ -44,38 +44,38 @@ class ShowSeries extends Component
     {
         $this->series = Series::with('genres')->find($this->series->id);
         $this->volumes = Volume::whereSeriesId($this->series->id)->orderBy('number')->get();
-        $this->new = $this->volumes->where('status', VolumeStatus::New)->count();
-        $this->ordered = $this->volumes->where('status', VolumeStatus::Ordered)->count();
-        $this->shipped = $this->volumes->where('status', VolumeStatus::Shipped)->count();
-        $this->delivered = $this->volumes->where('status', VolumeStatus::Delivered)->count();
-        $this->read = $this->volumes->where('status', VolumeStatus::Read)->count();
+        $this->new = $this->volumes->where('status', VolumeStatus::NEW)->count();
+        $this->ordered = $this->volumes->where('status', VolumeStatus::ORDERED)->count();
+        $this->shipped = $this->volumes->where('status', VolumeStatus::SHIPPED)->count();
+        $this->delivered = $this->volumes->where('status', VolumeStatus::DELIVERED)->count();
+        $this->read = $this->volumes->where('status', VolumeStatus::READ)->count();
 
         return view('livewire.series.show-series')->extends('layouts.app')->section('content');
     }
 
     public function canceled(int $id): void
     {
-        $this->setStatus($id, VolumeStatus::New);
+        $this->setStatus($id, VolumeStatus::NEW);
     }
 
     public function ordered(int $id): void
     {
-        $this->setStatus($id, VolumeStatus::Ordered);
+        $this->setStatus($id, VolumeStatus::ORDERED);
     }
 
     public function shipped(int $id): void
     {
-        $this->setStatus($id, VolumeStatus::Shipped);
+        $this->setStatus($id, VolumeStatus::SHIPPED);
     }
 
     public function delivered(int $id): void
     {
-        $this->setStatus($id, VolumeStatus::Delivered);
+        $this->setStatus($id, VolumeStatus::DELIVERED);
     }
 
     public function read(int $id): void
     {
-        $this->setStatus($id, VolumeStatus::Read);
+        $this->setStatus($id, VolumeStatus::READ);
     }
 
     private function setStatus(int $id, int $status): void

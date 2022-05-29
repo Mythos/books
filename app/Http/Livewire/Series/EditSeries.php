@@ -58,7 +58,7 @@ class EditSeries extends Component
         if ($property == 'series.publisher_id' && empty($value)) {
             $this->series->publisher_id = null;
         }
-        if ($property == 'series.status' && $value == SeriesStatus::Canceled && $this->series->subscription_active) {
+        if ($property == 'series.status' && $value == SeriesStatus::CANCELED && $this->series->subscription_active) {
             $this->series->subscription_active = false;
         }
         $this->validateOnly($property);
@@ -125,7 +125,7 @@ class EditSeries extends Component
     private function updateStatuses(): void
     {
         if ($this->series->subscription_active) {
-            Volume::whereSeriesId($this->series->id)->where('status', '=', VolumeStatus::New)->update(['status' => VolumeStatus::Ordered]);
+            Volume::whereSeriesId($this->series->id)->where('status', '=', VolumeStatus::NEW)->update(['status' => VolumeStatus::ORDERED]);
         }
     }
 }

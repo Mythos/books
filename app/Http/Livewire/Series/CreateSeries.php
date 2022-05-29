@@ -50,7 +50,7 @@ class CreateSeries extends Component
         if ($property == 'series.publisher_id' && empty($value)) {
             $this->series->publisher_id = null;
         }
-        if ($property == 'series.status' && $value == SeriesStatus::Canceled && $this->series->subscription_active) {
+        if ($property == 'series.status' && $value == SeriesStatus::CANCELED && $this->series->subscription_active) {
             $this->series->subscription_active = false;
         }
         $this->validateOnly($property);
@@ -61,7 +61,7 @@ class CreateSeries extends Component
         $this->publishers = Publisher::orderBy('name')->get();
         $this->category = $category;
         $this->series = new Series([
-            'status' => SeriesStatus::New,
+            'status' => SeriesStatus::NEW,
             'category_id' => $category->id,
             'is_nsfw' => false,
             'subscription_active' => false,

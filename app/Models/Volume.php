@@ -121,15 +121,15 @@ class Volume extends Model
     public function getStatusNameAttribute(): string
     {
         switch ($this->status) {
-            case VolumeStatus::New:
+            case VolumeStatus::NEW:
                 return __('New');
-            case VolumeStatus::Ordered:
+            case VolumeStatus::ORDERED:
                 return __('Ordered');
-            case VolumeStatus::Shipped:
+            case VolumeStatus::SHIPPED:
                 return __('Shipped');
-            case VolumeStatus::Delivered:
+            case VolumeStatus::DELIVERED:
                 return __('Delivered');
-            case VolumeStatus::Read:
+            case VolumeStatus::READ:
                 return __('Read');
             default:
                 return __('Unknown');
@@ -144,15 +144,15 @@ class Volume extends Model
     public function getStatusClassAttribute(): string
     {
         switch ($this->status) {
-            case VolumeStatus::New:
+            case VolumeStatus::NEW:
                 return 'table-danger';
-            case VolumeStatus::Ordered:
+            case VolumeStatus::ORDERED:
                 return 'table-warning';
-            case VolumeStatus::Shipped:
+            case VolumeStatus::SHIPPED:
                 return 'table-info';
-            case VolumeStatus::Delivered:
+            case VolumeStatus::DELIVERED:
                 return 'table-primary';
-            case VolumeStatus::Read:
+            case VolumeStatus::READ:
                 return 'table-success';
             default:
                 return '';

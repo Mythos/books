@@ -27,7 +27,7 @@ class Gallery extends Component
         $this->series = Series::whereCategoryId($this->category->id)->with(['volumes:id,status,publish_date,series_id', 'publisher:id,name']);
         $show_canceled_series = session('show_canceled_series') ?? false;
         if (!$show_canceled_series) {
-            $this->series->where('status', '<>', SeriesStatus::Canceled);
+            $this->series->where('status', '<>', SeriesStatus::CANCELED);
         }
         if (!empty($this->search)) {
             $this->series->where(function ($query): void {

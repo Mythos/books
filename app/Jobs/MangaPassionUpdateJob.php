@@ -41,7 +41,7 @@ class MangaPassionUpdateJob implements ShouldQueue
         $changeLog = [];
         $originalSeries = Series::all();
         $originalVolumes = Volume::all();
-        $series = Series::whereNotNull('mangapassion_id')->whereNotIn('status', [SeriesStatus::Finished, SeriesStatus::Canceled])->orderBy('name')->get();
+        $series = Series::whereNotNull('mangapassion_id')->whereNotIn('status', [SeriesStatus::FINISHED, SeriesStatus::CANCELED])->orderBy('name')->get();
         foreach ($series as $s) {
             try {
                 Log::info("Updating series metadata for {$s->name}...");

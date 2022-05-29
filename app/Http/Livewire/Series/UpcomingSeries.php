@@ -19,8 +19,8 @@ class UpcomingSeries extends Component
     {
         $upcoming = Volume::with(['series:id,name,slug,category_id,status,source_name,source_name_romaji', 'series.publisher:id,name', 'series.genres:id,name', 'series.category:id,name,slug'])
                                 ->where('ignore_in_upcoming', 'false')
-                                ->whereRelation('series', 'status', '<>', SeriesStatus::Canceled)
-                                ->whereIn('status', [VolumeStatus::New, VolumeStatus::Ordered, VolumeStatus::Shipped])
+                                ->whereRelation('series', 'status', '<>', SeriesStatus::CANCELED)
+                                ->whereIn('status', [VolumeStatus::NEW, VolumeStatus::ORDERED, VolumeStatus::SHIPPED])
                                 ->whereNotNull('publish_date');
 
         if (!empty($this->search)) {
@@ -50,17 +50,17 @@ class UpcomingSeries extends Component
 
     public function ordered(int $id): void
     {
-        $this->setStatus($id, VolumeStatus::Ordered);
+        $this->setStatus($id, VolumeStatus::ORDERED);
     }
 
     public function shipped(int $id): void
     {
-        $this->setStatus($id, VolumeStatus::Shipped);
+        $this->setStatus($id, VolumeStatus::SHIPPED);
     }
 
     public function delivered(int $id): void
     {
-        $this->setStatus($id, VolumeStatus::Delivered);
+        $this->setStatus($id, VolumeStatus::DELIVERED);
     }
 
     private function setStatus(int $id, int $status): void
