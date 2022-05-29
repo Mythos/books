@@ -30,7 +30,6 @@ class SeriesService
         $series->status = $apiSeries['status'];
         $series->total = $apiSeries['total'];
         $series->default_price = $apiSeries['default_price'];
-        $imageChanged = $series->image_url != $apiSeries['image_url'];
         $series->image_url = $apiSeries['image_url'];
         $series->source_status = $apiSeries['source_status'];
         $series->source_name = $apiSeries['source_name'];
@@ -64,18 +63,8 @@ class SeriesService
             }
         }
         $series->genres()->sync($genres);
-
         $series->save();
-
-        if (empty($series->image_url) || !$imageChanged) {
-            return;
-        }
-        $image = ImageHelpers::getImage($series->image_url);
-        if (!empty($image)) {
-            ImageHelpers::storePublicImage($image, $series->image_path . '/cover.jpg', true);
-            $nsfwImage = $image->pixelate(config('images.nsfw.pixelate', 10))->blur(config('images.nsfw.blur', 5))->encode('jpg');
-            ImageHelpers::storePublicImage($nsfwImage, $series->image_path . '/cover_sfw.jpg', true);
-        }
+        ImageHelpers::updateSeriesImage($series);
     }
 
     public function updateVolumes(Series $series): array
@@ -118,21 +107,10 @@ class SeriesService
                 $volume->isbn = $isbn;
             }
 
-            $imageChanged = $volume->image_url != $image_url;
-
             $volume->image_url = $image_url;
+            ImageHelpers::updateVolumeImage($volume);
             $volume->save();
             $data[] = $volume;
-
-            if (empty($image_url) || !$imageChanged) {
-                continue;
-            }
-            $image = ImageHelpers::getImage($image_url);
-            if (!empty($image)) {
-                ImageHelpers::storePublicImage($image, $volume->image_path . '/cover.jpg', true);
-                $nsfwImage = $image->pixelate(config('images.nsfw.pixelate', 10))->blur(config('images.nsfw.blur', 5))->encode('jpg');
-                ImageHelpers::storePublicImage($nsfwImage, $volume->image_path . '/cover_sfw.jpg', true);
-            }
         }
 
         $this->createNewVolumes($series, $newVolumes);
@@ -171,17 +149,8 @@ class SeriesService
                 'image_url' => $image_url,
             ]);
             $volume->save();
+            ImageHelpers::updateVolumeImage($volume, true);
             $data[] = $volume;
-
-            if (empty($image_url)) {
-                continue;
-            }
-            $image = ImageHelpers::getImage($image_url);
-            if (!empty($image)) {
-                ImageHelpers::storePublicImage($image, $volume->image_path . '/cover.jpg', true);
-                $nsfwImage = $image->pixelate(config('images.nsfw.pixelate', 10))->blur(config('images.nsfw.blur', 5))->encode('jpg');
-                ImageHelpers::storePublicImage($nsfwImage, $volume->image_path . '/cover_sfw.jpg', true);
-            }
         }
     }
 }

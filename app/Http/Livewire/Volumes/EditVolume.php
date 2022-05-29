@@ -85,15 +85,7 @@ class EditVolume extends Component
         }
         $this->validate();
         $this->volume->save();
-
-        if (!empty($this->volume->image_url)) {
-            $image = ImageHelpers::getImage($this->volume->image_url);
-            if (!empty($image)) {
-                ImageHelpers::storePublicImage($image, $this->volume->image_path . '/cover.jpg', true);
-                $nsfwImage = $image->pixelate(config('images.nsfw.pixelate', 10))->blur(config('images.nsfw.blur', 5))->encode('jpg');
-                ImageHelpers::storePublicImage($nsfwImage, $this->volume->image_path . '/cover_sfw.jpg', true);
-            }
-        }
+        ImageHelpers::updateVolumeImage($this->volume);
 
         $seriesService->resetNumbers($this->volume->series_id);
         toastr()->addSuccess(__('Volumme :number has been updated', ['number' => $this->volume->number]));

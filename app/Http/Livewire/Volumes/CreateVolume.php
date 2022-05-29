@@ -71,15 +71,7 @@ class CreateVolume extends Component
             $this->volume->publish_date = null;
         }
         $this->volume->save();
-
-        if (!empty($this->volume->image_url)) {
-            $image = ImageHelpers::getImage($this->volume->image_url);
-            if (!empty($image)) {
-                ImageHelpers::storePublicImage($image, $this->volume->image_path . '/cover.jpg', true);
-                $nsfwImage = $image->pixelate(config('images.nsfw.pixelate', 10))->blur(config('images.nsfw.blur', 5))->encode('jpg');
-                ImageHelpers::storePublicImage($nsfwImage, $this->volume->image_path . '/cover_sfw.jpg', true);
-            }
-        }
+        ImageHelpers::updateVolumeImage($this->volume, true);
 
         toastr()->addSuccess(__('Volumme :number has been created', ['number' => $this->volume->number]));
         $this->volume = $this->getModelInstance();

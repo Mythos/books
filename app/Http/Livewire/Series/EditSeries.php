@@ -40,8 +40,8 @@ class EditSeries extends Component
         'series.publisher_id' => 'nullable|exists:publishers,id',
         'series.subscription_active' => 'boolean',
         'series.mangapassion_id' => 'nullable|integer',
-        'series.image_url' => 'required|url',
-        'series.source_name' => 'required|integer|min:0',
+        'series.image_url' => 'nullable|url',
+        'series.source_status' => 'required|integer|min:0',
         'series.source_name' => 'nullable',
         'series.source_name_romaji' => 'nullable',
     ];
@@ -82,13 +82,8 @@ class EditSeries extends Component
             $this->series->default_price = floatval(Str::replace(',', '.', $this->series->default_price));
         }
         try {
-            $image = ImageHelpers::getImage($this->series->image_url);
             $this->series->save();
-            if (!empty($image)) {
-                ImageHelpers::storePublicImage($image, $this->series->image_path . '/cover.jpg', true);
-                $nsfwImage = $image->pixelate(config('images.nsfw.pixelate', 10))->blur(config('images.nsfw.blur', 5))->encode('jpg');
-                ImageHelpers::storePublicImage($nsfwImage, $this->series->image_path . '/cover_sfw.jpg', true);
-            }
+            ImageHelpers::updateSeriesImage($this->series);
             $this->updatePrices();
             $this->updateStatuses();
             toastr()->addSuccess(__(':name has been updated', ['name' => $this->series->name]));
