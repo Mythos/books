@@ -127,8 +127,7 @@ class MangaPassionApi
         if (!empty($additionalParameters)) {
             $url .= '/' . $additionalParameters;
         }
-        $response = Http::get($url);
 
-        return $response;
+        return Http::get($url);
     }
 }

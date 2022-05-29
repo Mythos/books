@@ -17,14 +17,14 @@ class UpcomingSeries extends Component
 
     public function render()
     {
-        $upcoming = Volume::with(['series:id,name,slug,category_id,status,source_name,source_name_romaji', 'series.publisher:id,name', 'series.genres:id,name', 'series.category:id,name,slug'])
-                                ->where('ignore_in_upcoming', 'false')
-                                ->whereRelation('series', 'status', '<>', SeriesStatus::CANCELED)
-                                ->whereIn('status', [VolumeStatus::NEW, VolumeStatus::ORDERED, VolumeStatus::SHIPPED])
-                                ->whereNotNull('publish_date');
+        $upcomingQuery = Volume::with(['series:id,name,slug,category_id,status,source_name,source_name_romaji', 'series.publisher:id,name', 'series.genres:id,name', 'series.category:id,name,slug'])
+                               ->where('ignore_in_upcoming', 'false')
+                               ->whereRelation('series', 'status', '<>', SeriesStatus::CANCELED)
+                               ->whereIn('status', [VolumeStatus::NEW, VolumeStatus::ORDERED, VolumeStatus::SHIPPED])
+                               ->whereNotNull('publish_date');
 
         if (!empty($this->search)) {
-            $upcoming->where(function ($query): void {
+            $upcomingQuery->where(function ($query): void {
                 $query->where('isbn', 'like', '%' . $this->search . '%')
                       ->orWhereHas('series', function ($query): void {
                           $query->where('name', 'like', '%' . $this->search . '%')
@@ -39,11 +39,11 @@ class UpcomingSeries extends Component
                       });
             });
         }
-        $this->upcoming = $upcoming->get()
-                                   ->sortBy([
-                                       ['publish_date', 'asc'],
-                                       ['series.name', 'asc'],
-                                   ]);
+        $this->upcoming = $upcomingQuery->get()
+                                        ->sortBy([
+                                            ['publish_date', 'asc'],
+                                            ['series.name', 'asc'],
+                                        ]);
 
         return view('livewire.series.upcoming-series');
     }
