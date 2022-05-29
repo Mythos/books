@@ -12,6 +12,10 @@ class ImageHelpers
 {
     private const THUMBNAIL_FOLDER = 'thumbnails/';
 
+    private const COVER_FILENAME = '/cover.jpg';
+
+    private const COVER_SFW_FILENAME = '/cover_sfw.jpg';
+
     public static function getImage($url): ?Image
     {
         if (empty($url)) {
@@ -53,10 +57,10 @@ class ImageHelpers
         $path = $series->image_path;
         $thumbnailPath = static::THUMBNAIL_FOLDER . $series->image_path;
         Storage::disk('public')->delete([
-            $path . '/cover.jpg',
-            $path . '/cover_sfw.jpg',
-            $thumbnailPath . '/cover.jpg',
-            $thumbnailPath . '/cover_sfw.jpg',
+            $path . static::COVER_FILENAME,
+            $path . static::COVER_SFW_FILENAME,
+            $thumbnailPath . static::COVER_FILENAME,
+            $thumbnailPath . static::COVER_SFW_FILENAME,
         ]);
     }
 
@@ -74,8 +78,8 @@ class ImageHelpers
         $path = $volume->image_path;
         $thumbnailPath = static::THUMBNAIL_FOLDER . $volume->image_path;
         Storage::disk('public')->delete([
-            $path . '/cover.jpg',
-            $path . '/cover_sfw.jpg',
+            $path . static::COVER_FILENAME,
+            $path . static::COVER_SFW_FILENAME,
         ]);
         Storage::disk('public')->deleteDirectory($thumbnailPath);
     }
@@ -84,9 +88,9 @@ class ImageHelpers
     {
         $image = ImageHelpers::getImage($url);
         if (!empty($image)) {
-            ImageHelpers::storePublicImage($image, $path . '/cover.jpg', true);
+            ImageHelpers::storePublicImage($image, $path . static::COVER_FILENAME, true);
             $nsfwImage = $image->pixelate(config('images.nsfw.pixelate', 10))->blur(config('images.nsfw.blur', 5))->encode('jpg');
-            ImageHelpers::storePublicImage($nsfwImage, $path . '/cover_sfw.jpg', true);
+            ImageHelpers::storePublicImage($nsfwImage, $path . static::COVER_SFW_FILENAME, true);
         }
     }
 }
