@@ -29,14 +29,12 @@ MIT
 
 ### Landing page & Gallery
 
-![Screenshot 2022-02-05 at 10-28-32 Mythos' Book Inventory System](https://user-images.githubusercontent.com/416568/152637303-94a354d9-c717-47b3-b238-c1a732339507.png)
-
+![Screenshot 2022-05-29 at 10-06-09 Mythos' Book Inventory System](https://user-images.githubusercontent.com/416568/170858541-f8f696e1-540c-424c-90df-5f3dc727d85a.png)
 
 ### Series details page
 
-![Screenshot 2022-03-19 at 06-33-45 Mythos' Book Inventory System](https://user-images.githubusercontent.com/416568/159108622-7a53bb94-652f-4868-b1fb-20d46a3495b8.png)
+![Screenshot 2022-05-29 at 10-06-19 More than a Doll - Mythos' Book Inventory System](https://user-images.githubusercontent.com/416568/170858547-117a7906-36ee-4e50-83f4-398850120e7d.png)
 
 ### Statistics
 
-![Screenshot 2022-03-19 at 06-33-51 Mythos' Book Inventory System](https://user-images.githubusercontent.com/416568/159108629-2f578831-720f-403f-baf2-40f3ada6d5eb.png)
-
+![Screenshot 2022-05-29 at 10-06-26 Statistiken - Mythos' Book Inventory System](https://user-images.githubusercontent.com/416568/170858550-a48e81d1-b91e-4601-8874-51ed682882ed.png)
