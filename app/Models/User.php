@@ -95,7 +95,7 @@ class User extends Authenticatable
     private function getGravatar($cacheKey, $avatarSize)
     {
         if (empty($this->id)) {
-            return;
+            return null;
         }
 
         return Cache::remember($cacheKey, config('cache.duration'), function () use ($avatarSize) {
