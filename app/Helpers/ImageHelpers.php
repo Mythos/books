@@ -47,10 +47,15 @@ class ImageHelpers
 
             return;
         }
-        Storage::disk('public')->delete($series->image_path . '/cover.jpg');
-        Storage::disk('public')->delete($series->image_path . '/cover_sfw.jpg');
-        Storage::disk('public')->delete('thumbnails/' . $series->image_path . '/cover.jpg');
-        Storage::disk('public')->delete('thumbnails/' . $series->image_path . '/cover_sfw.jpg');
+
+        $path = $series->image_path;
+        $thumbnailPath = 'thumbnails/' . $series->image_path;
+        Storage::disk('public')->delete([
+            $path . '/cover.jpg',
+            $path . '/cover_sfw.jpg',
+            $thumbnailPath . '/cover.jpg',
+            $thumbnailPath . '/cover_sfw.jpg',
+        ]);
     }
 
     public static function updateVolumeImage(Volume $volume, $wasCreated = false): void
@@ -64,9 +69,13 @@ class ImageHelpers
 
             return;
         }
-        Storage::disk('public')->delete($volume->image_path . '/cover.jpg');
-        Storage::disk('public')->delete($volume->image_path . '/cover_sfw.jpg');
-        Storage::disk('public')->deleteDirectory('thumbnails/' . $volume->image_path);
+        $path = $volume->image_path;
+        $thumbnailPath = 'thumbnails/' . $volume->image_path;
+        Storage::disk('public')->delete([
+            $path . '/cover.jpg',
+            $path . '/cover_sfw.jpg',
+        ]);
+        Storage::disk('public')->deleteDirectory($thumbnailPath);
     }
 
     public static function createAndSaveCoverImage($url, $path): void
