@@ -69,10 +69,10 @@ class MangaPassionApi
         return $series;
     }
 
-    public static function loadVolumes($mangaPassionId)
+    public static function loadVolumes($mangaPassionId, $total)
     {
         $result = [];
-        $response = self::request($mangaPassionId, 'volumes?itemsPerPage=500&order[number]=asc');
+        $response = self::request($mangaPassionId, 'volumes?itemsPerPage=' . $total . '&order[number]=asc');
         if ($response->successful()) {
             $responseBody = $response->json();
 

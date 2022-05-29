@@ -140,7 +140,7 @@ class CreateSeries extends Component
             return;
         }
 
-        $volumesResult = MangaPassionApi::loadVolumes($this->series->mangapassion_id);
+        $volumesResult = MangaPassionApi::loadVolumes($this->series->mangapassion_id, $this->series->total ?? 500);
 
         foreach ($volumesResult as $newVolume) {
             $number = $newVolume['number'];

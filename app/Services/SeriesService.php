@@ -75,7 +75,7 @@ class SeriesService
         }
         $volumes = Volume::whereSeriesId($series->id)->get();
 
-        $volumesResult = MangaPassionApi::loadVolumes($series->mangapassion_id);
+        $volumesResult = MangaPassionApi::loadVolumes($series->mangapassion_id, $series->total ?? 500);
         $newVolumes = [];
 
         foreach ($volumesResult as $volumeResult) {
