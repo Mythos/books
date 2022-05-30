@@ -4,7 +4,7 @@ namespace App\Constants;
 
 class SeriesStatus
 {
-    public const NEW = 0;
+    public const ANNOUNCED = 0;
 
     public const ONGOING = 1;
 

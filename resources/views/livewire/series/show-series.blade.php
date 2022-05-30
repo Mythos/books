@@ -58,11 +58,11 @@
             </div>
             <div>
                 <h1 class="my-0">{{ $series->name }}</h1>
-                @if (auth()->user()->secondary_title_preference == 1)
+                @if (auth()->user()->secondary_title_preference == App\Constants\SecondaryTitlePreference::ORIGINAL)
                     @if (!empty($series->source_name))
                         <span class="text-secondary my-0 fs-4" data-bs-toggle="tooltip" title="{{ $series->source_name_romaji }}">{{ $series->source_name }}</span>
                     @endif
-                @elseif (auth()->user()->secondary_title_preference == 2)
+                @elseif (auth()->user()->secondary_title_preference == App\Constants\SecondaryTitlePreference::ROMAJI)
                     @if (!empty($series->source_name_romaji))
                         <span class="text-secondary my-0 fs-4" data-bs-toggle="tooltip" title="{{ $series->source_name }}">{{ $series->source_name_romaji }}</span>
                     @endif

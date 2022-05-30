@@ -22,7 +22,7 @@
             </div>
         @else
             @foreach ($series as $item)
-                <div class="col-sm-12 col-md-6 col-lg-3 d-flex align-self-stretch @if (!empty($item) && $item->status == 4) opacity-50 @endif">
+                <div class="col-sm-12 col-md-6 col-lg-3 d-flex align-self-stretch @if (!empty($item) && $item->status == App\Constants\SeriesStatus::CANCELED) opacity-50 @endif">
                     <div class="card shadow-sm mb-4" style="width: 30rem;">
                         <img src="{{ $item->image }}" alt="{{ $item->name }}" class="card-img-top" style="height: 400px; object-fit: contain;">
                         <div class="card-body d-flex flex-column">

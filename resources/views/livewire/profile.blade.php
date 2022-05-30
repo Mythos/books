@@ -74,8 +74,8 @@
                         <div class="col-md-12">
                             <label for="user.secondary_title_preference" class="col-form-label required">{{ __('Alternative Title Format') }}</label>
                             <select id="user.secondary_title_preference" name="user.secondary_title_preference" class="form-select @error('user.secondary_title_preference') is-invalid @enderror" wire:model='user.secondary_title_preference' required>
-                                <option value="1">{{ __('Original Title') }}</option>
-                                <option value="2">{{ __('Romaji') }}</option>
+                                <option value="{{ App\Constants\SecondaryTitlePreference::ORIGINAL }}">{{ __('Original Title') }}</option>
+                                <option value="{{ App\Constants\SecondaryTitlePreference::ROMAJI }}">{{ __('Romaji') }}</option>
                             </select>
                             @error('user.secondary_title_preference')
                                 <span class="invalid-feedback" role="alert">

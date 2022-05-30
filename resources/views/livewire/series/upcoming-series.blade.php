@@ -35,13 +35,13 @@
                             <td>{{ $volume->isbn_formatted }}</td>
                             <td class="text-end">{{ number_format($volume->price, 2) }} {{ config('app.currency') }}</td>
                             <td class="text-center">
-                                @if ($volume->status == 0)
+                                @if ($volume->status == App\Constants\VolumeStatus::NEW)
                                     <a wire:click.prevent='ordered({{ $volume->id }})' href="#" title="{{ __('Sets the status to Ordered') }}"><span class="fa fa-shopping-cart"></span></a>
                                 @endif
-                                @if ($volume->status == 1)
+                                @if ($volume->status == App\Constants\VolumeStatus::ORDERED)
                                     <a wire:click.prevent='shipped({{ $volume->id }})' href="#" title="{{ __('Sets the status to Shipped') }}"><span class="fa fa-truck"></span></a>
                                 @endif
-                                @if ($volume->status == 2)
+                                @if ($volume->status == App\Constants\VolumeStatus::SHIPPED)
                                     <a wire:click.prevent='delivered({{ $volume->id }})' href="#" title="{{ __('Sets the status to Delivered') }}"><span class="fa fa-check"></span></a>
                                 @endif
                             </td>

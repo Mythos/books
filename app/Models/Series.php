@@ -129,7 +129,7 @@ class Series extends Model
     public function getStatusNameAttribute(): string
     {
         switch ($this->status) {
-            case SeriesStatus::NEW:
+            case SeriesStatus::ANNOUNCED:
                 return __('Announced');
             case SeriesStatus::ONGOING:
                 return __('Ongoing');
@@ -152,7 +152,7 @@ class Series extends Model
     public function getStatusClassAttribute(): string
     {
         switch ($this->status) {
-            case SeriesStatus::NEW:
+            case SeriesStatus::ANNOUNCED:
                 return 'badge bg-secondary';
             case SeriesStatus::ONGOING:
                 return 'badge bg-primary';

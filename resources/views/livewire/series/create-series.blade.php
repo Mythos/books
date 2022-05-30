@@ -91,11 +91,11 @@
                         <div class="col-md-12">
                             <label for="series.status" class="col-form-label required">{{ __('Status') }}</label>
                             <select id="series.status" name="series.status" class="form-select @error('series.status') is-invalid @enderror" wire:model='series.status' required>
-                                <option value="0">{{ __('Announced') }}</option>
-                                <option value="1">{{ __('Ongoing') }}</option>
-                                <option value="2">{{ __('Finished') }}</option>
-                                <option value="3">{{ __('Canceled') }}</option>
-                                <option value="4">{{ __('Paused') }}</option>
+                                <option value="{{ App\Constants\SeriesStatus::ANNOUNCED }}">{{ __('Announced') }}</option>
+                                <option value="{{ App\Constants\SeriesStatus::ONGOING }}">{{ __('Ongoing') }}</option>
+                                <option value="{{ App\Constants\SeriesStatus::FINISHED }}">{{ __('Finished') }}</option>
+                                <option value="{{ App\Constants\SeriesStatus::PAUSED }}">{{ __('Canceled') }}</option>
+                                <option value="{{ App\Constants\SeriesStatus::CANCELED }}">{{ __('Paused') }}</option>
                             </select>
                             @error('series.status')
                                 <span class="invalid-feedback" role="alert">
@@ -143,7 +143,7 @@
                     <div class="row mt-3">
                         <div class="col-md-12">
                             <div class="form-check">
-                                <input id="series.subscription_active" type="checkbox" class="form-check-input @error('series.subscription_active') is-invalid @enderror" name="subscription_active" wire:model='series.subscription_active' @if ($series->status == 4) disabled @endif>
+                                <input id="series.subscription_active" type="checkbox" class="form-check-input @error('series.subscription_active') is-invalid @enderror" name="subscription_active" wire:model='series.subscription_active' @if ($series->status == App\Constants\SeriesStatus::CANCELED) disabled @endif>
                                 <label for="series.subscription_active" class="form-check-label">{{ __('Subscription active') }}</label>
                             </div>
                             @error('series.subscription_active')

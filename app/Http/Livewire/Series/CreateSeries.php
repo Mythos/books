@@ -61,7 +61,7 @@ class CreateSeries extends Component
         $this->publishers = Publisher::orderBy('name')->get();
         $this->category = $category;
         $this->series = new Series([
-            'status' => SeriesStatus::NEW,
+            'status' => SeriesStatus::ANNOUNCED,
             'category_id' => $category->id,
             'is_nsfw' => false,
             'subscription_active' => false,
