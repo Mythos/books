@@ -57,6 +57,7 @@ class Article extends Model
         'release_date',
         'status',
         'category_id',
+        'image_url',
     ];
 
     /**
@@ -96,7 +97,7 @@ class Article extends Model
     {
         $path = 'storage/articles/' . $this->id . '/';
 
-        return url($path . 'image.jpg');
+        return url($path . 'image.' . config('images.type'));
     }
 
     /**

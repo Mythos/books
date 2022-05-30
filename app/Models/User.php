@@ -107,7 +107,7 @@ class User extends Authenticatable
 
             $image = Image::make($url)->resize(null, $avatarSize, function ($constraint): void {
                 $constraint->aspectRatio();
-            })->encode('jpg');
+            })->encode(config('images.type'));
 
             return $image->encode('data-url')->__toString();
         });

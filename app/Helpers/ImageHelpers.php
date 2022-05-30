@@ -12,9 +12,9 @@ class ImageHelpers
 {
     private const THUMBNAIL_FOLDER = 'thumbnails/';
 
-    private const COVER_FILENAME = '/cover.jpg';
+    private const COVER_FILENAME = 'cover';
 
-    private const COVER_SFW_FILENAME = '/cover_sfw.jpg';
+    private const COVER_SFW_FILENAME = 'cover_sfw';
 
     public static function getImage($url): ?Image
     {
@@ -24,7 +24,7 @@ class ImageHelpers
 
         return FacadesImage::make($url)->resize(null, 400, function ($constraint): void {
             $constraint->aspectRatio();
-        })->encode('jpg');
+        })->encode(config('images.type'));
     }
 
     public static function storePublicImage($image, $path, $generateThumbnail): void
@@ -38,7 +38,7 @@ class ImageHelpers
         }
         $thumbnail = FacadesImage::make(clone $image)->resize(null, 50, function ($constraint): void {
             $constraint->aspectRatio();
-        })->encode('jpg');
+        })->encode(config('images.type'));
         Storage::disk('public')->put(static::THUMBNAIL_FOLDER . $path, $thumbnail);
     }
 
@@ -56,11 +56,13 @@ class ImageHelpers
 
         $path = $series->image_path;
         $thumbnailPath = static::THUMBNAIL_FOLDER . $series->image_path;
+        $coverFilename = static::COVER_FILENAME . '.' . config('images.type');
+        $coverSfwFilename = static::COVER_SFW_FILENAME . '.' . config('images.type');
         Storage::disk('public')->delete([
-            $path . static::COVER_FILENAME,
-            $path . static::COVER_SFW_FILENAME,
-            $thumbnailPath . static::COVER_FILENAME,
-            $thumbnailPath . static::COVER_SFW_FILENAME,
+            implode(DIRECTORY_SEPARATOR, [$path, $coverFilename]),
+            implode(DIRECTORY_SEPARATOR, [$path, $coverSfwFilename]),
+            implode(DIRECTORY_SEPARATOR, [$thumbnailPath, $coverFilename]),
+            implode(DIRECTORY_SEPARATOR, [$thumbnailPath, $coverSfwFilename]),
         ]);
     }
 
@@ -77,9 +79,11 @@ class ImageHelpers
         }
         $path = $volume->image_path;
         $thumbnailPath = static::THUMBNAIL_FOLDER . $volume->image_path;
+        $coverFilename = static::COVER_FILENAME . '.' . config('images.type');
+        $coverSfwFilename = static::COVER_SFW_FILENAME . '.' . config('images.type');
         Storage::disk('public')->delete([
-            $path . static::COVER_FILENAME,
-            $path . static::COVER_SFW_FILENAME,
+            implode(DIRECTORY_SEPARATOR, [$path, $coverFilename]),
+            implode(DIRECTORY_SEPARATOR, [$path, $coverSfwFilename]),
         ]);
         Storage::disk('public')->deleteDirectory($thumbnailPath);
     }
@@ -88,9 +92,19 @@ class ImageHelpers
     {
         $image = ImageHelpers::getImage($url);
         if (!empty($image)) {
-            ImageHelpers::storePublicImage($image, $path . static::COVER_FILENAME, true);
-            $nsfwImage = $image->pixelate(config('images.nsfw.pixelate', 10))->blur(config('images.nsfw.blur', 5))->encode('jpg');
-            ImageHelpers::storePublicImage($nsfwImage, $path . static::COVER_SFW_FILENAME, true);
+            $coverFilename = static::COVER_FILENAME . '.' . config('images.type');
+            $coverSfwFilename = static::COVER_SFW_FILENAME . '.' . config('images.type');
+            ImageHelpers::storePublicImage($image, implode(DIRECTORY_SEPARATOR, [$path, $coverFilename]), true);
+            $nsfwImage = $image->pixelate(config('images.nsfw.pixelate', 10))->blur(config('images.nsfw.blur', 5))->encode(config('images.type'));
+            ImageHelpers::storePublicImage($nsfwImage, implode(DIRECTORY_SEPARATOR, [$path, $coverSfwFilename]), true);
+        }
+    }
+
+    public static function createAndSaveArticleImage($url, $path): void
+    {
+        $image = ImageHelpers::getImage($url);
+        if (!empty($image)) {
+            ImageHelpers::storePublicImage($image, $path . '/image.' . config('images.type'), false);
         }
     }
 }

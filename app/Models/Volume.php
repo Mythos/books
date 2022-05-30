@@ -198,10 +198,10 @@ class Volume extends Model
     {
         $path = 'storage/' . $this->image_path . '/';
         if ($this->series->is_nsfw && !session('show_nsfw', false)) {
-            return url($path . 'cover_sfw.jpg');
+            return url($path . 'cover_sfw.' . config('images.type'));
         }
 
-        return url($path . 'cover.jpg');
+        return url($path . 'cover.' . config('images.type'));
     }
 
     /**
@@ -227,9 +227,9 @@ class Volume extends Model
 
         $path = 'storage/thumbnails/' . $this->image_path . '/';
         if ($this->series->is_nsfw && !session('show_nsfw', false)) {
-            return url($path . 'cover_sfw.jpg');
+            return url($path . 'cover_sfw.' . config('images.type'));
         }
 
-        return url($path . 'cover.jpg');
+        return url($path . 'cover.' . config('images.type'));
     }
 }

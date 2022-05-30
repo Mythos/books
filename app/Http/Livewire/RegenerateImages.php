@@ -3,6 +3,7 @@
 namespace App\Http\Livewire;
 
 use App\Helpers\ImageHelpers;
+use App\Models\Article;
 use App\Models\Series;
 use Livewire\Component;
 
@@ -15,6 +16,10 @@ class RegenerateImages extends Component
 
     public function regenerate(): void
     {
+        $articles = Article::whereNotNull('image_url')->orderBy('id')->get();
+        foreach ($articles as $article) {
+            ImageHelpers::createAndSaveArticleImage($article->image_url, $article->image_path);
+        }
         $series = Series::with('volumes')->whereNotNull('image_url')->orderBy('id')->get();
         foreach ($series as $item) {
             ImageHelpers::createAndSaveCoverImage($item->image_url, $item->image_path);
