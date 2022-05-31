@@ -124,8 +124,13 @@ class EditSeries extends Component
 
     private function updateStatuses(): void
     {
+        if (!$this->series->wasChanged('subscription_active')) {
+            return;
+        }
         if ($this->series->subscription_active) {
             Volume::whereSeriesId($this->series->id)->where('status', '=', VolumeStatus::NEW)->update(['status' => VolumeStatus::ORDERED]);
+        } else {
+            Volume::whereSeriesId($this->series->id)->where('status', '=', VolumeStatus::ORDERED)->update(['status' => VolumeStatus::NEW]);
         }
     }
 }
