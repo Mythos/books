@@ -90,8 +90,8 @@
                                 <option value="{{ App\Constants\SeriesStatus::ANNOUNCED }}">{{ __('Announced') }}</option>
                                 <option value="{{ App\Constants\SeriesStatus::ONGOING }}">{{ __('Ongoing') }}</option>
                                 <option value="{{ App\Constants\SeriesStatus::FINISHED }}">{{ __('Finished') }}</option>
-                                <option value="{{ App\Constants\SeriesStatus::PAUSED }}">{{ __('Canceled') }}</option>
-                                <option value="{{ App\Constants\SeriesStatus::CANCELED }}">{{ __('Paused') }}</option>
+                                <option value="{{ App\Constants\SeriesStatus::CANCELED }}">{{ __('Canceled') }}</option>
+                                <option value="{{ App\Constants\SeriesStatus::PAUSED }}">{{ __('Paused') }}</option>
                             </select>
                             @error('series.status')
                                 <span class="invalid-feedback" role="alert">
