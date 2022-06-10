@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "955645582b6831c55bd29c5737ae488b",
+    "content-hash": "a91a7905766796c7724f468ca269fe97",
     "packages": [
         {
             "name": "brick/math",
@@ -3415,16 +3415,16 @@
         },
         {
             "name": "php-flasher/flasher",
-            "version": "v1.0.7",
+            "version": "v1.5.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-flasher/flasher.git",
-                "reference": "b0ac0e8c40ce856cc56bf7753737438568862f7c"
+                "reference": "0ea6fdfbfdfd736dabe348575a3533132981da77"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-flasher/flasher/zipball/b0ac0e8c40ce856cc56bf7753737438568862f7c",
-                "reference": "b0ac0e8c40ce856cc56bf7753737438568862f7c",
+                "url": "https://api.github.com/repos/php-flasher/flasher/zipball/0ea6fdfbfdfd736dabe348575a3533132981da77",
+                "reference": "0ea6fdfbfdfd736dabe348575a3533132981da77",
                 "shasum": ""
             },
             "require": {
@@ -3469,7 +3469,7 @@
             ],
             "support": {
                 "issues": "https://github.com/php-flasher/flasher/issues",
-                "source": "https://github.com/php-flasher/flasher/tree/v1.0.7"
+                "source": "https://github.com/php-flasher/flasher/tree/v1.5.2"
             },
             "funding": [
                 {
@@ -3489,7 +3489,7 @@
                     "type": "patreon"
                 }
             ],
-            "time": "2022-05-22T12:07:55+00:00"
+            "time": "2022-06-07T22:58:35+00:00"
         },
         {
             "name": "php-flasher/flasher-laravel",
@@ -10614,5 +10614,5 @@
         "php": "^8.0.2"
     },
     "platform-dev": [],
-    "plugin-api-version": "2.2.0"
+    "plugin-api-version": "2.3.0"
 }
