@@ -21,6 +21,7 @@ class Statistics extends Component
         return view('livewire.statistics', [
             'unreadSeries' => $this->getUnreadSeries(),
             'mostReadSeries' => $this->getMostReadSeries(),
+            'mostValuableSeries' => $this->getMostValuableSeries(),
         ])->extends('layouts.app')->section('content');
     }
 
@@ -38,6 +39,19 @@ class Statistics extends Component
                        })
                        ->orderByDesc('read_sum')
                        ->paginate(10, ['*'], 'mostread');
+    }
+
+    private function getMostValuableSeries()
+    {
+        return Series::with(['category', 'volumes'])
+                       ->whereHas('volumes', function (Builder $query): void {
+                           $query->whereIn('status', [VolumeStatus::DELIVERED, VolumeStatus::READ]);
+                       })
+                       ->withSum(['volumes' => function ($query): void {
+                           $query->whereIn('status', [VolumeStatus::DELIVERED, VolumeStatus::READ]);
+                       }], 'price')
+                       ->orderByDesc('volumes_sum_price')
+                       ->paginate(10, ['*'], 'mostvaluable');
     }
 
     private function getUnreadSeries()
