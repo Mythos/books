@@ -99,6 +99,7 @@ class Series extends Model
         'source_status',
         'source_name',
         'source_name_romaji',
+        'ignore_in_upcoming',
     ];
 
     /**

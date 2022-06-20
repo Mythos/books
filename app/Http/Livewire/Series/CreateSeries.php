@@ -40,6 +40,7 @@ class CreateSeries extends Component
         'series.source_status' => 'required|integer|min:0',
         'series.source_name' => 'nullable',
         'series.source_name_romaji' => 'nullable',
+        'series.ignore_in_upcoming' => 'boolean',
     ];
 
     public function updated($property, $value): void

@@ -17,9 +17,10 @@ class UpcomingSeries extends Component
 
     public function render()
     {
-        $upcomingQuery = Volume::with(['series:id,name,slug,category_id,status,source_name,source_name_romaji', 'series.publisher:id,name', 'series.genres:id,name', 'series.category:id,name,slug'])
+        $upcomingQuery = Volume::with(['series:id,name,slug,category_id,status,source_name,source_name_romaji,ignore_in_upcoming', 'series.publisher:id,name', 'series.genres:id,name', 'series.category:id,name,slug'])
                                ->where('ignore_in_upcoming', 'false')
                                ->whereRelation('series', 'status', '<>', SeriesStatus::CANCELED)
+                               ->whereRelation('series', 'ignore_in_upcoming', '=', 'false')
                                ->whereIn('status', [VolumeStatus::NEW, VolumeStatus::ORDERED, VolumeStatus::SHIPPED])
                                ->whereNotNull('publish_date');
 
