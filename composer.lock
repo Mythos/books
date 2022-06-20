@@ -3212,16 +3212,16 @@
         },
         {
             "name": "nicebooks/isbn",
-            "version": "0.3.23",
+            "version": "0.3.25",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nicebooks-com/isbn.git",
-                "reference": "83d1a214181c3fcf122e422f15f9f2fd4200590e"
+                "reference": "eb43ed0326dc8a2934ed1b8601fc4279d36f7a91"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nicebooks-com/isbn/zipball/83d1a214181c3fcf122e422f15f9f2fd4200590e",
-                "reference": "83d1a214181c3fcf122e422f15f9f2fd4200590e",
+                "url": "https://api.github.com/repos/nicebooks-com/isbn/zipball/eb43ed0326dc8a2934ed1b8601fc4279d36f7a91",
+                "reference": "eb43ed0326dc8a2934ed1b8601fc4279d36f7a91",
                 "shasum": ""
             },
             "require": {
@@ -3255,9 +3255,9 @@
             ],
             "support": {
                 "issues": "https://github.com/nicebooks-com/isbn/issues",
-                "source": "https://github.com/nicebooks-com/isbn/tree/0.3.23"
+                "source": "https://github.com/nicebooks-com/isbn/tree/0.3.25"
             },
-            "time": "2022-05-21T23:19:11+00:00"
+            "time": "2022-06-19T22:24:57+00:00"
         },
         {
             "name": "nikic/php-parser",
@@ -10614,5 +10614,5 @@
         "php": "^8.0.2"
     },
     "platform-dev": [],
-    "plugin-api-version": "2.2.0"
+    "plugin-api-version": "2.3.0"
 }
