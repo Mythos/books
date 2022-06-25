@@ -20,7 +20,7 @@
         "laravel/ui": "^3.4",
         "livewire/livewire": "^2.10",
         "nicebooks/isbn": "^0.3.13",
-        "php-flasher/flasher": "1.0.7",
+        "php-flasher/flasher": "1.6.3",
         "php-flasher/flasher-toastr": "1.0.7",
         "php-flasher/flasher-laravel": "1.0.7",
         "php-flasher/flasher-toastr-laravel": "1.0.7",
