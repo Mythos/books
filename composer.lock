@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "4298a7b32c117701bc647e3da8ff96f1",
+    "content-hash": "95e4797114d675f94038719fdbd8dc42",
     "packages": [
         {
             "name": "brick/math",
@@ -3032,16 +3032,16 @@
         },
         {
             "name": "php-flasher/flasher-toastr",
-            "version": "v1.0.7",
+            "version": "v1.0.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-flasher/flasher-toastr.git",
-                "reference": "840ea7b71831cd3158328ff9ff02313f0ca2ba6c"
+                "reference": "ec2f8cc6a44f1328bda680766beb40142e3edee6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-flasher/flasher-toastr/zipball/840ea7b71831cd3158328ff9ff02313f0ca2ba6c",
-                "reference": "840ea7b71831cd3158328ff9ff02313f0ca2ba6c",
+                "url": "https://api.github.com/repos/php-flasher/flasher-toastr/zipball/ec2f8cc6a44f1328bda680766beb40142e3edee6",
+                "reference": "ec2f8cc6a44f1328bda680766beb40142e3edee6",
                 "shasum": ""
             },
             "require": {
@@ -3082,7 +3082,7 @@
             ],
             "support": {
                 "issues": "https://github.com/php-flasher/flasher-toastr/issues",
-                "source": "https://github.com/php-flasher/flasher-toastr/tree/v1.0.7"
+                "source": "https://github.com/php-flasher/flasher-toastr/tree/v1.0.8"
             },
             "funding": [
                 {
@@ -3102,7 +3102,7 @@
                     "type": "patreon"
                 }
             ],
-            "time": "2022-05-22T12:07:55+00:00"
+            "time": "2022-05-26T07:17:06+00:00"
         },
         {
             "name": "php-flasher/flasher-toastr-laravel",
