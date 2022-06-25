@@ -23,7 +23,7 @@
         "php-flasher/flasher": "1.0.7",
         "php-flasher/flasher-toastr": "1.0.7",
         "php-flasher/flasher-laravel": "1.0.7",
-        "php-flasher/flasher-toastr-laravel": "1.0.7",
+        "php-flasher/flasher-toastr-laravel": "1.0.8",
         "spatie/laravel-sluggable": "^3.3"
     },
     "require-dev": {

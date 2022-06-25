@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "4298a7b32c117701bc647e3da8ff96f1",
+    "content-hash": "2114203ae1c66923a3ad9889fd015f74",
     "packages": [
         {
             "name": "brick/math",
@@ -3106,7 +3106,7 @@
         },
         {
             "name": "php-flasher/flasher-toastr-laravel",
-            "version": "v1.0.7",
+            "version": "v1.0.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-flasher/flasher-toastr-laravel.git",
@@ -3173,7 +3173,7 @@
             ],
             "support": {
                 "issues": "https://github.com/php-flasher/flasher-toastr-laravel/issues",
-                "source": "https://github.com/php-flasher/flasher-toastr-laravel/tree/v1.0.7"
+                "source": "https://github.com/php-flasher/flasher-toastr-laravel/tree/v1.0.8"
             },
             "funding": [
                 {
