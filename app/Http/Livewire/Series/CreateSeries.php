@@ -66,6 +66,7 @@ class CreateSeries extends Component
             'category_id' => $category->id,
             'is_nsfw' => false,
             'subscription_active' => false,
+            'ignore_in_upcoming' => false,
         ]);
     }
 
