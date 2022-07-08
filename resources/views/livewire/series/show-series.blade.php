@@ -28,9 +28,6 @@
                     @endforeach
                 </span>
             @endif
-            @if (!empty($series->mangapassion_id))
-                <button class="btn btn-primary btn-sm mt-3" wire:click="update" wire:loading.attr='disabled'>{{ __('Update') }}</button>
-            @endif
         </div>
         <div class="col-sm-12 col-md-12 col-lg-9 mb-2 pl-4">
             <div class="text-end">
@@ -38,8 +35,11 @@
                     <span class="badge bg-secondary">ID: {{ $series->id }}</span>
                     <span class="badge bg-secondary">MP-ID: {{ $series->mangapassion_id ?? 'NULL' }}</span>
                 @endif
-                <a href="{{ route('series.edit', [$category, $series]) }}" class="btn btn-link py-0 px-2"><span class="fas fa-edit"></span></a>
-                <a href="#" class="dropdown-toggle text-decoration-none" id="series-search" data-bs-toggle="dropdown" aria-expanded="false">
+                @if (!empty($series->mangapassion_id))
+                    <a class="btn btn-link py-0 px-1" wire:click="update" wire:loading.attr='disabled'><span class="fas fa-sync"></span></a>
+                @endif
+                <a href="{{ route('series.edit', [$category, $series]) }}" class="btn btn-link py-0 px-1"><span class="fas fa-edit"></span></a>
+                <a href="#" class="dropdown-toggle text-decoration-none py-0 px-1" id="series-search" data-bs-toggle="dropdown" aria-expanded="false">
                     <span class="fas fa-search"></span>
                 </a>
                 <ul class="dropdown-menu" aria-labelledby="series-search">
