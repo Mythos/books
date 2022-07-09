@@ -70,7 +70,7 @@
                     <div class="row mt-1">
                         <div class="col-md-12">
                             <label for="volume.status" class="col-form-label required">{{ __('Status') }}</label>
-                            <select id="input-volume.status" name="input-volume.status" class="form-select @error('volume.status') is-invalid @enderror" wire:model='volume.status' required>
+                            <select id="volume.status" name="volume.status" class="form-select @error('volume.status') is-invalid @enderror" wire:model='volume.status' required>
                                 <option value="{{ App\Constants\VolumeStatus::NEW }}">{{ __('New') }}</option>
                                 <option value="{{ App\Constants\VolumeStatus::ORDERED }}">{{ __('Ordered') }}</option>
                                 <option value="{{ App\Constants\VolumeStatus::SHIPPED }}">{{ __('Shipped') }}</option>
