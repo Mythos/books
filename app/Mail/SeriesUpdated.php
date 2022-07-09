@@ -29,6 +29,6 @@ class SeriesUpdated extends Mailable
      */
     public function build()
     {
-        return $this->markdown('series-updated');
+        return $this->subject(__('Summary of changes'))->markdown('series-updated');
     }
 }
