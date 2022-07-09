@@ -42,10 +42,10 @@ class MangaPassionApi
         $series['mangapassion_id'] = $result['id'];
 
         $series['name'] = $result['title'];
-        $series['description'] = $result['description'];
+        $series['description'] = $result['description'] ?? '';
         $series['status'] = $result['status'] ?? SeriesStatus::ANNOUNCED;
-        $series['image_url'] = $result['cover'];
-        $series['total'] = $result['numVolumes'];
+        $series['image_url'] = $result['cover'] ?? '';
+        $series['total'] = $result['numVolumes'] ?? 0;
         if (!empty($result['sources'])) {
             $source = $result['sources'][0];
             $series['total'] = $source['volumes'] ?? null;
