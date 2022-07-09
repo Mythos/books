@@ -11,10 +11,12 @@
         </ol>
     </nav>
     <div class="row bg-white shadow-sm rounded py-2">
-        @livewire('statistics.volumes-per-status')
         @livewire('statistics.series-per-publisher')
         @livewire('statistics.series-per-genre')
         @livewire('statistics.series-per-status')
+        @livewire('statistics.volumes-per-status')
+        @livewire('statistics.volumes-per-publisher')
+        @livewire('statistics.volumes-per-genre')
     </div>
     <div class="row bg-white shadow-sm rounded my-2 py-2">
         <div class="col-sm-12 col-md-12 col-lg-6">

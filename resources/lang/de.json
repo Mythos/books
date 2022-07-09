@@ -131,6 +131,8 @@
     "Version": "Version",
     "Volume :number": "Band :number",
     "Volumes (total)": "Bände (gesamt)",
+    "Volumes per genre": "Bände pro Genre",
+    "Volumes per publisher": "Bände pro Verlag",
     "Volumes per status": "Bände pro Status",
     "Volumes": "Bände",
     "Volumme :number has been created": "Band :number wurde angelegt",
