@@ -35,7 +35,7 @@
                     </div>
                     <div class="row mt-1">
                         <div class="col-md-12">
-                            <label for="series.source_name" class="col-form-label required">{{ __('Original Title') }}</label>
+                            <label for="series.source_name" class="col-form-label">{{ __('Original Title') }}</label>
                             <div class="input-group">
                                 <input id="series.source_name" name="series.source_name" type="text" class="form-control @error('series.source_name') is-invalid @enderror" wire:model='series.source_name' autofocus>
                                 @error('series.source_name')
@@ -48,7 +48,7 @@
                     </div>
                     <div class="row mt-1">
                         <div class="col-md-12">
-                            <label for="series.source_name_romaji" class="col-form-label required">{{ __('Original Title (Romaji)') }}</label>
+                            <label for="series.source_name_romaji" class="col-form-label">{{ __('Original Title (Romaji)') }}</label>
                             <div class="input-group">
                                 <input id="series.source_name_romaji" name="series.source_name_romaji" type="text" class="form-control @error('series.source_name_romaji') is-invalid @enderror" wire:model='series.source_name_romaji' autofocus>
                                 @error('series.source_name_romaji')
@@ -61,8 +61,8 @@
                     </div>
                     <div class="row mt-1">
                         <div class="col-md-12">
-                            <label for="series.description" class="col-form-label required">{{ __('Description') }}</label>
-                            <textarea id="series.description" name="series.description" type="text" class="form-control @error('series.description') is-invalid @enderror" wire:model='series.description'>
+                            <label for="series.description" class="col-form-label">{{ __('Description') }}</label>
+                            <textarea id="series.description" name="series.description" type="text" class="form-control @error('series.description') is-invalid @enderror" wire:model='series.description' rows="5">
                             </textarea>
                             @error('series.description')
                                 <span class="invalid-feedback" role="alert">
@@ -106,6 +106,23 @@
                     </div>
                     <div class="row mt-1">
                         <div class="col-md-12">
+                            <label for="series.source_status" class="col-form-label required">{{ __('Status (Source)') }}</label>
+                            <select id="series.source_status" name="series.source_status" class="form-select @error('series.source_status') is-invalid @enderror" wire:model='series.source_status' required>
+                                <option value="{{ App\Constants\SeriesStatus::ANNOUNCED }}">{{ __('Announced') }}</option>
+                                <option value="{{ App\Constants\SeriesStatus::ONGOING }}">{{ __('Ongoing') }}</option>
+                                <option value="{{ App\Constants\SeriesStatus::FINISHED }}">{{ __('Finished') }}</option>
+                                <option value="{{ App\Constants\SeriesStatus::CANCELED }}">{{ __('Canceled') }}</option>
+                                <option value="{{ App\Constants\SeriesStatus::PAUSED }}">{{ __('Paused') }}</option>
+                            </select>
+                            @error('series.source_status')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+                        </div>
+                    </div>
+                    <div class="row mt-1">
+                        <div class="col-md-12">
                             <label for="series.default_price" class="col-form-label">{{ __('Default price') }}</label>
                             <div class="input-group">
                                 <input id="series.default_price" name="series.default_price" type="text" class="form-control @error('series.default_price') is-invalid @enderror" wire:model='series.default_price'>
@@ -131,7 +148,7 @@
                     </div>
                     <div class="row mt-1">
                         <div class="col-md-12">
-                            <label for="series.image_url" class="col-form-label required">{{ __('Image URL') }}</label>
+                            <label for="series.image_url" class="col-form-label">{{ __('Image URL') }}</label>
                             <input id="series.image_url" name="series.image_url" type="text" class="form-control @error('series.image_url') is-invalid @enderror" wire:model='series.image_url'>
                             @error('series.image_url')
                                 <span class="invalid-feedback" role="alert">

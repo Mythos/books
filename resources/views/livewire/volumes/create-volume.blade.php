@@ -76,7 +76,7 @@
                     </div>
                     <div class="row mt-1">
                         <div class="col-md-12">
-                            <label for="volume.image_url" class="col-form-label required">{{ __('Image URL') }}</label>
+                            <label for="volume.image_url" class="col-form-label">{{ __('Image URL') }}</label>
                             <input id="volume.image_url" name="volume.image_url" type="text" class="form-control @error('volume.image_url') is-invalid @enderror" wire:model='volume.image_url'>
                             @error('volume.image_url')
                                 <span class="invalid-feedback" role="alert">
@@ -155,7 +155,6 @@
             left: 0;
             top: 0;
         }
-
     </style>
 
     <script type="text/javascript">
