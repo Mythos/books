@@ -63,6 +63,7 @@ class CreateSeries extends Component
         $this->category = $category;
         $this->series = new Series([
             'status' => SeriesStatus::ANNOUNCED,
+            'source_status' => SeriesStatus::ANNOUNCED,
             'category_id' => $category->id,
             'is_nsfw' => false,
             'subscription_active' => false,
