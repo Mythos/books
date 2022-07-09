@@ -11,9 +11,9 @@
         </ol>
     </nav>
     <div class="row bg-white shadow-sm rounded py-2">
+        @livewire('statistics.series-per-status')
         @livewire('statistics.series-per-publisher')
         @livewire('statistics.series-per-genre')
-        @livewire('statistics.series-per-status')
         @livewire('statistics.volumes-per-status')
         @livewire('statistics.volumes-per-publisher')
         @livewire('statistics.volumes-per-genre')
