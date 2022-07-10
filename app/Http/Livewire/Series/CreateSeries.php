@@ -120,6 +120,9 @@ class CreateSeries extends Component
         $this->series->source_name = $this->apiSeries['source_name'];
         $this->series->source_name_romaji = $this->apiSeries['source_name_romaji'];
 
+        if (empty($this->apiSeries['publisher'])) {
+            return;
+        }
         $publisher = Publisher::whereName($this->apiSeries['publisher'])->first();
         if (!empty($publisher)) {
             $this->series->publisher_id = $publisher->id;
