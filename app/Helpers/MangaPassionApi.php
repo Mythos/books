@@ -72,32 +72,33 @@ class MangaPassionApi
     public static function loadVolumes($mangaPassionId, $total)
     {
         $result = [];
-        $response = self::request($mangaPassionId, 'volumes?itemsPerPage=' . $total . '&order[number]=asc');
-        if ($response->successful()) {
-            $responseBody = $response->json();
+        $pages = intval(ceil($total / 100));
+        for ($i = 1; $i <= $pages; $i++) {
+            $response = self::request($mangaPassionId, 'volumes?itemsPerPage=100&page=' . $i . '&order[number]=asc');
+            if ($response->successful()) {
+                $responseBody = $response->json();
 
-            foreach ($responseBody as $responseItem) {
-                $number = !empty($responseItem['number']) ? $responseItem['number'] : 1;
-                $publish_date = null;
-                if ($responseItem['status'] < 2) {
-                    $publish_date = !empty($responseItem['date']) ? new DateTime($responseItem['date']) : null;
+                foreach ($responseBody as $responseItem) {
+                    $number = !empty($responseItem['number']) ? $responseItem['number'] : 1;
+                    $publish_date = null;
+                    if ($responseItem['status'] < 2) {
+                        $publish_date = !empty($responseItem['date']) ? new DateTime($responseItem['date']) : null;
+                    }
+                    $isbn = !empty($responseItem['isbn13']) ? (string) Isbn::of($responseItem['isbn13'])->to13() : null;
+                    $price = !empty($responseItem['price']) ? floatval($responseItem['price']) / 100.0 : 0.00;
+
+                    $result[] = [
+                        'number' => $number,
+                        'isbn' => $isbn,
+                        'publish_date' => $publish_date,
+                        'price' => $price,
+                        'image_url' => $responseItem['cover'],
+                    ];
                 }
-                $isbn = !empty($responseItem['isbn13']) ? (string) Isbn::of($responseItem['isbn13'])->to13() : null;
-                $price = !empty($responseItem['price']) ? floatval($responseItem['price']) / 100.0 : 0.00;
-
-                $result[] = [
-                    'number' => $number,
-                    'isbn' => $isbn,
-                    'publish_date' => $publish_date,
-                    'price' => $price,
-                    'image_url' => $responseItem['cover'],
-                ];
             }
-
-            return collect($result);
         }
 
-        return null;
+        return collect($result);
     }
 
     public static function getDefaultPrice($mangaPassionId): ?float
