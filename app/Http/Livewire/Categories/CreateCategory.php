@@ -7,21 +7,23 @@ use Livewire\Component;
 
 class CreateCategory extends Component
 {
-    public string $name = '';
-
-    public int $sort_index = 0;
-
-    public int $type = 0;
+    public Category $category;
 
     protected $rules = [
-        'name' => 'required',
-        'sort_index' => 'required|integer|min:0',
-        'type' => 'required|integer|min:0',
+        'category.name' => 'required',
+        'category.sort_index' => 'required|integer|min:0',
+        'category.type' => 'required|integer|min:0',
+        'category.page_size' => 'nullable|integer|min:0',
     ];
 
     public function mount(): void
     {
-        $this->sort_index = (Category::all()->max('sort_index') ?? 0) + 1;
+        $this->category = new Category([
+            'sort_index' => 0,
+            'type' => 0,
+            'page_size' => 40,
+            'sort_index' => (Category::all()->max('sort_index') ?? 0) + 1,
+        ]);
     }
 
     public function render()
@@ -29,21 +31,19 @@ class CreateCategory extends Component
         return view('livewire.categories.create-category')->extends('layouts.app')->section('content');
     }
 
-    public function updated($property): void
+    public function updated($property, $value): void
     {
+        if ($property == 'category.page_size') {
+            $this->category->page_size = !empty($value) ? $value : null;
+        }
         $this->validateOnly($property);
     }
 
     public function save()
     {
         $this->validate();
-        $category = new Category([
-            'name' => $this->name,
-            'sort_index' => $this->sort_index,
-            'type' => $this->type,
-        ]);
-        $category->save();
-        toastr()->addSuccess(__(':name has been created', ['name' => $this->name]));
+        $this->category->save();
+        toastr()->addSuccess(__(':name has been created', ['name' => $this->category->name]));
 
         return redirect()->route('home');
     }

@@ -48,6 +48,7 @@ class Category extends Model
         'name',
         'sort_index',
         'type',
+        'page_size',
     ];
 
     /**

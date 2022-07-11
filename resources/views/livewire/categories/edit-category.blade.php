@@ -52,6 +52,17 @@
                             @enderror
                         </div>
                     </div>
+                    <div class="row mt-1">
+                        <div class="col-md-12">
+                            <label for="category.page_size" class="col-form-label">{{ __('Page size') }}</label>
+                            <input id="category.page_size" name="category.page_size" type="number" min="0" class="form-control @error('category.page_size') is-invalid @enderror" wire:model='category.page_size'>
+                            @error('category.page_size')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+                        </div>
+                    </div>
                     <div class="mt-3">
                         <div class="float-start mb-3">
                             <button type="button" class="btn btn-danger" wire:click='delete'>{{ __('Delete') }}</button>

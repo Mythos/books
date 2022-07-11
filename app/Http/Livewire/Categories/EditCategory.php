@@ -21,6 +21,7 @@ class EditCategory extends Component
         'category.name' => 'required',
         'category.sort_index' => 'required|integer|min:0',
         'category.type' => 'required|integer|min:0',
+        'category.page_size' => 'nullable|integer|min:0',
     ];
 
     protected $listeners = [
@@ -32,8 +33,11 @@ class EditCategory extends Component
         return view('livewire.categories.edit-category')->extends('layouts.app')->section('content');
     }
 
-    public function updated($property): void
+    public function updated($property, $value): void
     {
+        if($property == 'category.page_size') {
+            $this->category->page_size = !empty($value) ? $value : null;
+        }
         $this->validateOnly($property);
     }
 

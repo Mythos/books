@@ -4,7 +4,7 @@
             <a class="text-dark text-decoration-none" href="{{ route('categories.show', [$category]) }}">
                 {{ $category->name }}
 
-                <small class="text-muted">({{ count($articles) }} {{ __('Articles') }})</small>
+                <small class="text-muted">({{ $total }} {{ __('Articles') }})</small>
             </a>
         </h1>
         <div class="float-end">
@@ -38,6 +38,9 @@
                     </div>
                 </div>
             @endforeach
+            @if (!empty($category->page_size))
+                {{ $articles->links() }}
+            @endif
         @endif
     </div>
 </div>

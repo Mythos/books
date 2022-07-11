@@ -6,14 +6,19 @@ use App\Constants\SeriesStatus;
 use App\Models\Category;
 use App\Models\Series;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 class Gallery extends Component
 {
-    public $series = [];
+    use WithPagination;
 
     public string $search = '';
 
     public Category $category;
+
+    public int $total = 0;
+
+    protected $paginationTheme = 'bootstrap';
 
     protected $listeners = ['search' => 'filter', 'show_nsfw' => '$refresh', 'show_canceled_series' => '$refresh'];
 
@@ -24,13 +29,13 @@ class Gallery extends Component
 
     public function render()
     {
-        $this->series = Series::whereCategoryId($this->category->id)->with(['volumes:id,status,publish_date,series_id', 'publisher:id,name']);
+        $series = Series::whereCategoryId($this->category->id)->with(['volumes:id,status,publish_date,series_id', 'publisher:id,name']);
         $show_canceled_series = session('show_canceled_series') ?? false;
         if (!$show_canceled_series) {
-            $this->series->where('status', '<>', SeriesStatus::CANCELED);
+            $series->where('status', '<>', SeriesStatus::CANCELED);
         }
         if (!empty($this->search)) {
-            $this->series->where(function ($query): void {
+            $series->where(function ($query): void {
                 $query->where('name', 'like', '%' . $this->search . '%')
                       ->orWhere('source_name', 'like', '%' . $this->search . '%')
                       ->orWhere('source_name_romaji', 'like', '%' . $this->search . '%')
@@ -45,13 +50,22 @@ class Gallery extends Component
                       });
             });
         }
-        $this->series = $this->series->orderBy('status')->orderBy('name')->get();
+        $series = $series->orderBy('status')->orderBy('name');
+        $this->total = $series->count();
+        if (!empty($this->category->page_size)) {
+            $series = $series->paginate($this->category->page_size, ['*'], $this->category->slug);
+        } else {
+            $series = $series->get();
+        }
 
-        return view('livewire.series.gallery');
+        return view('livewire.series.gallery', [
+            'series' => $series,
+        ]);
     }
 
     public function filter($filter): void
     {
         $this->search = $filter;
+        $this->resetPage($this->category->slug);
     }
 }
