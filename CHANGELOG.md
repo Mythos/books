@@ -6,6 +6,7 @@
 - Added subscription indicator in upcoming releases
 - Added source titles which can be fetched via Manga Passion API
 - Added Book Depository to series lookup options
+- Added bulk update for volumes (allows setting status and/or price)
 - Improved rendering times by introducing deferred loading
 - Release dates of articles are now formatted
 - Cover images for volumes are now fetched via Manga Passion API

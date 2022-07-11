@@ -2,6 +2,7 @@
     <div>
         <h2 style="display: inline;">{{ __('Volumes') }} ({{ count($volumes) }})</h2>
         <div class="float-end" style="display: inline;">
+            <a href="{{ route('volumes.bulk-update', [$category, $series]) }}" class="btn btn-link" title="{{ __('Update Volumes') }}"><span class="fas fa-sliders"></span></a>
             <a wire:click.prevent='toggle_reordering' href="#" title="{{ __('Reorder volumes') }}"><span class="fa fa-sort"></span></a>
             <a href="{{ route('volumes.create', [$category, $series]) }}" class="btn btn-link"><span class="fas fa-plus-circle"></span></a>
         </div>

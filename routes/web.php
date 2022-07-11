@@ -17,6 +17,7 @@ use App\Http\Livewire\Series\CreateSeries;
 use App\Http\Livewire\Series\EditSeries;
 use App\Http\Livewire\Series\ShowSeries;
 use App\Http\Livewire\Statistics;
+use App\Http\Livewire\Volumes\BulkUpdate;
 use App\Http\Livewire\Volumes\CreateVolume;
 use App\Http\Livewire\Volumes\EditVolume;
 use Illuminate\Support\Facades\Route;
@@ -64,6 +65,7 @@ Route::prefix('')->middleware(['auth'])->group(function (): void {
                 Route::get('edit', EditSeries::class)->name('series.edit');
 
                 Route::get('volumes/new', CreateVolume::class)->name('volumes.create');
+                Route::get('volumes/bulk-update', BulkUpdate::class)->name('volumes.bulk-update');
                 Route::get('{number}/edit', EditVolume::class)->name('volumes.edit');
             });
         });
