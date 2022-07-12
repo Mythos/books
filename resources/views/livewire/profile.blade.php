@@ -13,7 +13,7 @@
         <div class="row bg-white shadow-sm rounded">
             <div class="col-md-3">
                 <div class="d-flex flex-column align-items-center text-center p-3 py-3">
-                    <img class="rounded-circle" width="150px" src="{{ auth()->user()->avatar_profile }}" alt="{{ auth()->user()->email }}">
+                    <img class="rounded-circle" width="150px" src="{{ auth()->user()->avatar_profile }}" alt="{{ auth()->user()->email }}" loading="lazy" decoding="async">
                     <span class="font-weight-bold">{{ auth()->user()->name }}</span>
                     <span class="text-black-50">{{ auth()->user()->email }}</span>
                 </div>
@@ -64,6 +64,20 @@
                                 </optgroup>
                             </select>
                             @error('user.date_format')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+                        </div>
+                    </div>
+                    <div class="row mt-1">
+                        <div class="col-md-12">
+                            <label for="user.secondary_title_preference" class="col-form-label required">{{ __('Alternative Title Format') }}</label>
+                            <select id="user.secondary_title_preference" name="user.secondary_title_preference" class="form-select @error('user.secondary_title_preference') is-invalid @enderror" wire:model='user.secondary_title_preference' required>
+                                <option value="{{ App\Constants\SecondaryTitlePreference::ORIGINAL }}">{{ __('Original Title') }}</option>
+                                <option value="{{ App\Constants\SecondaryTitlePreference::ROMAJI }}">{{ __('Romaji') }}</option>
+                            </select>
+                            @error('user.secondary_title_preference')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
                                 </span>

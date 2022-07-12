@@ -15,11 +15,10 @@ class CanceledSeriesToggle extends Component
         return view('livewire.canceled-series-toggle');
     }
 
-    public function toggle()
+    public function toggle(): void
     {
         $this->show_canceled_series = !$this->show_canceled_series;
         session()->put('show_canceled_series', $this->show_canceled_series);
-
-        return redirect(request()->header('Referer'));
+        $this->emit('show_canceled_series');
     }
 }

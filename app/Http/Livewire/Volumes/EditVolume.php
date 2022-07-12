@@ -2,12 +2,14 @@
 
 namespace App\Http\Livewire\Volumes;
 
+use App\Helpers\ImageHelpers;
 use App\Helpers\IsbnHelpers;
 use App\Models\Category;
 use App\Models\Series;
 use App\Models\Volume;
 use App\Rules\Isbn;
 use App\Services\SeriesService;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Component;
@@ -24,29 +26,16 @@ class EditVolume extends Component
 
     public $seriesService;
 
+    protected $listeners = [
+        'confirmedDelete',
+    ];
+
     public function mount(Category $category, Series $series, int $number): void
     {
         $this->category = $category;
         $this->series = $series;
         $this->volume = Volume::whereSeriesId($series->id)->whereNumber($number)->first();
     }
-
-    protected function rules()
-    {
-        return [
-            'volume.number' => 'required|integer|min:1',
-            'volume.publish_date' => 'nullable|date',
-            'volume.status' => 'required|integer|min:0',
-            'volume.price' => 'nullable|regex:"^[0-9]{1,9}([,.][0-9]{1,2})?$"',
-            'volume.isbn' => ['nullable', 'unique:volumes,isbn,' . $this->volume->id . ',id,series_id,' . $this->series->id, new Isbn()],
-            'volume.ignore_in_upcoming' => 'boolean',
-            'volume.series_id' => 'required|exists:series,id',
-        ];
-    }
-
-    protected $listeners = [
-        'confirmedDelete',
-    ];
 
     public function updated($property, $value): void
     {
@@ -82,6 +71,8 @@ class EditVolume extends Component
         }
         $this->validate();
         $this->volume->save();
+        ImageHelpers::updateVolumeImage($this->volume);
+
         $seriesService->resetNumbers($this->volume->series_id);
         toastr()->addSuccess(__('Volumme :number has been updated', ['number' => $this->volume->number]));
 
@@ -100,8 +91,24 @@ class EditVolume extends Component
     public function confirmedDelete()
     {
         $this->volume->delete();
+        Storage::disk('public')->deleteDirectory($this->volume->image_path);
+        Storage::disk('public')->deleteDirectory('thumbnails/' . $this->volume->image_path);
         toastr()->addSuccess(__('Volumme :number has been deleted', ['number' => $this->volume->number]));
 
         return redirect()->route('series.show', [$this->category, $this->series]);
+    }
+
+    protected function rules()
+    {
+        return [
+            'volume.number' => 'required|integer|min:1',
+            'volume.publish_date' => 'nullable|date',
+            'volume.status' => 'required|integer|min:0',
+            'volume.price' => 'nullable|regex:"^[0-9]{1,9}([,.][0-9]{1,2})?$"',
+            'volume.isbn' => ['nullable', 'unique:volumes,isbn,' . $this->volume->id . ',id,series_id,' . $this->series->id, new Isbn()],
+            'volume.ignore_in_upcoming' => 'boolean',
+            'volume.series_id' => 'required|exists:series,id',
+            'volume.image_url' => 'nullable|url',
+        ];
     }
 }

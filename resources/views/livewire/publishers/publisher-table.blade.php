@@ -32,7 +32,7 @@
                             <td>{{ $publisher->name }}</td>
                         </tr>
                     @endforeach
-                    @if ($publishers->count() == 0)
+                    @if (count($publishers) == 0)
                         <tr>
                             <td colspan="5" style="text-align: center;">{{ __('No data') }}</td>
                         </tr>

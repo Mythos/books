@@ -40,7 +40,11 @@ class EditSeries extends Component
         'series.publisher_id' => 'nullable|exists:publishers,id',
         'series.subscription_active' => 'boolean',
         'series.mangapassion_id' => 'nullable|integer',
-        'series.image_url' => 'required|url',
+        'series.image_url' => 'nullable|url',
+        'series.source_status' => 'required|integer|min:0',
+        'series.source_name' => 'nullable',
+        'series.source_name_romaji' => 'nullable',
+        'series.ignore_in_upcoming' => 'boolean',
     ];
 
     protected $listeners = [
@@ -55,7 +59,7 @@ class EditSeries extends Component
         if ($property == 'series.publisher_id' && empty($value)) {
             $this->series->publisher_id = null;
         }
-        if ($property == 'series.status' && $value == SeriesStatus::Canceled && $this->series->subscription_active) {
+        if ($property == 'series.status' && $value == SeriesStatus::CANCELED && $this->series->subscription_active) {
             $this->series->subscription_active = false;
         }
         $this->validateOnly($property);
@@ -79,13 +83,8 @@ class EditSeries extends Component
             $this->series->default_price = floatval(Str::replace(',', '.', $this->series->default_price));
         }
         try {
-            $image = ImageHelpers::getImage($this->series->image_url);
             $this->series->save();
-            if (!empty($image)) {
-                ImageHelpers::storePublicImage($image, $this->series->image_path . '/cover.jpg');
-                $nsfwImage = $image->pixelate(config('images.nsfw.pixelate', 10))->blur(config('images.nsfw.blur', 5))->encode('jpg');
-                ImageHelpers::storePublicImage($nsfwImage, $this->series->image_path . '/cover_sfw.jpg');
-            }
+            ImageHelpers::updateSeriesImage($this->series);
             $this->updatePrices();
             $this->updateStatuses();
             toastr()->addSuccess(__(':name has been updated', ['name' => $this->series->name]));
@@ -93,7 +92,7 @@ class EditSeries extends Component
             return redirect()->route('series.show', [$this->category, $this->series]);
         } catch (Exception $exception) {
             Log::error($exception);
-            toastr()->livewire()->addError(__(':name could not be updated', ['name' => $this->series->name]));
+            toastr()->addError(__(':name could not be updated', ['name' => $this->series->name]));
         }
     }
 
@@ -112,6 +111,7 @@ class EditSeries extends Component
         Volume::whereSeriesId($this->series->id)->delete();
         $this->series->delete();
         Storage::disk('public')->deleteDirectory($this->series->image_path);
+        Storage::disk('public')->deleteDirectory('thumbnails/series/' . $this->series->id);
         toastr()->addSuccess(__(':name has been deleted', ['name' => $this->series->name]));
         redirect()->route('categories.show', [$this->category]);
     }
@@ -125,8 +125,13 @@ class EditSeries extends Component
 
     private function updateStatuses(): void
     {
+        if (!$this->series->wasChanged('subscription_active')) {
+            return;
+        }
         if ($this->series->subscription_active) {
-            Volume::whereSeriesId($this->series->id)->where('status', '=', VolumeStatus::New)->update(['status' => VolumeStatus::Ordered]);
+            Volume::whereSeriesId($this->series->id)->where('status', '=', VolumeStatus::NEW)->update(['status' => VolumeStatus::ORDERED]);
+        } else {
+            Volume::whereSeriesId($this->series->id)->where('status', '=', VolumeStatus::ORDERED)->update(['status' => VolumeStatus::NEW]);
         }
     }
 }

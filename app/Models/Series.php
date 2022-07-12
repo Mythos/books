@@ -30,12 +30,17 @@ use Spatie\Sluggable\SlugOptions;
  * @property int|null $mangapassion_id
  * @property string|null $image_url
  * @property string|null $description
+ * @property int|null $source_status
+ * @property string|null $source_name
+ * @property string|null $source_name_romaji
  * @property-read \App\Models\Category $category
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Genre[] $genres
  * @property-read int|null $genres_count
- * @property-read string $completion_status
+ * @property-read int $completion_status
  * @property-read string $completion_status_class
  * @property-read string $completion_status_name
+ * @property-read mixed $demographics
+ * @property-read mixed $genre_tags
  * @property-read string $image
  * @property-read string $image_path
  * @property-read string $read_volumes_count
@@ -60,6 +65,9 @@ use Spatie\Sluggable\SlugOptions;
  * @method static \Illuminate\Database\Eloquent\Builder|Series whereName($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Series wherePublisherId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Series whereSlug($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Series whereSourceName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Series whereSourceNameRomaji($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Series whereSourceStatus($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Series whereStatus($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Series whereSubscriptionActive($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Series whereTotal($value)
@@ -86,7 +94,12 @@ class Series extends Model
         'category_id',
         'publisher_id',
         'subscription_active',
+        'image_url',
         'mangapassion_id',
+        'source_status',
+        'source_name',
+        'source_name_romaji',
+        'ignore_in_upcoming',
     ];
 
     /**
@@ -96,7 +109,7 @@ class Series extends Model
      */
     public function getUnreadVolumesCountAttribute(): ?int
     {
-        return $this->volumes->where('status', '=', VolumeStatus::Delivered)->count();
+        return $this->volumes->where('status', '=', VolumeStatus::DELIVERED)->count();
     }
 
     /**
@@ -106,7 +119,7 @@ class Series extends Model
      */
     public function getReadVolumesCountAttribute(): ?int
     {
-        return $this->volumes->where('status', '=', VolumeStatus::Read)->count();
+        return $this->volumes->where('status', '=', VolumeStatus::READ)->count();
     }
 
     /**
@@ -117,15 +130,15 @@ class Series extends Model
     public function getStatusNameAttribute(): string
     {
         switch ($this->status) {
-            case SeriesStatus::New:
-                return __('New');
-            case SeriesStatus::Ongoing:
+            case SeriesStatus::ANNOUNCED:
+                return __('Announced');
+            case SeriesStatus::ONGOING:
                 return __('Ongoing');
-            case SeriesStatus::Finished:
+            case SeriesStatus::FINISHED:
                 return __('Finished');
-            case SeriesStatus::Paused:
+            case SeriesStatus::PAUSED:
                 return __('Paused');
-            case SeriesStatus::Canceled:
+            case SeriesStatus::CANCELED:
                 return __('Canceled');
             default:
                 return __('Unknown');
@@ -140,15 +153,15 @@ class Series extends Model
     public function getStatusClassAttribute(): string
     {
         switch ($this->status) {
-            case SeriesStatus::New:
+            case SeriesStatus::ANNOUNCED:
                 return 'badge bg-secondary';
-            case SeriesStatus::Ongoing:
+            case SeriesStatus::ONGOING:
                 return 'badge bg-primary';
-            case SeriesStatus::Finished:
+            case SeriesStatus::FINISHED:
                 return 'badge bg-success';
-            case SeriesStatus::Paused:
+            case SeriesStatus::PAUSED:
                 return 'badge bg-warning';
-            case SeriesStatus::Canceled:
+            case SeriesStatus::CANCELED:
                 return 'badge bg-danger';
             default:
                 return '';
@@ -203,13 +216,13 @@ class Series extends Model
 
         $volumes = $this->volumes->whereNotNull('publish_date')
         ->filter(function ($volume) {
-            return $volume->status == VolumeStatus::Shipped || $volume->status == VolumeStatus::Delivered || $volume->status == VolumeStatus::Read
+            return $volume->status == VolumeStatus::SHIPPED || $volume->status == VolumeStatus::DELIVERED || $volume->status == VolumeStatus::READ
                 || $volume->publish_date <= now()
-                || (!$this->subscription_active && $volume->status == VolumeStatus::Ordered);
+                || (!$this->subscription_active && $volume->status == VolumeStatus::ORDERED);
         });
         $total = $volumes->count();
-        $possessed = $volumes->whereIn('status', [VolumeStatus::Delivered, VolumeStatus::Read])->count();
-        $read = $volumes->where('status', VolumeStatus::Read)->count();
+        $possessed = $volumes->whereIn('status', [VolumeStatus::DELIVERED, VolumeStatus::READ])->count();
+        $read = $volumes->where('status', VolumeStatus::READ)->count();
 
         if ($total == 0) {
             return 0;
@@ -230,10 +243,10 @@ class Series extends Model
     {
         $path = 'storage/' . $this->image_path . '/';
         if ($this->is_nsfw && !session('show_nsfw', false)) {
-            return url($path . 'cover_sfw.jpg');
+            return url($path . 'cover_sfw.' . config('images.type'));
         }
 
-        return url($path . 'cover.jpg');
+        return url($path . 'cover.' . config('images.type'));
     }
 
     /**
@@ -243,7 +256,7 @@ class Series extends Model
      */
     public function getTotalWorthAttribute(): string
     {
-        return $this->volumes->whereIn('status', [VolumeStatus::Delivered, VolumeStatus::Read])->sum('price');
+        return $this->volumes->whereIn('status', [VolumeStatus::DELIVERED, VolumeStatus::READ])->sum('price');
     }
 
     /**

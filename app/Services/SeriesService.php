@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Helpers\ImageHelpers;
 use App\Helpers\MangaPassionApi;
 use App\Models\Genre;
 use App\Models\Publisher;
@@ -11,7 +12,7 @@ use Exception;
 
 class SeriesService
 {
-    public function refreshMetadata(Series $series)
+    public function refreshMetadata(Series $series): void
     {
         if (empty($series->mangapassion_id)) {
             throw new Exception('Manga Passion ID not set');
@@ -30,6 +31,9 @@ class SeriesService
         $series->total = $apiSeries['total'];
         $series->default_price = $apiSeries['default_price'];
         $series->image_url = $apiSeries['image_url'];
+        $series->source_status = $apiSeries['source_status'];
+        $series->source_name = $apiSeries['source_name'];
+        $series->source_name_romaji = $apiSeries['source_name_romaji'];
 
         $publisher = Publisher::whereName($apiSeries['publisher'])->first();
         if (!empty($publisher)) {
@@ -59,8 +63,8 @@ class SeriesService
             }
         }
         $series->genres()->sync($genres);
-
-        return $series;
+        $series->save();
+        ImageHelpers::updateSeriesImage($series);
     }
 
     public function updateVolumes(Series $series): array
@@ -71,7 +75,7 @@ class SeriesService
         }
         $volumes = Volume::whereSeriesId($series->id)->get();
 
-        $volumesResult = MangaPassionApi::loadVolumes($series->mangapassion_id);
+        $volumesResult = MangaPassionApi::loadVolumes($series->mangapassion_id, $series->total ?? 500);
         $newVolumes = [];
 
         foreach ($volumesResult as $volumeResult) {
@@ -79,6 +83,7 @@ class SeriesService
             $isbn = $volumeResult['isbn'];
             $publish_date = $volumeResult['publish_date'];
             $price = $volumeResult['price'];
+            $image_url = $volumeResult['image_url'];
 
             $volume = null;
             if (!empty($isbn)) {
@@ -101,27 +106,14 @@ class SeriesService
             if (!empty($isbn)) {
                 $volume->isbn = $isbn;
             }
+
+            $volume->image_url = $image_url;
+            ImageHelpers::updateVolumeImage($volume);
             $volume->save();
             $data[] = $volume;
         }
 
-        foreach ($newVolumes as $newVolume) {
-            $number = $newVolume['number'];
-            $isbn = $newVolume['isbn'];
-            $publish_date = $newVolume['publish_date'];
-            $price = $newVolume['price'];
-
-            $volume = new Volume([
-                'series_id' => $series->id,
-                'isbn' => $isbn,
-                'number' => $number,
-                'publish_date' => !empty($publish_date) ? $publish_date->format('Y-m-d') : null,
-                'price' => $price,
-                'status' => $series->subscription_active,
-            ]);
-            $volume->save();
-            $data[] = $volume;
-        }
+        $this->createNewVolumes($series, $newVolumes);
         $this->resetNumbers($series->id);
 
         return $data;
@@ -135,6 +127,30 @@ class SeriesService
             $volume->number = $number;
             $volume->save();
             $number++;
+        }
+    }
+
+    private function createNewVolumes($series, $newVolumes): void
+    {
+        foreach ($newVolumes as $newVolume) {
+            $number = $newVolume['number'];
+            $isbn = $newVolume['isbn'];
+            $publish_date = $newVolume['publish_date'];
+            $price = $newVolume['price'];
+            $image_url = $newVolume['image_url'];
+
+            $volume = new Volume([
+                'series_id' => $series->id,
+                'isbn' => $isbn,
+                'number' => $number,
+                'publish_date' => !empty($publish_date) ? $publish_date->format('Y-m-d') : null,
+                'price' => $price,
+                'status' => $series->subscription_active,
+                'image_url' => $image_url,
+            ]);
+            $volume->save();
+            ImageHelpers::updateVolumeImage($volume, true);
+            $data[] = $volume;
         }
     }
 }

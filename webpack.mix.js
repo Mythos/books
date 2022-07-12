@@ -6,13 +6,29 @@ const mix = require("laravel-mix");
  |--------------------------------------------------------------------------
  |
  | Mix provides a clean, fluent API for defining some Webpack build steps
- | for your Laravel application. By default, we are compiling the Sass
+ | for your Laravel applications. By default, we are compiling the CSS
  | file for the application as well as bundling up all the JS files.
  |
  */
-
-mix.js("resources/js/app.js", "public/js")
+const options = {
+    postCss: [
+        require('postcss-discard-comments')({
+            removeAll: true
+        })
+    ],
+    uglify: {
+        uglifyOptions: {
+            comments: false
+        },
+    }
+};
+mix.options(options)
+    .js("resources/js/app.js", "public/js")
     .sass("resources/sass/app.scss", "public/css")
+    .copy(
+        "node_modules/@flasher/flasher/dist/flasher.min.js",
+        "public/js/flasher.min.js"
+    )
     .copy(
         "node_modules/@flasher/flasher-toastr/dist/flasher-toastr.min.js",
         "public/js/flasher-toastr.min.js"

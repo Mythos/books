@@ -1,5 +1,26 @@
 # Changelog
 
+## 2.3.0 (2022-07-12)
+
+- Added cover images for volumes
+- Added subscription indicator in upcoming releases
+- Added source titles which can be fetched via Manga Passion API
+- Added Book Depository to series lookup options
+- Added bulk update for volumes (allows setting status and/or price)
+- Added new search options for series: Book Depository, Manga Passion, AniList and MyAnimeList.net
+- Added option to create volumes when creating a series not via Manga Passion API
+- Added page size to categories
+- Added new statistics
+- Added option to set the image type for covers (jpg, png, gif, bmp, webp)
+- Moved refresh button (Manga Passion API) to the top next to the edit button
+- Improved rendering performance through lazy loading and async decoding images
+- Release dates of articles are now formatted
+- Cover images for volumes are now fetched via Manga Passion API
+- Fixed category deletion when genres are assigned to series
+- Fixed fetching volumes via Manga Passion API when a series has more than 100 volumes
+- Fixed various other bugs
+- Ignore volumes without number via Manga Passion API as they were overwriting volume 1
+
 ## 2.2.0 (2022-05-14)
 
 - Updating a series via Manga Passion API now updates the price for volumes with status "New"

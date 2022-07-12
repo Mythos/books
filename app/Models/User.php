@@ -22,6 +22,9 @@ use Laravel\Sanctum\HasApiTokens;
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property int $format_isbns_enabled
  * @property string $date_format
+ * @property int $secondary_title_preference
+ * @property-read mixed $avatar_navbar
+ * @property-read mixed $avatar_profile
  * @property-read \Illuminate\Notifications\DatabaseNotificationCollection|\Illuminate\Notifications\DatabaseNotification[] $notifications
  * @property-read int|null $notifications_count
  * @property-read \Illuminate\Database\Eloquent\Collection|\Laravel\Sanctum\PersonalAccessToken[] $tokens
@@ -39,6 +42,7 @@ use Laravel\Sanctum\HasApiTokens;
  * @method static \Illuminate\Database\Eloquent\Builder|User whereName($value)
  * @method static \Illuminate\Database\Eloquent\Builder|User wherePassword($value)
  * @method static \Illuminate\Database\Eloquent\Builder|User whereRememberToken($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereSecondaryTitlePreference($value)
  * @method static \Illuminate\Database\Eloquent\Builder|User whereUpdatedAt($value)
  * @mixin \Eloquent
  */
@@ -56,6 +60,7 @@ class User extends Authenticatable
         'email',
         'password',
         'format_isbns_enabled',
+        'secondary_title_preference',
     ];
 
     /**
@@ -90,7 +95,7 @@ class User extends Authenticatable
     private function getGravatar($cacheKey, $avatarSize)
     {
         if (empty($this->id)) {
-            return;
+            return null;
         }
 
         return Cache::remember($cacheKey, config('cache.duration'), function () use ($avatarSize) {
@@ -102,7 +107,7 @@ class User extends Authenticatable
 
             $image = Image::make($url)->resize(null, $avatarSize, function ($constraint): void {
                 $constraint->aspectRatio();
-            })->encode('jpg');
+            })->encode(config('images.type'));
 
             return $image->encode('data-url')->__toString();
         });

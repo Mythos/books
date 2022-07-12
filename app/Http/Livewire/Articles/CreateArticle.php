@@ -16,15 +16,13 @@ class CreateArticle extends Component
 
     public Article $article;
 
-    public string $image_url = '';
-
     protected $rules = [
         'article.name' => 'required',
         'article.release_date' => 'date',
         'article.price' => 'nullable|regex:"^[0-9]{1,9}([,.][0-9]{1,2})?$"',
         'article.status' => 'required|integer|min:0',
         'article.category_id' => 'required|exists:categories,id',
-        'image_url' => 'required|url',
+        'article.image_url' => 'nullable|url',
     ];
 
     public function updated($property, $value): void
@@ -54,15 +52,14 @@ class CreateArticle extends Component
         }
         $this->article->category_id = $this->category->id;
         try {
-            $image = ImageHelpers::getImage($this->image_url);
             $this->article->save();
-            ImageHelpers::storePublicImage($image, $this->article->image_path . '/image.jpg');
+            ImageHelpers::createAndSaveArticleImage($this->article->image_url, $this->article->image_path);
             toastr()->addSuccess(__(':name has been created', ['name' => $this->article->name]));
 
             return redirect()->route('home');
         } catch (Exception $exception) {
             Log::error($exception);
-            toastr()->livewire()->addError(__(':name could not be created', ['name' => $this->article->name]));
+            toastr()->addError(__(':name could not be created', ['name' => $this->article->name]));
         }
     }
 }

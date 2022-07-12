@@ -29,6 +29,7 @@
 
     <!-- Styles -->
     @livewireStyles
+    @flasher_render
     <link href="{{ mix('css/app.css') }}" rel="stylesheet">
 </head>
 
@@ -107,7 +108,7 @@
                             </li>
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    <img class="rounded-circle" width="20px" src="{{ auth()->user()->avatar_navbar }}" alt="{{ auth()->user()->email }}">
+                                    <img class="rounded-circle" width="20px" src="{{ auth()->user()->avatar_navbar }}" alt="{{ auth()->user()->email }}" loading="lazy" decoding="async">
                                     {{ Auth::user()->name }}
                                 </a>
                                 <ul class="dropdown-menu dropdown-menu-end">
@@ -151,8 +152,6 @@
             navigator.serviceWorker.register("service-worker.js").then(function(reg) {}).catch(function(err) {});
         }
     </script>
-    @flasher_render
-    @flasher_livewire_render
     @livewireScripts
     <x-livewire-alert::scripts />
     @stack('scripts')

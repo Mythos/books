@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Categories;
 
 use App\Models\Article;
 use App\Models\Category;
+use App\Models\GenreSeries;
 use App\Models\Series;
 use App\Models\Volume;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
@@ -20,6 +21,7 @@ class EditCategory extends Component
         'category.name' => 'required',
         'category.sort_index' => 'required|integer|min:0',
         'category.type' => 'required|integer|min:0',
+        'category.page_size' => 'nullable|integer|min:0',
     ];
 
     protected $listeners = [
@@ -31,8 +33,11 @@ class EditCategory extends Component
         return view('livewire.categories.edit-category')->extends('layouts.app')->section('content');
     }
 
-    public function updated($property): void
+    public function updated($property, $value): void
     {
+        if($property == 'category.page_size') {
+            $this->category->page_size = !empty($value) ? $value : null;
+        }
         $this->validateOnly($property);
     }
 
@@ -40,7 +45,7 @@ class EditCategory extends Component
     {
         $this->validate();
         $this->category->save();
-        toastr()->livewire()->addSuccess(__(':name has been updated', ['name' => $this->category->name]));
+        toastr()->addSuccess(__(':name has been updated', ['name' => $this->category->name]));
     }
 
     public function delete(): void
@@ -69,9 +74,11 @@ class EditCategory extends Component
     {
         $series = Series::whereCategoryId($this->category->id)->get();
         foreach ($series as $s) {
+            GenreSeries::whereSeriesId($s->id)->delete();
             Volume::whereSeriesId($s->id)->delete();
             $s->delete();
             Storage::disk('public')->deleteDirectory($s->image_path);
+            Storage::disk('public')->deleteDirectory('thumbnails/' . $s->image_path);
         }
     }
 

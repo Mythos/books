@@ -8,6 +8,8 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Image;
+use Storage;
 
 /**
  * App\Models\Volume
@@ -22,6 +24,11 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property string|null $price
  * @property int $ignore_in_upcoming
+ * @property string|null $image_url
+ * @property-read string $image
+ * @property-read bool $image_exists
+ * @property-read string $image_path
+ * @property-read bool $image_thumbnail
  * @property-read string $isbn_formatted
  * @property-read string $name
  * @property-read string $publish_date_formatted
@@ -34,6 +41,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @method static \Illuminate\Database\Eloquent\Builder|Volume whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Volume whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Volume whereIgnoreInUpcoming($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Volume whereImageUrl($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Volume whereIsbn($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Volume whereNumber($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Volume wherePrice($value)
@@ -60,6 +68,7 @@ class Volume extends Model
         'price',
         'ignore_in_upcoming',
         'series_id',
+        'image_url',
     ];
 
     /**
@@ -112,15 +121,15 @@ class Volume extends Model
     public function getStatusNameAttribute(): string
     {
         switch ($this->status) {
-            case VolumeStatus::New:
+            case VolumeStatus::NEW:
                 return __('New');
-            case VolumeStatus::Ordered:
+            case VolumeStatus::ORDERED:
                 return __('Ordered');
-            case VolumeStatus::Shipped:
+            case VolumeStatus::SHIPPED:
                 return __('Shipped');
-            case VolumeStatus::Delivered:
+            case VolumeStatus::DELIVERED:
                 return __('Delivered');
-            case VolumeStatus::Read:
+            case VolumeStatus::READ:
                 return __('Read');
             default:
                 return __('Unknown');
@@ -135,15 +144,15 @@ class Volume extends Model
     public function getStatusClassAttribute(): string
     {
         switch ($this->status) {
-            case VolumeStatus::New:
+            case VolumeStatus::NEW:
                 return 'table-danger';
-            case VolumeStatus::Ordered:
+            case VolumeStatus::ORDERED:
                 return 'table-warning';
-            case VolumeStatus::Shipped:
+            case VolumeStatus::SHIPPED:
                 return 'table-info';
-            case VolumeStatus::Delivered:
+            case VolumeStatus::DELIVERED:
                 return 'table-primary';
-            case VolumeStatus::Read:
+            case VolumeStatus::READ:
                 return 'table-success';
             default:
                 return '';
@@ -168,5 +177,59 @@ class Volume extends Model
     public function getRouteKeyName(): string
     {
         return 'number';
+    }
+
+    /**
+     * Get the volumes' image path.
+     *
+     * @return string
+     */
+    public function getImagePathAttribute(): string
+    {
+        return 'series/' . $this->series_id . '/volumes/' . $this->id;
+    }
+
+    /**
+     * Get the volumes' image.
+     *
+     * @return string
+     */
+    public function getImageAttribute(): string
+    {
+        $path = 'storage/' . $this->image_path . '/';
+        if ($this->series->is_nsfw && !session('show_nsfw', false)) {
+            return url($path . 'cover_sfw.' . config('images.type'));
+        }
+
+        return url($path . 'cover.' . config('images.type'));
+    }
+
+    /**
+     * Get the volumes' image status.
+     *
+     * @return bool
+     */
+    public function getImageExistsAttribute(): bool
+    {
+        return Storage::disk('public')->exists($this->image_path);
+    }
+
+    /**
+     * Get the volumes' image thumbnail.
+     *
+     * @return bool
+     */
+    public function getImageThumbnailAttribute(): ?string
+    {
+        if (!$this->image_exists) {
+            return null;
+        }
+
+        $path = 'storage/thumbnails/' . $this->image_path . '/';
+        if ($this->series->is_nsfw && !session('show_nsfw', false)) {
+            return url($path . 'cover_sfw.' . config('images.type'));
+        }
+
+        return url($path . 'cover.' . config('images.type'));
     }
 }

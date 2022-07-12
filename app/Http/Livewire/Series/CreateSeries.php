@@ -25,6 +25,8 @@ class CreateSeries extends Component
 
     public $apiSeries;
 
+    public bool $create_volumes = false;
+
     protected $rules = [
         'series.name' => 'required',
         'series.description' => 'nullable',
@@ -36,7 +38,11 @@ class CreateSeries extends Component
         'series.publisher_id' => 'nullable|exists:publishers,id',
         'series.subscription_active' => 'boolean',
         'series.mangapassion_id' => 'nullable|integer',
-        'series.image_url' => 'required|url',
+        'series.image_url' => 'nullable|url',
+        'series.source_status' => 'required|integer|min:0',
+        'series.source_name' => 'nullable',
+        'series.source_name_romaji' => 'nullable',
+        'series.ignore_in_upcoming' => 'boolean',
     ];
 
     public function updated($property, $value): void
@@ -47,7 +53,7 @@ class CreateSeries extends Component
         if ($property == 'series.publisher_id' && empty($value)) {
             $this->series->publisher_id = null;
         }
-        if ($property == 'series.status' && $value == SeriesStatus::Canceled && $this->series->subscription_active) {
+        if ($property == 'series.status' && $value == SeriesStatus::CANCELED && $this->series->subscription_active) {
             $this->series->subscription_active = false;
         }
         $this->validateOnly($property);
@@ -58,10 +64,12 @@ class CreateSeries extends Component
         $this->publishers = Publisher::orderBy('name')->get();
         $this->category = $category;
         $this->series = new Series([
-            'status' => SeriesStatus::New,
+            'status' => SeriesStatus::ANNOUNCED,
+            'source_status' => SeriesStatus::ANNOUNCED,
             'category_id' => $category->id,
             'is_nsfw' => false,
             'subscription_active' => false,
+            'ignore_in_upcoming' => false,
         ]);
     }
 
@@ -78,13 +86,8 @@ class CreateSeries extends Component
         }
         $this->series->category_id = $this->category->id;
         try {
-            $image = ImageHelpers::getImage($this->series->image_url);
             $this->series->save();
-            if (!empty($image)) {
-                ImageHelpers::storePublicImage($image, $this->series->image_path . '/cover.jpg');
-                $nsfwImage = $image->pixelate(config('images.nsfw.pixelate', 10))->blur(config('images.nsfw.blur', 5))->encode('jpg');
-                ImageHelpers::storePublicImage($nsfwImage, $this->series->image_path . '/cover_sfw.jpg');
-            }
+            ImageHelpers::updateSeriesImage($this->series, true);
             $this->createGenres();
             $this->createVolumes();
             toastr()->addSuccess(__(':name has been created', ['name' => $this->series->name]));
@@ -92,7 +95,7 @@ class CreateSeries extends Component
             return redirect()->route('home');
         } catch (Exception $exception) {
             Log::error($exception);
-            toastr()->livewire()->addError(__(':name could not be created', ['name' => $this->series->name]));
+            toastr()->addError(__(':name could not be created', ['name' => $this->series->name]));
         }
     }
 
@@ -103,11 +106,11 @@ class CreateSeries extends Component
         $this->apiSeries = MangaPassionApi::loadSeriesByTitle($this->series->name);
 
         if (empty($this->apiSeries)) {
-            toastr()->livewire()->addWarning(__('No entry with the title :name has been found', ['name' => $this->series->name]));
+            toastr()->addWarning(__('No entry with the title :name has been found', ['name' => $this->series->name]));
 
             return;
         }
-
+        $this->create_volumes = true;
         $this->series->mangapassion_id = $this->apiSeries['mangapassion_id'];
         $this->series->name = $this->apiSeries['name'];
         $this->series->description = $this->apiSeries['description'];
@@ -115,7 +118,13 @@ class CreateSeries extends Component
         $this->series->total = $this->apiSeries['total'];
         $this->series->default_price = $this->apiSeries['default_price'];
         $this->series->image_url = $this->apiSeries['image_url'];
+        $this->series->source_status = $this->apiSeries['source_status'];
+        $this->series->source_name = $this->apiSeries['source_name'];
+        $this->series->source_name_romaji = $this->apiSeries['source_name_romaji'];
 
+        if (empty($this->apiSeries['publisher'])) {
+            return;
+        }
         $publisher = Publisher::whereName($this->apiSeries['publisher'])->first();
         if (!empty($publisher)) {
             $this->series->publisher_id = $publisher->id;
@@ -130,17 +139,29 @@ class CreateSeries extends Component
 
     private function createVolumes(): void
     {
-        if (empty($this->series->mangapassion_id)) {
+        if (!$this->create_volumes) {
             return;
         }
+        if (empty($this->series->mangapassion_id)) {
+            for ($i = 1; $i <= $this->series->total; $i++) {
+                $volume = new Volume([
+                    'series_id' => $this->series->id,
+                    'number' => $i,
+                    'price' => $this->series->default_price,
+                    'status' => $this->series->subscription_active,
+                ]);
+                $volume->save();
+            }
+        }
 
-        $volumesResult = MangaPassionApi::loadVolumes($this->series->mangapassion_id);
+        $volumesResult = MangaPassionApi::loadVolumes($this->series->mangapassion_id, $this->series->total ?? 500);
 
         foreach ($volumesResult as $newVolume) {
             $number = $newVolume['number'];
             $isbn = $newVolume['isbn'];
             $publish_date = $newVolume['publish_date'];
             $price = $newVolume['price'];
+            $image_url = $newVolume['image_url'];
 
             $volume = new Volume([
                 'series_id' => $this->series->id,
@@ -149,8 +170,11 @@ class CreateSeries extends Component
                 'publish_date' => !empty($publish_date) ? $publish_date->format('Y-m-d') : null,
                 'price' => $price,
                 'status' => $this->series->subscription_active,
+                'image_url' => $image_url,
             ]);
+
             $volume->save();
+            ImageHelpers::updateVolumeImage($volume, true);
         }
     }
 

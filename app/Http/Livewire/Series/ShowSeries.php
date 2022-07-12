@@ -3,7 +3,6 @@
 namespace App\Http\Livewire\Series;
 
 use App\Constants\VolumeStatus;
-use App\Helpers\ImageHelpers;
 use App\Models\Category;
 use App\Models\Series;
 use App\Models\Volume;
@@ -33,6 +32,8 @@ class ShowSeries extends Component
 
     public int $read;
 
+    protected $listeners = ['show_nsfw' => '$refresh'];
+
     public function mount(Category $category, Series $series): void
     {
         $this->category = $category;
@@ -43,46 +44,38 @@ class ShowSeries extends Component
     {
         $this->series = Series::with('genres')->find($this->series->id);
         $this->volumes = Volume::whereSeriesId($this->series->id)->orderBy('number')->get();
-        $this->new = $this->volumes->where('status', VolumeStatus::New)->count();
-        $this->ordered = $this->volumes->where('status', VolumeStatus::Ordered)->count();
-        $this->shipped = $this->volumes->where('status', VolumeStatus::Shipped)->count();
-        $this->delivered = $this->volumes->where('status', VolumeStatus::Delivered)->count();
-        $this->read = $this->volumes->where('status', VolumeStatus::Read)->count();
+        $this->new = $this->volumes->where('status', VolumeStatus::NEW)->count();
+        $this->ordered = $this->volumes->where('status', VolumeStatus::ORDERED)->count();
+        $this->shipped = $this->volumes->where('status', VolumeStatus::SHIPPED)->count();
+        $this->delivered = $this->volumes->where('status', VolumeStatus::DELIVERED)->count();
+        $this->read = $this->volumes->where('status', VolumeStatus::READ)->count();
 
         return view('livewire.series.show-series')->extends('layouts.app')->section('content');
     }
 
     public function canceled(int $id): void
     {
-        $this->setStatus($id, VolumeStatus::New);
+        $this->setStatus($id, VolumeStatus::NEW);
     }
 
     public function ordered(int $id): void
     {
-        $this->setStatus($id, VolumeStatus::Ordered);
+        $this->setStatus($id, VolumeStatus::ORDERED);
     }
 
     public function shipped(int $id): void
     {
-        $this->setStatus($id, VolumeStatus::Shipped);
+        $this->setStatus($id, VolumeStatus::SHIPPED);
     }
 
     public function delivered(int $id): void
     {
-        $this->setStatus($id, VolumeStatus::Delivered);
+        $this->setStatus($id, VolumeStatus::DELIVERED);
     }
 
     public function read(int $id): void
     {
-        $this->setStatus($id, VolumeStatus::Read);
-    }
-
-    private function setStatus(int $id, int $status): void
-    {
-        $volume = Volume::find($id);
-        $volume->status = $status;
-        $volume->save();
-        toastr()->livewire()->addSuccess(__(':name has been updated', ['name' => $volume->series->name . ' ' . $volume->number]));
+        $this->setStatus($id, VolumeStatus::READ);
     }
 
     public function toggle_reordering(): void
@@ -105,7 +98,7 @@ class ShowSeries extends Component
 
         $seriesService->resetNumbers($this->series->id);
 
-        toastr()->livewire()->addSuccess(__(':name has been updated', ['name' => $volume->series->name . ' ' . $volume->number]));
+        toastr()->addSuccess(__(':name has been updated', ['name' => $volume->series->name . ' ' . $volume->number]));
     }
 
     public function move_down(int $id, SeriesService $seriesService): void
@@ -123,28 +116,29 @@ class ShowSeries extends Component
 
         $seriesService->resetNumbers($this->series->id);
 
-        toastr()->livewire()->addSuccess(__(':name has been updated', ['name' => $volume->series->name . ' ' . $volume->number]));
+        toastr()->addSuccess(__(':name has been updated', ['name' => $volume->series->name . ' ' . $volume->number]));
     }
 
-    public function update(SeriesService $seriesService): void
+    public function update(SeriesService $seriesService)
     {
         try {
-            $this->series = $seriesService->refreshMetadata($this->series);
-            $this->series->save();
-
-            $image = ImageHelpers::getImage($this->series->image_url);
-            if (!empty($image)) {
-                ImageHelpers::storePublicImage($image, $this->series->image_path . '/cover.jpg');
-                $nsfwImage = $image->pixelate(config('images.nsfw.pixelate', 10))->blur(config('images.nsfw.blur', 5))->encode('jpg');
-                ImageHelpers::storePublicImage($nsfwImage, $this->series->image_path . '/cover_sfw.jpg');
-            }
-
+            $seriesService->refreshMetadata($this->series);
             $seriesService->updateVolumes($this->series);
 
-            toastr()->livewire()->addSuccess(__(':name has been updated', ['name' => $this->series->name]));
+            toastr()->addSuccess(__(':name has been updated', ['name' => $this->series->name]));
+
+            return redirect(request()->header('Referer'));
         } catch (Exception $exception) {
             Log::error('Error while updating series via API', ['exception' => $exception]);
-            toastr()->livewire()->addError(__(':name could not be updated', ['name' => $this->series->name]));
+            toastr()->addError(__(':name could not be updated', ['name' => $this->series->name]));
         }
+    }
+
+    private function setStatus(int $id, int $status): void
+    {
+        $volume = Volume::find($id);
+        $volume->status = $status;
+        $volume->save();
+        toastr()->addSuccess(__(':name has been updated', ['name' => $volume->series->name . ' ' . $volume->number]));
     }
 }

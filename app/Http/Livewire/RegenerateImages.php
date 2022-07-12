@@ -3,6 +3,7 @@
 namespace App\Http\Livewire;
 
 use App\Helpers\ImageHelpers;
+use App\Models\Article;
 use App\Models\Series;
 use Livewire\Component;
 
@@ -15,15 +16,18 @@ class RegenerateImages extends Component
 
     public function regenerate(): void
     {
-        $series = Series::all();
+        $articles = Article::whereNotNull('image_url')->orderBy('id')->get();
+        foreach ($articles as $article) {
+            ImageHelpers::createAndSaveArticleImage($article->image_url, $article->image_path);
+        }
+        $series = Series::with('volumes')->whereNotNull('image_url')->orderBy('id')->get();
         foreach ($series as $item) {
-            $image = ImageHelpers::getImage($item->image_url);
-            if (!empty($image)) {
-                ImageHelpers::storePublicImage($image, $item->image_path . '/cover.jpg');
-                $nsfwImage = $image->pixelate(config('images.nsfw.pixelate', 10))->blur(config('images.nsfw.blur', 5))->encode('jpg');
-                ImageHelpers::storePublicImage($nsfwImage, $item->image_path . '/cover_sfw.jpg');
+            ImageHelpers::createAndSaveCoverImage($item->image_url, $item->image_path);
+            $volumes = $item->volumes->whereNotNull('image_url')->sortBy('id');
+            foreach ($volumes as $volume) {
+                ImageHelpers::createAndSaveCoverImage($volume->image_url, $volume->image_path);
             }
         }
-        toastr()->livewire()->addSuccess(__('Images have been updated'));
+        toastr()->addSuccess(__('Images have been updated'));
     }
 }

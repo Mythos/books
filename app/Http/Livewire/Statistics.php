@@ -21,36 +21,50 @@ class Statistics extends Component
         return view('livewire.statistics', [
             'unreadSeries' => $this->getUnreadSeries(),
             'mostReadSeries' => $this->getMostReadSeries(),
+            'mostValuableSeries' => $this->getMostValuableSeries(),
         ])->extends('layouts.app')->section('content');
     }
 
     private function getMostReadSeries()
     {
         return Series::with(['category', 'volumes'])
-                       ->where('status', '<>', SeriesStatus::Canceled)
+                       ->where('status', '<>', SeriesStatus::CANCELED)
                        ->withCount([
                            'volumes as read_sum' => function ($query): void {
-                               $query->select(DB::raw('SUM(CASE WHEN `status` = ' . VolumeStatus::Read . ' THEN 1 ELSE 0 END)'));
+                               $query->select(DB::raw('SUM(CASE WHEN `status` = ' . VolumeStatus::READ . ' THEN 1 ELSE 0 END)'));
                            },
                        ])
                        ->whereHas('volumes', function (Builder $query): void {
-                           $query->where('status', '=', VolumeStatus::Read);
+                           $query->where('status', '=', VolumeStatus::READ);
                        })
                        ->orderByDesc('read_sum')
                        ->paginate(10, ['*'], 'mostread');
     }
 
+    private function getMostValuableSeries()
+    {
+        return Series::with(['category', 'volumes'])
+                       ->whereHas('volumes', function (Builder $query): void {
+                           $query->whereIn('status', [VolumeStatus::DELIVERED, VolumeStatus::READ]);
+                       })
+                       ->withSum(['volumes' => function ($query): void {
+                           $query->whereIn('status', [VolumeStatus::DELIVERED, VolumeStatus::READ]);
+                       }], 'price')
+                       ->orderByDesc('volumes_sum_price')
+                       ->paginate(10, ['*'], 'mostvaluable');
+    }
+
     private function getUnreadSeries()
     {
         return Series::with(['category', 'volumes'])
-                       ->where('status', '<>', SeriesStatus::Canceled)
+                       ->where('status', '<>', SeriesStatus::CANCELED)
                        ->withCount([
                            'volumes as unread_sum' => function ($query): void {
-                               $query->select(DB::raw('SUM(CASE WHEN `status` = ' . VolumeStatus::Delivered . ' THEN 1 ELSE 0 END)'));
+                               $query->select(DB::raw('SUM(CASE WHEN `status` = ' . VolumeStatus::DELIVERED . ' THEN 1 ELSE 0 END)'));
                            },
                        ])
                        ->whereHas('volumes', function (Builder $query): void {
-                           $query->where('status', '=', VolumeStatus::Delivered);
+                           $query->where('status', '=', VolumeStatus::DELIVERED);
                        })
                        ->orderByDesc('unread_sum')
                        ->paginate(10, ['*'], 'unread');

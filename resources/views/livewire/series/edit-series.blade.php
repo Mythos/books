@@ -31,8 +31,34 @@
                     </div>
                     <div class="row mt-1">
                         <div class="col-md-12">
-                            <label for="series.description" class="col-form-label required">{{ __('Description') }}</label>
-                            <textarea id="series.description" name="series.description" type="text" class="form-control @error('series.description') is-invalid @enderror" wire:model='series.description'>
+                            <label for="series.source_name" class="col-form-label">{{ __('Original Title') }}</label>
+                            <div class="input-group">
+                                <input id="series.source_name" name="series.source_name" type="text" class="form-control @error('series.source_name') is-invalid @enderror" wire:model='series.source_name' autofocus>
+                                @error('series.source_name')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mt-1">
+                        <div class="col-md-12">
+                            <label for="series.source_name_romaji" class="col-form-label">{{ __('Original Title (Romaji)') }}</label>
+                            <div class="input-group">
+                                <input id="series.source_name_romaji" name="series.source_name_romaji" type="text" class="form-control @error('series.source_name_romaji') is-invalid @enderror" wire:model='series.source_name_romaji' autofocus>
+                                @error('series.source_name_romaji')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mt-1">
+                        <div class="col-md-12">
+                            <label for="series.description" class="col-form-label">{{ __('Description') }}</label>
+                            <textarea id="series.description" name="series.description" type="text" class="form-control @error('series.description') is-invalid @enderror" wire:model='series.description' rows="5">
                             </textarea>
                             @error('series.description')
                                 <span class="invalid-feedback" role="alert">
@@ -61,13 +87,30 @@
                         <div class="col-md-12">
                             <label for="series.status" class="col-form-label required">{{ __('Status') }}</label>
                             <select id="series.status" name="series.status" class="form-select @error('series.status') is-invalid @enderror" wire:model='series.status' required>
-                                <option value="0">{{ __('New') }}</option>
-                                <option value="1">{{ __('Ongoing') }}</option>
-                                <option value="2">{{ __('Finished') }}</option>
-                                <option value="3">{{ __('Paused') }}</option>
-                                <option value="4">{{ __('Canceled') }}</option>
+                                <option value="{{ App\Constants\SeriesStatus::ANNOUNCED }}">{{ __('Announced') }}</option>
+                                <option value="{{ App\Constants\SeriesStatus::ONGOING }}">{{ __('Ongoing') }}</option>
+                                <option value="{{ App\Constants\SeriesStatus::FINISHED }}">{{ __('Finished') }}</option>
+                                <option value="{{ App\Constants\SeriesStatus::CANCELED }}">{{ __('Canceled') }}</option>
+                                <option value="{{ App\Constants\SeriesStatus::PAUSED }}">{{ __('Paused') }}</option>
                             </select>
                             @error('series.status')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+                        </div>
+                    </div>
+                    <div class="row mt-1">
+                        <div class="col-md-12">
+                            <label for="series.source_status" class="col-form-label required">{{ __('Status (Source)') }}</label>
+                            <select id="series.source_status" name="series.source_status" class="form-select @error('series.source_status') is-invalid @enderror" wire:model='series.source_status' required>
+                                <option value="{{ App\Constants\SeriesStatus::ANNOUNCED }}">{{ __('Announced') }}</option>
+                                <option value="{{ App\Constants\SeriesStatus::ONGOING }}">{{ __('Ongoing') }}</option>
+                                <option value="{{ App\Constants\SeriesStatus::FINISHED }}">{{ __('Finished') }}</option>
+                                <option value="{{ App\Constants\SeriesStatus::CANCELED }}">{{ __('Canceled') }}</option>
+                                <option value="{{ App\Constants\SeriesStatus::PAUSED }}">{{ __('Paused') }}</option>
+                            </select>
+                            @error('series.source_status')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
                                 </span>
@@ -113,7 +156,7 @@
                     <div class="row mt-3">
                         <div class="col-md-12">
                             <div class="form-check">
-                                <input id="series.subscription_active" type="checkbox" class="form-check-input @error('series.subscription_active') is-invalid @enderror" name="series.subscription_active" wire:model='series.subscription_active' @if ($series->status == 4) disabled @endif>
+                                <input id="series.subscription_active" type="checkbox" class="form-check-input @error('series.subscription_active') is-invalid @enderror" name="series.subscription_active" wire:model='series.subscription_active' @if ($series->status == App\Constants\SeriesStatus::CANCELED) disabled @endif>
                                 <label for="series.subscription_active" class="form-check-label">{{ __('Subscription active') }}</label>
                             </div>
                             @error('series.subscription_active')
@@ -130,6 +173,19 @@
                                 <label for="series.is_nsfw" class="form-check-label">{{ __('NSFW') }}</label>
                             </div>
                             @error('series.is_nsfw')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-md-12">
+                            <div class="form-check">
+                                <input id="series.ignore_in_upcoming" type="checkbox" class="form-check-input @error('series.ignore_in_upcoming') is-invalid @enderror" name="series.ignore_in_upcoming" wire:model='series.ignore_in_upcoming'>
+                                <label for="series.ignore_in_upcoming" class="form-check-label">{{ __('Hide in upcoming releases') }}</label>
+                            </div>
+                            @error('series.ignore_in_upcoming')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
                                 </span>

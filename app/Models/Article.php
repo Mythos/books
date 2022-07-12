@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -23,6 +24,7 @@ use Spatie\Sluggable\SlugOptions;
  * @property-read \App\Models\Category $category
  * @property-read string $image
  * @property-read string $image_path
+ * @property-read string $release_date_formatted
  * @property-read string $status_class
  * @property-read string $status_name
  * @method static \Illuminate\Database\Eloquent\Builder|Article newModelQuery()
@@ -55,6 +57,7 @@ class Article extends Model
         'release_date',
         'status',
         'category_id',
+        'image_url',
     ];
 
     /**
@@ -94,7 +97,7 @@ class Article extends Model
     {
         $path = 'storage/articles/' . $this->id . '/';
 
-        return url($path . 'image.jpg');
+        return url($path . 'image.' . config('images.type'));
     }
 
     /**
@@ -147,5 +150,19 @@ class Article extends Model
     public function getImagePathAttribute(): string
     {
         return 'articles/' . $this->id;
+    }
+
+    /**
+     * Get the article's formatted release date.
+     *
+     * @return string
+     */
+    public function getReleaseDateFormattedAttribute() : ?string
+    {
+        if (empty($this->release_date)) {
+            return null;
+        }
+
+        return Carbon::parse($this->release_date)->format(auth()->user()->date_format);
     }
 }

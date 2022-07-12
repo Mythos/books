@@ -20,15 +20,13 @@ class EditArticle extends Component
 
     public Article $article;
 
-    public string $image_url = '';
-
     protected $rules = [
         'article.name' => 'required',
         'article.release_date' => 'date',
         'article.price' => 'nullable|regex:"^[0-9]{1,9}([,.][0-9]{1,2})?$"',
         'article.status' => 'required|integer|min:0',
         'article.category_id' => 'required|exists:categories,id',
-        'image_url' => 'url',
+        'article.image_url' => 'nullable|url',
     ];
 
     protected $listeners = [
@@ -51,21 +49,21 @@ class EditArticle extends Component
         return view('livewire.articles.edit-article')->extends('layouts.app')->section('content');
     }
 
-    public function save(): void
+    public function save()
     {
         $this->validate();
         if (!empty($this->article->price)) {
             $this->article->price = floatval(Str::replace(',', '.', $this->article->price));
         }
         try {
-            $image = ImageHelpers::getImage($this->image_url);
             $this->article->save();
-            ImageHelpers::storePublicImage($image, $this->article->image_path . '/image.jpg');
-            toastr()->livewire()->addSuccess(__(':name has been updated', ['name' => $this->article->name]));
-            $this->reset(['image_url']);
+            ImageHelpers::createAndSaveArticleImage($this->article->image_url, $this->article->image_path);
+            toastr()->addSuccess(__(':name has been updated', ['name' => $this->article->name]));
+
+            return redirect()->route('article.show', [$this->category, $this->article]);
         } catch (Exception $exception) {
             Log::error($exception);
-            toastr()->livewire()->addError(__(':name could not be updated', ['name' => $this->article->name]));
+            toastr()->addError(__(':name could not be updated', ['name' => $this->article->name]));
         }
     }
 

@@ -14,7 +14,7 @@ class SeriesPerPublisher extends Component
     {
         $this->seriesByPublisherStatistics = DB::table('series')
                                                  ->join('publishers', 'series.publisher_id', '=', 'publishers.id')
-                                                 ->where('series.status', '<>', SeriesStatus::Canceled)
+                                                 ->where('series.status', '<>', SeriesStatus::CANCELED)
                                                  ->select('publishers.name as publisher', DB::raw('count(*) as total'))
                                                  ->groupBy('publishers.name')
                                                  ->orderByDesc('total')

@@ -5,7 +5,6 @@ namespace App\Http\Livewire\Series;
 use App\Constants\SeriesStatus;
 use App\Constants\VolumeStatus;
 use App\Models\Volume;
-use Illuminate\Support\Str;
 use Livewire\Component;
 
 class UpcomingSeries extends Component
@@ -18,49 +17,56 @@ class UpcomingSeries extends Component
 
     public function render()
     {
-        $upcoming = Volume::with(['series', 'series.publisher', 'series.genres', 'series.category'])
-        ->where('ignore_in_upcoming', 'false')
-        ->whereRelation('series', 'status', '<>', SeriesStatus::Canceled)
-        ->whereIn('status', [VolumeStatus::New, VolumeStatus::Ordered, VolumeStatus::Shipped])
-        ->whereNotNull('publish_date')
-        ->get()
-        ->sortBy([
-            ['publish_date', 'asc'],
-            ['series.name', 'asc'],
-        ]);
-        if (!empty($this->search)) {
-            $upcoming = $upcoming->filter(function ($volume) {
-                $volumeNameMatch = Str::contains(Str::lower($volume->name), Str::lower($this->search));
-                $volumeIsbnMatch = Str::contains(Str::lower($volume->isbn), Str::lower($this->search));
-                $seriesPublisherMatch = Str::contains(Str::lower($volume->series->publisher?->name), Str::lower($this->search));
-                $seriesGenreMatch = $volume->series->genres->filter(function ($genre) {
-                    return Str::contains(Str::lower($genre->name), Str::lower($this->search));
-                })->count() > 0;
+        $upcomingQuery = Volume::with(['series:id,name,slug,category_id,status,subscription_active,source_name,source_name_romaji,ignore_in_upcoming', 'series.publisher:id,name', 'series.genres:id,name', 'series.category:id,name,slug'])
+                               ->where('ignore_in_upcoming', 'false')
+                               ->whereRelation('series', 'status', '<>', SeriesStatus::CANCELED)
+                               ->whereRelation('series', 'ignore_in_upcoming', '=', 'false')
+                               ->whereIn('status', [VolumeStatus::NEW, VolumeStatus::ORDERED, VolumeStatus::SHIPPED])
+                               ->whereNotNull('publish_date');
 
-                return $volumeNameMatch
-                || $volumeIsbnMatch
-                || $seriesPublisherMatch
-                || $seriesGenreMatch;
+        if (!empty($this->search)) {
+            $upcomingQuery->where(function ($query): void {
+                $query->where('isbn', 'like', '%' . $this->search . '%')
+                      ->orWhereHas('series', function ($query): void {
+                          $query->where('name', 'like', '%' . $this->search . '%')
+                              ->orwhere('source_name', 'like', '%' . $this->search . '%')
+                              ->orWhere('source_name_romaji', 'like', '%' . $this->search . '%')
+                              ->orWhereHas('publisher', function ($query): void {
+                                  $query->where('name', 'like', '%' . $this->search . '%');
+                              })
+                              ->orWhereHas('genres', function ($query): void {
+                                  $query->where('name', 'like', '%' . $this->search . '%');
+                              });
+                      });
             });
         }
-        $this->upcoming = $upcoming;
+        $this->upcoming = $upcomingQuery->get()
+                                        ->sortBy([
+                                            ['publish_date', 'asc'],
+                                            ['series.name', 'asc'],
+                                        ]);
 
         return view('livewire.series.upcoming-series');
     }
 
     public function ordered(int $id): void
     {
-        $this->setStatus($id, VolumeStatus::Ordered);
+        $this->setStatus($id, VolumeStatus::ORDERED);
     }
 
     public function shipped(int $id): void
     {
-        $this->setStatus($id, VolumeStatus::Shipped);
+        $this->setStatus($id, VolumeStatus::SHIPPED);
     }
 
     public function delivered(int $id): void
     {
-        $this->setStatus($id, VolumeStatus::Delivered);
+        $this->setStatus($id, VolumeStatus::DELIVERED);
+    }
+
+    public function filter($filter): void
+    {
+        $this->search = $filter;
     }
 
     private function setStatus(int $id, int $status): void
@@ -69,11 +75,6 @@ class UpcomingSeries extends Component
         $volume->status = $status;
         $volume->save();
         $this->emitTo('overview', '$refresh');
-        toastr()->livewire()->addSuccess(__(':name has been updated', ['name' => $volume->series->name . ' ' . $volume->number]));
-    }
-
-    public function filter($filter): void
-    {
-        $this->search = $filter;
+        toastr()->addSuccess(__(':name has been updated', ['name' => $volume->series->name . ' ' . $volume->number]));
     }
 }
