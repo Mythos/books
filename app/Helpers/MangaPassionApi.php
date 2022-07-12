@@ -79,7 +79,10 @@ class MangaPassionApi
                 $responseBody = $response->json();
 
                 foreach ($responseBody as $responseItem) {
-                    $number = !empty($responseItem['number']) ? $responseItem['number'] : 1;
+                    if (empty($responseItem['number'])) {
+                        continue;
+                    }
+                    $number = $responseItem['number'];
                     $publish_date = null;
                     if ($responseItem['status'] < 2) {
                         $publish_date = !empty($responseItem['date']) ? new DateTime($responseItem['date']) : null;
