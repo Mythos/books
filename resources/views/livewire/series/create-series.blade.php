@@ -146,6 +146,19 @@
                             @enderror
                         </div>
                     </div>
+                    <div class="row mt-3">
+                        <div class="col-md-12">
+                            <div class="form-check">
+                                <input id="create_volumes" type="checkbox" class="form-check-input @error('create_volumes') is-invalid @enderror" name="create_volumes" wire:model='create_volumes' @if (!empty($series->mangapassion_id) || empty($series->total)) disabled @endif>
+                                <label for="create_volumes" class="form-check-label">{{ __('Create Volumes') }}</label>
+                            </div>
+                            @error('create_volumes')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+                        </div>
+                    </div>
                     <div class="row mt-1">
                         <div class="col-md-12">
                             <label for="series.image_url" class="col-form-label">{{ __('Image URL') }}</label>

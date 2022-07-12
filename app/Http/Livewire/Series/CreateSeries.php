@@ -25,6 +25,8 @@ class CreateSeries extends Component
 
     public $apiSeries;
 
+    public bool $create_volumes = false;
+
     protected $rules = [
         'series.name' => 'required',
         'series.description' => 'nullable',
@@ -108,7 +110,7 @@ class CreateSeries extends Component
 
             return;
         }
-
+        $this->create_volumes = true;
         $this->series->mangapassion_id = $this->apiSeries['mangapassion_id'];
         $this->series->name = $this->apiSeries['name'];
         $this->series->description = $this->apiSeries['description'];
@@ -137,8 +139,19 @@ class CreateSeries extends Component
 
     private function createVolumes(): void
     {
-        if (empty($this->series->mangapassion_id)) {
+        if (!$this->create_volumes) {
             return;
+        }
+        if (empty($this->series->mangapassion_id)) {
+            for ($i = 1; $i <= $this->series->total; $i++) {
+                $volume = new Volume([
+                    'series_id' => $this->series->id,
+                    'number' => $i,
+                    'price' => $this->series->default_price,
+                    'status' => $this->series->subscription_active,
+                ]);
+                $volume->save();
+            }
         }
 
         $volumesResult = MangaPassionApi::loadVolumes($this->series->mangapassion_id, $this->series->total ?? 500);
