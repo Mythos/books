@@ -12,7 +12,7 @@
     </nav>
     <div class="row bg-white shadow-sm rounded py-2">
         <div class="col-sm-12 col-md-12 col-lg-3 d-flex align-self-stretch justify-content-center my-2">
-            <img src="{{ $article->image }}" alt="{{ $article->name }}" class="card-img-top" style="max-height: 400px; object-fit: contain;">
+            <img src="{{ $article->image }}" alt="{{ $article->name }}" class="card-img-top" style="max-height: 400px; object-fit: contain;" loading="lazy" decoding="async">
         </div>
         <div class="col-sm-12 col-md-12 col-lg-9 mb-2 pl-4">
             <div class="text-end">

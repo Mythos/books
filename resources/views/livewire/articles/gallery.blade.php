@@ -25,7 +25,7 @@
             @foreach ($articles as $article)
                 <div class="col-sm-12 col-md-6 col-lg-3 d-flex align-self-stretch">
                     <div class="card shadow-sm mb-4" style="width: 30rem;">
-                        <img src="{{ $article->image }}" alt="{{ $article->name }}" class="card-img-top" style="height: 400px; object-fit: contain;">
+                        <img src="{{ $article->image }}" alt="{{ $article->name }}" class="card-img-top" style="height: 400px; object-fit: contain;" loading="lazy" decoding="async">
                         <div class="card-body d-flex flex-column">
                             <h5 class="card-title text-uppercase">{{ $article->name }}</h5>
                             <div class="mt-auto">

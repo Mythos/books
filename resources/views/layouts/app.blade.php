@@ -108,7 +108,7 @@
                             </li>
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    <img class="rounded-circle" width="20px" src="{{ auth()->user()->avatar_navbar }}" alt="{{ auth()->user()->email }}">
+                                    <img class="rounded-circle" width="20px" src="{{ auth()->user()->avatar_navbar }}" alt="{{ auth()->user()->email }}" loading="lazy" decoding="async">
                                     {{ Auth::user()->name }}
                                 </a>
                                 <ul class="dropdown-menu dropdown-menu-end">

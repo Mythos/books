@@ -12,7 +12,7 @@
     </nav>
     <div class="row bg-white shadow-sm rounded py-2">
         <div class="col-sm-12 col-md-12 col-lg-3 d-flex flex-column align-items-center text-center my-2">
-            <img src="{{ $series->image }}" alt="{{ $series->name }}" class="card-img-top" style="max-height: 400px; object-fit: contain;">
+            <img src="{{ $series->image }}" alt="{{ $series->name }}" class="card-img-top" style="max-height: 400px; object-fit: contain;" loading="lazy" decoding="async">
             <span class="mt-2 fs-4">{{ $series->publisher?->name }}</span>
             <span class="{{ $series->status_class }}">{{ $series->status_name }}</span>
             @if ($series->subscription_active)

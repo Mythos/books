@@ -75,7 +75,7 @@
                                             <th scope="row" class="text-end">{{ $volume->number }}</th>
                                             <td class="text-center" style="padding: 3px;">
                                                 @if ($volume->image_exists)
-                                                    <img src="{{ $volume->image_thumbnail }}" alt="{{ $volume->name }}" class="volume-cover" style="max-height: 33px; object-fit: contain;" data-image-url="{{ $volume->image }}">
+                                                    <img src="{{ $volume->image_thumbnail }}" alt="{{ $volume->name }}" class="volume-cover" style="max-height: 33px; object-fit: contain;" data-image-url="{{ $volume->image }}" loading="lazy" decoding="async">
                                                 @endif
                                             </td>
                                             <td class="text-center">{{ $volume->publish_date_formatted }}</td>
