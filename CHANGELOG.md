@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.3.1
+
+- Removed ISBN requirement for Overview
+
 ## 2.3.0 (2022-07-12)
 
 - Added cover images for volumes

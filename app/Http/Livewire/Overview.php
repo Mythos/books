@@ -54,7 +54,7 @@ class Overview extends Component
                       });
             });
         }
-        $volumes = $volumes->join('series', 'volumes.series_id', '=', 'series.id')->WhereNotNull('isbn')->select([
+        $volumes = $volumes->join('series', 'volumes.series_id', '=', 'series.id')->select([
             DB::raw('COALESCE(sum(case when volumes.status = ' . VolumeStatus::NEW . ' AND series.status <> ' . SeriesStatus::CANCELED . ' then 1 else 0 end), 0) as new'),
             DB::raw('COALESCE(sum(case when volumes.status = ' . VolumeStatus::ORDERED . ' AND series.status <> ' . SeriesStatus::CANCELED . ' then 1 else 0 end), 0) as ordered'),
             DB::raw('COALESCE(sum(case when volumes.status = ' . VolumeStatus::SHIPPED . ' then 1 else 0 end), 0) as shipped'),
