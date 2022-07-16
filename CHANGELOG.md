@@ -3,6 +3,7 @@
 ## 2.3.1
 
 - Removed ISBN requirement for Overview
+- Improved series/volume requirements for statistics
 
 ## 2.3.0 (2022-07-12)
 
