@@ -29,6 +29,8 @@ class EditSeries extends Component
 
     public string $image_url = '';
 
+    public bool $isEditable = true;
+
     protected $rules = [
         'series.name' => 'required',
         'series.description' => 'nullable',
@@ -73,6 +75,8 @@ class EditSeries extends Component
 
     public function render()
     {
+        $this->isEditable = empty($this->series->mangapassion_id);
+
         return view('livewire.series.edit-series')->extends('layouts.app')->section('content');
     }
 

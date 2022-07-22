@@ -27,6 +27,8 @@ class CreateSeries extends Component
 
     public bool $create_volumes = false;
 
+    public bool $isEditable = true;
+
     protected $rules = [
         'series.name' => 'required',
         'series.description' => 'nullable',
@@ -75,6 +77,8 @@ class CreateSeries extends Component
 
     public function render()
     {
+        $this->isEditable = empty($this->series->mangapassion_id);
+
         return view('livewire.series.create-series')->extends('layouts.app')->section('content');
     }
 
