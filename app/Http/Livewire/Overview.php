@@ -61,7 +61,7 @@ class Overview extends Component
             DB::raw('COALESCE(sum(case when volumes.status = ' . VolumeStatus::DELIVERED . ' then 1 else 0 end), 0) as delivered'),
             DB::raw('COALESCE(sum(case when volumes.status = ' . VolumeStatus::READ . ' then 1 else 0 end), 0) as `read`'),
             DB::raw('COALESCE(sum(case when volumes.status = ' . VolumeStatus::DELIVERED . ' OR volumes.status = ' . VolumeStatus::READ . ' then price else 0 end), 0) as price'),
-            DB::raw('COALESCE(sum(case when series.status <> ' . SeriesStatus::CANCELED . ' or volumes.status = ' . VolumeStatus::DELIVERED . ' or volumes.status = ' . VolumeStatus::READ . ' then 1 else 0 end), 0) as total'),
+            DB::raw('COALESCE(sum(case when volumes.status = ' . VolumeStatus::DELIVERED . ' or volumes.status = ' . VolumeStatus::READ . ' then 1 else 0 end), 0) as total'),
         ])->first();
 
         return json_decode(json_encode($volumes->toArray()), true);
@@ -80,7 +80,7 @@ class Overview extends Component
             DB::raw('COALESCE(sum(case when status = 3 then 1 else 0 end), 0) as delivered'),
             DB::raw('0 as `read`'),
             DB::raw('COALESCE(sum(case when status = 3 then price else 0 end), 0) as price'),
-            DB::raw('count(*) as total'),
+            DB::raw('COALESCE(sum(case when status = 3 then 1 else 0 end), 0) as total'),
         ])->first();
 
         return json_decode(json_encode($articleStatisticsQuery), true);
