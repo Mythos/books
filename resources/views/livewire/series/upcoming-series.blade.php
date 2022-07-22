@@ -25,7 +25,7 @@
                             </td>
                             <td>
                                 @if ($volume->series->subscription_active)
-                                    <span class="badge rounded-pill bg-success mt-1" data-bs-toggle="tooltip" title="{{ __('Subscription active') }}">{{ Str::substr(__('Subscription active'), 0, 1) }}</span>
+                                    <span class="badge rounded-pill bg-success mt-1" data-bs-toggle="tooltip" title="{{ __('Subscription active') }}">{{ Str::substr(__('Subscription active'), 0, 3) }}</span>
                                 @endif
                                 {{ $volume->name }}
                             </td>
