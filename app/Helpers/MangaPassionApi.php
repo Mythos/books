@@ -46,6 +46,17 @@ class MangaPassionApi
         $series['status'] = $result['status'] ?? SeriesStatus::ANNOUNCED;
         $series['image_url'] = $result['cover'] ?? '';
         $series['total'] = $result['numVolumes'] ?? 0;
+
+        if (!empty($result['allInOne'])) {
+            $isbn = !empty($result['allInOne']['isbn13']) ? (string) Isbn::of($result['allInOne']['isbn13'])->to13() : null;
+            $publish_date = !empty($result['allInOne']['date']) ? new DateTime($result['allInOne']['date']) : null;
+            $price = !empty($result['allInOne']['price']) ? floatval($result['allInOne']['price']) / 100.0 : 0.00;
+            $series['allInOne'] = true;
+            $series['isbn'] = $isbn;
+            $series['publish_date'] = $publish_date?->format('Y-m-d');
+            $series['price'] = $price;
+        }
+
         if (!empty($result['sources'])) {
             $source = $result['sources'][0];
             $series['total'] = $source['volumes'] ?? null;
@@ -93,7 +104,7 @@ class MangaPassionApi
                     $result[] = [
                         'number' => $number,
                         'isbn' => $isbn,
-                        'publish_date' => $publish_date,
+                        'publish_date' => $publish_date?->format('Y-m-d'),
                         'price' => $price,
                         'image_url' => $responseItem['cover'],
                     ];

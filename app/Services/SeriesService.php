@@ -74,8 +74,25 @@ class SeriesService
             return [];
         }
         $volumes = Volume::whereSeriesId($series->id)->get();
+        $apiSeries = MangaPassionApi::loadSeriesById($series->mangapassion_id);
+        $volumesResult = [];
+        if (!empty($apiSeries['allInOne'])) {
+            $number = 1;
+            $isbn = $apiSeries['isbn'];
+            $publish_date = $apiSeries['publish_date'];
+            $price = $apiSeries['price'];
+            $image_url = $apiSeries['image_url'];
 
-        $volumesResult = MangaPassionApi::loadVolumes($series->mangapassion_id, $series->total ?? 500);
+            $volumesResult[] = [
+                'number' => $number,
+                'isbn' => $isbn,
+                'publish_date' => $publish_date,
+                'price' => $price,
+                'image_url' => $apiSeries['image_url'],
+            ];
+        } else {
+            $volumesResult = MangaPassionApi::loadVolumes($series->mangapassion_id, $series->total ?? 500);
+        }
         $newVolumes = [];
 
         foreach ($volumesResult as $volumeResult) {
@@ -102,7 +119,7 @@ class SeriesService
             }
 
             $volume->number = $number;
-            $volume->publish_date = !empty($publish_date) ? $publish_date->format('Y-m-d') : null;
+            $volume->publish_date = !empty($publish_date) ? $publish_date : null;
             if (!empty($isbn)) {
                 $volume->isbn = $isbn;
             }
@@ -143,7 +160,7 @@ class SeriesService
                 'series_id' => $series->id,
                 'isbn' => $isbn,
                 'number' => $number,
-                'publish_date' => !empty($publish_date) ? $publish_date->format('Y-m-d') : null,
+                'publish_date' => !empty($publish_date) ? $publish_date : null,
                 'price' => $price,
                 'status' => $series->subscription_active,
                 'image_url' => $image_url,

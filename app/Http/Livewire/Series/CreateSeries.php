@@ -158,20 +158,18 @@ class CreateSeries extends Component
             }
         }
 
-        $volumesResult = MangaPassionApi::loadVolumes($this->series->mangapassion_id, $this->series->total ?? 500);
-
-        foreach ($volumesResult as $newVolume) {
-            $number = $newVolume['number'];
-            $isbn = $newVolume['isbn'];
-            $publish_date = $newVolume['publish_date'];
-            $price = $newVolume['price'];
-            $image_url = $newVolume['image_url'];
+        if (!empty($this->apiSeries['allInOne'])) {
+            $number = 1;
+            $isbn = $this->apiSeries['isbn'];
+            $publish_date = $this->apiSeries['publish_date'];
+            $price = $this->apiSeries['price'];
+            $image_url = $this->apiSeries['image_url'];
 
             $volume = new Volume([
                 'series_id' => $this->series->id,
                 'isbn' => $isbn,
                 'number' => $number,
-                'publish_date' => !empty($publish_date) ? $publish_date->format('Y-m-d') : null,
+                'publish_date' => !empty($publish_date) ? $publish_date : null,
                 'price' => $price,
                 'status' => $this->series->subscription_active,
                 'image_url' => $image_url,
@@ -179,6 +177,29 @@ class CreateSeries extends Component
 
             $volume->save();
             ImageHelpers::updateVolumeImage($volume, true);
+        } else {
+            $volumesResult = MangaPassionApi::loadVolumes($this->series->mangapassion_id, $this->series->total ?? 500);
+
+            foreach ($volumesResult as $newVolume) {
+                $number = $newVolume['number'];
+                $isbn = $newVolume['isbn'];
+                $publish_date = $newVolume['publish_date'];
+                $price = $newVolume['price'];
+                $image_url = $newVolume['image_url'];
+
+                $volume = new Volume([
+                    'series_id' => $this->series->id,
+                    'isbn' => $isbn,
+                    'number' => $number,
+                    'publish_date' => !empty($publish_date) ? $publish_date : null,
+                    'price' => $price,
+                    'status' => $this->series->subscription_active,
+                    'image_url' => $image_url,
+                ]);
+
+                $volume->save();
+                ImageHelpers::updateVolumeImage($volume, true);
+            }
         }
     }
 
