@@ -33,6 +33,7 @@ use Spatie\Sluggable\SlugOptions;
  * @property int|null $source_status
  * @property string|null $source_name
  * @property string|null $source_name_romaji
+ * @property int $ignore_in_upcoming
  * @property-read \App\Models\Category $category
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Genre[] $genres
  * @property-read int|null $genres_count
@@ -59,6 +60,7 @@ use Spatie\Sluggable\SlugOptions;
  * @method static \Illuminate\Database\Eloquent\Builder|Series whereDefaultPrice($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Series whereDescription($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Series whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Series whereIgnoreInUpcoming($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Series whereImageUrl($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Series whereIsNsfw($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Series whereMangapassionId($value)

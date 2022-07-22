@@ -18,6 +18,7 @@ use Spatie\Sluggable\SlugOptions;
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property int $sort_index
  * @property int $type
+ * @property int|null $page_size
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Article[] $articles
  * @property-read int|null $articles_count
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Series[] $series
@@ -28,6 +29,7 @@ use Spatie\Sluggable\SlugOptions;
  * @method static \Illuminate\Database\Eloquent\Builder|Category whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Category whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Category whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Category wherePageSize($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Category whereSlug($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Category whereSortIndex($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Category whereType($value)

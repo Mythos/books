@@ -21,6 +21,7 @@ use Spatie\Sluggable\SlugOptions;
  * @property int $category_id
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property string|null $image_url
  * @property-read \App\Models\Category $category
  * @property-read string $image
  * @property-read string $image_path
@@ -33,6 +34,7 @@ use Spatie\Sluggable\SlugOptions;
  * @method static \Illuminate\Database\Eloquent\Builder|Article whereCategoryId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Article whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Article whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Article whereImageUrl($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Article whereName($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Article wherePrice($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Article whereReleaseDate($value)
