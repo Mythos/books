@@ -106,7 +106,7 @@ class MangaPassionApi
                         'isbn' => $isbn,
                         'publish_date' => $publish_date?->format('Y-m-d'),
                         'price' => $price,
-                        'image_url' => $responseItem['cover'],
+                        'image_url' => $responseItem['cover'] ?? null,
                     ];
                 }
             }
