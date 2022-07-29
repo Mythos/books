@@ -34,12 +34,15 @@
                     <div class="row mt-1">
                         <div class="col-md-12">
                             <label for="volume.isbn" class="col-form-label">{{ __('ISBN') }}</label>
-                            <input id="volume.isbn" name="volume.isbn" type="text" class="form-control @error('volume.isbn') is-invalid @enderror" wire:model='volume.isbn' autofocus>
-                            @error('volume.isbn')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                            @enderror
+                            <div class="input-group">
+                                <input id="volume.isbn" name="volume.isbn" type="text" class="form-control @error('volume.isbn') is-invalid @enderror" wire:model='volume.isbn' autofocus>
+                                <button class="btn btn-outline-secondary" type="button" data-bs-toggle="modal" data-bs-target="#livestream_scanner"><span class="fa fa-barcode"></span></button>
+                                @error('volume.isbn')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
                         </div>
                     </div>
                     <div class="row mt-1">
@@ -120,5 +123,6 @@
             </div>
         </div>
     </form>
+    @include('livewire.volumes.barcodescanner')
 </div>
 @include('scripts.select2')
