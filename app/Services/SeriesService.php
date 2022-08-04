@@ -88,7 +88,7 @@ class SeriesService
                 'isbn' => $isbn,
                 'publish_date' => $publish_date,
                 'price' => $price,
-                'image_url' => $apiSeries['image_url'],
+                'image_url' => $image_url,
             ];
         } else {
             $volumesResult = MangaPassionApi::loadVolumes($series->mangapassion_id, $series->total ?? 500);
