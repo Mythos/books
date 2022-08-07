@@ -2,6 +2,7 @@
 
 namespace App\Helpers;
 
+use App\Models\Publisher;
 use App\Models\Series;
 use App\Models\Volume;
 use Illuminate\Support\Facades\Storage;
@@ -15,6 +16,14 @@ class ImageHelpers
     private const COVER_FILENAME = 'cover';
 
     private const COVER_SFW_FILENAME = 'cover_sfw';
+
+    private const LOGO_FILENAME = 'logo';
+
+    private const LOGO_SFW_FILENAME = 'logo_sfw';
+
+    private const IMAGE_FILENAME = 'image';
+
+    private const IMAGE_SFW_FILENAME = 'image_sfw';
 
     public static function getImage($url): ?Image
     {
@@ -58,6 +67,30 @@ class ImageHelpers
         $thumbnailPath = static::THUMBNAIL_FOLDER . $series->image_path;
         $coverFilename = static::COVER_FILENAME . '.' . config('images.type');
         $coverSfwFilename = static::COVER_SFW_FILENAME . '.' . config('images.type');
+        Storage::disk('public')->delete([
+            implode(DIRECTORY_SEPARATOR, [$path, $coverFilename]),
+            implode(DIRECTORY_SEPARATOR, [$path, $coverSfwFilename]),
+            implode(DIRECTORY_SEPARATOR, [$thumbnailPath, $coverFilename]),
+            implode(DIRECTORY_SEPARATOR, [$thumbnailPath, $coverSfwFilename]),
+        ]);
+    }
+
+    public static function updatePublisherImage(Publisher $publisher, $wasCreated = false): void
+    {
+        if (!$wasCreated && !$publisher->isDirty('image_url') && !$publisher->wasChanged('image_url')) {
+            return;
+        }
+
+        if (!empty($publisher->image_url)) {
+            static::createAndSaveCoverImage($publisher->image_url, $publisher->image_path);
+
+            return;
+        }
+
+        $path = $publisher->image_path;
+        $thumbnailPath = static::THUMBNAIL_FOLDER . $publisher->image_path;
+        $coverFilename = static::LOGO_FILENAME . '.' . config('images.type');
+        $coverSfwFilename = static::LOGO_SFW_FILENAME . '.' . config('images.type');
         Storage::disk('public')->delete([
             implode(DIRECTORY_SEPARATOR, [$path, $coverFilename]),
             implode(DIRECTORY_SEPARATOR, [$path, $coverSfwFilename]),

@@ -2,8 +2,11 @@
 
 namespace App\Http\Livewire\Publishers;
 
+use App\Helpers\ImageHelpers;
 use App\Models\Publisher;
 use App\Models\Series;
+use Exception;
+use Illuminate\Support\Facades\Log;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Component;
 
@@ -15,6 +18,7 @@ class EditPublisher extends Component
 
     protected $rules = [
         'publisher.name' => 'required',
+        'publisher.image_url' => 'nullable|url',
     ];
 
     protected $listeners = [
@@ -36,12 +40,20 @@ class EditPublisher extends Component
         return view('livewire.publishers.edit-publisher')->extends('layouts.app')->section('content');
     }
 
-    public function save(): void
+    public function save()
     {
-        $this->validate();
+        try {
+            $this->validate();
 
-        $this->publisher->save();
-        toastr()->addSuccess(__(':name has been updated', ['name' => $this->publisher->name]));
+            $this->publisher->save();
+            ImageHelpers::updatePublisherImage($this->publisher);
+            toastr()->addSuccess(__(':name has been updated', ['name' => $this->publisher->name]));
+
+            return redirect()->route('publishers.index');
+        } catch (Exception $exception) {
+            Log::error($exception);
+            toastr()->addError(__(':name could not be created', ['name' => $this->publisher->name]));
+        }
     }
 
     public function delete(): void

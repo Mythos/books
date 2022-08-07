@@ -12,7 +12,6 @@
         </ol>
     </nav>
     <form method="POST" wire:submit.prevent='save'>
-        <input id="category_id" type="hidden" name="category_id" wire:model='series.category_id' />
         <div class="row bg-white shadow-sm rounded">
             <div class="col-md-12">
                 <div class="p-3 py-3">
@@ -24,6 +23,17 @@
                             <label for="publisher.name" class="col-form-label required">{{ __('Name') }}</label>
                             <input id="publisher.name" name="publisher.name" type="text" class="form-control @error('publisher.name') is-invalid @enderror" wire:model='publisher.name' autofocus>
                             @error('publisher.name')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+                        </div>
+                    </div>
+                    <div class="row mt-1">
+                        <div class="col-md-12">
+                            <label for="publisher.image_url" class="col-form-label">{{ __('Image URL') }}</label>
+                            <input id="publisher.image_url" name="publisher.image_url" type="text" class="form-control @error('publisher.image_url') is-invalid @enderror" wire:model='publisher.image_url'>
+                            @error('publisher.image_url')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
                                 </span>

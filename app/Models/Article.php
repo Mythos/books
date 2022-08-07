@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Facades\File;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 
@@ -98,8 +99,12 @@ class Article extends Model
     public function getImageAttribute(): string
     {
         $path = 'storage/articles/' . $this->id . '/';
-
-        return url($path . 'image.' . config('images.type'));
+        $file = $path . 'image.' . config('images.type');
+        if (File::exists($file)) {
+            return url($file);
+        } else {
+            return url('images/placeholder.png');
+        }
     }
 
     /**

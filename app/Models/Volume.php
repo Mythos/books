@@ -8,6 +8,7 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Facades\File;
 use Image;
 use Storage;
 
@@ -197,11 +198,16 @@ class Volume extends Model
     public function getImageAttribute(): string
     {
         $path = 'storage/' . $this->image_path . '/';
+        $file = $path . 'cover.' . config('images.type');
         if ($this->series->is_nsfw && !session('show_nsfw', false)) {
-            return url($path . 'cover_sfw.' . config('images.type'));
+            $file = $path . 'cover_sfw.' . config('images.type');
         }
 
-        return url($path . 'cover.' . config('images.type'));
+        if (File::exists($file)) {
+            return url($file);
+        } else {
+            return url('images/placeholder.png');
+        }
     }
 
     /**
@@ -221,15 +227,15 @@ class Volume extends Model
      */
     public function getImageThumbnailAttribute(): ?string
     {
-        if (!$this->image_exists) {
-            return null;
-        }
-
         $path = 'storage/thumbnails/' . $this->image_path . '/';
+        $file = $path . 'cover.' . config('images.type');
         if ($this->series->is_nsfw && !session('show_nsfw', false)) {
-            return url($path . 'cover_sfw.' . config('images.type'));
+            $file = $path . 'cover_sfw.' . config('images.type');
         }
-
-        return url($path . 'cover.' . config('images.type'));
+        if (File::exists($file)) {
+            return url($file);
+        } else {
+            return url('images/placeholder.png');
+        }
     }
 }
