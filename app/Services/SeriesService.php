@@ -128,7 +128,9 @@ class SeriesService
             }
 
             $volume->image_url = $image_url;
-            $volume->pages = $pages;
+            if (empty($volume->pages) || !empty($pages)) {
+                $volume->pages = $pages;
+            }
             ImageHelpers::updateVolumeImage($volume);
             $volume->save();
             $data[] = $volume;
