@@ -23,7 +23,7 @@
                     <th scope="col" class="text-end" style="width: 5rem; min-width: 5rem;">{{ __('Price') }}</th>
                     <th scope="col" class="text-end" style="width: 7rem; min-width: 7rem;">{{ __('Ch.') }} / {{ __('Pages') }}</th>
                     <th scope="col" class="text-center" style="width: 5rem; min-width: 5rem;">{{ __('Status') }}</th>
-                    <th scope="col" class="text-center" style="min-width: 3rem;"></th>
+                    <th scope="col" class="text-center" style="min-width: 4rem;"></th>
                 </tr>
             </thead>
             <tbody>
