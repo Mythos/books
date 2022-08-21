@@ -101,6 +101,7 @@ class SeriesService
             $publish_date = $volumeResult['publish_date'];
             $price = $volumeResult['price'];
             $image_url = $volumeResult['image_url'];
+            $pages = $volumeResult['pages'];
 
             $volume = null;
             if (!empty($isbn)) {
@@ -125,6 +126,7 @@ class SeriesService
             }
 
             $volume->image_url = $image_url;
+            $volume->pages = $pages;
             ImageHelpers::updateVolumeImage($volume);
             $volume->save();
             $data[] = $volume;

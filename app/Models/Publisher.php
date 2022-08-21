@@ -18,6 +18,8 @@ use Spatie\Sluggable\SlugOptions;
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property string|null $image_url
+ * @property-read string $image
+ * @property-read string $image_path
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Series[] $series
  * @property-read int|null $series_count
  * @method static \Illuminate\Database\Eloquent\Builder|Publisher newModelQuery()

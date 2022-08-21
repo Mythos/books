@@ -100,13 +100,14 @@ class MangaPassionApi
                     }
                     $isbn = !empty($responseItem['isbn13']) ? (string) Isbn::of($responseItem['isbn13'])->to13() : null;
                     $price = !empty($responseItem['price']) ? floatval($responseItem['price']) / 100.0 : 0.00;
-
+                    $pages = $responseItem['pages'] ?? null;
                     $result[] = [
                         'number' => $number,
                         'isbn' => $isbn,
                         'publish_date' => $publish_date?->format('Y-m-d'),
                         'price' => $price,
                         'image_url' => $responseItem['cover'] ?? null,
+                        'pages' => $pages,
                     ];
                 }
             }

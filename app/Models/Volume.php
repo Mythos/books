@@ -26,6 +26,8 @@ use Storage;
  * @property string|null $price
  * @property int $ignore_in_upcoming
  * @property string|null $image_url
+ * @property int|null $pages
+ * @property int|null $chapters
  * @property-read string $image
  * @property-read bool $image_exists
  * @property-read string $image_path
@@ -39,12 +41,14 @@ use Storage;
  * @method static \Illuminate\Database\Eloquent\Builder|Volume newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Volume newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Volume query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Volume whereChapters($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Volume whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Volume whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Volume whereIgnoreInUpcoming($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Volume whereImageUrl($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Volume whereIsbn($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Volume whereNumber($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Volume wherePages($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Volume wherePrice($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Volume wherePublishDate($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Volume whereSeriesId($value)

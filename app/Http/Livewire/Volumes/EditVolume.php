@@ -109,6 +109,8 @@ class EditVolume extends Component
             'volume.ignore_in_upcoming' => 'boolean',
             'volume.series_id' => 'required|exists:series,id',
             'volume.image_url' => 'nullable|url',
+            'volume.pages' => 'nullable|integer|min:0',
+            'volume.chapters' => 'nullable|integer|min:0',
         ];
     }
 }

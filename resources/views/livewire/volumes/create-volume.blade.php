@@ -59,6 +59,28 @@
                     </div>
                     <div class="row mt-1">
                         <div class="col-md-12">
+                            <label for="volume.pages" class="col-form-label">{{ __('Pages') }}</label>
+                            <input id="volume.pages" name="volume.pages" type="number" class="form-control @error('volume.pages') is-invalid @enderror" wire:model='volume.pages'>
+                            @error('volume.pages')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+                        </div>
+                    </div>
+                    <div class="row mt-1">
+                        <div class="col-md-12">
+                            <label for="volume.chapters" class="col-form-label">{{ __('Chapters') }}</label>
+                            <input id="volume.chapters" name="volume.chapters" type="number" class="form-control @error('volume.chapters') is-invalid @enderror" wire:model='volume.chapters'>
+                            @error('volume.chapters')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+                        </div>
+                    </div>
+                    <div class="row mt-1">
+                        <div class="col-md-12">
                             <label for="volume.status" class="col-form-label required">{{ __('Status') }}</label>
                             <select id="volume.status" name="volume.status" class="form-select @error('volume.status') is-invalid @enderror" wire:model='volume.status' required>
                                 <option value="{{ App\Constants\VolumeStatus::NEW }}">{{ __('New') }}</option>

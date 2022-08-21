@@ -3,6 +3,7 @@
 ## 2.3.1
 
 - Added images for publishers
+- Added chapter and page count to volumes
 - Added placeholder image
 - Added barcode scanner when editing volumes
 - Changed total in overview to only count delivered and read volumes
