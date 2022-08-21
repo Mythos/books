@@ -32,7 +32,7 @@
                     <div class="row mt-1">
                         <div class="col-md-12">
                             <label for="article.release_date" class="col-form-label">{{ __('Release Date') }}</label>
-                            <input id="article.release_date" name="article.release_date" type="date" class="form-control @error('article.release_date') is-invalid @enderror" wire:model='article.release_date' autofocus>
+                            <input id="article.release_date" name="article.release_date" type="date" class="form-control @error('article.release_date') is-invalid @enderror" wire:model='article.release_date'>
                             @error('article.release_date')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>

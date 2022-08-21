@@ -11,7 +11,7 @@
             <li class="breadcrumb-item active" aria-current="page">{{ __('Volume :number', ['number' => $volume->number]) }}</li>
         </ol>
     </nav>
-    <form method="POST" wire:submit.prevent='save'>
+    <form method="POST">
         <input id="series_id" type="hidden" name="series_id" wire:model='series_id' />
         <div class="row bg-white shadow-sm rounded">
             <div class="col-md-12">
@@ -47,7 +47,7 @@
                     <div class="row mt-1">
                         <div class="col-md-12">
                             <label for="volume.publish_date" class="col-form-label">{{ __('Publish Date') }}</label>
-                            <input id="volume.publish_date" name="volume.publish_date" type="date" class="form-control @error('volume.publish_date') is-invalid @enderror" wire:model='volume.publish_date' autofocus>
+                            <input id="volume.publish_date" name="volume.publish_date" type="date" class="form-control @error('volume.publish_date') is-invalid @enderror" wire:model='volume.publish_date'>
                             @error('volume.publish_date')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -137,7 +137,12 @@
                             <button type="button" class="btn btn-danger" wire:click='delete'>{{ __('Delete') }}</button>
                         </div>
                         <div class="float-end mb-3">
-                            <button class="btn btn-primary" type="submit">{{ __('Save') }}</button>
+                            @if (!empty($nextVolume))
+                                <button class="btn btn-secondary" type="button" wire:click='save'>{{ __('Save') }}</button>
+                                <button class="btn btn-primary" type="submit" wire:click='saveAndContinue'>{{ __('Save and Continue') }}</button>
+                            @else
+                                <button class="btn btn-primary" type="submit" wire:click='save'>{{ __('Save') }}</button>
+                            @endif
                         </div>
                     </div>
                 </div>

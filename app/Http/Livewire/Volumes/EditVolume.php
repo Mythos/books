@@ -26,6 +26,8 @@ class EditVolume extends Component
 
     public $seriesService;
 
+    public $nextVolume;
+
     protected $listeners = [
         'confirmedDelete',
     ];
@@ -35,6 +37,7 @@ class EditVolume extends Component
         $this->category = $category;
         $this->series = $series;
         $this->volume = Volume::whereSeriesId($series->id)->whereNumber($number)->first();
+        $this->nextVolume = Volume::whereSeriesId($series->id)->whereNumber($number + 1)->first();
     }
 
     public function updated($property, $value): void
@@ -55,31 +58,19 @@ class EditVolume extends Component
         return view('livewire.volumes.edit-volume')->extends('layouts.app')->section('content');
     }
 
+    public function saveAndContinue(SeriesService $seriesService)
+    {
+        $this->saveVolume($seriesService);
+
+        toastr()->addSuccess(__('Volumme :number has been updated', ['number' => $this->volume->number]));
+
+        return redirect()->route('volumes.edit', [$this->category, $this->series, $this->volume->number + 1]);
+    }
+
     public function save(SeriesService $seriesService)
     {
-        $isbn = IsbnHelpers::convertTo13($this->volume->isbn);
-        if (!empty($isbn)) {
-            $this->volume->isbn = $isbn;
-        }
-        if (!empty($this->volume->price)) {
-            $this->volume->price = floatval(Str::replace(',', '.', $this->volume->price));
-        } else {
-            $this->volume->price = 0;
-        }
-        if (empty($this->volume->publish_date)) {
-            $this->volume->publish_date = null;
-        }
-        if (empty($this->volume->pages)) {
-            $this->volume->pages = null;
-        }
-        if (empty($this->volume->chapters)) {
-            $this->volume->chapters = null;
-        }
-        $this->validate();
-        $this->volume->save();
-        ImageHelpers::updateVolumeImage($this->volume);
+        $this->saveVolume($seriesService);
 
-        $seriesService->resetNumbers($this->volume->series_id);
         toastr()->addSuccess(__('Volumme :number has been updated', ['number' => $this->volume->number]));
 
         return redirect()->route('series.show', [$this->category, $this->series]);
@@ -118,5 +109,32 @@ class EditVolume extends Component
             'volume.pages' => 'nullable|integer|min:0',
             'volume.chapters' => 'nullable|integer|min:0',
         ];
+    }
+
+    private function saveVolume(SeriesService $seriesService): void
+    {
+        $isbn = IsbnHelpers::convertTo13($this->volume->isbn);
+        if (!empty($isbn)) {
+            $this->volume->isbn = $isbn;
+        }
+        if (!empty($this->volume->price)) {
+            $this->volume->price = floatval(Str::replace(',', '.', $this->volume->price));
+        } else {
+            $this->volume->price = 0;
+        }
+        if (empty($this->volume->publish_date)) {
+            $this->volume->publish_date = null;
+        }
+        if (empty($this->volume->pages)) {
+            $this->volume->pages = null;
+        }
+        if (empty($this->volume->chapters)) {
+            $this->volume->chapters = null;
+        }
+        $this->validate();
+        $this->volume->save();
+        ImageHelpers::updateVolumeImage($this->volume);
+
+        $seriesService->resetNumbers($this->volume->series_id);
     }
 }

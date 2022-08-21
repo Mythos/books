@@ -2,7 +2,6 @@
     {{ __('Create Series') }}
 @endsection
 
-
 <div class="container">
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
@@ -37,7 +36,7 @@
                         <div class="col-md-12">
                             <label for="series.source_name" class="col-form-label">{{ __('Original Title') }}</label>
                             <div class="input-group">
-                                <input id="series.source_name" name="series.source_name" type="text" class="form-control @error('series.source_name') is-invalid @enderror" wire:model='series.source_name' autofocus @if (!$isEditable) disabled @endif>
+                                <input id="series.source_name" name="series.source_name" type="text" class="form-control @error('series.source_name') is-invalid @enderror" wire:model='series.source_name' @if (!$isEditable) disabled @endif>
                                 @error('series.source_name')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -50,7 +49,7 @@
                         <div class="col-md-12">
                             <label for="series.source_name_romaji" class="col-form-label">{{ __('Original Title (Romaji)') }}</label>
                             <div class="input-group">
-                                <input id="series.source_name_romaji" name="series.source_name_romaji" type="text" class="form-control @error('series.source_name_romaji') is-invalid @enderror" wire:model='series.source_name_romaji' autofocus @if (!$isEditable) disabled @endif>
+                                <input id="series.source_name_romaji" name="series.source_name_romaji" type="text" class="form-control @error('series.source_name_romaji') is-invalid @enderror" wire:model='series.source_name_romaji' @if (!$isEditable) disabled @endif>
                                 @error('series.source_name_romaji')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
