@@ -27,6 +27,7 @@ class VolumesPerGenre extends Component
                                                 ->select('genres.name as genre', DB::raw('count(*) as total'))
                                                 ->groupBy('genres.name')
                                                 ->orderByDesc('total')
+                                                ->orderBy('genres.name')
                                                 ->get()
                                                 ->pluck('total', 'genre')
                                                 ->toArray();

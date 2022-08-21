@@ -36,6 +36,7 @@ class Statistics extends Component
                          $query->where('status', '=', VolumeStatus::READ);
                      })
                      ->orderByDesc('read_sum')
+                     ->orderBy('name')
                      ->paginate(10, ['*'], 'mostread');
     }
 
@@ -49,6 +50,7 @@ class Statistics extends Component
                          $query->whereIn('status', [VolumeStatus::DELIVERED, VolumeStatus::READ]);
                      })
                      ->orderByDesc('volumes_sum_price')
+                     ->orderBy('name')
                      ->paginate(10, ['*'], 'mostvaluable');
     }
 
@@ -64,6 +66,7 @@ class Statistics extends Component
                          $query->where('status', '=', VolumeStatus::DELIVERED);
                      })
                      ->orderByDesc('unread_sum')
+                     ->orderBy('name')
                      ->paginate(10, ['*'], 'unread');
     }
 }
