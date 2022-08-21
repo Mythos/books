@@ -51,10 +51,12 @@ class MangaPassionApi
             $isbn = !empty($result['allInOne']['isbn13']) ? (string) Isbn::of($result['allInOne']['isbn13'])->to13() : null;
             $publish_date = !empty($result['allInOne']['date']) ? new DateTime($result['allInOne']['date']) : null;
             $price = !empty($result['allInOne']['price']) ? floatval($result['allInOne']['price']) / 100.0 : 0.00;
+            $pages = !empty($result['allInOne']['pages']) ? $result['allInOne']['pages'] : null;
             $series['allInOne'] = true;
             $series['isbn'] = $isbn;
             $series['publish_date'] = $publish_date?->format('Y-m-d');
             $series['price'] = $price;
+            $series['pages'] = $pages;
         }
 
         if (!empty($result['sources'])) {

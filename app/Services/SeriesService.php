@@ -82,6 +82,7 @@ class SeriesService
             $publish_date = $apiSeries['publish_date'];
             $price = $apiSeries['price'];
             $image_url = $apiSeries['image_url'];
+            $pages = $apiSeries['pages'];
 
             $volumesResult[] = [
                 'number' => $number,
@@ -89,6 +90,7 @@ class SeriesService
                 'publish_date' => $publish_date,
                 'price' => $price,
                 'image_url' => $image_url,
+                'pages' => $pages,
             ];
         } else {
             $volumesResult = MangaPassionApi::loadVolumes($series->mangapassion_id, $series->total ?? 500);
