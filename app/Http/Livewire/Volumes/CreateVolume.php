@@ -57,6 +57,12 @@ class CreateVolume extends Component
         if (empty($this->volume->publish_date)) {
             $this->volume->publish_date = null;
         }
+        if (empty($this->volume->pages)) {
+            $this->volume->pages = null;
+        }
+        if (empty($this->volume->chapters)) {
+            $this->volume->chapters = null;
+        }
         $this->volume->save();
         ImageHelpers::updateVolumeImage($this->volume, true);
 
