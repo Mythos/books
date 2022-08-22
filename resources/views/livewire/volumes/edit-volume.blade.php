@@ -11,7 +11,7 @@
             <li class="breadcrumb-item active" aria-current="page">{{ __('Volume :number', ['number' => $volume->number]) }}</li>
         </ol>
     </nav>
-    <form method="POST">
+    <form method="POST" wire:submit.prevent='@if (!empty($nextVolume)) saveAndContinue @else save @endif'>
         <input id="series_id" type="hidden" name="series_id" wire:model='series_id' />
         <div class="row bg-white shadow-sm rounded">
             <div class="col-md-12">
@@ -139,9 +139,9 @@
                         <div class="float-end mb-3">
                             @if (!empty($nextVolume))
                                 <button class="btn btn-secondary" type="button" wire:click='save'>{{ __('Save') }}</button>
-                                <button class="btn btn-primary" type="submit" wire:click='saveAndContinue'>{{ __('Save and Continue') }}</button>
+                                <button class="btn btn-primary" type="submit">{{ __('Save and Continue') }}</button>
                             @else
-                                <button class="btn btn-primary" type="submit" wire:click='save'>{{ __('Save') }}</button>
+                                <button class="btn btn-primary" type="submit">{{ __('Save') }}</button>
                             @endif
                         </div>
                     </div>
