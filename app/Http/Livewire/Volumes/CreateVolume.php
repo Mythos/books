@@ -60,9 +60,6 @@ class CreateVolume extends Component
         if (empty($this->volume->pages)) {
             $this->volume->pages = null;
         }
-        if (empty($this->volume->chapters)) {
-            $this->volume->chapters = null;
-        }
         $this->volume->save();
         ImageHelpers::updateVolumeImage($this->volume, true);
 
@@ -81,7 +78,6 @@ class CreateVolume extends Component
             'volume.series_id' => 'required|exists:series,id',
             'volume.image_url' => 'nullable|url',
             'volume.pages' => 'nullable|integer|min:0',
-            'volume.chapters' => 'nullable|integer|min:0',
         ];
     }
 

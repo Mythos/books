@@ -21,7 +21,7 @@
                     <th scope="col" class="text-center" style="width: 7rem; min-width: 7rem;">{{ __('Publish Date') }}</th>
                     <th scope="col" style="min-width: 8rem;">{{ __('ISBN') }}</th>
                     <th scope="col" class="text-end" style="width: 5rem; min-width: 5rem;">{{ __('Price') }}</th>
-                    <th scope="col" class="text-end" style="width: 7rem; min-width: 7rem;">{{ __('Ch.') }} / {{ __('Pages') }}</th>
+                    <th scope="col" class="text-end" style="width: 7rem; min-width: 7rem;">{{ __('Pages') }}</th>
                     <th scope="col" class="text-center" style="width: 5rem; min-width: 5rem;">{{ __('Status') }}</th>
                     <th scope="col" class="text-center" style="min-width: 4rem;"></th>
                 </tr>
@@ -49,7 +49,7 @@
                         <td class="text-center">{{ $volume->publish_date_formatted }}</td>
                         <td>{{ $volume->isbn_formatted }}</td>
                         <td class="text-end">{{ number_format($volume->price, 2) }} {{ config('app.currency') }}</td>
-                        <td class="text-end">{{ $volume->chapters ?? '?' }} / {{ $volume->pages ?? '?' }}</td>
+                        <td class="text-end">{{ $volume->pages ?? '?' }}</td>
                         <td class="text-center">{{ $volume->status_name }}</td>
                         <td class="text-center">
                             @if ($volume->status == App\Constants\VolumeStatus::NEW)
