@@ -12,7 +12,7 @@
     "devDependencies": {
         "@ericblade/quagga2": "1.7.0",
         "@flasher/flasher-toastr": "1.0.7",
-        "@fortawesome/fontawesome-free": "^6.1.2",
+        "@fortawesome/fontawesome-free": "6.1.2",
         "axios": "0.27.2",
         "bootstrap": "5.2.0",
         "chart.js": "3.9.1",
