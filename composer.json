@@ -11,7 +11,7 @@
         "php": "^8.0.2",
         "enlightn/enlightn": "2.1.0",
         "fruitcake/laravel-cors": "3.0.0",
-        "guzzlehttp/guzzle": "7.4.5",
+        "guzzlehttp/guzzle": "7.5.0",
         "intervention/image": "2.7.2",
         "jantinnerezo/livewire-alert": "2.2.6",
         "laravel/framework": "9.27.0",
