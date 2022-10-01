@@ -82,7 +82,7 @@
                 @endforeach
                 @if ($volumes->count() == 0)
                     <tr>
-                        <td colspan="@if ($enable_reordering) 9 @else 8 @endif" style="text-align: center;">{{ __('No data') }}</td>
+                        <td colspan="@if ($enable_reordering) 11 @else 10 @endif" style="text-align: center;">{{ __('No data') }}</td>
                     </tr>
                 @endif
             </tbody>
