@@ -7,25 +7,26 @@ use App\Constants\VolumeStatus;
 use App\Models\Volume;
 use Livewire\Component;
 
-class UpcomingSeries extends Component
+class ReadingStackUnplanned extends Component
 {
-    public $upcoming;
+    public $volumes;
 
     public string $search;
 
-    protected $listeners = ['search' => 'filter'];
+    protected $listeners = [
+        '$refresh',
+        'search' => 'filter',
+    ];
 
     public function render()
     {
-        $upcomingQuery = Volume::with(['series:id,name,slug,category_id,status,subscription_active,source_name,source_name_romaji,ignore_in_upcoming', 'series.publisher:id,name', 'series.genres:id,name', 'series.category:id,name,slug'])
-                               ->where('ignore_in_upcoming', 'false')
-                               ->whereRelation('series', 'status', '<>', SeriesStatus::CANCELED)
-                               ->whereRelation('series', 'ignore_in_upcoming', '=', 'false')
-                               ->whereIn('status', [VolumeStatus::NEW, VolumeStatus::ORDERED, VolumeStatus::SHIPPED])
-                               ->whereNotNull('publish_date');
+        $readingStackQuery = Volume::with(['series:id,name,slug,category_id,status,subscription_active,source_name,source_name_romaji,ignore_in_upcoming', 'series.publisher:id,name', 'series.genres:id,name', 'series.category:id,name,slug'])
+                                ->whereRelation('series', 'status', '<>', SeriesStatus::CANCELED)
+                                ->where('status', VolumeStatus::DELIVERED)
+                                ->where('plan_to_read', '0');
 
         if (!empty($this->search)) {
-            $upcomingQuery->where(function ($query): void {
+            $readingStackQuery->where(function ($query): void {
                 $query->where('isbn', 'like', '%' . $this->search . '%')
                       ->orWhereHas('series', function ($query): void {
                           $query->where('name', 'like', '%' . $this->search . '%')
@@ -40,28 +41,13 @@ class UpcomingSeries extends Component
                       });
             });
         }
-        $this->upcoming = $upcomingQuery->get()
+        $this->volumes = $readingStackQuery->get()
                                         ->sortBy([
                                             ['publish_date', 'asc'],
                                             ['series.name', 'asc'],
                                         ]);
 
-        return view('livewire.series.upcoming-series');
-    }
-
-    public function ordered(int $id): void
-    {
-        $this->setStatus($id, VolumeStatus::ORDERED);
-    }
-
-    public function shipped(int $id): void
-    {
-        $this->setStatus($id, VolumeStatus::SHIPPED);
-    }
-
-    public function delivered(int $id): void
-    {
-        $this->setStatus($id, VolumeStatus::DELIVERED);
+        return view('livewire.series.reading-stack-unplanned');
     }
 
     public function filter($filter): void
@@ -69,13 +55,12 @@ class UpcomingSeries extends Component
         $this->search = $filter;
     }
 
-    private function setStatus(int $id, int $status): void
+    public function plan(int $id): void
     {
         $volume = Volume::find($id);
-        $volume->status = $status;
+        $volume->plan_to_read = true;
         $volume->save();
-        $this->emitTo('overview', '$refresh');
-        $this->emitTo('series.reading-stack-unplanned', '$refresh');
+        $this->emitTo('series.reading-stack', '$refresh');
         toastr()->addSuccess(__(':name has been updated', ['name' => $volume->series->name . ' ' . $volume->number]));
     }
 }

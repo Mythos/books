@@ -1,6 +1,6 @@
 <div class="col-sm-12 col-md-12 col-lg-6">
     <div class="card shadow-sm mb-2">
-        <div class="card-header">{{ __('Planned') }}</div>
+        <div class="card-header">{{ __('Unplanned') }}</div>
         <div class="card-body d-flex flex-column table-responsive p-0" style="height: 280px; overflow-y: scroll;">
             <table class="table table-hover mb-0">
                 <thead class="table-dark" style="position: sticky; top: 0;">
@@ -8,7 +8,6 @@
                         <th scope="col" class="text-center" style="width: 7rem; min-width: 7rem;">{{ __('Publish Date') }}</th>
                         <th scope="col" class="text-center" style="width: 2rem; min-width: 2rem;"></th>
                         <th scope="col" style="min-width: 21rem;">{{ __('Title') }}</th>
-                        <th scope="col" class="text-center"></th>
                         <th scope="col" class="text-center">{{ __('Status') }}</th>
                     </tr>
                 </thead>
@@ -23,11 +22,7 @@
                                 {{ $volume->name }}
                             </td>
                             <td class="text-center">
-                                <a href="{{ route('series.show', [$volume->series->category, $volume->series]) }}"><span class="fa fa-book"></span></a>
-                            </td>
-                            <td class="text-center">
-                                <a wire:click.prevent='read({{ $volume->id }})' href="#" title="{{ __('Sets the status to Read') }}"><span class="fa fa-check"></span></a>
-                                <a wire:click.prevent='unplan({{ $volume->id }})' href="#" title="{{ __('Remove reading stack') }}"><span class="fa fa-minus"></span></a>
+                                <a wire:click.prevent='plan({{ $volume->id }})' href="#" title="{{ __('Add to reading stack') }}"><span class="fa fa-plus"></span></a>
                             </td>
                         </tr>
                     @endforeach

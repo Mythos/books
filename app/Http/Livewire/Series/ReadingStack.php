@@ -12,7 +12,10 @@ class ReadingStack extends Component
 
     public string $search;
 
-    protected $listeners = ['search' => 'filter'];
+    protected $listeners = [
+        '$refresh',
+        'search' => 'filter',
+    ];
 
     public function render()
     {
@@ -56,6 +59,15 @@ class ReadingStack extends Component
         $volume->plan_to_read = false;
         $volume->save();
         $this->emitTo('overview', '$refresh');
+        toastr()->addSuccess(__(':name has been updated', ['name' => $volume->series->name . ' ' . $volume->number]));
+    }
+
+    public function unplan(int $id): void
+    {
+        $volume = Volume::find($id);
+        $volume->plan_to_read = false;
+        $volume->save();
+        $this->emitTo('series.reading-stack-unplanned', '$refresh');
         toastr()->addSuccess(__(':name has been updated', ['name' => $volume->series->name . ' ' . $volume->number]));
     }
 }

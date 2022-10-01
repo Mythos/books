@@ -89,7 +89,7 @@ class ShowSeries extends Component
     public function unplan(int $id): void
     {
         $volume = Volume::find($id);
-        $volume->plan_to_read = true;
+        $volume->plan_to_read = false;
         $volume->save();
         toastr()->addSuccess(__(':name has been updated', ['name' => $volume->series->name . ' ' . $volume->number]));
     }
