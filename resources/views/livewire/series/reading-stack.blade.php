@@ -22,9 +22,6 @@
                                 <img src="{{ $volume->image_thumbnail }}" alt="{{ $volume->name }}" class="volume-cover" style="max-height: 33px; object-fit: contain;" data-image-url="{{ $volume->image }}" loading="lazy" decoding="async">
                             </td>
                             <td>
-                                @if ($volume->series->subscription_active)
-                                    <span class="badge rounded-pill bg-success mt-1" data-bs-toggle="tooltip" title="{{ __('Subscription active') }}">{{ Str::substr(__('Subscription active'), 0, 3) }}</span>
-                                @endif
                                 {{ $volume->name }}
                             </td>
                             <td class="text-center">
