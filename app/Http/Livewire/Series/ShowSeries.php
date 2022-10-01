@@ -153,6 +153,9 @@ class ShowSeries extends Component
     private function setStatus(int $id, int $status): void
     {
         $volume = Volume::find($id);
+        if ($status == VolumeStatus::READ) {
+            $volume->plan_to_read = false;
+        }
         $volume->status = $status;
         $volume->save();
         toastr()->addSuccess(__(':name has been updated', ['name' => $volume->series->name . ' ' . $volume->number]));
