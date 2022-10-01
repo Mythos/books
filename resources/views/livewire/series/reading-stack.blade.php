@@ -24,8 +24,8 @@
                                 <a href="{{ route('series.show', [$volume->series->category, $volume->series]) }}"><span class="fa fa-book"></span></a>
                             </td>
                             <td class="text-center">
-                                <a wire:click.prevent='read({{ $volume->id }})' href="#" title="{{ __('Sets the status to Read') }}"><span class="fa fa-check"></span></a>
-                                <a wire:click.prevent='unplan({{ $volume->id }})' href="#" title="{{ __('Remove reading stack') }}"><span class="fa fa-minus"></span></a>
+                                <a class="px-2" wire:click.prevent='read({{ $volume->id }})' href="#" title="{{ __('Sets the status to Read') }}"><span class="fa fa-check"></span></a>
+                                <a class="px-2" wire:click.prevent='unplan({{ $volume->id }})' href="#" title="{{ __('Remove reading stack') }}"><span class="fa fa-minus"></span></a>
                             </td>
                         </tr>
                     @endforeach

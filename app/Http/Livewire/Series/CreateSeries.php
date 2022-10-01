@@ -153,6 +153,7 @@ class CreateSeries extends Component
                     'number' => $i,
                     'price' => $this->series->default_price,
                     'status' => $this->series->subscription_active,
+                    'plan_to_read' => false,
                 ]);
                 $volume->save();
             }
@@ -173,6 +174,7 @@ class CreateSeries extends Component
                 'price' => $price,
                 'status' => $this->series->subscription_active,
                 'image_url' => $image_url,
+                'plan_to_read' => false,
             ]);
 
             $volume->save();
@@ -195,6 +197,7 @@ class CreateSeries extends Component
                     'price' => $price,
                     'status' => $this->series->subscription_active,
                     'image_url' => $image_url,
+                    'plan_to_read' => false,
                 ]);
 
                 $volume->save();

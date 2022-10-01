@@ -170,6 +170,7 @@ class SeriesService
                 'price' => $price,
                 'status' => $series->subscription_active,
                 'image_url' => $image_url,
+                'plan_to_read' => false,
             ]);
             $volume->save();
             ImageHelpers::updateVolumeImage($volume, true);
