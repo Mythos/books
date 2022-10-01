@@ -13,7 +13,7 @@
                 <tbody>
                     @foreach ($volumes as $volume)
                         <tr class="{{ $volume->status_class }}">
-                            <td class="text-center" style="padding: 3px;">
+                            <td class="text-center ps-2" style="padding: 3px;">
                                 <img src="{{ $volume->image_thumbnail }}" alt="{{ $volume->name }}" class="volume-cover" style="max-height: 33px; object-fit: contain;" data-image-url="{{ $volume->image }}" loading="lazy" decoding="async">
                             </td>
                             <td>
