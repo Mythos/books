@@ -40,8 +40,8 @@ class ReadingStack extends Component
         }
         $this->volumes = $readingStackQuery->get()
                                         ->sortBy([
-                                            ['publish_date', 'asc'],
                                             ['series.name', 'asc'],
+                                            ['number', 'asc'],
                                         ]);
 
         return view('livewire.series.reading-stack');

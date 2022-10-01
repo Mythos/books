@@ -41,11 +41,17 @@ class ReadingStackUnplanned extends Component
                       });
             });
         }
-        $this->volumes = $readingStackQuery->get()
+        $groups = $readingStackQuery->get()
                                         ->sortBy([
-                                            ['publish_date', 'asc'],
                                             ['series.name', 'asc'],
-                                        ]);
+                                            ['number', 'asc'],
+                                        ])->groupBy('series_id');
+
+        $results = [];
+        foreach ($groups as $group) {
+            $results[] = $group->first();
+        }
+        $this->volumes = $results;
 
         return view('livewire.series.reading-stack-unplanned');
     }

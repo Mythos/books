@@ -5,7 +5,6 @@
             <table class="table table-hover mb-0">
                 <thead class="table-dark" style="position: sticky; top: 0;">
                     <tr>
-                        <th scope="col" class="text-center" style="width: 7rem; min-width: 7rem;">{{ __('Publish Date') }}</th>
                         <th scope="col" class="text-center" style="width: 2rem; min-width: 2rem;"></th>
                         <th scope="col" style="min-width: 21rem;">{{ __('Title') }}</th>
                         <th scope="col" class="text-center">{{ __('Status') }}</th>
@@ -14,7 +13,6 @@
                 <tbody>
                     @foreach ($volumes as $volume)
                         <tr class="{{ $volume->status_class }}">
-                            <th scope="row" class="text-center">{{ $volume->publish_date_formatted }}</th>
                             <td class="text-center" style="padding: 3px;">
                                 <img src="{{ $volume->image_thumbnail }}" alt="{{ $volume->name }}" class="volume-cover" style="max-height: 33px; object-fit: contain;" data-image-url="{{ $volume->image }}" loading="lazy" decoding="async">
                             </td>
