@@ -78,6 +78,22 @@ class ShowSeries extends Component
         $this->setStatus($id, VolumeStatus::READ);
     }
 
+    public function plan(int $id): void
+    {
+        $volume = Volume::find($id);
+        $volume->plan_to_read = true;
+        $volume->save();
+        toastr()->addSuccess(__(':name has been updated', ['name' => $volume->series->name . ' ' . $volume->number]));
+    }
+
+    public function unplan(int $id): void
+    {
+        $volume = Volume::find($id);
+        $volume->plan_to_read = true;
+        $volume->save();
+        toastr()->addSuccess(__(':name has been updated', ['name' => $volume->series->name . ' ' . $volume->number]));
+    }
+
     public function toggle_reordering(): void
     {
         $this->enable_reordering = !$this->enable_reordering;

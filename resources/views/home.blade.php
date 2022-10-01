@@ -11,6 +11,9 @@
             @livewire('series.upcoming-series')
             @livewire('overview')
         </div>
+        <div class="row mb-3">
+            @livewire('series.reading-stack')
+        </div>
         @foreach ($categories as $category)
             @if ($category->type == 0)
                 @livewire('series.gallery', [$category])

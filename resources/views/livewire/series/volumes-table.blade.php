@@ -23,6 +23,7 @@
                     <th scope="col" class="text-end" style="width: 5rem; min-width: 5rem;">{{ __('Price') }}</th>
                     <th scope="col" class="text-end" style="width: 7rem; min-width: 7rem;">{{ __('Pages') }}</th>
                     <th scope="col" class="text-center" style="width: 5rem; min-width: 5rem;">{{ __('Status') }}</th>
+                    <th scope="col" class="text-center" style="min-width: 3rem;">{{ __('Reading Stack') }}</th>
                     <th scope="col" class="text-center" style="min-width: 4rem;"></th>
                 </tr>
             </thead>
@@ -51,6 +52,15 @@
                         <td class="text-end">{{ number_format($volume->price, 2) }} {{ config('app.currency') }}</td>
                         <td class="text-end">{{ $volume->pages ?? '?' }}</td>
                         <td class="text-center">{{ $volume->status_name }}</td>
+                        <td class="text-center">
+                            @if ($volume->status == App\Constants\VolumeStatus::DELIVERED)
+                                @if ($volume->plan_to_read)
+                                    <a wire:click.prevent='unplan({{ $volume->id }})' href="#" title="{{ __('Add to reading stack') }}"><span class="fa fa-check"></span></a>
+                                @else
+                                    <a wire:click.prevent='plan({{ $volume->id }})' href="#" title="{{ __('Remove reading stack') }}"><span class="fa fa-xmark"></span></a>
+                                @endif
+                            @endif
+                        </td>
                         <td class="text-center">
                             @if ($volume->status == App\Constants\VolumeStatus::NEW)
                                 <a wire:click.prevent='ordered({{ $volume->id }})' href="#" title="{{ __('Sets the status to Ordered') }}"><span class="fa fa-shopping-cart"></span></a>
