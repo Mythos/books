@@ -8,7 +8,7 @@
                         <th scope="col" class="text-center" style="width: 2rem; min-width: 2rem;"></th>
                         <th scope="col" style="min-width: 21rem;">{{ __('Title') }}</th>
                         <th scope="col" class="text-center"></th>
-                        <th scope="col" class="text-center">{{ __('Status') }}</th>
+                        <th scope="col" class="text-center" style="width: 5rem; min-width: 5rem;">{{ __('Status') }}</th>
                     </tr>
                 </thead>
                 <tbody>
