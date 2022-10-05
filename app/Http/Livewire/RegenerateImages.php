@@ -4,6 +4,7 @@ namespace App\Http\Livewire;
 
 use App\Helpers\ImageHelpers;
 use App\Models\Article;
+use App\Models\Publisher;
 use App\Models\Series;
 use Livewire\Component;
 
@@ -27,6 +28,10 @@ class RegenerateImages extends Component
             foreach ($volumes as $volume) {
                 ImageHelpers::createAndSaveCoverImage($volume->image_url, $volume->image_path);
             }
+        }
+        $publishers = Publisher::whereNotNull('image_url')->orderBy('id')->get();
+        foreach ($publishers as $item) {
+            ImageHelpers::updatePublisherImage($item, true);
         }
         toastr()->addSuccess(__('Images have been updated'));
     }
