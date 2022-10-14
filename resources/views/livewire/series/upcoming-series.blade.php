@@ -39,19 +39,19 @@
                                 {{ $volume->name }}
                             </td>
                             <td class="text-center">
-                                <a href="{{ route('series.show', [$volume->series->category, $volume->series]) }}"><span class="fa fa-book"></span></a>
+                                <a href="{{ route('series.show', [$volume->series->category, $volume->series]) }}" data-bs-toggle="tooltip" title="{{ __('Open series') }}"><span class="fa fa-book"></span></a>
                             </td>
                             <td>{{ $volume->isbn_formatted }}</td>
                             <td class="text-end">{{ number_format($volume->price, 2) }} {{ config('app.currency') }}</td>
                             <td class="text-center">
                                 @if ($volume->status == App\Constants\VolumeStatus::NEW)
-                                    <a wire:click.prevent='ordered({{ $volume->id }})' href="#" title="{{ __('Sets the status to Ordered') }}"><span class="fa fa-shopping-cart"></span></a>
+                                    <a wire:click.prevent='ordered({{ $volume->id }})' href="#" data-bs-toggle="tooltip" title="{{ __('Sets the status to Ordered') }}"><span class="fa fa-shopping-cart"></span></a>
                                 @endif
                                 @if ($volume->status == App\Constants\VolumeStatus::ORDERED)
-                                    <a wire:click.prevent='shipped({{ $volume->id }})' href="#" title="{{ __('Sets the status to Shipped') }}"><span class="fa fa-truck"></span></a>
+                                    <a wire:click.prevent='shipped({{ $volume->id }})' href="#" data-bs-toggle="tooltip" title="{{ __('Sets the status to Shipped') }}"><span class="fa fa-truck"></span></a>
                                 @endif
                                 @if ($volume->status == App\Constants\VolumeStatus::SHIPPED)
-                                    <a wire:click.prevent='delivered({{ $volume->id }})' href="#" title="{{ __('Sets the status to Delivered') }}"><span class="fa fa-check"></span></a>
+                                    <a wire:click.prevent='delivered({{ $volume->id }})' href="#" data-bs-toggle="tooltip" title="{{ __('Sets the status to Delivered') }}"><span class="fa fa-check"></span></a>
                                 @endif
                             </td>
                         </tr>

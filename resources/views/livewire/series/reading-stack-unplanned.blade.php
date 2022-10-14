@@ -18,7 +18,7 @@
                     <tr>
                         <th scope="col" class="text-center" style="width: 2rem; min-width: 2rem;"></th>
                         <th scope="col" style="min-width: 21rem;">{{ __('Title') }}</th>
-                        <th scope="col" class="text-center">{{ __('Status') }}</th>
+                        <th scope="col" class="text-center">{{ __('Action') }}</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -31,7 +31,7 @@
                                 {{ $volume->name }}
                             </td>
                             <td class="text-center">
-                                <a wire:click.prevent='plan({{ $volume->id }})' href="#" title="{{ __('Add to reading stack') }}"><span class="fa fa-plus"></span></a>
+                                <a wire:click.prevent='plan({{ $volume->id }})' href="#" data-bs-toggle="tooltip" title="{{ __('Add to reading stack') }}"><span class="fa fa-plus"></span></a>
                             </td>
                         </tr>
                     @endforeach

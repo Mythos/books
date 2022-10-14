@@ -2,8 +2,8 @@
     <div>
         <h2 style="display: inline;">{{ __('Volumes') }} ({{ count($volumes) }})</h2>
         <div class="float-end" style="display: inline;">
-            <a href="{{ route('volumes.bulk-update', [$category, $series]) }}" class="btn btn-link" title="{{ __('Update Volumes') }}"><span class="fas fa-sliders"></span></a>
-            <a wire:click.prevent='toggle_reordering' href="#" title="{{ __('Reorder volumes') }}"><span class="fa fa-sort"></span></a>
+            <a href="{{ route('volumes.bulk-update', [$category, $series]) }}" class="btn btn-link" data-bs-toggle="tooltip" title="{{ __('Update Volumes') }}"><span class="fas fa-sliders"></span></a>
+            <a wire:click.prevent='toggle_reordering' href="#" data-bs-toggle="tooltip" title="{{ __('Reorder volumes') }}"><span class="fa fa-sort"></span></a>
             <a href="{{ route('volumes.create', [$category, $series]) }}" class="btn btn-link"><span class="fas fa-plus-circle"></span></a>
         </div>
     </div>
@@ -33,12 +33,12 @@
                         @if ($enable_reordering)
                             <td class="text-center">
                                 @if ($volume->number > 1)
-                                    <a wire:click.prevent='move_up({{ $volume->id }})' href="#" title="{{ __('Moves the volume up') }}"><span class="fa fa-arrow-up"></span></a>
+                                    <a wire:click.prevent='move_up({{ $volume->id }})' href="#" data-bs-toggle="tooltip" title="{{ __('Moves the volume up') }}"><span class="fa fa-arrow-up"></span></a>
                                 @endif
                             </td>
                             <td class="text-center">
                                 @if ($volume->number < $volumes->max('number'))
-                                    <a wire:click.prevent='move_down({{ $volume->id }})' href="#" title="{{ __('Moves the volume down') }}"><span class="fa fa-arrow-down"></span></a>
+                                    <a wire:click.prevent='move_down({{ $volume->id }})' href="#" data-bs-toggle="tooltip" title="{{ __('Moves the volume down') }}"><span class="fa fa-arrow-down"></span></a>
                                 @endif
                             </td>
                         @endif
@@ -55,27 +55,27 @@
                         <td class="text-center">
                             @if ($volume->status == App\Constants\VolumeStatus::DELIVERED)
                                 @if ($volume->plan_to_read)
-                                    <a wire:click.prevent='unplan({{ $volume->id }})' href="#" title="{{ __('Add to reading stack') }}"><span class="fa fa-check"></span></a>
+                                    <a wire:click.prevent='unplan({{ $volume->id }})' href="#" data-bs-toggle="tooltip" title="{{ __('Add to reading stack') }}"><span class="fa fa-check"></span></a>
                                 @else
-                                    <a wire:click.prevent='plan({{ $volume->id }})' href="#" title="{{ __('Remove reading stack') }}"><span class="fa fa-xmark"></span></a>
+                                    <a wire:click.prevent='plan({{ $volume->id }})' href="#" data-bs-toggle="tooltip" title="{{ __('Remove reading stack') }}"><span class="fa fa-xmark"></span></a>
                                 @endif
                             @endif
                         </td>
                         <td class="text-center">
                             @if ($volume->status == App\Constants\VolumeStatus::NEW)
-                                <a wire:click.prevent='ordered({{ $volume->id }})' href="#" title="{{ __('Sets the status to Ordered') }}"><span class="fa fa-shopping-cart"></span></a>
+                                <a wire:click.prevent='ordered({{ $volume->id }})' href="#" data-bs-toggle="tooltip" title="{{ __('Sets the status to Ordered') }}"><span class="fa fa-shopping-cart"></span></a>
                             @endif
                             @if ($volume->status == App\Constants\VolumeStatus::ORDERED)
-                                <a wire:click.prevent='shipped({{ $volume->id }})' href="#" title="{{ __('Sets the status to Shipped') }}"><span class="fa fa-truck"></span></a>
+                                <a wire:click.prevent='shipped({{ $volume->id }})' href="#" data-bs-toggle="tooltip" title="{{ __('Sets the status to Shipped') }}"><span class="fa fa-truck"></span></a>
                             @endif
                             @if ($volume->status == App\Constants\VolumeStatus::SHIPPED)
-                                <a wire:click.prevent='delivered({{ $volume->id }})' href="#" title="{{ __('Sets the status to Delivered') }}"><span class="fa fa-check"></span></a>
+                                <a wire:click.prevent='delivered({{ $volume->id }})' href="#" data-bs-toggle="tooltip" title="{{ __('Sets the status to Delivered') }}"><span class="fa fa-check"></span></a>
                             @endif
                             @if ($volume->status == App\Constants\VolumeStatus::DELIVERED)
-                                <a wire:click.prevent='read({{ $volume->id }})' href="#" title="{{ __('Sets the status to Read') }}"><span class="fa fa-book"></span></a>
+                                <a wire:click.prevent='read({{ $volume->id }})' href="#" data-bs-toggle="tooltip" title="{{ __('Sets the status to Read') }}"><span class="fa fa-book"></span></a>
                             @endif
                             @if ($volume->status == App\Constants\VolumeStatus::ORDERED || $volume->status == App\Constants\VolumeStatus::SHIPPED || $volume->status == App\Constants\VolumeStatus::DELIVERED || $volume->status == App\Constants\VolumeStatus::READ)
-                                <a wire:click.prevent='canceled({{ $volume->id }})' href="#" title="{{ __('Sets the status to New') }}"><span class="fa fa-ban"></span></a>
+                                <a wire:click.prevent='canceled({{ $volume->id }})' href="#" data-bs-toggle="tooltip" title="{{ __('Sets the status to New') }}"><span class="fa fa-ban"></span></a>
                             @endif
                         </td>
                     </tr>

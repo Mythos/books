@@ -19,7 +19,7 @@
                         <th scope="col" class="text-center" style="width: 2rem; min-width: 2rem;"></th>
                         <th scope="col" style="min-width: 21rem;">{{ __('Title') }}</th>
                         <th scope="col" class="text-center"></th>
-                        <th scope="col" class="text-center" style="width: 5rem; min-width: 5rem;">{{ __('Status') }}</th>
+                        <th scope="col" class="text-center" style="width: 5rem; min-width: 5rem;">{{ __('Action') }}</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -32,11 +32,11 @@
                                 {{ $volume->name }}
                             </td>
                             <td class="text-center">
-                                <a href="{{ route('series.show', [$volume->series->category, $volume->series]) }}"><span class="fa fa-book"></span></a>
+                                <a href="{{ route('series.show', [$volume->series->category, $volume->series]) }}" data-bs-toggle="tooltip" title="{{ __('Open series') }}"><span class="fa fa-book"></span></a>
                             </td>
                             <td class="text-center">
-                                <a class="px-2" wire:click.prevent='read({{ $volume->id }})' href="#" title="{{ __('Sets the status to Read') }}"><span class="fa fa-check"></span></a>
-                                <a class="px-2" wire:click.prevent='unplan({{ $volume->id }})' href="#" title="{{ __('Remove reading stack') }}"><span class="fa fa-minus"></span></a>
+                                <a class="px-2" wire:click.prevent='read({{ $volume->id }})' href="#" data-bs-toggle="tooltip" title="{{ __('Sets the status to Read') }}"><span class="fa fa-check"></span></a>
+                                <a class="px-2" wire:click.prevent='unplan({{ $volume->id }})' href="#" data-bs-toggle="tooltip" title="{{ __('Remove reading stack') }}"><span class="fa fa-minus"></span></a>
                             </td>
                         </tr>
                     @endforeach
