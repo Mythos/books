@@ -11,6 +11,8 @@ class ReadingStackUnplanned extends Component
 {
     public $volumes;
 
+    public bool $expanded = false;
+
     public string $search;
 
     protected $listeners = [
@@ -59,6 +61,11 @@ class ReadingStackUnplanned extends Component
     public function filter($filter): void
     {
         $this->search = $filter;
+    }
+
+    public function expand(): void
+    {
+        $this->expanded = !$this->expanded;
     }
 
     public function plan(int $id): void

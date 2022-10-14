@@ -13,6 +13,8 @@ class UpcomingSeries extends Component
 
     public string $search;
 
+    public bool $expanded = false;
+
     protected $listeners = ['search' => 'filter'];
 
     public function render()
@@ -67,6 +69,11 @@ class UpcomingSeries extends Component
     public function filter($filter): void
     {
         $this->search = $filter;
+    }
+
+    public function expand(): void
+    {
+        $this->expanded = !$this->expanded;
     }
 
     private function setStatus(int $id, int $status): void

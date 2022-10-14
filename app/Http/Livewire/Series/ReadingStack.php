@@ -10,6 +10,8 @@ class ReadingStack extends Component
 {
     public $volumes;
 
+    public bool $expanded = false;
+
     public string $search;
 
     protected $listeners = [
@@ -60,6 +62,11 @@ class ReadingStack extends Component
         $volume->save();
         $this->emitTo('overview', '$refresh');
         toastr()->addSuccess(__(':name has been updated', ['name' => $volume->series->name . ' ' . $volume->number]));
+    }
+
+    public function expand(): void
+    {
+        $this->expanded = !$this->expanded;
     }
 
     public function unplan(int $id): void

@@ -1,7 +1,18 @@
 <div class="col-sm-12 col-md-12 col-lg-9">
     <div class="card shadow-sm mb-2">
-        <div class="card-header">{{ __('Upcoming Releases') }}</div>
-        <div class="card-body d-flex flex-column table-responsive p-0" style="height: 280px; overflow-y: scroll;">
+        <div class="card-header">
+            <span>{{ __('Upcoming Releases') }}</span>
+            <div class="float-end">
+                <a href="#" wire:click.prevent="expand">
+                    @if ($expanded)
+                        <span class="fas fa-compress" data-bs-toggle="tooltip" title="{{ __('Shrink') }}"></span>
+                    @else
+                        <span class="fas fa-expand" data-bs-toggle="tooltip" title="{{ __('Expand') }}"></span>
+                    @endif
+                </a>
+            </div>
+        </div>
+        <div class="card-body d-flex flex-column table-responsive p-0"@if (!$expanded) style="height: 280px; overflow-y: scroll;" @endif>
             <table class="table table-hover mb-0">
                 <thead class="table-dark" style="position: sticky; top: 0;">
                     <tr>
