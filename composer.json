@@ -14,12 +14,12 @@
         "guzzlehttp/guzzle": "7.5.0",
         "intervention/image": "2.7.2",
         "jantinnerezo/livewire-alert": "2.2.6",
-        "laravel/framework": "9.33.0",
+        "laravel/framework": "9.35.1",
         "laravel/sanctum": "3.0.1",
         "laravel/tinker": "2.7.2",
         "laravel/ui": "4.0.2",
         "livewire/livewire": "2.10.7",
-        "nicebooks/isbn": "0.3.32",
+        "nicebooks/isbn": "0.3.33",
         "php-flasher/flasher": "1.0.7",
         "php-flasher/flasher-toastr": "1.0.7",
         "php-flasher/flasher-laravel": "1.0.7",
@@ -33,7 +33,7 @@
         "mockery/mockery": "1.5.1",
         "nunomaduro/collision": "6.3.1",
         "phpunit/phpunit": "9.5.25",
-        "spatie/laravel-ignition": "1.5.0"
+        "spatie/laravel-ignition": "1.5.2"
     },
     "autoload": {
         "psr-4": {
