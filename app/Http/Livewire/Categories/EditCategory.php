@@ -35,7 +35,7 @@ class EditCategory extends Component
 
     public function updated($property, $value): void
     {
-        if($property == 'category.page_size') {
+        if ($property == 'category.page_size') {
             $this->category->page_size = !empty($value) ? $value : null;
         }
         $this->validateOnly($property);

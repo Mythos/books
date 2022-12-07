@@ -4,16 +4,15 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      *
      * @return void
      */
-    public function up()
+    public function up(): void
     {
-        Schema::table('publishers', function (Blueprint $table) {
+        Schema::table('publishers', function (Blueprint $table): void {
             $table->text('image_url')->nullable();
         });
     }
@@ -23,9 +22,9 @@ return new class extends Migration
      *
      * @return void
      */
-    public function down()
+    public function down(): void
     {
-        Schema::table('publishers', function (Blueprint $table) {
+        Schema::table('publishers', function (Blueprint $table): void {
             $table->dropColumn('image_url');
         });
     }
