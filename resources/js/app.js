@@ -5,9 +5,7 @@ function initializeTooltips() {
     const tooltipTriggerList = [].slice.call(
         document.querySelectorAll('[data-bs-toggle="tooltip"]')
     );
-    tooltipList.map(function (tooltip) {
-        tooltip.hide();
-    });
+    tooltipList.forEach((tooltip) => tooltip.hide());
     tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
         return new bootstrap.Tooltip(tooltipTriggerEl);
     });
