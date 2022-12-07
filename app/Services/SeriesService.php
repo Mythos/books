@@ -161,6 +161,7 @@ class SeriesService
             $publish_date = $newVolume['publish_date'];
             $price = $newVolume['price'];
             $image_url = $newVolume['image_url'];
+            $pages = $newVolume['pages'];
 
             $volume = new Volume([
                 'series_id' => $series->id,
@@ -171,6 +172,7 @@ class SeriesService
                 'status' => $series->subscription_active,
                 'image_url' => $image_url,
                 'plan_to_read' => false,
+                'pages' => $pages,
             ]);
             $volume->save();
             ImageHelpers::updateVolumeImage($volume, true);

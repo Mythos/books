@@ -75,6 +75,7 @@ class Volume extends Model
         'series_id',
         'image_url',
         'plan_to_read',
+        'pages',
     ];
 
     /**

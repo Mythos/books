@@ -165,6 +165,7 @@ class CreateSeries extends Component
             $publish_date = $this->apiSeries['publish_date'];
             $price = $this->apiSeries['price'];
             $image_url = $this->apiSeries['image_url'];
+            $pages = $this->apiSeries['pages'];
 
             $volume = new Volume([
                 'series_id' => $this->series->id,
@@ -175,6 +176,7 @@ class CreateSeries extends Component
                 'status' => $this->series->subscription_active,
                 'image_url' => $image_url,
                 'plan_to_read' => false,
+                'pages' => $pages,
             ]);
 
             $volume->save();
@@ -188,6 +190,7 @@ class CreateSeries extends Component
                 $publish_date = $newVolume['publish_date'];
                 $price = $newVolume['price'];
                 $image_url = $newVolume['image_url'];
+                $pages = $newVolume['pages'];
 
                 $volume = new Volume([
                     'series_id' => $this->series->id,
@@ -198,6 +201,7 @@ class CreateSeries extends Component
                     'status' => $this->series->subscription_active,
                     'image_url' => $image_url,
                     'plan_to_read' => false,
+                    'pages' => $pages,
                 ]);
 
                 $volume->save();
