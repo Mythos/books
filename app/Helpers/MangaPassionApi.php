@@ -70,6 +70,10 @@ class MangaPassionApi
                 $series['demographics'] = $tags->where('type', '=', '0')->pluck('name')->first();
                 $series['genres'] = $tags->where('type', '=', '1')->pluck('name');
             }
+            if (!empty($source['tags'])) {
+                $magazines = collect($source['magazines']);
+                $series['magazines'] = $magazines->pluck('name');
+            }
         }
 
         $defaultPrice = MangaPassionApi::getDefaultPrice($series['mangapassion_id']);

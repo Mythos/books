@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Helpers\ImageHelpers;
 use App\Helpers\MangaPassionApi;
 use App\Models\Genre;
+use App\Models\Magazine;
 use App\Models\Publisher;
 use App\Models\Series;
 use App\Models\Volume;
@@ -63,6 +64,18 @@ class SeriesService
             }
         }
         $series->genres()->sync($genres);
+
+        $magazines = [];
+        if (!empty($apiSeries['magazines'])) {
+            foreach ($apiSeries['magazines'] as $magazineName) {
+                $magazine = Magazine::firstOrCreate([
+                    'name' => $magazineName,
+                ]);
+                $magazines[] = $magazine->id;
+            }
+        }
+        $series->magazines()->sync($magazines);
+
         $series->save();
         ImageHelpers::updateSeriesImage($series);
     }

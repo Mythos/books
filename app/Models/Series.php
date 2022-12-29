@@ -314,6 +314,16 @@ class Series extends Model
     }
 
     /**
+     * Get the publisher that owns the Series
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function magazines(): BelongsToMany
+    {
+        return $this->belongsToMany(Magazine::class);
+    }
+
+    /**
      * Get the genres associated with the Series
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany

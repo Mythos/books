@@ -42,7 +42,7 @@ class ShowSeries extends Component
 
     public function render()
     {
-        $this->series = Series::with('genres')->find($this->series->id);
+        $this->series = Series::with(['genres', 'magazines'])->find($this->series->id);
         $this->volumes = Volume::whereSeriesId($this->series->id)->orderBy('number')->get();
         $this->new = $this->volumes->where('status', VolumeStatus::NEW)->count();
         $this->ordered = $this->volumes->where('status', VolumeStatus::ORDERED)->count();
