@@ -38,6 +38,9 @@ class UpcomingSeries extends Component
                               })
                               ->orWhereHas('genres', function ($query): void {
                                   $query->where('name', 'like', '%' . $this->search . '%');
+                              })
+                              ->orWhereHas('magazines', function ($query): void {
+                                  $query->where('name', 'like', '%' . $this->search . '%');
                               });
                       });
             });
