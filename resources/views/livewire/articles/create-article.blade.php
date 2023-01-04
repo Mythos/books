@@ -72,7 +72,7 @@
                     </div>
                     <div class="row mt-1">
                         <div class="col-md-12">
-                            <label for="article.image_url" class="col-form-label required">{{ __('Image URL') }}</label>
+                            <label for="article.image_url" class="col-form-label">{{ __('Image URL') }}</label>
                             <input id="article.image_url" name="article.image_url" type="text" class="form-control @error('article.image_url') is-invalid @enderror" wire:model='article.image_url'>
                             @error('article.image_url')
                                 <span class="invalid-feedback" role="alert">
