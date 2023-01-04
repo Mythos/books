@@ -55,9 +55,9 @@
                         <td class="text-center">
                             @if ($volume->status == App\Constants\VolumeStatus::DELIVERED)
                                 @if ($volume->plan_to_read)
-                                    <a wire:click.prevent='unplan({{ $volume->id }})' href="#" data-bs-toggle="tooltip" title="{{ __('Add to reading stack') }}"><span class="fa fa-check"></span></a>
+                                    <a wire:click.prevent='unplan({{ $volume->id }})' href="#" data-bs-toggle="tooltip" title="{{ __('Remove reading stack') }}"><span class="fa fa-check"></span></a>
                                 @else
-                                    <a wire:click.prevent='plan({{ $volume->id }})' href="#" data-bs-toggle="tooltip" title="{{ __('Remove reading stack') }}"><span class="fa fa-xmark"></span></a>
+                                    <a wire:click.prevent='plan({{ $volume->id }})' href="#" data-bs-toggle="tooltip" title="{{ __('Add to reading stack') }}"><span class="fa fa-xmark"></span></a>
                                 @endif
                             @endif
                         </td>
