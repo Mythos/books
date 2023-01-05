@@ -8,6 +8,26 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 
+/**
+ * App\Models\Magazine
+ *
+ * @property int $id
+ * @property string $name
+ * @property string $slug
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Series[] $series
+ * @property-read int|null $series_count
+ * @method static \Illuminate\Database\Eloquent\Builder|Magazine newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Magazine newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Magazine query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Magazine whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Magazine whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Magazine whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Magazine whereSlug($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Magazine whereUpdatedAt($value)
+ * @mixin \Eloquent
+ */
 class Magazine extends Model
 {
     use HasFactory;

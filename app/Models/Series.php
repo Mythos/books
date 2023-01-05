@@ -50,6 +50,8 @@ use Spatie\Sluggable\SlugOptions;
  * @property-read string $status_name
  * @property-read string $total_worth
  * @property-read string $unread_volumes_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Magazine[] $magazines
+ * @property-read int|null $magazines_count
  * @property-read \App\Models\Publisher|null $publisher
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Volume[] $volumes
  * @property-read int|null $volumes_count

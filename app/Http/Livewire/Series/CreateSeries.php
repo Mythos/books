@@ -7,6 +7,7 @@ use App\Helpers\ImageHelpers;
 use App\Helpers\MangaPassionApi;
 use App\Models\Category;
 use App\Models\Genre;
+use App\Models\Magazine;
 use App\Models\Publisher;
 use App\Models\Series;
 use App\Models\Volume;
@@ -93,6 +94,7 @@ class CreateSeries extends Component
             $this->series->save();
             ImageHelpers::updateSeriesImage($this->series, true);
             $this->createGenres();
+            $this->createMagazines();
             $this->createVolumes();
             toastr()->addSuccess(__(':name has been created', ['name' => $this->series->name]));
 
@@ -230,5 +232,19 @@ class CreateSeries extends Component
             }
         }
         $this->series->genres()->sync($genres);
+    }
+
+    private function createMagazines(): void
+    {
+        $magazines = [];
+        if (!empty($this->apiSeries['magazines'])) {
+            foreach ($this->apiSeries['magazines'] as $magazineName) {
+                $magazine = Magazine::firstOrCreate([
+                    'name' => $magazineName,
+                ]);
+                $magazines[] = $magazine->id;
+            }
+        }
+        $this->series->magazines()->sync($magazines);
     }
 }
