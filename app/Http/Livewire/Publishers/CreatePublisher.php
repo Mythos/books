@@ -39,7 +39,6 @@ class CreatePublisher extends Component
         if (!empty($this->series->default_price)) {
             $this->series->default_price = floatval(Str::replace(',', '.', $this->series->default_price));
         }
-        $this->series->category_id = $this->category->id;
         try {
             $this->publisher->save();
             ImageHelpers::updatePublisherImage($this->publisher, true);
