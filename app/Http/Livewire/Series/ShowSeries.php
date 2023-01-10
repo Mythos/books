@@ -55,7 +55,7 @@ class ShowSeries extends Component
 
     public function canceled(int $id): void
     {
-        $this->setStatus($id, VolumeStatus::NEW);
+        $this->setStatus($id, $this->series->subscription_active ? VolumeStatus::ORDERED : VolumeStatus::NEW);
     }
 
     public function ordered(int $id): void
