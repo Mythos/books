@@ -215,14 +215,10 @@ class Series extends Model
      */
     public function getCompletionStatusAttribute(): int
     {
-        if (empty($this->total)) {
-            return false;
-        }
-
-        $volumes = $this->volumes->whereNotNull('publish_date')
+        $volumes = $this->volumes
         ->filter(function ($volume) {
             return $volume->status == VolumeStatus::SHIPPED || $volume->status == VolumeStatus::DELIVERED || $volume->status == VolumeStatus::READ
-                || $volume->publish_date <= now()
+                || ($volume->publish_date != null && $volume->publish_date <= now())
                 || (!$this->subscription_active && $volume->status == VolumeStatus::ORDERED);
         });
         $total = $volumes->count();
