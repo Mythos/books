@@ -20,7 +20,7 @@
                         <th scope="col" class="text-center" style="width: 2rem; min-width: 2rem;"></th>
                         <th scope="col" style="min-width: 23rem;">{{ __('Title') }}</th>
                         <th scope="col" class="text-center"></th>
-                        <th scope="col" style="min-width: 9rem;">{{ __('ISBN') }}</th>
+                        <th scope="col" style="min-width: 10rem;">{{ __('ISBN') }}</th>
                         <th scope="col" class="text-end" style="min-width: 5rem;">{{ __('Price') }}</th>
                         <th scope="col" class="text-center">{{ __('Status') }}</th>
                     </tr>
