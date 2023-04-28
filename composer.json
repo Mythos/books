@@ -16,7 +16,7 @@
         "jantinnerezo/livewire-alert": "2.2.7",
         "laravel/framework": "9.43.0",
         "laravel/sanctum": "3.0.1",
-        "laravel/tinker": "2.8.0",
+        "laravel/tinker": "2.8.1",
         "laravel/ui": "4.2.1",
         "livewire/livewire": "2.12.3",
         "nicebooks/isbn": "0.3.34",
