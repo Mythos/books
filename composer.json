@@ -18,7 +18,7 @@
         "laravel/sanctum": "3.0.1",
         "laravel/tinker": "2.8.0",
         "laravel/ui": "4.1.1",
-        "livewire/livewire": "2.10.7",
+        "livewire/livewire": "2.12.3",
         "nicebooks/isbn": "0.3.34",
         "php-flasher/flasher": "1.0.7",
         "php-flasher/flasher-toastr": "1.0.7",
