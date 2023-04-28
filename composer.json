@@ -27,7 +27,7 @@
         "spatie/laravel-sluggable": "3.4.2"
     },
     "require-dev": {
-        "barryvdh/laravel-debugbar": "3.7.0",
+        "barryvdh/laravel-debugbar": "3.8.1",
         "barryvdh/laravel-ide-helper": "2.12.3",
         "fakerphp/faker": "1.20.0",
         "mockery/mockery": "1.5.1",
