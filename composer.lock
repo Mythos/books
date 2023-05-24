@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "2072059195af77260fbd50cb5d14b945",
+    "content-hash": "5a2d4ac68cd25aa85ae4bb15aad17184",
     "packages": [
         {
             "name": "brick/math",
@@ -2860,16 +2860,16 @@
         },
         {
             "name": "php-flasher/flasher",
-            "version": "v1.0.7",
+            "version": "v1.13.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-flasher/flasher.git",
-                "reference": "b0ac0e8c40ce856cc56bf7753737438568862f7c"
+                "reference": "4f75f1d3638522db2531e76a27e96075432011c8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-flasher/flasher/zipball/b0ac0e8c40ce856cc56bf7753737438568862f7c",
-                "reference": "b0ac0e8c40ce856cc56bf7753737438568862f7c",
+                "url": "https://api.github.com/repos/php-flasher/flasher/zipball/4f75f1d3638522db2531e76a27e96075432011c8",
+                "reference": "4f75f1d3638522db2531e76a27e96075432011c8",
                 "shasum": ""
             },
             "require": {
@@ -2877,6 +2877,9 @@
             },
             "type": "library",
             "autoload": {
+                "files": [
+                    "helpers.php"
+                ],
                 "psr-4": {
                     "Flasher\\Prime\\": ""
                 }
@@ -2893,33 +2896,42 @@
                     "role": "Developer"
                 }
             ],
-            "description": "A powerful and flexible flash notification system for PHP",
+            "description": "PHPFlasher - A powerful & easy-to-use package for adding flash messages to Laravel or Symfony projects. Provides feedback to users, improves engagement & enhances user experience. Intuitive design for beginners & experienced developers. A reliable, flexible solution.",
             "homepage": "https://php-flasher.io",
             "keywords": [
-                "Flasher",
-                "alerts",
-                "flash",
+                "custom-adapter",
+                "dark-mode",
+                "desktop-notifications",
+                "flash-messages",
+                "framework-agnostic",
+                "javascript",
                 "laravel",
-                "lumen",
-                "messages",
-                "notifications",
-                "notify",
+                "notification-system",
                 "noty",
                 "notyf",
                 "php",
+                "php-flasher",
+                "phpstorm-auto-complete",
                 "pnotify",
-                "sweet alert",
+                "rtl",
+                "sweetalert",
                 "symfony",
-                "toastr"
+                "toastr",
+                "user-experience",
+                "user-feedback",
+                "yoeunes"
             ],
             "support": {
-                "issues": "https://github.com/php-flasher/flasher/issues",
-                "source": "https://github.com/php-flasher/flasher/tree/v1.0.7"
+                "source": "https://github.com/php-flasher/flasher/tree/v1.13.1"
             },
             "funding": [
                 {
                     "url": "https://www.paypal.com/paypalme/yoeunes",
                     "type": "custom"
+                },
+                {
+                    "url": "https://github.com/yoeunes",
+                    "type": "github"
                 },
                 {
                     "url": "https://ko-fi.com/yoeunes",
@@ -2934,7 +2946,7 @@
                     "type": "patreon"
                 }
             ],
-            "time": "2022-05-22T12:07:55+00:00"
+            "time": "2023-01-15T22:24:30+00:00"
         },
         {
             "name": "php-flasher/flasher-laravel",
