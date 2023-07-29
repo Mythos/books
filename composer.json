@@ -16,7 +16,7 @@
         "laravel/framework": "10.16.1",
         "laravel/sanctum": "3.2.5",
         "laravel/tinker": "2.8.1",
-        "laravel/ui": "4.2.1",
+        "laravel/ui": "4.2.2",
         "livewire/livewire": "2.12.4",
         "nicebooks/isbn": "0.3.46",
         "php-flasher/flasher": "1.13.1",
