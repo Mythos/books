@@ -57,6 +57,10 @@ class CreateVolume extends Component
         if (empty($this->volume->publish_date)) {
             $this->volume->publish_date = null;
         }
+        if (empty($this->volume->pages)) {
+            $this->volume->pages = null;
+        }
+        $this->volume->plan_to_read = false;
         $this->volume->save();
         ImageHelpers::updateVolumeImage($this->volume, true);
 
@@ -74,6 +78,7 @@ class CreateVolume extends Component
             'volume.ignore_in_upcoming' => 'boolean',
             'volume.series_id' => 'required|exists:series,id',
             'volume.image_url' => 'nullable|url',
+            'volume.pages' => 'nullable|integer|min:0',
         ];
     }
 
@@ -84,6 +89,7 @@ class CreateVolume extends Component
             'price' => $this->series->default_price ?? '',
             'status' => $this->series->subscription_active,
             'ignore_in_upcoming' => false,
+            'plan_to_read' => false,
         ]);
     }
 }

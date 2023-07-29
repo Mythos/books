@@ -2,7 +2,6 @@
     {{ __('Create Series') }}
 @endsection
 
-
 <div class="container">
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
@@ -37,7 +36,7 @@
                         <div class="col-md-12">
                             <label for="series.source_name" class="col-form-label">{{ __('Original Title') }}</label>
                             <div class="input-group">
-                                <input id="series.source_name" name="series.source_name" type="text" class="form-control @error('series.source_name') is-invalid @enderror" wire:model='series.source_name' autofocus>
+                                <input id="series.source_name" name="series.source_name" type="text" class="form-control @error('series.source_name') is-invalid @enderror" wire:model='series.source_name' @if (!$isEditable) disabled @endif>
                                 @error('series.source_name')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -50,7 +49,7 @@
                         <div class="col-md-12">
                             <label for="series.source_name_romaji" class="col-form-label">{{ __('Original Title (Romaji)') }}</label>
                             <div class="input-group">
-                                <input id="series.source_name_romaji" name="series.source_name_romaji" type="text" class="form-control @error('series.source_name_romaji') is-invalid @enderror" wire:model='series.source_name_romaji' autofocus>
+                                <input id="series.source_name_romaji" name="series.source_name_romaji" type="text" class="form-control @error('series.source_name_romaji') is-invalid @enderror" wire:model='series.source_name_romaji' @if (!$isEditable) disabled @endif>
                                 @error('series.source_name_romaji')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -62,7 +61,7 @@
                     <div class="row mt-1">
                         <div class="col-md-12">
                             <label for="series.description" class="col-form-label">{{ __('Description') }}</label>
-                            <textarea id="series.description" name="series.description" type="text" class="form-control @error('series.description') is-invalid @enderror" wire:model='series.description' rows="5">
+                            <textarea id="series.description" name="series.description" type="text" class="form-control @error('series.description') is-invalid @enderror" wire:model='series.description' rows="5" @if (!$isEditable) disabled @endif>
                             </textarea>
                             @error('series.description')
                                 <span class="invalid-feedback" role="alert">
@@ -74,7 +73,7 @@
                     <div class="row mt-1">
                         <div class="col-md-12">
                             <label for="series.publisher_id" class="col-form-label">{{ __('Publisher') }}</label>
-                            <select id="series.publisher_id" name="series.publisher_id" class="form-select @error('series.publisher_id') is-invalid @enderror" wire:model='series.publisher_id' data-allow-clear="true">
+                            <select id="series.publisher_id" name="series.publisher_id" class="form-select @error('series.publisher_id') is-invalid @enderror" wire:model='series.publisher_id' data-allow-clear="true" @if (!$isEditable) disabled @endif>
                                 <option></option>
                                 @foreach ($publishers as $publisher)
                                     <option value="{{ $publisher->id }}">{{ $publisher->name }}</option>
@@ -107,7 +106,7 @@
                     <div class="row mt-1">
                         <div class="col-md-12">
                             <label for="series.source_status" class="col-form-label required">{{ __('Status (Source)') }}</label>
-                            <select id="series.source_status" name="series.source_status" class="form-select @error('series.source_status') is-invalid @enderror" wire:model='series.source_status' required>
+                            <select id="series.source_status" name="series.source_status" class="form-select @error('series.source_status') is-invalid @enderror" wire:model='series.source_status' required @if (!$isEditable) disabled @endif>
                                 <option value="{{ App\Constants\SeriesStatus::ANNOUNCED }}">{{ __('Announced') }}</option>
                                 <option value="{{ App\Constants\SeriesStatus::ONGOING }}">{{ __('Ongoing') }}</option>
                                 <option value="{{ App\Constants\SeriesStatus::FINISHED }}">{{ __('Finished') }}</option>
@@ -125,7 +124,7 @@
                         <div class="col-md-12">
                             <label for="series.default_price" class="col-form-label">{{ __('Default price') }}</label>
                             <div class="input-group">
-                                <input id="series.default_price" name="series.default_price" type="text" class="form-control @error('series.default_price') is-invalid @enderror" wire:model='series.default_price'>
+                                <input id="series.default_price" name="series.default_price" type="text" class="form-control @error('series.default_price') is-invalid @enderror" wire:model='series.default_price' @if (!$isEditable) disabled @endif>
                                 <span class="input-group-text">{{ config('app.currency') }}</span>
                                 @error('series.default_price')
                                     <span class="invalid-feedback" role="alert">
@@ -138,7 +137,7 @@
                     <div class="row mt-1">
                         <div class="col-md-12">
                             <label for="series.total" class="col-form-label">{{ __('Volumes (total)') }}</label>
-                            <input id="series.total" name="series.total" type="number" class="form-control @error('series.total') is-invalid @enderror" wire:model='series.total'>
+                            <input id="series.total" name="series.total" type="number" class="form-control @error('series.total') is-invalid @enderror" wire:model='series.total' @if (!$isEditable) disabled @endif>
                             @error('series.total')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -162,7 +161,7 @@
                     <div class="row mt-1">
                         <div class="col-md-12">
                             <label for="series.image_url" class="col-form-label">{{ __('Image URL') }}</label>
-                            <input id="series.image_url" name="series.image_url" type="text" class="form-control @error('series.image_url') is-invalid @enderror" wire:model='series.image_url'>
+                            <input id="series.image_url" name="series.image_url" type="text" class="form-control @error('series.image_url') is-invalid @enderror" wire:model='series.image_url' @if (!$isEditable) disabled @endif>
                             @error('series.image_url')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>

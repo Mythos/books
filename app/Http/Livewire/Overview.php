@@ -50,18 +50,21 @@ class Overview extends Component
                               })
                               ->orWhereHas('genres', function ($query): void {
                                   $query->where('name', 'like', '%' . $this->search . '%');
+                              })
+                              ->orWhereHas('magazines', function ($query): void {
+                                  $query->where('name', 'like', '%' . $this->search . '%');
                               });
                       });
             });
         }
-        $volumes = $volumes->join('series', 'volumes.series_id', '=', 'series.id')->WhereNotNull('isbn')->select([
+        $volumes = $volumes->join('series', 'volumes.series_id', '=', 'series.id')->select([
             DB::raw('COALESCE(sum(case when volumes.status = ' . VolumeStatus::NEW . ' AND series.status <> ' . SeriesStatus::CANCELED . ' then 1 else 0 end), 0) as new'),
             DB::raw('COALESCE(sum(case when volumes.status = ' . VolumeStatus::ORDERED . ' AND series.status <> ' . SeriesStatus::CANCELED . ' then 1 else 0 end), 0) as ordered'),
             DB::raw('COALESCE(sum(case when volumes.status = ' . VolumeStatus::SHIPPED . ' then 1 else 0 end), 0) as shipped'),
             DB::raw('COALESCE(sum(case when volumes.status = ' . VolumeStatus::DELIVERED . ' then 1 else 0 end), 0) as delivered'),
             DB::raw('COALESCE(sum(case when volumes.status = ' . VolumeStatus::READ . ' then 1 else 0 end), 0) as `read`'),
             DB::raw('COALESCE(sum(case when volumes.status = ' . VolumeStatus::DELIVERED . ' OR volumes.status = ' . VolumeStatus::READ . ' then price else 0 end), 0) as price'),
-            DB::raw('COALESCE(sum(case when series.status <> ' . SeriesStatus::CANCELED . ' or volumes.status = ' . VolumeStatus::DELIVERED . ' or volumes.status = ' . VolumeStatus::READ . ' then 1 else 0 end), 0) as total'),
+            DB::raw('COALESCE(sum(case when volumes.status = ' . VolumeStatus::DELIVERED . ' or volumes.status = ' . VolumeStatus::READ . ' then 1 else 0 end), 0) as total'),
         ])->first();
 
         return json_decode(json_encode($volumes->toArray()), true);
@@ -80,7 +83,7 @@ class Overview extends Component
             DB::raw('COALESCE(sum(case when status = 3 then 1 else 0 end), 0) as delivered'),
             DB::raw('0 as `read`'),
             DB::raw('COALESCE(sum(case when status = 3 then price else 0 end), 0) as price'),
-            DB::raw('count(*) as total'),
+            DB::raw('COALESCE(sum(case when status = 3 then 1 else 0 end), 0) as total'),
         ])->first();
 
         return json_decode(json_encode($articleStatisticsQuery), true);

@@ -2,7 +2,6 @@
     {{ __('Volume :number', ['number' => $volume->number]) }} - {{ $series->name }}
 @endsection
 
-
 <div class="container">
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
@@ -12,7 +11,7 @@
             <li class="breadcrumb-item active" aria-current="page">{{ __('Volume :number', ['number' => $volume->number]) }}</li>
         </ol>
     </nav>
-    <form method="POST" wire:submit.prevent='save'>
+    <form method="POST" wire:submit.prevent='@if (!empty($nextVolume)) saveAndContinue @else save @endif'>
         <input id="series_id" type="hidden" name="series_id" wire:model='series_id' />
         <div class="row bg-white shadow-sm rounded">
             <div class="col-md-12">
@@ -34,18 +33,21 @@
                     <div class="row mt-1">
                         <div class="col-md-12">
                             <label for="volume.isbn" class="col-form-label">{{ __('ISBN') }}</label>
-                            <input id="volume.isbn" name="volume.isbn" type="text" class="form-control @error('volume.isbn') is-invalid @enderror" wire:model='volume.isbn' autofocus>
-                            @error('volume.isbn')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                            @enderror
+                            <div class="input-group">
+                                <input id="volume.isbn" name="volume.isbn" type="text" class="form-control @error('volume.isbn') is-invalid @enderror" wire:model='volume.isbn' autofocus>
+                                <button class="btn btn-outline-secondary" type="button" data-bs-toggle="modal" data-bs-target="#livestream_scanner"><span class="fa fa-barcode"></span></button>
+                                @error('volume.isbn')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
                         </div>
                     </div>
                     <div class="row mt-1">
                         <div class="col-md-12">
                             <label for="volume.publish_date" class="col-form-label">{{ __('Publish Date') }}</label>
-                            <input id="volume.publish_date" name="volume.publish_date" type="date" class="form-control @error('volume.publish_date') is-invalid @enderror" wire:model='volume.publish_date' autofocus>
+                            <input id="volume.publish_date" name="volume.publish_date" type="date" class="form-control @error('volume.publish_date') is-invalid @enderror" wire:model='volume.publish_date'>
                             @error('volume.publish_date')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -65,6 +67,17 @@
                                     </span>
                                 @enderror
                             </div>
+                        </div>
+                    </div>
+                    <div class="row mt-1">
+                        <div class="col-md-12">
+                            <label for="volume.pages" class="col-form-label">{{ __('Pages') }}</label>
+                            <input id="volume.pages" name="volume.pages" type="number" class="form-control @error('volume.pages') is-invalid @enderror" wire:model='volume.pages'>
+                            @error('volume.pages')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
                         </div>
                     </div>
                     <div class="row mt-1">
@@ -113,12 +126,18 @@
                             <button type="button" class="btn btn-danger" wire:click='delete'>{{ __('Delete') }}</button>
                         </div>
                         <div class="float-end mb-3">
-                            <button class="btn btn-primary" type="submit">{{ __('Save') }}</button>
+                            @if (!empty($nextVolume))
+                                <button class="btn btn-secondary" type="button" wire:click='save'>{{ __('Save') }}</button>
+                                <button class="btn btn-primary" type="submit">{{ __('Save and Continue') }}</button>
+                            @else
+                                <button class="btn btn-primary" type="submit">{{ __('Save') }}</button>
+                            @endif
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </form>
+    @include('livewire.volumes.barcodescanner')
 </div>
 @include('scripts.select2')

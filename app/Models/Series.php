@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Facades\File;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 
@@ -33,6 +34,7 @@ use Spatie\Sluggable\SlugOptions;
  * @property int|null $source_status
  * @property string|null $source_name
  * @property string|null $source_name_romaji
+ * @property int $ignore_in_upcoming
  * @property-read \App\Models\Category $category
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Genre[] $genres
  * @property-read int|null $genres_count
@@ -48,6 +50,8 @@ use Spatie\Sluggable\SlugOptions;
  * @property-read string $status_name
  * @property-read string $total_worth
  * @property-read string $unread_volumes_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Magazine[] $magazines
+ * @property-read int|null $magazines_count
  * @property-read \App\Models\Publisher|null $publisher
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Volume[] $volumes
  * @property-read int|null $volumes_count
@@ -59,6 +63,7 @@ use Spatie\Sluggable\SlugOptions;
  * @method static \Illuminate\Database\Eloquent\Builder|Series whereDefaultPrice($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Series whereDescription($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Series whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Series whereIgnoreInUpcoming($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Series whereImageUrl($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Series whereIsNsfw($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Series whereMangapassionId($value)
@@ -210,14 +215,10 @@ class Series extends Model
      */
     public function getCompletionStatusAttribute(): int
     {
-        if (empty($this->total)) {
-            return false;
-        }
-
-        $volumes = $this->volumes->whereNotNull('publish_date')
+        $volumes = $this->volumes
         ->filter(function ($volume) {
             return $volume->status == VolumeStatus::SHIPPED || $volume->status == VolumeStatus::DELIVERED || $volume->status == VolumeStatus::READ
-                || $volume->publish_date <= now()
+                || ($volume->publish_date != null && $volume->publish_date <= now())
                 || (!$this->subscription_active && $volume->status == VolumeStatus::ORDERED);
         });
         $total = $volumes->count();
@@ -242,11 +243,16 @@ class Series extends Model
     public function getImageAttribute(): string
     {
         $path = 'storage/' . $this->image_path . '/';
+        $file = $path . 'cover.' . config('images.type');
         if ($this->is_nsfw && !session('show_nsfw', false)) {
-            return url($path . 'cover_sfw.' . config('images.type'));
+            $file = $path . 'cover_sfw.' . config('images.type');
         }
 
-        return url($path . 'cover.' . config('images.type'));
+        if (File::exists($file)) {
+            return url($file);
+        } else {
+            return url('images/placeholder.png');
+        }
     }
 
     /**
@@ -303,6 +309,16 @@ class Series extends Model
     public function publisher(): BelongsTo
     {
         return $this->belongsTo(Publisher::class);
+    }
+
+    /**
+     * Get the publisher that owns the Series
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function magazines(): BelongsToMany
+    {
+        return $this->belongsToMany(Magazine::class);
     }
 
     /**

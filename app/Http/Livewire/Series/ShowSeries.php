@@ -42,7 +42,7 @@ class ShowSeries extends Component
 
     public function render()
     {
-        $this->series = Series::with('genres')->find($this->series->id);
+        $this->series = Series::with(['genres', 'magazines'])->find($this->series->id);
         $this->volumes = Volume::whereSeriesId($this->series->id)->orderBy('number')->get();
         $this->new = $this->volumes->where('status', VolumeStatus::NEW)->count();
         $this->ordered = $this->volumes->where('status', VolumeStatus::ORDERED)->count();
@@ -55,7 +55,7 @@ class ShowSeries extends Component
 
     public function canceled(int $id): void
     {
-        $this->setStatus($id, VolumeStatus::NEW);
+        $this->setStatus($id, $this->series->subscription_active ? VolumeStatus::ORDERED : VolumeStatus::NEW);
     }
 
     public function ordered(int $id): void
@@ -76,6 +76,22 @@ class ShowSeries extends Component
     public function read(int $id): void
     {
         $this->setStatus($id, VolumeStatus::READ);
+    }
+
+    public function plan(int $id): void
+    {
+        $volume = Volume::find($id);
+        $volume->plan_to_read = true;
+        $volume->save();
+        toastr()->addSuccess(__(':name has been updated', ['name' => $volume->series->name . ' ' . $volume->number]));
+    }
+
+    public function unplan(int $id): void
+    {
+        $volume = Volume::find($id);
+        $volume->plan_to_read = false;
+        $volume->save();
+        toastr()->addSuccess(__(':name has been updated', ['name' => $volume->series->name . ' ' . $volume->number]));
     }
 
     public function toggle_reordering(): void
@@ -137,6 +153,9 @@ class ShowSeries extends Component
     private function setStatus(int $id, int $status): void
     {
         $volume = Volume::find($id);
+        if ($status == VolumeStatus::READ) {
+            $volume->plan_to_read = false;
+        }
         $volume->status = $status;
         $volume->save();
         toastr()->addSuccess(__(':name has been updated', ['name' => $volume->series->name . ' ' . $volume->number]));

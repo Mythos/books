@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Statistics;
 
 use App\Constants\SeriesStatus;
+use App\Models\Series;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 
@@ -12,10 +13,9 @@ class SeriesPerStatus extends Component
 
     public function render()
     {
-        $data = DB::table('series')
-                  ->select('series.status', DB::raw('count(*) as total'))
-                  ->groupBy('series.status')
-                  ->get();
+        $data = Series::select('series.status', DB::raw('count(*) as total'))
+                      ->groupBy('series.status')
+                      ->get();
         $this->seriesByStatusStatistics = [
             __('Announced') => $data->where('status', '=', SeriesStatus::ANNOUNCED)->first()?->total ?? 0,
             __('Ongoing') => $data->where('status', '=', SeriesStatus::ONGOING)->first()?->total ?? 0,

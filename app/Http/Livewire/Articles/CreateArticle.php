@@ -18,7 +18,7 @@ class CreateArticle extends Component
 
     protected $rules = [
         'article.name' => 'required',
-        'article.release_date' => 'date',
+        'article.release_date' => 'nullable|date',
         'article.price' => 'nullable|regex:"^[0-9]{1,9}([,.][0-9]{1,2})?$"',
         'article.status' => 'required|integer|min:0',
         'article.category_id' => 'required|exists:categories,id',

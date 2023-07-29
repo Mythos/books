@@ -11,6 +11,13 @@
             @livewire('series.upcoming-series')
             @livewire('overview')
         </div>
+        <div class="row">
+            <h2>
+                {{ __('Reading Stack') }}
+            </h2>
+            @livewire('series.reading-stack')
+            @livewire('series.reading-stack-unplanned')
+        </div>
         @foreach ($categories as $category)
             @if ($category->type == 0)
                 @livewire('series.gallery', [$category])

@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Facades\File;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 
@@ -16,6 +17,9 @@ use Spatie\Sluggable\SlugOptions;
  * @property string $slug
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property string|null $image_url
+ * @property-read string $image
+ * @property-read string $image_path
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Series[] $series
  * @property-read int|null $series_count
  * @method static \Illuminate\Database\Eloquent\Builder|Publisher newModelQuery()
@@ -23,6 +27,7 @@ use Spatie\Sluggable\SlugOptions;
  * @method static \Illuminate\Database\Eloquent\Builder|Publisher query()
  * @method static \Illuminate\Database\Eloquent\Builder|Publisher whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Publisher whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Publisher whereImageUrl($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Publisher whereName($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Publisher whereSlug($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Publisher whereUpdatedAt($value)
@@ -40,6 +45,7 @@ class Publisher extends Model
      */
     protected $fillable = [
         'name',
+        'image_url',
     ];
 
     /**
@@ -68,5 +74,35 @@ class Publisher extends Model
     public function getRouteKeyName(): string
     {
         return 'slug';
+    }
+
+    /**
+     * Get the publisher's image path.
+     *
+     * @return string
+     */
+    public function getImagePathAttribute(): string
+    {
+        return 'publishers/' . $this->id;
+    }
+
+    /**
+     * Get the publisher's image.
+     *
+     * @return string
+     */
+    public function getImageAttribute(): string
+    {
+        $path = 'storage/' . $this->image_path . '/';
+        $file = $path . 'cover.' . config('images.type');
+        if ($this->is_nsfw && !session('show_nsfw', false)) {
+            $file = $path . 'cover_sfw.' . config('images.type');
+        }
+
+        if (File::exists($file)) {
+            return url($file);
+        } else {
+            return url('images/placeholder.png');
+        }
     }
 }

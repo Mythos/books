@@ -29,6 +29,17 @@
                             @enderror
                         </div>
                     </div>
+                    <div class="row mt-1">
+                        <div class="col-md-12">
+                            <label for="publisher.image_url" class="col-form-label">{{ __('Image URL') }}</label>
+                            <input id="publisher.image_url" name="publisher.image_url" type="text" class="form-control @error('publisher.image_url') is-invalid @enderror" wire:model='publisher.image_url'>
+                            @error('publisher.image_url')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+                        </div>
+                    </div>
                     <div class="mt-3">
                         <div class="text-end">
                             <button class="btn btn-primary float-end mb-2" type="submit">{{ __('Save') }}</button>

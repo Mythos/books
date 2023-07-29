@@ -1,5 +1,18 @@
 # Changelog
 
+## 2.3.1
+
+- Added images for publishers
+- Added page count to volumes
+- Added placeholder image
+- Added barcode scanner when editing volumes
+- Changed total in overview to only count delivered and read volumes
+- Removed ISBN requirement for Overview
+- Changed search bar to be always visible on mobile devices
+- Fields are now readonly when managed via Manga Passion API
+- Improved series/volume requirements for statistics
+- Improved handling of Manga Passion API results regarding single volume series
+
 ## 2.3.0 (2022-07-12)
 
 - Added cover images for volumes

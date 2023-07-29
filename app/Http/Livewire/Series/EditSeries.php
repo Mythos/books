@@ -7,6 +7,7 @@ use App\Constants\VolumeStatus;
 use App\Helpers\ImageHelpers;
 use App\Models\Category;
 use App\Models\GenreSeries;
+use App\Models\MagazineSeries;
 use App\Models\Publisher;
 use App\Models\Series;
 use App\Models\Volume;
@@ -28,6 +29,8 @@ class EditSeries extends Component
     public Series $series;
 
     public string $image_url = '';
+
+    public bool $isEditable = true;
 
     protected $rules = [
         'series.name' => 'required',
@@ -73,6 +76,8 @@ class EditSeries extends Component
 
     public function render()
     {
+        $this->isEditable = empty($this->series->mangapassion_id);
+
         return view('livewire.series.edit-series')->extends('layouts.app')->section('content');
     }
 
@@ -108,6 +113,7 @@ class EditSeries extends Component
     public function confirmedDelete(): void
     {
         GenreSeries::whereSeriesId($this->series->id)->delete();
+        MagazineSeries::whereSeriesId($this->series->id)->delete();
         Volume::whereSeriesId($this->series->id)->delete();
         $this->series->delete();
         Storage::disk('public')->deleteDirectory($this->series->image_path);

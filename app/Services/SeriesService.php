@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Helpers\ImageHelpers;
 use App\Helpers\MangaPassionApi;
 use App\Models\Genre;
+use App\Models\Magazine;
 use App\Models\Publisher;
 use App\Models\Series;
 use App\Models\Volume;
@@ -63,6 +64,18 @@ class SeriesService
             }
         }
         $series->genres()->sync($genres);
+
+        $magazines = [];
+        if (!empty($apiSeries['magazines'])) {
+            foreach ($apiSeries['magazines'] as $magazineName) {
+                $magazine = Magazine::firstOrCreate([
+                    'name' => $magazineName,
+                ]);
+                $magazines[] = $magazine->id;
+            }
+        }
+        $series->magazines()->sync($magazines);
+
         $series->save();
         ImageHelpers::updateSeriesImage($series);
     }
@@ -74,8 +87,27 @@ class SeriesService
             return [];
         }
         $volumes = Volume::whereSeriesId($series->id)->get();
+        $apiSeries = MangaPassionApi::loadSeriesById($series->mangapassion_id);
+        $volumesResult = [];
+        if (!empty($apiSeries['allInOne'])) {
+            $number = 1;
+            $isbn = $apiSeries['isbn'];
+            $publish_date = $apiSeries['publish_date'];
+            $price = $apiSeries['price'];
+            $image_url = $apiSeries['image_url'];
+            $pages = $apiSeries['pages'];
 
-        $volumesResult = MangaPassionApi::loadVolumes($series->mangapassion_id, $series->total ?? 500);
+            $volumesResult[] = [
+                'number' => $number,
+                'isbn' => $isbn,
+                'publish_date' => $publish_date,
+                'price' => $price,
+                'image_url' => $image_url,
+                'pages' => $pages,
+            ];
+        } else {
+            $volumesResult = MangaPassionApi::loadVolumes($series->mangapassion_id, $series->total ?? 500);
+        }
         $newVolumes = [];
 
         foreach ($volumesResult as $volumeResult) {
@@ -84,6 +116,7 @@ class SeriesService
             $publish_date = $volumeResult['publish_date'];
             $price = $volumeResult['price'];
             $image_url = $volumeResult['image_url'];
+            $pages = $volumeResult['pages'];
 
             $volume = null;
             if (!empty($isbn)) {
@@ -102,12 +135,15 @@ class SeriesService
             }
 
             $volume->number = $number;
-            $volume->publish_date = !empty($publish_date) ? $publish_date->format('Y-m-d') : null;
+            $volume->publish_date = !empty($publish_date) ? $publish_date : null;
             if (!empty($isbn)) {
                 $volume->isbn = $isbn;
             }
 
             $volume->image_url = $image_url;
+            if (empty($volume->pages) || !empty($pages)) {
+                $volume->pages = $pages;
+            }
             ImageHelpers::updateVolumeImage($volume);
             $volume->save();
             $data[] = $volume;
@@ -138,15 +174,18 @@ class SeriesService
             $publish_date = $newVolume['publish_date'];
             $price = $newVolume['price'];
             $image_url = $newVolume['image_url'];
+            $pages = $newVolume['pages'];
 
             $volume = new Volume([
                 'series_id' => $series->id,
                 'isbn' => $isbn,
                 'number' => $number,
-                'publish_date' => !empty($publish_date) ? $publish_date->format('Y-m-d') : null,
+                'publish_date' => !empty($publish_date) ? $publish_date : null,
                 'price' => $price,
                 'status' => $series->subscription_active,
                 'image_url' => $image_url,
+                'plan_to_read' => false,
+                'pages' => $pages,
             ]);
             $volume->save();
             ImageHelpers::updateVolumeImage($volume, true);

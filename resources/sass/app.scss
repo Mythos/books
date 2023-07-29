@@ -6,8 +6,7 @@
     font-weight: 400;
     src: url("../fonts/nunito-v20-latin-regular.eot");
     src: local(""),
-        url("../fonts/nunito-v20-latin-regular.eot?#iefix")
-            format("embedded-opentype"),
+        url("../fonts/nunito-v20-latin-regular.eot?#iefix") format("embedded-opentype"),
         url("../fonts/nunito-v20-latin-regular.woff2") format("woff2"),
         url("../fonts/nunito-v20-latin-regular.woff") format("woff"),
         url("../fonts/nunito-v20-latin-regular.ttf") format("truetype"),
@@ -30,4 +29,13 @@
 .col-form-label.required:after {
     content: "*";
     color: red;
+}
+
+.padding-content-container {
+    @media screen and (max-width: 768px) {
+        padding-top: 115px;
+    }
+    @media screen and (min-width: 768px) {
+        padding-top: 70px;
+    }
 }

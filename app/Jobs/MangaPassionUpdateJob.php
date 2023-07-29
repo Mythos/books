@@ -37,11 +37,22 @@ class MangaPassionUpdateJob implements ShouldQueue
      */
     public function handle(SeriesService $seriesService): void
     {
+        $statusesToSkip = [];
+        if (!config('jobs.mangapassion_updater.include_completed')) {
+            $statusesToSkip[] = SeriesStatus::FINISHED;
+        }
+        if (!config('jobs.mangapassion_updater.include_canceled')) {
+            $statusesToSkip[] = SeriesStatus::CANCELED;
+        }
         Log::info('Started updating series metadata');
         $changeLog = [];
         $originalSeries = Series::all();
         $originalVolumes = Volume::all();
-        $series = Series::whereNotNull('mangapassion_id')->whereNotIn('status', [SeriesStatus::FINISHED, SeriesStatus::CANCELED])->orderBy('name')->get();
+        $series = Series::whereNotNull('mangapassion_id');
+        if (count($statusesToSkip) > 0) {
+            $series = $series->whereNotIn('status', $statusesToSkip);
+        }
+        $series = $series->orderBy('name')->get();
         foreach ($series as $s) {
             try {
                 Log::info("Updating series metadata for {$s->name}...");
@@ -138,6 +149,7 @@ class MangaPassionUpdateJob implements ShouldQueue
             case 'source_status': return __('Status (Source)');
             case 'source_name': return __('Original Title');
             case 'source_name_romaji': return __('Original Title (Romaji)');
+            case 'pages': return __('Pages');
             default: return null;
         }
     }

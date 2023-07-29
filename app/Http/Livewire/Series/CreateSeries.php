@@ -7,6 +7,7 @@ use App\Helpers\ImageHelpers;
 use App\Helpers\MangaPassionApi;
 use App\Models\Category;
 use App\Models\Genre;
+use App\Models\Magazine;
 use App\Models\Publisher;
 use App\Models\Series;
 use App\Models\Volume;
@@ -26,6 +27,8 @@ class CreateSeries extends Component
     public $apiSeries;
 
     public bool $create_volumes = false;
+
+    public bool $isEditable = true;
 
     protected $rules = [
         'series.name' => 'required',
@@ -75,6 +78,8 @@ class CreateSeries extends Component
 
     public function render()
     {
+        $this->isEditable = empty($this->series->mangapassion_id);
+
         return view('livewire.series.create-series')->extends('layouts.app')->section('content');
     }
 
@@ -89,6 +94,7 @@ class CreateSeries extends Component
             $this->series->save();
             ImageHelpers::updateSeriesImage($this->series, true);
             $this->createGenres();
+            $this->createMagazines();
             $this->createVolumes();
             toastr()->addSuccess(__(':name has been created', ['name' => $this->series->name]));
 
@@ -149,32 +155,60 @@ class CreateSeries extends Component
                     'number' => $i,
                     'price' => $this->series->default_price,
                     'status' => $this->series->subscription_active,
+                    'plan_to_read' => false,
                 ]);
                 $volume->save();
             }
         }
 
-        $volumesResult = MangaPassionApi::loadVolumes($this->series->mangapassion_id, $this->series->total ?? 500);
-
-        foreach ($volumesResult as $newVolume) {
-            $number = $newVolume['number'];
-            $isbn = $newVolume['isbn'];
-            $publish_date = $newVolume['publish_date'];
-            $price = $newVolume['price'];
-            $image_url = $newVolume['image_url'];
+        if (!empty($this->apiSeries['allInOne'])) {
+            $number = 1;
+            $isbn = $this->apiSeries['isbn'];
+            $publish_date = $this->apiSeries['publish_date'];
+            $price = $this->apiSeries['price'];
+            $image_url = $this->apiSeries['image_url'];
+            $pages = $this->apiSeries['pages'];
 
             $volume = new Volume([
                 'series_id' => $this->series->id,
                 'isbn' => $isbn,
                 'number' => $number,
-                'publish_date' => !empty($publish_date) ? $publish_date->format('Y-m-d') : null,
+                'publish_date' => !empty($publish_date) ? $publish_date : null,
                 'price' => $price,
                 'status' => $this->series->subscription_active,
                 'image_url' => $image_url,
+                'plan_to_read' => false,
+                'pages' => $pages,
             ]);
 
             $volume->save();
             ImageHelpers::updateVolumeImage($volume, true);
+        } else {
+            $volumesResult = MangaPassionApi::loadVolumes($this->series->mangapassion_id, $this->series->total ?? 500);
+
+            foreach ($volumesResult as $newVolume) {
+                $number = $newVolume['number'];
+                $isbn = $newVolume['isbn'];
+                $publish_date = $newVolume['publish_date'];
+                $price = $newVolume['price'];
+                $image_url = $newVolume['image_url'];
+                $pages = $newVolume['pages'];
+
+                $volume = new Volume([
+                    'series_id' => $this->series->id,
+                    'isbn' => $isbn,
+                    'number' => $number,
+                    'publish_date' => !empty($publish_date) ? $publish_date : null,
+                    'price' => $price,
+                    'status' => $this->series->subscription_active,
+                    'image_url' => $image_url,
+                    'plan_to_read' => false,
+                    'pages' => $pages,
+                ]);
+
+                $volume->save();
+                ImageHelpers::updateVolumeImage($volume, true);
+            }
         }
     }
 
@@ -198,5 +232,19 @@ class CreateSeries extends Component
             }
         }
         $this->series->genres()->sync($genres);
+    }
+
+    private function createMagazines(): void
+    {
+        $magazines = [];
+        if (!empty($this->apiSeries['magazines'])) {
+            foreach ($this->apiSeries['magazines'] as $magazineName) {
+                $magazine = Magazine::firstOrCreate([
+                    'name' => $magazineName,
+                ]);
+                $magazines[] = $magazine->id;
+            }
+        }
+        $this->series->magazines()->sync($magazines);
     }
 }

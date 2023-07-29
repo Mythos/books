@@ -25,7 +25,7 @@
                         <td class="text-end">{{ $volumeStatistics['read'] }} {{ __('Volumes') }}</td>
                     </tr>
                     <tr style="font-weight: bold;">
-                        <td>{{ __('Total') }}</td>
+                        <td>{{ __('Collected') }}</td>
                         <td class="text-end">{{ $volumeStatistics['total'] }} {{ __('Volumes') }} / {{ $articleStatistics['total'] }} {{ __('Articles') }}</td>
                     </tr>
                     <tr class="table-secondary">

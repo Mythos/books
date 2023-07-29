@@ -43,6 +43,11 @@
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
                 </button>
+                @auth
+                    <div class="d-block d-md-none my-1" style="width: 100%;">
+                        @livewire('search')
+                    </div>
+                @endauth
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav me-auto">
@@ -93,7 +98,7 @@
                                 </li>
                             @endif
                         @else
-                            <li class="nav-item">
+                            <li class="nav-item d-none d-md-block">
                                 @livewire('search')
                             </li>
                             <li class="nav-item dropdown">
@@ -131,7 +136,7 @@
                 </div>
             </div>
         </nav>
-        <main class="pb-4" style="padding-top: 70px; background-color: #F0F0F0;">
+        <main class="pb-4 padding-content-container" style="background-color: #F0F0F0;">
             @yield('content')
         </main>
         <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 border-top">

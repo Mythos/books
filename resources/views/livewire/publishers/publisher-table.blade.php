@@ -11,34 +11,35 @@
         </ol>
     </nav>
     <div class="row bg-white shadow-sm rounded p-3">
-        <div>
-            <h2 style="display: inline;">{{ __('Publishers') }}</h2>
-            <div class="float-end" style="display: inline;">
+        <div class="my-2">
+            <h1 style="display: inline;">
+                {{ __('Publishers') }}
+            </h1>
+            <div class="float-end">
                 <a href="{{ route('publishers.create') }}" class="btn btn-link"><span class="fas fa-plus-circle"></span></a>
             </div>
         </div>
-        <div class="table-responsive my-2" style="width: 100%;">
-            <table class="table table-hover">
-                <thead class="table-dark">
-                    <tr>
-                        <th scope="col" class="text-center" style="width: 2rem; min-width: 2rem;"></th>
-                        <th>{{ __('Name') }}</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach ($publishers as $publisher)
-                        <tr>
-                            <td class="text-center"><a href="{{ route('publishers.edit', [$publisher]) }}"><span class="fa fa-edit"></span></a></td>
-                            <td>{{ $publisher->name }}</td>
-                        </tr>
-                    @endforeach
-                    @if (count($publishers) == 0)
-                        <tr>
-                            <td colspan="5" style="text-align: center;">{{ __('No data') }}</td>
-                        </tr>
-                    @endif
-                </tbody>
-            </table>
+        <div class="row mt-2">
+            @if (count($publishers) == 0)
+                <div class="text-center">
+                    {{ __('No data') }}
+                </div>
+            @else
+                @foreach ($publishers as $publisher)
+                    <div class="col-sm-12 col-md-6 col-lg-3 d-flex align-self-stretch">
+                        <div class="card shadow-sm mb-4" style="width: 30rem;">
+                            <img src="{{ $publisher->image }}" alt="{{ $publisher->name }}" class="card-img-top" style="height: 150px; object-fit: contain;" loading="lazy" decoding="async">
+                            <div class="card-body d-flex flex-column">
+                                <h5 class="card-title text-uppercase">{{ $publisher->name }}</h5>
+                                <div>
+                                    <div class="float-end"><span class="badge bg-primary">{{ $publisher->series->count() }} {{ __('Volumes') }}</span></div>
+                                </div>
+                                <a href="{{ route('publishers.edit', [$publisher]) }}" class="stretched-link"></a>
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
+            @endif
         </div>
     </div>
 </div>
