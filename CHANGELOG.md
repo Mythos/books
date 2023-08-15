@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.3.2
+
+- Show cover when adding/editing volumes
+
 ## 2.3.1
 
 - Added images for publishers

@@ -14,7 +14,15 @@
     <form method="POST" wire:submit.prevent='@if (!empty($nextVolume)) saveAndContinue @else save @endif'>
         <input id="series_id" type="hidden" name="series_id" wire:model='series_id' />
         <div class="row bg-white shadow-sm rounded">
-            <div class="col-md-12">
+            <div class="col-sm-12 col-md-12 col-lg-3 d-flex flex-column align-items-center text-center my-2">
+                @if (!empty($volume->image_url))
+                    <img src="{{ $volume->image_url }}" class="card-img-top" style="max-height: 400px; object-fit: contain;" loading="lazy" decoding="async" onerror="this.src='{{ url('images/placeholder.png') }}';this.onerror='';">
+                @else
+                    <img src="{{ url('images/placeholder.png') }}" class="card-img-top" style="max-height: 400px; object-fit: contain;" loading="lazy" decoding="async">
+                @endif
+                <span class="mt-2 fs-4">{{ $volume->name }}</span>
+            </div>
+            <div class="col-sm-12 col-md-12 col-lg-9 mb-2 pl-4">
                 <div class="p-3 py-3">
                     <div class="d-flex justify-content-between align-items-center">
                         <h4 class="text-right">{{ __('Edit Series') }}</h4>
