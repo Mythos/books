@@ -20,6 +20,8 @@ class EditArticle extends Component
 
     public Article $article;
 
+    public ?string $image_preview = null;
+
     protected $rules = [
         'article.name' => 'required',
         'article.release_date' => 'nullable|date',
@@ -35,6 +37,9 @@ class EditArticle extends Component
 
     public function updated($property, $value): void
     {
+        if ($property == 'article.image_url') {
+            $this->image_preview = ImageHelpers::getImage($this->article->image_url, 'data-url');
+        }
         $this->validateOnly($property);
     }
 
@@ -42,6 +47,7 @@ class EditArticle extends Component
     {
         $this->category = $category;
         $this->article = $article;
+        $this->image_preview = ImageHelpers::getImage($this->article->image_url, 'data-url');
     }
 
     public function render()

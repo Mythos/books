@@ -13,7 +13,14 @@
     <form method="POST" wire:submit.prevent='save'>
         <input id="category_id" type="hidden" name="category_id" wire:model='article.category_id' />
         <div class="row bg-white shadow-sm rounded">
-            <div class="col-md-12">
+            <div class="col-sm-12 col-md-12 col-lg-3 d-flex flex-column align-items-center text-center my-2">
+                @if (!empty($image_preview))
+                    <img src="{{ $image_preview }}" class="card-img-top" style="max-height: 400px; object-fit: contain;" loading="lazy" decoding="async" onerror="this.src='{{ url('images/placeholder.png') }}';this.onerror='';">
+                @else
+                    <img src="{{ url('images/placeholder.png') }}" class="card-img-top" style="max-height: 400px; object-fit: contain;" loading="lazy" decoding="async">
+                @endif
+            </div>
+            <div class="col-sm-12 col-md-12 col-lg-9 mb-2 pl-4">
                 <div class="p-3 py-3">
                     <div class="d-flex justify-content-between align-items-center">
                         <h4 class="text-right">{{ __('Create Article') }}</h4>
