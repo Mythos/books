@@ -2,9 +2,9 @@
 
 ## 2.3.2
 
-- Show cover when adding/editing volumes
-- Show cover when adding/editing series
-- Show cover when adding/editing articles
+- Show preview image when adding/editing volumes
+- Show preview image when adding/editing series
+- Show preview image when adding/editing articles
 - Catch errors when fetching images
 
 ## 2.3.1
