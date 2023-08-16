@@ -132,6 +132,7 @@ class CreateSeries extends Component
         $this->series->source_status = $this->apiSeries['source_status'];
         $this->series->source_name = $this->apiSeries['source_name'];
         $this->series->source_name_romaji = $this->apiSeries['source_name_romaji'];
+        $this->image_preview = ImageHelpers::getImage($this->series->image_url, 'data-url');
 
         if (empty($this->apiSeries['publisher'])) {
             return;
