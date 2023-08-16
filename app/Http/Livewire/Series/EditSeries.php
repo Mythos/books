@@ -77,7 +77,7 @@ class EditSeries extends Component
     {
         $this->publishers = Publisher::orderBy('name')->get();
         $this->series = $series;
-        $this->image_preview = ImageHelpers::getImage($this->article->image_url, 'data-url');
+        $this->image_preview = ImageHelpers::getImage($this->series->image_url, 'data-url');
     }
 
     public function render()
