@@ -28,6 +28,8 @@ class EditVolume extends Component
 
     public $nextVolume;
 
+    public ?string $image_preview = null;
+
     protected $listeners = [
         'confirmedDelete',
     ];
@@ -38,6 +40,7 @@ class EditVolume extends Component
         $this->series = $series;
         $this->volume = Volume::whereSeriesId($series->id)->whereNumber($number)->first();
         $this->nextVolume = Volume::whereSeriesId($series->id)->whereNumber($number + 1)->first();
+        $this->image_preview = $this->volume->image_url;
     }
 
     public function updated($property, $value): void
@@ -48,6 +51,8 @@ class EditVolume extends Component
             if (!empty($isbn)) {
                 $this->volume->publish_date = IsbnHelpers::getPublishDateByIsbn($isbn) ?? null;
             }
+        } elseif ($property == 'volume.image_url') {
+            $this->image_preview = ImageHelpers::getImage($this->volume->image_url, 'data-url');
         } else {
             $this->validateOnly($property);
         }

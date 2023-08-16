@@ -3,6 +3,8 @@
 ## 2.3.2
 
 - Show cover when adding/editing volumes
+- Show cover when adding/editing series
+- Catch errors when fetching images
 
 ## 2.3.1
 

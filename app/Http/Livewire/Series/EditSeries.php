@@ -32,6 +32,8 @@ class EditSeries extends Component
 
     public bool $isEditable = true;
 
+    public ?string $image_preview = null;
+
     protected $rules = [
         'series.name' => 'required',
         'series.description' => 'nullable',
@@ -65,6 +67,9 @@ class EditSeries extends Component
         if ($property == 'series.status' && $value == SeriesStatus::CANCELED && $this->series->subscription_active) {
             $this->series->subscription_active = false;
         }
+        if ($property == 'series.image_url') {
+            $this->image_preview = ImageHelpers::getImage($this->series->image_url, 'data-url');
+        }
         $this->validateOnly($property);
     }
 
@@ -72,6 +77,7 @@ class EditSeries extends Component
     {
         $this->publishers = Publisher::orderBy('name')->get();
         $this->series = $series;
+        $this->image_preview = $this->series->image_url;
     }
 
     public function render()

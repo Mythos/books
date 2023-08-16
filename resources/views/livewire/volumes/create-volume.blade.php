@@ -14,8 +14,8 @@
     <form method="POST" wire:submit.prevent='save'>
         <div class="row bg-white shadow-sm rounded">
             <div class="col-sm-12 col-md-12 col-lg-3 d-flex flex-column align-items-center text-center my-2">
-                @if (!empty($volume->image_url))
-                    <img src="{{ $volume->image_url }}" class="card-img-top" style="max-height: 400px; object-fit: contain;" loading="lazy" decoding="async" onerror="this.src='{{ url('images/placeholder.png') }}';this.onerror='';">
+                @if (!empty($image_preview))
+                    <img src="{{ $image_preview }}" class="card-img-top" style="max-height: 400px; object-fit: contain;" loading="lazy" decoding="async" onerror="this.src='{{ url('images/placeholder.png') }}';this.onerror='';">
                 @else
                     <img src="{{ url('images/placeholder.png') }}" class="card-img-top" style="max-height: 400px; object-fit: contain;" loading="lazy" decoding="async">
                 @endif

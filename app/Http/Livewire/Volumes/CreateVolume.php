@@ -16,6 +16,8 @@ class CreateVolume extends Component
 
     public Series $series;
 
+    public ?string $image_preview = null;
+
     public function mount(Series $series): void
     {
         $this->series = $series;
@@ -35,6 +37,8 @@ class CreateVolume extends Component
             if (!empty($isbn)) {
                 $this->volume->publish_date = IsbnHelpers::getPublishDateByIsbn($isbn) ?? '';
             }
+        } elseif ($property == 'volume.image_url') {
+            $this->image_preview = ImageHelpers::getImage($this->volume->image_url, 'data-url');
         } else {
             $this->validateOnly($property);
         }

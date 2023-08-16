@@ -30,6 +30,8 @@ class CreateSeries extends Component
 
     public bool $isEditable = true;
 
+    public ?string $image_preview = null;
+
     protected $rules = [
         'series.name' => 'required',
         'series.description' => 'nullable',
@@ -58,6 +60,9 @@ class CreateSeries extends Component
         }
         if ($property == 'series.status' && $value == SeriesStatus::CANCELED && $this->series->subscription_active) {
             $this->series->subscription_active = false;
+        }
+        if ($property == 'series.image_url') {
+            $this->image_preview = ImageHelpers::getImage($this->series->image_url, 'data-url');
         }
         $this->validateOnly($property);
     }

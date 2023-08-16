@@ -5,6 +5,8 @@ namespace App\Helpers;
 use App\Models\Publisher;
 use App\Models\Series;
 use App\Models\Volume;
+use Exception;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image as FacadesImage;
 use Intervention\Image\Image;
@@ -25,15 +27,21 @@ class ImageHelpers
 
     private const IMAGE_SFW_FILENAME = 'image_sfw';
 
-    public static function getImage($url): ?Image
+    public static function getImage($url, $outputType = null): ?Image
     {
+        $outputType ??= config('images.type');
         if (empty($url)) {
             return null;
         }
+        try {
+            return FacadesImage::make($url)->resize(null, 400, function ($constraint): void {
+                $constraint->aspectRatio();
+            })->encode($outputType);
+        } catch (Exception $exception) {
+            Log::warning('Could not fetch image from ' . $url, ['exception' => $exception]);
 
-        return FacadesImage::make($url)->resize(null, 400, function ($constraint): void {
-            $constraint->aspectRatio();
-        })->encode(config('images.type'));
+            return null;
+        }
     }
 
     public static function storePublicImage($image, $path, $generateThumbnail): void
