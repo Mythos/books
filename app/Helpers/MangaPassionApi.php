@@ -61,7 +61,9 @@ class MangaPassionApi
 
         if (!empty($result['sources'])) {
             $source = $result['sources'][0];
-            $series['total'] = $source['volumes'] ?? null;
+            if (($source['volumes'] ?? 0) > $series['total']) {
+                $series['total'] = $source['volumes'];
+            }
             $series['source_status'] = $source['status'] ?? null;
             $series['source_name'] = $source['title'] ?? $source['romaji'] ?? null;
             $series['source_name_romaji'] = $source['romaji'] ?? null;
