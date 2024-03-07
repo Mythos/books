@@ -2,7 +2,6 @@
 
 namespace App\Http\Livewire\Statistics;
 
-use App\Constants\SeriesStatus;
 use App\Constants\VolumeStatus;
 use App\Models\Volume;
 use Illuminate\Support\Facades\DB;
@@ -18,10 +17,7 @@ class VolumesPerGenre extends Component
                                                 ->join('genre_series', 'genre_series.series_id', '=', 'series.id')
                                                 ->join('genres', 'genre_series.genre_id', '=', 'genres.id')
                                                 ->where(function ($query): void {
-                                                    $query->where(function ($statusQuery): void {
-                                                        $statusQuery->where('volumes.status', '=', VolumeStatus::NEW)
-                                                                    ->where('series.status', '<>', SeriesStatus::CANCELED);
-                                                    })->orWhereIn('volumes.status', [VolumeStatus::ORDERED, VolumeStatus::SHIPPED, VolumeStatus::DELIVERED, VolumeStatus::READ]);
+                                                    $query->whereIn('volumes.status', [VolumeStatus::DELIVERED, VolumeStatus::READ]);
                                                 })
                                                 ->where('genres.type', '=', '1')
                                                 ->select('genres.name as genre', DB::raw('count(*) as total'))
