@@ -30,7 +30,7 @@ class ImageHelpers
 
     private const IMAGE_SFW_FILENAME = 'image_sfw';
 
-    public static function getImage($url, $outputType = null): ?EncodedImage
+    public static function getImage($url): ?EncodedImage
     {
         $outputType = config('images.type');
         $image = static::downloadImage($url);
