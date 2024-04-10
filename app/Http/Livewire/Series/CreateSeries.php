@@ -62,7 +62,7 @@ class CreateSeries extends Component
             $this->series->subscription_active = false;
         }
         if ($property == 'series.image_url') {
-            $this->image_preview = ImageHelpers::getImage($this->series->image_url, 'data-url');
+            $this->image_preview = ImageHelpers::getImage($this->series->image_url)?->toDataUri();
         }
         $this->validateOnly($property);
     }
@@ -132,7 +132,7 @@ class CreateSeries extends Component
         $this->series->source_status = $this->apiSeries['source_status'];
         $this->series->source_name = $this->apiSeries['source_name'];
         $this->series->source_name_romaji = $this->apiSeries['source_name_romaji'];
-        $this->image_preview = ImageHelpers::getImage($this->series->image_url, 'data-url');
+        $this->image_preview = ImageHelpers::getImage($this->series->image_url)?->toDataUri();
 
         if (empty($this->apiSeries['publisher'])) {
             return;

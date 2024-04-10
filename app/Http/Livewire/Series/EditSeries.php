@@ -68,7 +68,7 @@ class EditSeries extends Component
             $this->series->subscription_active = false;
         }
         if ($property == 'series.image_url') {
-            $this->image_preview = ImageHelpers::getImage($this->series->image_url, 'data-url');
+            $this->image_preview = ImageHelpers::getImage($this->series->image_url)?->toDataUri();
         }
         $this->validateOnly($property);
     }
@@ -77,7 +77,7 @@ class EditSeries extends Component
     {
         $this->publishers = Publisher::orderBy('name')->get();
         $this->series = $series;
-        $this->image_preview = ImageHelpers::getImage($this->series->image_url, 'data-url');
+        $this->image_preview = ImageHelpers::getImage($this->series->image_url)?->toDataUri();
     }
 
     public function render()

@@ -6,10 +6,13 @@ use App\Models\Publisher;
 use App\Models\Series;
 use App\Models\Volume;
 use Exception;
+use Http;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
-use Intervention\Image\Facades\Image as FacadesImage;
-use Intervention\Image\Image;
+use Intervention\Image\Drivers\Gd\Driver;
+use Intervention\Image\EncodedImage;
+use Intervention\Image\ImageManager;
+use Intervention\Image\Interfaces\ImageInterface;
 
 class ImageHelpers
 {
@@ -27,35 +30,30 @@ class ImageHelpers
 
     private const IMAGE_SFW_FILENAME = 'image_sfw';
 
-    public static function getImage($url, $outputType = null): ?Image
+    public static function getImage($url, $outputType = null): ?EncodedImage
     {
-        $outputType ??= config('images.type');
-        if (empty($url)) {
+        $outputType = config('images.type');
+        $image = static::downloadImage($url);
+        if (empty($image)) {
             return null;
         }
-        try {
-            return FacadesImage::make($url)->resize(null, 400, function ($constraint): void {
-                $constraint->aspectRatio();
-            })->encode($outputType);
-        } catch (Exception $exception) {
-            Log::warning('Could not fetch image from ' . $url, ['exception' => $exception]);
 
-            return null;
-        }
+        return static::output($image, $outputType);
     }
 
-    public static function storePublicImage($image, $path, $generateThumbnail): void
+    public static function storePublicImage(ImageInterface $image, $path, $generateThumbnail): void
     {
         if (empty($image)) {
             return;
         }
-        Storage::disk('public')->put($path, $image);
+        $encodedImage = static::output($image, config('images.type'));
+        Storage::disk('public')->put($path, $encodedImage);
         if (!$generateThumbnail) {
             return;
         }
-        $thumbnail = FacadesImage::make(clone $image)->resize(null, 50, function ($constraint): void {
-            $constraint->aspectRatio();
-        })->encode(config('images.type'));
+        $manager = new ImageManager(new Driver());
+        $thumbnail = $manager->read(clone $image)->scaleDown(width: 200);
+        $thumbnail = static::output($thumbnail, config('images.type'));
         Storage::disk('public')->put(static::THUMBNAIL_FOLDER . $path, $thumbnail);
     }
 
@@ -131,21 +129,59 @@ class ImageHelpers
 
     public static function createAndSaveCoverImage($url, $path): void
     {
-        $image = ImageHelpers::getImage($url);
-        if (!empty($image)) {
-            $coverFilename = static::COVER_FILENAME . '.' . config('images.type');
-            $coverSfwFilename = static::COVER_SFW_FILENAME . '.' . config('images.type');
-            ImageHelpers::storePublicImage($image, implode(DIRECTORY_SEPARATOR, [$path, $coverFilename]), true);
-            $nsfwImage = $image->pixelate(config('images.nsfw.pixelate', 10))->blur(config('images.nsfw.blur', 5))->encode(config('images.type'));
-            ImageHelpers::storePublicImage($nsfwImage, implode(DIRECTORY_SEPARATOR, [$path, $coverSfwFilename]), true);
+        $image = ImageHelpers::downloadImage($url);
+        if (empty($image)) {
+            return;
         }
+        $coverFilename = static::COVER_FILENAME . '.' . config('images.type');
+        $coverSfwFilename = static::COVER_SFW_FILENAME . '.' . config('images.type');
+        ImageHelpers::storePublicImage($image, implode(DIRECTORY_SEPARATOR, [$path, $coverFilename]), true);
+
+        $nsfwImage = $image->pixelate(config('images.nsfw.pixelate', 10))->blur(config('images.nsfw.blur', 5));
+        ImageHelpers::storePublicImage($nsfwImage, implode(DIRECTORY_SEPARATOR, [$path, $coverSfwFilename]), true);
     }
 
     public static function createAndSaveArticleImage($url, $path): void
     {
-        $image = ImageHelpers::getImage($url);
-        if (!empty($image)) {
-            ImageHelpers::storePublicImage($image, $path . '/image.' . config('images.type'), false);
+        $image = ImageHelpers::downloadImage($url);
+        if (empty($image)) {
+            return;
         }
+        ImageHelpers::storePublicImage($image, $path . '/image.' . config('images.type'), false);
+    }
+
+    private static function downloadImage($url): ?ImageInterface
+    {
+        if (empty($url)) {
+            return null;
+        }
+        try {
+            $manager = new ImageManager(new Driver());
+            $response = Http::get($url);
+            if (!$response->successful()) {
+                return null;
+            }
+            $image = $response->body();
+            $image = $manager->read($image);
+            $image = $image->scaleDown(width: 400);
+
+            return $image;
+        } catch (Exception $exception) {
+            dd($exception);
+            Log::warning('Could not fetch image from ' . $url, ['exception' => json_encode($exception)]);
+
+            return null;
+        }
+    }
+
+    private static function output(ImageInterface $image, $outputType) : EncodedImage
+    {
+        if ($outputType == 'png') {
+            return $image->toPng();
+        } elseif ($outputType == 'webp') {
+            return $image->toWebp();
+        }
+
+        return $image->toJpeg();
     }
 }

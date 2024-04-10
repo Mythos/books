@@ -40,7 +40,7 @@ class EditVolume extends Component
         $this->series = $series;
         $this->volume = Volume::whereSeriesId($series->id)->whereNumber($number)->first();
         $this->nextVolume = Volume::whereSeriesId($series->id)->whereNumber($number + 1)->first();
-        $this->image_preview = ImageHelpers::getImage($this->volume->image_url, 'data-url');
+        $this->image_preview = ImageHelpers::getImage($this->volume->image_url)?->toDataUri();
     }
 
     public function updated($property, $value): void
@@ -52,7 +52,7 @@ class EditVolume extends Component
                 $this->volume->publish_date = IsbnHelpers::getPublishDateByIsbn($isbn) ?? null;
             }
         } elseif ($property == 'volume.image_url') {
-            $this->image_preview = ImageHelpers::getImage($this->volume->image_url, 'data-url');
+            $this->image_preview = ImageHelpers::getImage($this->volume->image_url)?->toDataUri();
         } else {
             $this->validateOnly($property);
         }

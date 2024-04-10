@@ -30,7 +30,7 @@ class CreateArticle extends Component
     public function updated($property, $value): void
     {
         if ($property == 'article.image_url') {
-            $this->image_preview = ImageHelpers::getImage($this->article->image_url, 'data-url');
+            $this->image_preview = ImageHelpers::getImage($this->article->image_url)?->toDataUri();
         }
         $this->validateOnly($property);
     }

@@ -38,7 +38,7 @@ class CreateVolume extends Component
                 $this->volume->publish_date = IsbnHelpers::getPublishDateByIsbn($isbn) ?? '';
             }
         } elseif ($property == 'volume.image_url') {
-            $this->image_preview = ImageHelpers::getImage($this->volume->image_url, 'data-url');
+            $this->image_preview = ImageHelpers::getImage($this->volume->image_url)?->toDataUri();
         } else {
             $this->validateOnly($property);
         }
