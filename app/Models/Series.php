@@ -36,7 +36,7 @@ use Spatie\Sluggable\SlugOptions;
  * @property string|null $source_name_romaji
  * @property int $ignore_in_upcoming
  * @property-read \App\Models\Category $category
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Genre[] $genres
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Genre> $genres
  * @property-read int|null $genres_count
  * @property-read int $completion_status
  * @property-read string $completion_status_class
@@ -50,10 +50,10 @@ use Spatie\Sluggable\SlugOptions;
  * @property-read string $status_name
  * @property-read string $total_worth
  * @property-read string $unread_volumes_count
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Magazine[] $magazines
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Magazine> $magazines
  * @property-read int|null $magazines_count
  * @property-read \App\Models\Publisher|null $publisher
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Volume[] $volumes
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Volume> $volumes
  * @property-read int|null $volumes_count
  * @method static \Illuminate\Database\Eloquent\Builder|Series newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Series newQuery()

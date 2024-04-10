@@ -20,7 +20,7 @@ use Spatie\Sluggable\SlugOptions;
  * @property string|null $image_url
  * @property-read string $image
  * @property-read string $image_path
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Series[] $series
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Series> $series
  * @property-read int|null $series_count
  * @method static \Illuminate\Database\Eloquent\Builder|Publisher newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Publisher newQuery()

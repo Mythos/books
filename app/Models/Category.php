@@ -19,9 +19,9 @@ use Spatie\Sluggable\SlugOptions;
  * @property int $sort_index
  * @property int $type
  * @property int|null $page_size
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Article[] $articles
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Article> $articles
  * @property-read int|null $articles_count
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Series[] $series
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Series> $series
  * @property-read int|null $series_count
  * @method static \Illuminate\Database\Eloquent\Builder|Category newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Category newQuery()

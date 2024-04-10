@@ -16,7 +16,7 @@ use Spatie\Sluggable\SlugOptions;
  * @property string $slug
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Series[] $series
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Series> $series
  * @property-read int|null $series_count
  * @method static \Illuminate\Database\Eloquent\Builder|Magazine newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Magazine newQuery()
