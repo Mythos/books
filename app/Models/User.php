@@ -2,11 +2,11 @@
 
 namespace App\Models;
 
+use App\Helpers\ImageHelpers;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Cache;
-use Intervention\Image\Facades\Image;
 use Laravel\Sanctum\HasApiTokens;
 
 /**
@@ -105,11 +105,9 @@ class User extends Authenticatable
                 return null;
             }
 
-            $image = Image::make($url)->resize(null, $avatarSize, function ($constraint): void {
-                $constraint->aspectRatio();
-            })->encode(config('images.type'));
+            $image = ImageHelpers::getImage($url, $avatarSize);
 
-            return $image->encode('data-url')->__toString();
+            return $image?->toDataUri();
         });
     }
 }
