@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Str;
 use Laravel\Sanctum\HasApiTokens;
 
 /**
@@ -99,7 +100,7 @@ class User extends Authenticatable
         }
 
         return Cache::remember($cacheKey, config('cache.duration'), function () use ($avatarSize) {
-            $hash = md5($this->email);
+            $hash = hash('sha256', trim(Str::lower($this->email)));
             $url = "https://www.gravatar.com/avatar/{$hash}?s={$avatarSize}";
             if (empty($url)) {
                 return null;
