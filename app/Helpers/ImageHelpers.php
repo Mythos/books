@@ -30,10 +30,10 @@ class ImageHelpers
 
     private const IMAGE_SFW_FILENAME = 'image_sfw';
 
-    public static function getImage($url): ?EncodedImage
+    public static function getImage($url, $width): ?EncodedImage
     {
         $outputType = config('images.type');
-        $image = static::downloadImage($url);
+        $image = static::downloadImage($url, $width);
         if (empty($image)) {
             return null;
         }
@@ -150,7 +150,7 @@ class ImageHelpers
         ImageHelpers::storePublicImage($image, $path . '/image.' . config('images.type'), false);
     }
 
-    private static function downloadImage($url): ?ImageInterface
+    private static function downloadImage($url, $width): ?ImageInterface
     {
         if (empty($url)) {
             return null;
@@ -163,7 +163,7 @@ class ImageHelpers
             }
             $image = $response->body();
             $image = $manager->read($image);
-            $image = $image->scaleDown(width: 400);
+            $image = $image->scaleDown(width: $width ?? 400);
 
             return $image;
         } catch (Exception $exception) {
