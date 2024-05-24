@@ -106,7 +106,8 @@ class SeriesService
                 'pages' => $pages,
             ];
         } else {
-            $volumesResult = MangaPassionApi::loadVolumes($series->mangapassion_id, $series->total ?? 500);
+            $volumesToLoad = !empty($series->total) ? $series->total : 500;
+            $volumesResult = MangaPassionApi::loadVolumes($series->mangapassion_id, $volumesToLoad);
         }
         $newVolumes = [];
 

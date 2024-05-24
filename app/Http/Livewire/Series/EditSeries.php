@@ -38,7 +38,7 @@ class EditSeries extends Component
         'series.name' => 'required',
         'series.description' => 'nullable',
         'series.status' => 'required|integer|min:0',
-        'series.total' => 'nullable|integer|min:1',
+        'series.total' => 'nullable|integer|min:0',
         'series.category_id' => 'required|exists:categories,id',
         'series.is_nsfw' => 'boolean',
         'series.default_price' => 'nullable|regex:"^[0-9]{1,9}([,.][0-9]{1,2})?$"',

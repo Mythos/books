@@ -36,7 +36,7 @@ class CreateSeries extends Component
         'series.name' => 'required',
         'series.description' => 'nullable',
         'series.status' => 'required|integer|min:0',
-        'series.total' => 'nullable|integer|min:1',
+        'series.total' => 'nullable|integer|min:0',
         'series.category_id' => 'required|exists:categories,id',
         'series.is_nsfw' => 'boolean',
         'series.default_price' => 'nullable|regex:"^[0-9]{1,9}([,.][0-9]{1,2})?$"',
@@ -190,7 +190,8 @@ class CreateSeries extends Component
             $volume->save();
             ImageHelpers::updateVolumeImage($volume, true);
         } else {
-            $volumesResult = MangaPassionApi::loadVolumes($this->series->mangapassion_id, $this->series->total ?? 500);
+            $volumesToLoad = !empty($this->series->total) ? $this->series->total : 500;
+            $volumesResult = MangaPassionApi::loadVolumes($this->series->mangapassion_id, $volumesToLoad);
 
             foreach ($volumesResult as $newVolume) {
                 $number = $newVolume['number'];
