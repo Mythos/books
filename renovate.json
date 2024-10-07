@@ -1,7 +1,14 @@
 {
     "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-    "extends": ["config:recommended"],
-    "osvVulnerabilityAlerts": true,
-    "labels": ["dependencies"],
-    "schedule": ["every weekend"]
+    "extends": [
+        "config:best-practices",
+        "mergeConfidence:all-badges",
+        ":disableRateLimiting",
+        ":pinVersions",
+        ":enableVulnerabilityAlertsWithLabel(security)",
+        ":label(dependencies)",
+        "helpers:pinGitHubActionDigestsToSemver",
+        "schedule:weekends"
+    ],
+    "osvVulnerabilityAlerts": true
 }
