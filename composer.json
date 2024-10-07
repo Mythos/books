@@ -21,7 +21,7 @@
         "nicebooks/isbn": "0.4.21",
         "php-flasher/flasher": "1.13.1",
         "php-flasher/flasher-toastr": "1.13.1",
-        "php-flasher/flasher-laravel": "1.13.1",
+        "php-flasher/flasher-laravel": "1.15.14",
         "php-flasher/flasher-toastr-laravel": "1.13.1",
         "spatie/laravel-sluggable": "3.6.0"
     },
