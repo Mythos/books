@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ed4bcb84053fe1f130c434f0157c5953",
+    "content-hash": "8de61f9e37272fb4ecefd661eeb14d49",
     "packages": [
         {
             "name": "brick/math",
@@ -3040,16 +3040,16 @@
         },
         {
             "name": "php-flasher/flasher",
-            "version": "v1.13.1",
+            "version": "v1.15.14",
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-flasher/flasher.git",
-                "reference": "4f75f1d3638522db2531e76a27e96075432011c8"
+                "reference": "33ae74e73f62814fff4e78e78f912d9b6ddf82d0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-flasher/flasher/zipball/4f75f1d3638522db2531e76a27e96075432011c8",
-                "reference": "4f75f1d3638522db2531e76a27e96075432011c8",
+                "url": "https://api.github.com/repos/php-flasher/flasher/zipball/33ae74e73f62814fff4e78e78f912d9b6ddf82d0",
+                "reference": "33ae74e73f62814fff4e78e78f912d9b6ddf82d0",
                 "shasum": ""
             },
             "require": {
@@ -3102,7 +3102,7 @@
                 "yoeunes"
             ],
             "support": {
-                "source": "https://github.com/php-flasher/flasher/tree/v1.13.1"
+                "source": "https://github.com/php-flasher/flasher/tree/v1.15.14"
             },
             "funding": [
                 {
@@ -3126,7 +3126,7 @@
                     "type": "patreon"
                 }
             ],
-            "time": "2023-01-15T22:24:30+00:00"
+            "time": "2023-12-16T17:11:36+00:00"
         },
         {
             "name": "php-flasher/flasher-laravel",
@@ -9923,12 +9923,12 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {},
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
         "php": "^8.0.2"
     },
-    "platform-dev": [],
+    "platform-dev": {},
     "plugin-api-version": "2.6.0"
 }
