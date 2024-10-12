@@ -8,7 +8,7 @@
     ],
     "license": "MIT",
     "require": {
-        "php": "^8.0.2",
+        "php": "8.3.12",
         "enlightn/enlightn": "2.10.0",
         "guzzlehttp/guzzle": "7.8.1",
         "intervention/image": "3.5.1",
