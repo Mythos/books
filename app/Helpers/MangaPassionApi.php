@@ -87,8 +87,8 @@ class MangaPassionApi
     public static function loadVolumes($mangaPassionId, $total)
     {
         $result = [];
-        $pages = intval(ceil($total / 100));
-        for ($i = 1; $i <= $pages; $i++) {
+        $apiPages = intval(ceil($total / 100));
+        for ($i = 1; $i <= $apiPages; $i++) {
             $volumeResult = self::seriesRequest($mangaPassionId, 'volumes?itemsPerPage=100&page=' . $i . '&order[number]=asc');
             if (empty($volumeResult)) {
                 return $result;
