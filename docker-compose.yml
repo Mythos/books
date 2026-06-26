@@ -1,0 +1,92 @@
+services:
+    app:
+        build:
+            context: .
+            dockerfile: docker/php/Dockerfile
+        working_dir: /var/www/html
+        volumes:
+            - ./:/var/www/html
+            - vendor:/var/www/html/vendor
+        depends_on:
+            mariadb:
+                condition: service_healthy
+            redis:
+                condition: service_healthy
+        networks:
+            - books
+
+    web:
+        image: nginx:1.27-alpine
+        ports:
+            - "${APP_FORWARD_PORT:-8080}:80"
+        volumes:
+            - ./:/var/www/html:ro
+            - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
+        depends_on:
+            - app
+        networks:
+            - books
+
+    mariadb:
+        image: mariadb:11.4
+        ports:
+            - "${DB_FORWARD_PORT:-3306}:3306"
+        environment:
+            MARIADB_DATABASE: ${DB_DATABASE:-books}
+            MARIADB_USER: ${DB_USERNAME:-books}
+            MARIADB_PASSWORD: ${DB_PASSWORD:-books}
+            MARIADB_ROOT_PASSWORD: ${MARIADB_ROOT_PASSWORD:-root}
+        volumes:
+            - mariadb_data:/var/lib/mysql
+        healthcheck:
+            test: ["CMD-SHELL", "mariadb-admin ping -h 127.0.0.1 -u$$MARIADB_USER -p$$MARIADB_PASSWORD --silent"]
+            interval: 10s
+            timeout: 5s
+            retries: 10
+            start_period: 30s
+        networks:
+            - books
+
+    redis:
+        image: redis:7.4-alpine
+        ports:
+            - "${REDIS_FORWARD_PORT:-6379}:6379"
+        volumes:
+            - redis_data:/data
+        healthcheck:
+            test: ["CMD", "redis-cli", "ping"]
+            interval: 10s
+            timeout: 5s
+            retries: 10
+        networks:
+            - books
+
+    mailpit:
+        image: axllent/mailpit:latest
+        ports:
+            - "${MAILPIT_SMTP_FORWARD_PORT:-1025}:1025"
+            - "${MAILPIT_DASHBOARD_FORWARD_PORT:-8025}:8025"
+        networks:
+            - books
+
+    node:
+        image: node:22-bookworm
+        profiles:
+            - assets
+        working_dir: /var/www/html
+        command: sh -c "test -d node_modules/laravel-mix || npm ci; npm run watch-poll"
+        volumes:
+            - ./:/var/www/html
+            - node_modules:/var/www/html/node_modules
+        networks:
+            - books
+
+networks:
+    books:
+        driver: bridge
+
+volumes:
+    vendor:
+    mariadb_data:
+    redis_data:
+    node_modules:

@@ -16,6 +16,50 @@ I also use this project to improve my Laravel skills as I'm mainly a .NET develo
     * `php artisan storage:link`
     *  or `ln -s ./storage/app/public ./public/storage` if you are on a shared webspace
 
+## Docker Development
+
+The repository includes a Docker Compose setup that can replace a local Laragon/XAMPP-style installation. It provides PHP-FPM, Nginx, MariaDB, Redis, Mailpit and a Node container for Laravel Mix assets. The normal Laravel `.env` file is also used by Docker Compose; `.env.example` contains separate comment blocks for Laravel application settings and Docker development settings.
+
+1. Copy `.env.example` to `.env` and adjust values if needed.
+2. Start the runtime services:
+
+    ```sh
+    docker compose up -d --build
+    ```
+
+3. Install PHP dependencies and initialize Laravel:
+
+    ```sh
+    docker compose exec app composer install
+    docker compose exec app php artisan key:generate
+    docker compose exec app php artisan migrate
+    docker compose exec app php artisan storage:link
+    ```
+
+4. Build frontend assets once:
+
+    ```sh
+    docker compose run --rm node npm ci
+    docker compose run --rm node npm run dev
+    ```
+
+For continuous frontend rebuilds, run:
+
+```sh
+docker compose --profile assets up node
+```
+
+The application is available at <http://localhost:8080>. Mailpit is available at <http://localhost:8025>. MariaDB is exposed on `localhost:3306` with database/user/password `books`/`books`/`books`, and Redis is exposed on `localhost:6379`.
+
+Useful commands:
+
+```sh
+docker compose exec app php artisan test
+docker compose exec app vendor/bin/phpunit
+docker compose exec app php artisan tinker
+docker compose down
+```
+
 ## Contribution
 
 You are very welcome to create a Pull Request. Please consider using proper commit messages describing the change (i.e. not only `fix` or something like that) and assign me as a reviewer.
