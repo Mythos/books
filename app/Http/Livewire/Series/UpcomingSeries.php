@@ -87,8 +87,8 @@ class UpcomingSeries extends Component
         $volume = Volume::find($id);
         $volume->status = $status;
         $volume->save();
-        $this->emitTo('overview', '$refresh');
-        $this->emitTo('series.reading-stack-unplanned', '$refresh');
-        toastr()->addSuccess(__(':name has been updated', ['name' => $volume->series->name . ' ' . $volume->number]));
+        $this->dispatch('$refresh')->to('overview');
+        $this->dispatch('$refresh')->to('series.reading-stack-unplanned');
+        toastr()->success(__(':name has been updated', ['name' => $volume->series->name . ' ' . $volume->number]));
     }
 }

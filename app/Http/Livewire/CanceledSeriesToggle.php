@@ -19,6 +19,6 @@ class CanceledSeriesToggle extends Component
     {
         $this->show_canceled_series = !$this->show_canceled_series;
         session()->put('show_canceled_series', $this->show_canceled_series);
-        $this->emit('show_canceled_series');
+        $this->dispatch('show_canceled_series');
     }
 }

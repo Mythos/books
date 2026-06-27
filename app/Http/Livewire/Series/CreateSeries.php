@@ -101,12 +101,12 @@ class CreateSeries extends Component
             $this->createGenres();
             $this->createMagazines();
             $this->createVolumes();
-            toastr()->addSuccess(__(':name has been created', ['name' => $this->series->name]));
+            toastr()->success(__(':name has been created', ['name' => $this->series->name]));
 
             return redirect()->route('home');
         } catch (Exception $exception) {
             Log::error($exception);
-            toastr()->addError(__(':name could not be created', ['name' => $this->series->name]));
+            toastr()->error(__(':name could not be created', ['name' => $this->series->name]));
         }
     }
 
@@ -117,7 +117,7 @@ class CreateSeries extends Component
         $this->apiSeries = MangaPassionApi::loadSeriesByTitle($this->series->name);
 
         if (empty($this->apiSeries)) {
-            toastr()->addWarning(__('No entry with the title :name has been found', ['name' => $this->series->name]));
+            toastr()->warning(__('No entry with the title :name has been found', ['name' => $this->series->name]));
 
             return;
         }

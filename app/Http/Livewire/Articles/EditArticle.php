@@ -9,13 +9,11 @@ use Exception;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
-use Jantinnerezo\LivewireAlert\LivewireAlert;
+use Jantinnerezo\LivewireAlert\Facades\LivewireAlert;
 use Livewire\Component;
 
 class EditArticle extends Component
 {
-    use LivewireAlert;
-
     public Category $category;
 
     public Article $article;
@@ -64,29 +62,31 @@ class EditArticle extends Component
         try {
             $this->article->save();
             ImageHelpers::createAndSaveArticleImage($this->article->image_url, $this->article->image_path);
-            toastr()->addSuccess(__(':name has been updated', ['name' => $this->article->name]));
+            toastr()->success(__(':name has been updated', ['name' => $this->article->name]));
 
             return redirect()->route('article.show', [$this->category, $this->article]);
         } catch (Exception $exception) {
             Log::error($exception);
-            toastr()->addError(__(':name could not be updated', ['name' => $this->article->name]));
+            toastr()->error(__(':name could not be updated', ['name' => $this->article->name]));
         }
     }
 
     public function delete(): void
     {
-        $this->confirm(__('Are you sure you want to delete :name?', ['name' => $this->article->name]), [
-            'confirmButtonText' => __('Delete'),
-            'cancelButtonText' => __('Cancel'),
-            'onConfirmed' => 'confirmedDelete',
-        ]);
+        LivewireAlert::title(__('Are you sure you want to delete :name?', ['name' => $this->article->name]))
+            ->question()
+            ->withConfirmButton(__('Delete'))
+            ->withCancelButton(__('Cancel'))
+            ->timer(null)
+            ->onConfirm('confirmedDelete')
+            ->show();
     }
 
     public function confirmedDelete(): void
     {
         $this->article->delete();
         Storage::disk('public')->deleteDirectory($this->article->image_path);
-        toastr()->addSuccess(__(':name has been deleted', ['name' => $this->article->name]));
+        toastr()->success(__(':name has been deleted', ['name' => $this->article->name]));
         redirect()->route('categories.show', [$this->category]);
     }
 }

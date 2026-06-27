@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Drivers\Gd\Driver;
 use Intervention\Image\EncodedImage;
+use Intervention\Image\Format;
 use Intervention\Image\ImageManager;
 use Intervention\Image\Interfaces\ImageInterface;
 
@@ -51,8 +52,8 @@ class ImageHelpers
         if (!$generateThumbnail) {
             return;
         }
-        $manager = new ImageManager(new Driver());
-        $thumbnail = $manager->read(clone $image)->scaleDown(width: 200);
+        $manager = static::imageManager();
+        $thumbnail = $manager->decode($image)->scaleDown(width: 200);
         $thumbnail = static::output($thumbnail, config('images.type'));
         Storage::disk('public')->put(static::THUMBNAIL_FOLDER . $path, $thumbnail);
     }
@@ -156,32 +157,36 @@ class ImageHelpers
             return null;
         }
         try {
-            $manager = new ImageManager(new Driver());
+            $manager = static::imageManager();
             $response = Http::get($url);
             if (!$response->successful()) {
                 return null;
             }
             $image = $response->body();
-            $image = $manager->read($image);
+            $image = $manager->decodeBinary($image);
             $image = $image->scaleDown(width: $width);
 
             return $image;
         } catch (Exception $exception) {
-            dd($exception);
-            Log::warning('Could not fetch image from ' . $url, ['exception' => json_encode($exception)]);
+            Log::warning('Could not fetch image from ' . $url, ['exception' => $exception]);
 
             return null;
         }
     }
 
+    private static function imageManager(): ImageManager
+    {
+        return ImageManager::usingDriver(Driver::class);
+    }
+
     private static function output(ImageInterface $image, $outputType) : EncodedImage
     {
         if ($outputType == 'png') {
-            return $image->toPng();
+            return $image->encodeUsingFormat(Format::PNG);
         } elseif ($outputType == 'webp') {
-            return $image->toWebp();
+            return $image->encodeUsingFormat(Format::WEBP);
         }
 
-        return $image->toJpeg();
+        return $image->encodeUsingFormat(Format::JPEG);
     }
 }

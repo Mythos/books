@@ -7,14 +7,12 @@ use App\Models\Category;
 use App\Models\GenreSeries;
 use App\Models\Series;
 use App\Models\Volume;
-use Jantinnerezo\LivewireAlert\LivewireAlert;
+use Jantinnerezo\LivewireAlert\Facades\LivewireAlert;
 use Livewire\Component;
 use Storage;
 
 class EditCategory extends Component
 {
-    use LivewireAlert;
-
     public Category $category;
 
     protected $rules = [
@@ -45,16 +43,18 @@ class EditCategory extends Component
     {
         $this->validate();
         $this->category->save();
-        toastr()->addSuccess(__(':name has been updated', ['name' => $this->category->name]));
+        toastr()->success(__(':name has been updated', ['name' => $this->category->name]));
     }
 
     public function delete(): void
     {
-        $this->confirm(__('Are you sure you want to delete :name?', ['name' => $this->category->name]), [
-            'confirmButtonText' => __('Delete'),
-            'cancelButtonText' => __('Cancel'),
-            'onConfirmed' => 'confirmedDelete',
-        ]);
+        LivewireAlert::title(__('Are you sure you want to delete :name?', ['name' => $this->category->name]))
+            ->question()
+            ->withConfirmButton(__('Delete'))
+            ->withCancelButton(__('Cancel'))
+            ->timer(null)
+            ->onConfirm('confirmedDelete')
+            ->show();
     }
 
     public function confirmedDelete()
@@ -65,7 +65,7 @@ class EditCategory extends Component
             $this->deleteArticles();
         }
         $this->category->delete();
-        toastr()->addSuccess(__(':name has been deleted', ['name' => $this->category->name]));
+        toastr()->success(__(':name has been deleted', ['name' => $this->category->name]));
 
         return redirect()->route('home');
     }

@@ -29,7 +29,6 @@
 
     <!-- Styles -->
     @livewireStyles
-    @flasher_render
     <link href="{{ mix('css/app.css') }}" rel="stylesheet">
 </head>
 
@@ -45,7 +44,7 @@
                 </button>
                 @auth
                     <div class="d-block d-md-none my-1" style="width: 100%;">
-                        @livewire('search')
+                        @livewire('search', [], key('search-mobile'))
                     </div>
                 @endauth
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -99,7 +98,7 @@
                             @endif
                         @else
                             <li class="nav-item d-none d-md-block">
-                                @livewire('search')
+                                @livewire('search', [], key('search-desktop'))
                             </li>
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
@@ -158,7 +157,6 @@
         }
     </script>
     @livewireScripts
-    <x-livewire-alert::scripts />
     @stack('scripts')
 </body>
 

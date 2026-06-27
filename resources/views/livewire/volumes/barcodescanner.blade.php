@@ -48,7 +48,7 @@
 </style>
 
 <script type="text/javascript">
-    document.addEventListener('livewire:load', function() {
+    document.addEventListener('livewire:initialized', function() {
         // Create the QuaggaJS config object for the live stream
         var liveStreamConfig = {
             frequency: 10,

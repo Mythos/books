@@ -68,7 +68,7 @@ class CreateVolume extends Component
         $this->volume->save();
         ImageHelpers::updateVolumeImage($this->volume, true);
 
-        toastr()->addSuccess(__('Volumme :number has been created', ['number' => $this->volume->number]));
+        toastr()->success(__('Volumme :number has been created', ['number' => $this->volume->number]));
         $this->volume = $this->getModelInstance();
     }
 

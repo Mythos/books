@@ -45,9 +45,9 @@ class Version extends Component
         }
 
         if ($this->latestVersion != null && $this->isNewerVersionAvailable($this->latestVersion)) {
-            toastr()->addInfo(__('Version :version is available', ['version' => $this->latestVersion]));
+            toastr()->info(__('Version :version is available', ['version' => $this->latestVersion]));
         } elseif ($this->latestVersion == null) {
-            toastr()->addWarning(__('Version check failed'));
+            toastr()->warning(__('Version check failed'));
         }
         session(['version_check_shown' => Carbon::now()]);
     }

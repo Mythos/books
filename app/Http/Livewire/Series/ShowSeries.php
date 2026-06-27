@@ -83,7 +83,7 @@ class ShowSeries extends Component
         $volume = Volume::find($id);
         $volume->plan_to_read = true;
         $volume->save();
-        toastr()->addSuccess(__(':name has been updated', ['name' => $volume->series->name . ' ' . $volume->number]));
+        toastr()->success(__(':name has been updated', ['name' => $volume->series->name . ' ' . $volume->number]));
     }
 
     public function unplan(int $id): void
@@ -91,7 +91,7 @@ class ShowSeries extends Component
         $volume = Volume::find($id);
         $volume->plan_to_read = false;
         $volume->save();
-        toastr()->addSuccess(__(':name has been updated', ['name' => $volume->series->name . ' ' . $volume->number]));
+        toastr()->success(__(':name has been updated', ['name' => $volume->series->name . ' ' . $volume->number]));
     }
 
     public function toggle_reordering(): void
@@ -114,7 +114,7 @@ class ShowSeries extends Component
 
         $seriesService->resetNumbers($this->series->id);
 
-        toastr()->addSuccess(__(':name has been updated', ['name' => $volume->series->name . ' ' . $volume->number]));
+        toastr()->success(__(':name has been updated', ['name' => $volume->series->name . ' ' . $volume->number]));
     }
 
     public function move_down(int $id, SeriesService $seriesService): void
@@ -132,7 +132,7 @@ class ShowSeries extends Component
 
         $seriesService->resetNumbers($this->series->id);
 
-        toastr()->addSuccess(__(':name has been updated', ['name' => $volume->series->name . ' ' . $volume->number]));
+        toastr()->success(__(':name has been updated', ['name' => $volume->series->name . ' ' . $volume->number]));
     }
 
     public function update(SeriesService $seriesService)
@@ -141,12 +141,12 @@ class ShowSeries extends Component
             $seriesService->refreshMetadata($this->series);
             $seriesService->updateVolumes($this->series);
 
-            toastr()->addSuccess(__(':name has been updated', ['name' => $this->series->name]));
+            toastr()->success(__(':name has been updated', ['name' => $this->series->name]));
 
             return redirect(request()->header('Referer'));
         } catch (Exception $exception) {
             Log::error('Error while updating series via API', ['exception' => $exception]);
-            toastr()->addError(__(':name could not be updated', ['name' => $this->series->name]));
+            toastr()->error(__(':name could not be updated', ['name' => $this->series->name]));
         }
     }
 
@@ -158,6 +158,6 @@ class ShowSeries extends Component
         }
         $volume->status = $status;
         $volume->save();
-        toastr()->addSuccess(__(':name has been updated', ['name' => $volume->series->name . ' ' . $volume->number]));
+        toastr()->success(__(':name has been updated', ['name' => $volume->series->name . ' ' . $volume->number]));
     }
 }

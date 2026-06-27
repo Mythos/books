@@ -43,7 +43,7 @@ class CreateCategory extends Component
     {
         $this->validate();
         $this->category->save();
-        toastr()->addSuccess(__(':name has been created', ['name' => $this->category->name]));
+        toastr()->success(__(':name has been created', ['name' => $this->category->name]));
 
         return redirect()->route('home');
     }

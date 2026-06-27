@@ -25,12 +25,14 @@ function initializeVolumePopover() {
     });
 }
 
-document.addEventListener('livewire:load', function () {
+document.addEventListener('livewire:initialized', function () {
     initializeTooltips();
     initializeVolumePopover();
 });
-document.addEventListener('livewire:update', function () {
-    initializeTooltips();
-    initializeVolumePopover();
+document.addEventListener('livewire:init', function () {
+    Livewire.hook('morphed', function () {
+        initializeTooltips();
+        initializeVolumePopover();
+    });
 });
 

@@ -63,8 +63,8 @@ class ReadingStack extends Component
         $volume->status = VolumeStatus::READ;
         $volume->plan_to_read = false;
         $volume->save();
-        $this->emitTo('overview', '$refresh');
-        toastr()->addSuccess(__(':name has been updated', ['name' => $volume->series->name . ' ' . $volume->number]));
+        $this->dispatch('$refresh')->to('overview');
+        toastr()->success(__(':name has been updated', ['name' => $volume->series->name . ' ' . $volume->number]));
     }
 
     public function expand(): void
@@ -77,7 +77,7 @@ class ReadingStack extends Component
         $volume = Volume::find($id);
         $volume->plan_to_read = false;
         $volume->save();
-        $this->emitTo('series.reading-stack-unplanned', '$refresh');
-        toastr()->addSuccess(__(':name has been updated', ['name' => $volume->series->name . ' ' . $volume->number]));
+        $this->dispatch('$refresh')->to('series.reading-stack-unplanned');
+        toastr()->success(__(':name has been updated', ['name' => $volume->series->name . ' ' . $volume->number]));
     }
 }

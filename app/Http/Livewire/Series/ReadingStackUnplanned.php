@@ -76,7 +76,7 @@ class ReadingStackUnplanned extends Component
         $volume = Volume::find($id);
         $volume->plan_to_read = true;
         $volume->save();
-        $this->emitTo('series.reading-stack', '$refresh');
-        toastr()->addSuccess(__(':name has been updated', ['name' => $volume->series->name . ' ' . $volume->number]));
+        $this->dispatch('$refresh')->to('series.reading-stack');
+        toastr()->success(__(':name has been updated', ['name' => $volume->series->name . ' ' . $volume->number]));
     }
 }
