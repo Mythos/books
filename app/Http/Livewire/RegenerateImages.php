@@ -51,6 +51,6 @@ class RegenerateImages extends Component
                 Log::error('Error while regenerating image for publisher ' . $item->name, ['exception' => $exception]);
             }
         }
-        toastr()->addSuccess(__('Images have been updated'));
+        toastr()->success(__('Images have been updated'));
     }
 }

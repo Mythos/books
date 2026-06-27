@@ -54,7 +54,7 @@ return [
     |
     */
 
-    'asset_url' => env('APP_URL', 'http://localhost'),
+    'asset_url' => null,
 
     /*
     |--------------------------------------------------------------------------
@@ -154,5 +154,19 @@ return [
     */
 
     'render_on_redirect' => false,
+
+    /*
+    |--------------------------------------------------------------------------
+    | Legacy Model Binding
+    |--------------------------------------------------------------------------
+    |
+    | This application still binds Livewire form fields directly to Eloquent
+    | model attributes such as "series.name" and "user.email". Livewire 4
+    | disables that pattern by default, so keep the legacy synthesizer enabled
+    | until those components are migrated to form objects or scalar state.
+    |
+    */
+
+    'legacy_model_binding' => true,
 
 ];

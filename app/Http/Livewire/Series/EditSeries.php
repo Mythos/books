@@ -14,14 +14,12 @@ use App\Models\Volume;
 use Exception;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
-use Jantinnerezo\LivewireAlert\LivewireAlert;
+use Jantinnerezo\LivewireAlert\Facades\LivewireAlert;
 use Livewire\Component;
 use Storage;
 
 class EditSeries extends Component
 {
-    use LivewireAlert;
-
     public $publishers;
 
     public Category $category;
@@ -98,22 +96,24 @@ class EditSeries extends Component
             ImageHelpers::updateSeriesImage($this->series);
             $this->updatePrices();
             $this->updateStatuses();
-            toastr()->addSuccess(__(':name has been updated', ['name' => $this->series->name]));
+            toastr()->success(__(':name has been updated', ['name' => $this->series->name]));
 
             return redirect()->route('series.show', [$this->category, $this->series]);
         } catch (Exception $exception) {
             Log::error($exception);
-            toastr()->addError(__(':name could not be updated', ['name' => $this->series->name]));
+            toastr()->error(__(':name could not be updated', ['name' => $this->series->name]));
         }
     }
 
     public function delete(): void
     {
-        $this->confirm(__('Are you sure you want to delete :name?', ['name' => $this->series->name]), [
-            'confirmButtonText' => __('Delete'),
-            'cancelButtonText' => __('Cancel'),
-            'onConfirmed' => 'confirmedDelete',
-        ]);
+        LivewireAlert::title(__('Are you sure you want to delete :name?', ['name' => $this->series->name]))
+            ->question()
+            ->withConfirmButton(__('Delete'))
+            ->withCancelButton(__('Cancel'))
+            ->timer(null)
+            ->onConfirm('confirmedDelete')
+            ->show();
     }
 
     public function confirmedDelete(): void
@@ -124,7 +124,7 @@ class EditSeries extends Component
         $this->series->delete();
         Storage::disk('public')->deleteDirectory($this->series->image_path);
         Storage::disk('public')->deleteDirectory('thumbnails/series/' . $this->series->id);
-        toastr()->addSuccess(__(':name has been deleted', ['name' => $this->series->name]));
+        toastr()->success(__(':name has been deleted', ['name' => $this->series->name]));
         redirect()->route('categories.show', [$this->category]);
     }
 

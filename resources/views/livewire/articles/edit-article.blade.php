@@ -10,8 +10,8 @@
             <li class="breadcrumb-item active" aria-current="page">{{ $article->name }}</li>
         </ol>
     </nav>
-    <form method="POST" wire:submit.prevent='save'>
-        <input id="category_id" type="hidden" name="category_id" wire:model='article.category_id' />
+    <form method="POST" wire:submit='save'>
+        <input id="category_id" type="hidden" name="category_id" wire:model.live='article.category_id' />
         <div class="row bg-white shadow-sm rounded">
             <div class="col-sm-12 col-md-12 col-lg-3 d-flex flex-column align-items-center text-center my-2">
                 @if (!empty($image_preview))
@@ -28,7 +28,7 @@
                     <div class="row mt-1">
                         <div class="col-md-12">
                             <label for="article.name" class="col-form-label required">{{ __('Name') }}</label>
-                            <input id="article.name" name="article.name" type="text" class="form-control @error('article.name') is-invalid @enderror" wire:model='article.name' autofocus>
+                            <input id="article.name" name="article.name" type="text" class="form-control @error('article.name') is-invalid @enderror" wire:model.live='article.name' autofocus>
                             @error('article.name')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -39,7 +39,7 @@
                     <div class="row mt-1">
                         <div class="col-md-12">
                             <label for="article.release_date" class="col-form-label">{{ __('Release Date') }}</label>
-                            <input id="article.release_date" name="article.release_date" type="date" class="form-control @error('article.release_date') is-invalid @enderror" wire:model='article.release_date'>
+                            <input id="article.release_date" name="article.release_date" type="date" class="form-control @error('article.release_date') is-invalid @enderror" wire:model.live='article.release_date'>
                             @error('article.release_date')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -51,7 +51,7 @@
                         <div class="col-md-12">
                             <label for="article.price" class="col-form-label">{{ __('Price') }}</label>
                             <div class="input-group">
-                                <input id="article.price" name="article.price" type="text" class="form-control @error('article.price') is-invalid @enderror" wire:model='article.price'>
+                                <input id="article.price" name="article.price" type="text" class="form-control @error('article.price') is-invalid @enderror" wire:model.live='article.price'>
                                 <span class="input-group-text">{{ config('app.currency') }}</span>
                                 @error('article.price')
                                     <span class="invalid-feedback" role="alert">
@@ -64,7 +64,7 @@
                     <div class="row mt-1">
                         <div class="col-md-12">
                             <label for="article.status" class="col-form-label required">{{ __('Status') }}</label>
-                            <select id="article.status" name="article.status" class="form-select @error('article.status') is-invalid @enderror" wire:model='article.status' required>
+                            <select id="article.status" name="article.status" class="form-select @error('article.status') is-invalid @enderror" wire:model.live='article.status' required>
                                 <option value="0">{{ __('New') }}</option>
                                 <option value="1">{{ __('Ordered') }}</option>
                                 <option value="2">{{ __('Shipped') }}</option>
@@ -80,7 +80,7 @@
                     <div class="row mt-1">
                         <div class="col-md-12">
                             <label for="article.image_url" class="col-form-label">{{ __('Image URL') }}</label>
-                            <input id="article.image_url" name="article.image_url" type="text" class="form-control @error('article.image_url') is-invalid @enderror" wire:model='article.image_url'>
+                            <input id="article.image_url" name="article.image_url" type="text" class="form-control @error('article.image_url') is-invalid @enderror" wire:model.live='article.image_url'>
                             @error('article.image_url')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>

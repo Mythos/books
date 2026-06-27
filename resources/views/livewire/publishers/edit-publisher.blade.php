@@ -11,7 +11,7 @@
             <li class="breadcrumb-item active" aria-current="page">{{ $publisher->name }}</li>
         </ol>
     </nav>
-    <form method="POST" wire:submit.prevent='save'>
+    <form method="POST" wire:submit='save'>
         <div class="row bg-white shadow-sm rounded">
             <div class="col-md-12">
                 <div class="p-3 py-3">
@@ -21,7 +21,7 @@
                     <div class="row mt-1">
                         <div class="col-md-12">
                             <label for="publisher.name" class="col-form-label required">{{ __('Name') }}</label>
-                            <input id="publisher.name" name="publisher.name" type="text" class="form-control @error('publisher.name') is-invalid @enderror" wire:model='publisher.name' autofocus>
+                            <input id="publisher.name" name="publisher.name" type="text" class="form-control @error('publisher.name') is-invalid @enderror" wire:model.live='publisher.name' autofocus>
                             @error('publisher.name')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -32,7 +32,7 @@
                     <div class="row mt-1">
                         <div class="col-md-12">
                             <label for="publisher.image_url" class="col-form-label">{{ __('Image URL') }}</label>
-                            <input id="publisher.image_url" name="publisher.image_url" type="text" class="form-control @error('publisher.image_url') is-invalid @enderror" wire:model='publisher.image_url'>
+                            <input id="publisher.image_url" name="publisher.image_url" type="text" class="form-control @error('publisher.image_url') is-invalid @enderror" wire:model.live='publisher.image_url'>
                             @error('publisher.image_url')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>

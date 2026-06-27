@@ -31,7 +31,7 @@ class Profile extends Component
     {
         $this->validate();
         $this->user->save();
-        toastr()->addSuccess(__('Your profile has been updated'));
+        toastr()->success(__('Your profile has been updated'));
 
         return redirect()->route('profile');
     }

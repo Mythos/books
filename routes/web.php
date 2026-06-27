@@ -20,6 +20,8 @@ use App\Http\Livewire\Statistics;
 use App\Http\Livewire\Volumes\BulkUpdate;
 use App\Http\Livewire\Volumes\CreateVolume;
 use App\Http\Livewire\Volumes\EditVolume;
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -34,6 +36,19 @@ use Illuminate\Support\Facades\Route;
 */
 
 Auth::routes(['register' => config('auth.registration_enabled')]);
+
+if (app()->environment(['local', 'testing']) && config('app.debug') && config('auth.codex_bypass_email')) {
+    Route::get('_codex/login', function () {
+        $user = User::query()
+            ->where('email', config('auth.codex_bypass_email'))
+            ->firstOrFail();
+
+        Auth::login($user);
+        request()->session()->regenerate();
+
+        return redirect()->route('home');
+    })->name('codex.login');
+}
 
 Route::prefix('')->middleware(['auth'])->group(function (): void {
     Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

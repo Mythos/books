@@ -10,7 +10,7 @@
             <li class="breadcrumb-item active">{{ __('Change password') }}</li>
         </ol>
     </nav>
-    <form method="POST" wire:submit.prevent='save'>
+    <form method="POST" wire:submit='save'>
         <div class="row bg-white shadow-sm rounded">
             <div class="col-md-12">
                 <div class="p-3 py-3">
@@ -20,7 +20,7 @@
                     <div class="row mt-1">
                         <div class="col-md-12">
                             <label for="current_password" class="col-form-label required">{{ __('Current Password') }}</label>
-                            <input id="current_password" name="current_password" type="password" class="form-control @error('current_password') is-invalid @enderror" wire:model='current_password' autofocus>
+                            <input id="current_password" name="current_password" type="password" class="form-control @error('current_password') is-invalid @enderror" wire:model.live='current_password' autofocus>
                             @error('current_password')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -31,7 +31,7 @@
                     <div class="row mt-1">
                         <div class="col-md-12">
                             <label for="new_password" class="col-form-label required">{{ __('New Password') }}</label>
-                            <input id="new_password" name="new_password" type="password" class="form-control @error('new_password') is-invalid @enderror" wire:model='new_password'>
+                            <input id="new_password" name="new_password" type="password" class="form-control @error('new_password') is-invalid @enderror" wire:model.live='new_password'>
                             @error('new_password')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -42,7 +42,7 @@
                     <div class="row mt-1">
                         <div class="col-md-12">
                             <label for="new_password_confirmation" class="col-form-label required">{{ __('Confirm Password') }}</label>
-                            <input id="new_password_confirmation" name="new_password_confirmation" type="password" class="form-control @error('new_password_confirmation') is-invalid @enderror" wire:model='new_password_confirmation'>
+                            <input id="new_password_confirmation" name="new_password_confirmation" type="password" class="form-control @error('new_password_confirmation') is-invalid @enderror" wire:model.live='new_password_confirmation'>
                             @error('new_password_confirmation')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>

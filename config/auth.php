@@ -20,6 +20,8 @@ return [
 
     'registration_enabled' => env('AUTH_REGISTRATION_ENABLED', true),
 
+    'codex_bypass_email' => env('CODEX_AUTH_BYPASS_EMAIL'),
+
     /*
     |--------------------------------------------------------------------------
     | Authentication Guards

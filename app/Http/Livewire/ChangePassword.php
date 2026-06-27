@@ -33,7 +33,7 @@ class ChangePassword extends Component
         $user->password = Hash::make($this->new_password);
         $user->save();
 
-        toastr()->addSuccess(__('Your password has been changed'));
+        toastr()->success(__('Your password has been changed'));
 
         return redirect()->route('profile');
     }

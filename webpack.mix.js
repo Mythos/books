@@ -33,6 +33,8 @@ mix.options(options)
         "node_modules/@flasher/flasher-toastr/dist/flasher-toastr.min.js",
         "public/js/flasher-toastr.min.js"
     )
+    .copy("node_modules/toastr/build/toastr.min.js", "public/js/toastr.min.js")
+    .copy("node_modules/toastr/build/toastr.min.css", "public/css/toastr.min.css")
     .copy([
         'resources/js/service-worker.js',
     ], 'public/service-worker.js')

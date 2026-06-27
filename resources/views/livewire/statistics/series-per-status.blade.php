@@ -8,12 +8,20 @@
     </div>
     <script>
         let seriesByStatusStatistics = null;
-        document.addEventListener('livewire:load', function() {
+        function refreshSeriesByStatusChart() {
+            if (seriesByStatusStatistics) {
+                seriesByStatusStatistics.destroy();
+            }
             seriesByStatusStatistics = seriesByStatusChart();
+        }
+
+        document.addEventListener('livewire:initialized', function() {
+            refreshSeriesByStatusChart();
         });
-        document.addEventListener('livewire:update', function() {
-            seriesByStatusStatistics.destroy();
-            seriesByStatusStatistics = seriesByStatusChart();
+        document.addEventListener('livewire:init', function() {
+            Livewire.hook('morphed', function() {
+                refreshSeriesByStatusChart();
+            });
         });
 
         function seriesByStatusChart() {

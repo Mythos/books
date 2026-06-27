@@ -70,7 +70,7 @@ class BulkUpdate extends Component
             $volume->save();
         }
         $this->reset(['selectAll', 'selectedVolumes', 'price']);
-        toastr()->addSuccess(__('Volumes have been updated'));
+        toastr()->success(__('Volumes have been updated'));
     }
 
     public function selectPublished(): void

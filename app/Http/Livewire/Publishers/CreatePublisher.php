@@ -42,12 +42,12 @@ class CreatePublisher extends Component
         try {
             $this->publisher->save();
             ImageHelpers::updatePublisherImage($this->publisher, true);
-            toastr()->addSuccess(__(':name has been created', ['name' => $this->publisher->name]));
+            toastr()->success(__(':name has been created', ['name' => $this->publisher->name]));
 
             return redirect()->route('publishers.index');
         } catch (Exception $exception) {
             Log::error($exception);
-            toastr()->addError(__(':name could not be created', ['name' => $this->publisher->name]));
+            toastr()->error(__(':name could not be created', ['name' => $this->publisher->name]));
         }
     }
 }

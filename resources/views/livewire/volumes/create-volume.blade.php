@@ -11,7 +11,7 @@
             <li class="breadcrumb-item active" aria-current="page">{{ __('Create Volume') }}</li>
         </ol>
     </nav>
-    <form method="POST" wire:submit.prevent='save'>
+    <form method="POST" wire:submit='save'>
         <div class="row bg-white shadow-sm rounded">
             <div class="col-sm-12 col-md-12 col-lg-3 d-flex flex-column align-items-center text-center my-2">
                 @if (!empty($image_preview))
@@ -30,7 +30,7 @@
                         <div class="col-md-12">
                             <label for="volume.isbn" class="col-form-label">{{ __('ISBN') }}</label>
                             <div class="input-group">
-                                <input id="volume.isbn" name="volume.isbn" type="text" class="form-control @error('volume.isbn') is-invalid @enderror" wire:model='volume.isbn' autofocus>
+                                <input id="volume.isbn" name="volume.isbn" type="text" class="form-control @error('volume.isbn') is-invalid @enderror" wire:model.live='volume.isbn' autofocus>
                                 <button class="btn btn-outline-secondary" type="button" data-bs-toggle="modal" data-bs-target="#livestream_scanner"><span class="fa fa-barcode"></span></button>
                                 @error('volume.isbn')
                                     <span class="invalid-feedback" role="alert">
@@ -43,7 +43,7 @@
                     <div class="row mt-1">
                         <div class="col-md-12">
                             <label for="volume.publish_date" class="col-form-label">{{ __('Publish Date') }}</label>
-                            <input id="volume.publish_date" name="volume.publish_date" type="date" class="form-control @error('volume.publish_date') is-invalid @enderror" wire:model='volume.publish_date'>
+                            <input id="volume.publish_date" name="volume.publish_date" type="date" class="form-control @error('volume.publish_date') is-invalid @enderror" wire:model.live='volume.publish_date'>
                             @error('volume.publish_date')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -55,7 +55,7 @@
                         <div class="col-md-12">
                             <label for="volume.price" class="col-form-label">{{ __('Price') }}</label>
                             <div class="input-group">
-                                <input id="volume.price" name="volume.price" type="text" class="form-control @error('volume.price') is-invalid @enderror" wire:model='volume.price'>
+                                <input id="volume.price" name="volume.price" type="text" class="form-control @error('volume.price') is-invalid @enderror" wire:model.live='volume.price'>
                                 <span class="input-group-text">{{ config('app.currency') }}</span>
                                 @error('volume.price')
                                     <span class="invalid-feedback" role="alert">
@@ -68,7 +68,7 @@
                     <div class="row mt-1">
                         <div class="col-md-12">
                             <label for="volume.pages" class="col-form-label">{{ __('Pages') }}</label>
-                            <input id="volume.pages" name="volume.pages" type="number" class="form-control @error('volume.pages') is-invalid @enderror" wire:model='volume.pages'>
+                            <input id="volume.pages" name="volume.pages" type="number" class="form-control @error('volume.pages') is-invalid @enderror" wire:model.live='volume.pages'>
                             @error('volume.pages')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -79,7 +79,7 @@
                     <div class="row mt-1">
                         <div class="col-md-12">
                             <label for="volume.status" class="col-form-label required">{{ __('Status') }}</label>
-                            <select id="volume.status" name="volume.status" class="form-select @error('volume.status') is-invalid @enderror" wire:model='volume.status' required>
+                            <select id="volume.status" name="volume.status" class="form-select @error('volume.status') is-invalid @enderror" wire:model.live='volume.status' required>
                                 <option value="{{ App\Constants\VolumeStatus::NEW }}">{{ __('New') }}</option>
                                 <option value="{{ App\Constants\VolumeStatus::ORDERED }}">{{ __('Ordered') }}</option>
                                 <option value="{{ App\Constants\VolumeStatus::SHIPPED }}">{{ __('Shipped') }}</option>
@@ -96,7 +96,7 @@
                     <div class="row mt-1">
                         <div class="col-md-12">
                             <label for="volume.image_url" class="col-form-label">{{ __('Image URL') }}</label>
-                            <input id="volume.image_url" name="volume.image_url" type="text" class="form-control @error('volume.image_url') is-invalid @enderror" wire:model='volume.image_url'>
+                            <input id="volume.image_url" name="volume.image_url" type="text" class="form-control @error('volume.image_url') is-invalid @enderror" wire:model.live='volume.image_url'>
                             @error('volume.image_url')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -107,7 +107,7 @@
                     <div class="row mt-3">
                         <div class="col-md-12">
                             <div class="form-check">
-                                <input id="volume.ignore_in_upcoming" type="checkbox" class="form-check-input @error('volume.ignore_in_upcoming') is-invalid @enderror" name="volume.ignore_in_upcoming" wire:model='volume.ignore_in_upcoming'>
+                                <input id="volume.ignore_in_upcoming" type="checkbox" class="form-check-input @error('volume.ignore_in_upcoming') is-invalid @enderror" name="volume.ignore_in_upcoming" wire:model.live='volume.ignore_in_upcoming'>
                                 <label for="volume.ignore_in_upcoming" class="form-check-label">{{ __('Hide in upcoming releases') }}</label>
                             </div>
                             @error('volume.ignore_in_upcoming')

@@ -8,12 +8,20 @@
     </div>
     <script>
         let volumesByGenreStatistics = null;
-        document.addEventListener('livewire:load', function() {
+        function refreshVolumesByGenreChart() {
+            if (volumesByGenreStatistics) {
+                volumesByGenreStatistics.destroy();
+            }
             volumesByGenreStatistics = volumesByGenreChart();
+        }
+
+        document.addEventListener('livewire:initialized', function() {
+            refreshVolumesByGenreChart();
         });
-        document.addEventListener('livewire:update', function() {
-            volumesByGenreStatistics.destroy();
-            volumesByGenreStatistics = volumesByGenreChart();
+        document.addEventListener('livewire:init', function() {
+            Livewire.hook('morphed', function() {
+                refreshVolumesByGenreChart();
+            });
         });
 
         function volumesByGenreChart() {

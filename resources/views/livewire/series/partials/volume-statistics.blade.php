@@ -7,12 +7,20 @@
 
 <script>
     let chart = null;
-    document.addEventListener('livewire:load', function() {
+    function refreshVolumeStatisticsChart() {
+        if (chart) {
+            chart.destroy();
+        }
         chart = initializeChart();
+    }
+
+    document.addEventListener('livewire:initialized', function() {
+        refreshVolumeStatisticsChart();
     });
-    document.addEventListener('livewire:update', function() {
-        chart.destroy();
-        chart = initializeChart();
+    document.addEventListener('livewire:init', function() {
+        Livewire.hook('morphed', function() {
+            refreshVolumeStatisticsChart();
+        });
     });
 
     function initializeChart() {

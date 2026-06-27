@@ -11,7 +11,7 @@
             <li class="breadcrumb-item active" aria-current="page">{{ __('Update Volumes') }}</li>
         </ol>
     </nav>
-    <form method="POST" wire:submit.prevent='save'>
+    <form method="POST" wire:submit='save'>
         <div class="row bg-white shadow-sm rounded">
             <div class="col-md-12">
                 <div class="p-3 py-3">
@@ -21,7 +21,7 @@
                     <div class="form-group row">
                         <label for="status" class="col-sm-2 col-form-label">{{ __('Status') }}</label>
                         <div class="col-sm-10">
-                            <select id="status" name="status" class="form-select @error('status') is-invalid @enderror" wire:model='status' data-allow-clear="true">
+                            <select id="status" name="status" class="form-select @error('status') is-invalid @enderror" wire:model.live='status' data-allow-clear="true">
                                 <option></option>
                                 <option value="{{ App\Constants\VolumeStatus::NEW }}">{{ __('New') }}</option>
                                 <option value="{{ App\Constants\VolumeStatus::ORDERED }}">{{ __('Ordered') }}</option>
@@ -40,7 +40,7 @@
                         <label for="price" class="col-sm-2 col-form-label">{{ __('Price') }}</label>
                         <div class="col-sm-10">
                             <div class="input-group">
-                                <input id="price" name="price" type="text" class="form-control @error('price') is-invalid @enderror" wire:model='price'>
+                                <input id="price" name="price" type="text" class="form-control @error('price') is-invalid @enderror" wire:model.live='price'>
                                 <span class="input-group-text">{{ config('app.currency') }}</span>
                                 @error('price')
                                     <span class="invalid-feedback" role="alert">
@@ -59,7 +59,7 @@
                             <table class="table table-hover">
                                 <thead class="table-dark">
                                     <tr>
-                                        <th scope="col" class="text-end" style="width: 2rem; min-width: 2rem;"><input type="checkbox" wire:model='selectAll'></th>
+                                        <th scope="col" class="text-end" style="width: 2rem; min-width: 2rem;"><input type="checkbox" wire:model.live='selectAll'></th>
                                         <th scope="col" class="text-end" style="width: 2rem; min-width: 2rem;">{{ __('#') }}</th>
                                         <th scope="col" class="text-center" style="width: 2rem; min-width: 2rem;"></th>
                                         <th scope="col" class="text-center" style="width: 7rem; min-width: 7rem;">{{ __('Publish Date') }}</th>
@@ -71,7 +71,7 @@
                                 <tbody>
                                     @foreach ($volumes as $index => $volume)
                                         <tr class="{{ $volume->status_class }}">
-                                            <th scope="row" class="text-end"><input type="checkbox" wire:model='selectedVolumes' value="{{ $volume->id }}"></th>
+                                            <th scope="row" class="text-end"><input type="checkbox" wire:model.live='selectedVolumes' value="{{ $volume->id }}"></th>
                                             <th scope="row" class="text-end">{{ $volume->number }}</th>
                                             <td class="text-center" style="padding: 3px;">
                                                 @if ($volume->image_exists)

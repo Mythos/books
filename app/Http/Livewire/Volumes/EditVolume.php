@@ -11,13 +11,11 @@ use App\Rules\Isbn;
 use App\Services\SeriesService;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
-use Jantinnerezo\LivewireAlert\LivewireAlert;
+use Jantinnerezo\LivewireAlert\Facades\LivewireAlert;
 use Livewire\Component;
 
 class EditVolume extends Component
 {
-    use LivewireAlert;
-
     public Category $category;
 
     public Series $series;
@@ -67,7 +65,7 @@ class EditVolume extends Component
     {
         $this->saveVolume($seriesService);
 
-        toastr()->addSuccess(__('Volumme :number has been updated', ['number' => $this->volume->number]));
+        toastr()->success(__('Volumme :number has been updated', ['number' => $this->volume->number]));
 
         return redirect()->route('volumes.edit', [$this->category, $this->series, $this->volume->number + 1]);
     }
@@ -76,18 +74,20 @@ class EditVolume extends Component
     {
         $this->saveVolume($seriesService);
 
-        toastr()->addSuccess(__('Volumme :number has been updated', ['number' => $this->volume->number]));
+        toastr()->success(__('Volumme :number has been updated', ['number' => $this->volume->number]));
 
         return redirect()->route('series.show', [$this->category, $this->series]);
     }
 
     public function delete(): void
     {
-        $this->confirm(__('Are you sure you want to delete :name?', ['name' => __('Volume :number', ['number' => $this->volume->number])]), [
-            'confirmButtonText' => __('Delete'),
-            'cancelButtonText' => __('Cancel'),
-            'onConfirmed' => 'confirmedDelete',
-        ]);
+        LivewireAlert::title(__('Are you sure you want to delete :name?', ['name' => __('Volume :number', ['number' => $this->volume->number])]))
+            ->question()
+            ->withConfirmButton(__('Delete'))
+            ->withCancelButton(__('Cancel'))
+            ->timer(null)
+            ->onConfirm('confirmedDelete')
+            ->show();
     }
 
     public function confirmedDelete()
@@ -95,7 +95,7 @@ class EditVolume extends Component
         $this->volume->delete();
         Storage::disk('public')->deleteDirectory($this->volume->image_path);
         Storage::disk('public')->deleteDirectory('thumbnails/' . $this->volume->image_path);
-        toastr()->addSuccess(__('Volumme :number has been deleted', ['number' => $this->volume->number]));
+        toastr()->success(__('Volumme :number has been deleted', ['number' => $this->volume->number]));
 
         return redirect()->route('series.show', [$this->category, $this->series]);
     }

@@ -19,6 +19,6 @@ class NsfwToggle extends Component
     {
         $this->show_nsfw = !$this->show_nsfw;
         session()->put('show_nsfw', $this->show_nsfw);
-        $this->emit('show_nsfw');
+        $this->dispatch('show_nsfw');
     }
 }

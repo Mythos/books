@@ -59,12 +59,12 @@ class CreateArticle extends Component
         try {
             $this->article->save();
             ImageHelpers::createAndSaveArticleImage($this->article->image_url, $this->article->image_path);
-            toastr()->addSuccess(__(':name has been created', ['name' => $this->article->name]));
+            toastr()->success(__(':name has been created', ['name' => $this->article->name]));
 
             return redirect()->route('home');
         } catch (Exception $exception) {
             Log::error($exception);
-            toastr()->addError(__(':name could not be created', ['name' => $this->article->name]));
+            toastr()->error(__(':name could not be created', ['name' => $this->article->name]));
         }
     }
 }

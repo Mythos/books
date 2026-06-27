@@ -9,7 +9,7 @@
             <li class="breadcrumb-item active">{{ __('Profile') }}</li>
         </ol>
     </nav>
-    <form method="POST" wire:submit.prevent='save'>
+    <form method="POST" wire:submit='save'>
         <div class="row bg-white shadow-sm rounded">
             <div class="col-md-3">
                 <div class="d-flex flex-column align-items-center text-center p-3 py-3">
@@ -27,7 +27,7 @@
                     <div class="row mt-1">
                         <div class="col-md-12">
                             <label for="user.name" class="col-form-label required">{{ __('Name') }}</label>
-                            <input id="user.name" name="user.name" type="text" class="form-control @error('user.name') is-invalid @enderror" wire:model='user.name'>
+                            <input id="user.name" name="user.name" type="text" class="form-control @error('user.name') is-invalid @enderror" wire:model.live='user.name'>
                             @error('user.name')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -38,7 +38,7 @@
                     <div class="row mt-1">
                         <div class="col-md-12">
                             <label for="user.email" class="col-form-label required">{{ __('E-Mail Address') }}</label>
-                            <input id="user.email" name="user.email" type="email" class="form-control @error('user.email') is-invalid @enderror" wire:model='user.email'>
+                            <input id="user.email" name="user.email" type="email" class="form-control @error('user.email') is-invalid @enderror" wire:model.live='user.email'>
                             @error('user.email')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -49,7 +49,7 @@
                     <div class="row mt-1">
                         <div class="col-md-12">
                             <label for="user.date_format" class="col-form-label required">{{ __('Date Format') }}</label>
-                            <select id="user.date_format" name="user.date_format" class="form-select @error('user.date_format') is-invalid @enderror" wire:model='user.date_format' required>
+                            <select id="user.date_format" name="user.date_format" class="form-select @error('user.date_format') is-invalid @enderror" wire:model.live='user.date_format' required>
                                 <optgroup label="(Y-m-d)">
                                     <option value="Y-m-d">{{ \Carbon\Carbon::now()->format('Y-m-d') }}</option>
                                     <option value="y-m-d">{{ \Carbon\Carbon::now()->format('y-m-d') }}</option>
@@ -73,7 +73,7 @@
                     <div class="row mt-1">
                         <div class="col-md-12">
                             <label for="user.secondary_title_preference" class="col-form-label required">{{ __('Alternative Title Format') }}</label>
-                            <select id="user.secondary_title_preference" name="user.secondary_title_preference" class="form-select @error('user.secondary_title_preference') is-invalid @enderror" wire:model='user.secondary_title_preference' required>
+                            <select id="user.secondary_title_preference" name="user.secondary_title_preference" class="form-select @error('user.secondary_title_preference') is-invalid @enderror" wire:model.live='user.secondary_title_preference' required>
                                 <option value="{{ App\Constants\SecondaryTitlePreference::ORIGINAL }}">{{ __('Original Title') }}</option>
                                 <option value="{{ App\Constants\SecondaryTitlePreference::ROMAJI }}">{{ __('Romaji') }}</option>
                             </select>
@@ -87,7 +87,7 @@
                     <div class="row mt-3">
                         <div class="col-md-12">
                             <div class="form-check">
-                                <input id="user.is_nsfw" name="user.is_nsfw" type="checkbox" class="form-check-input @error('user.format_isbns_enabled') is-invalid @enderror" wire:model='user.format_isbns_enabled'>
+                                <input id="user.is_nsfw" name="user.is_nsfw" type="checkbox" class="form-check-input @error('user.format_isbns_enabled') is-invalid @enderror" wire:model.live='user.format_isbns_enabled'>
                                 <label for="user.is_nsfw" class="form-check-label">{{ __('Format ISBNs') }}</label>
                             </div>
                             @error('user.format_isbns_enabled')
