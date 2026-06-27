@@ -16,7 +16,7 @@ services:
             - books
 
     web:
-        image: nginx:1.27-alpine
+        image: nginx:1.27-alpine@sha256:65645c7bb6a0661892a8b03b89d0743208a18dd2f3f17a54ef4b76fb8e2f2a10
         ports:
             - "${APP_FORWARD_PORT:-8080}:80"
         volumes:
@@ -28,7 +28,7 @@ services:
             - books
 
     mariadb:
-        image: mariadb:11.4
+        image: mariadb:11.4@sha256:1b46b73d4b629022dfa29e6db3bb0d63b5df714fc3bfbe5057d63d76d8f6054b
         ports:
             - "${DB_FORWARD_PORT:-3306}:3306"
         environment:
@@ -48,7 +48,7 @@ services:
             - books
 
     redis:
-        image: redis:7.4-alpine
+        image: redis:7.4-alpine@sha256:6ab0b6e7381779332f97b8ca76193e45b0756f38d4c0dcda72dbb3c32061ab99
         ports:
             - "${REDIS_FORWARD_PORT:-6379}:6379"
         volumes:
@@ -62,7 +62,7 @@ services:
             - books
 
     mailpit:
-        image: axllent/mailpit:latest
+        image: axllent/mailpit:latest@sha256:37a38e48e9338cd7e89dfeb487f37b02ebfcd9cb23111bed2d345e79d37d6dd6
         ports:
             - "${MAILPIT_SMTP_FORWARD_PORT:-1025}:1025"
             - "${MAILPIT_DASHBOARD_FORWARD_PORT:-8025}:8025"

@@ -1,4 +1,4 @@
-FROM php:8.3-fpm-bookworm
+FROM php:8.3-fpm-bookworm@sha256:36823ca48d6798ecef231042028a092e8e4b19146f126ba59cc56aa18e35dd7d
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
@@ -26,7 +26,7 @@ RUN apt-get update \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
+COPY --from=composer:2@sha256:7725eb4545c438629ae8bde3ef0bb9a5038ef566126ad878442a69007242d267 /usr/bin/composer /usr/bin/composer
 COPY docker/php/php.ini /usr/local/etc/php/conf.d/books.ini
 
 WORKDIR /var/www/html
