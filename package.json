@@ -13,7 +13,7 @@
     "devDependencies": {
         "@ericblade/quagga2": "1.12.1",
         "@flasher/flasher-toastr": "2.2.0",
-        "@fortawesome/fontawesome-free": "^7.3.0",
+        "@fortawesome/fontawesome-free": "7.3.0",
         "bootstrap": "5.3.8",
         "chart.js": "4.5.1",
         "jquery": "4.0.0",
