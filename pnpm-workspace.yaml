@@ -1,6 +1,6 @@
 packages:
   - .
 
-onlyBuiltDependencies:
-  - '@parcel/watcher'
-  - sharp
+allowBuilds:
+  '@parcel/watcher': true
+  sharp: true
