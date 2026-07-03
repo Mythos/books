@@ -39,8 +39,8 @@ The repository includes a Docker Compose setup that can replace a local Laragon/
 4. Build frontend assets once:
 
     ```sh
-    docker compose run --rm node npm ci
-    docker compose run --rm node npm run dev
+    docker compose run --rm node sh -c "corepack enable pnpm && pnpm install --frozen-lockfile"
+    docker compose run --rm node sh -c "corepack enable pnpm && pnpm run dev"
     ```
 
 For continuous frontend rebuilds, run:

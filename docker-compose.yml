@@ -74,7 +74,7 @@ services:
         profiles:
             - assets
         working_dir: /var/www/html
-        command: sh -c "test -d node_modules/laravel-mix || npm ci; npm run watch-poll"
+        command: sh -c "corepack enable pnpm && (test -d node_modules/laravel-mix || pnpm install --frozen-lockfile) && pnpm run watch-poll"
         volumes:
             - ./:/var/www/html
             - node_modules:/var/www/html/node_modules
