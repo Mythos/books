@@ -1,0 +1,44 @@
+{
+  "resources/fonts/nunito-v20-latin-regular.eot": {
+    "file": "assets/nunito-v20-latin-regular-Ccgr3atV.eot",
+    "src": "resources/fonts/nunito-v20-latin-regular.eot"
+  },
+  "resources/fonts/nunito-v20-latin-regular.svg": {
+    "file": "assets/nunito-v20-latin-regular-rlMOyMR7.svg",
+    "src": "resources/fonts/nunito-v20-latin-regular.svg"
+  },
+  "resources/fonts/nunito-v20-latin-regular.ttf": {
+    "file": "assets/nunito-v20-latin-regular-DtVHbI2k.ttf",
+    "src": "resources/fonts/nunito-v20-latin-regular.ttf"
+  },
+  "resources/fonts/nunito-v20-latin-regular.woff": {
+    "file": "assets/nunito-v20-latin-regular-CVrU1huI.woff",
+    "src": "resources/fonts/nunito-v20-latin-regular.woff"
+  },
+  "resources/fonts/nunito-v20-latin-regular.woff2": {
+    "file": "assets/nunito-v20-latin-regular-BaikMWaW.woff2",
+    "src": "resources/fonts/nunito-v20-latin-regular.woff2"
+  },
+  "resources/js/app.js": {
+    "file": "assets/app-CMbECZMO.js",
+    "name": "app",
+    "src": "resources/js/app.js",
+    "isEntry": true
+  },
+  "resources/sass/app.scss": {
+    "file": "assets/app-BEu_-bRv.css",
+    "name": "app",
+    "names": [
+      "app.css"
+    ],
+    "src": "resources/sass/app.scss",
+    "isEntry": true,
+    "assets": [
+      "assets/nunito-v20-latin-regular-Ccgr3atV.eot",
+      "assets/nunito-v20-latin-regular-BaikMWaW.woff2",
+      "assets/nunito-v20-latin-regular-CVrU1huI.woff",
+      "assets/nunito-v20-latin-regular-DtVHbI2k.ttf",
+      "assets/nunito-v20-latin-regular-rlMOyMR7.svg"
+    ]
+  }
+}
