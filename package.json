@@ -4,32 +4,29 @@
     "packageManager": "pnpm@11.9.0",
     "scripts": {
         "dev": "pnpm run development",
-        "development": "mix",
-        "watch": "mix watch",
-        "watch-poll": "mix watch -- --watch-options-poll=1000",
-        "hot": "mix watch --hot",
+        "development": "vite",
+        "watch": "vite build --watch",
+        "watch-poll": "vite build --watch",
+        "hot": "vite --host 0.0.0.0",
         "prod": "pnpm run production",
-        "production": "mix --production"
+        "production": "vite build"
     },
     "devDependencies": {
         "@ericblade/quagga2": "1.12.1",
         "@flasher/flasher": "2.2.0",
         "@flasher/flasher-toastr": "2.2.0",
         "@fortawesome/fontawesome-free": "7.3.0",
+        "@popperjs/core": "2.11.8",
         "bootstrap": "5.3.8",
         "chart.js": "4.5.1",
         "jquery": "4.0.0",
-        "laravel-mix": "6.0.49",
+        "laravel-vite-plugin": "3.1.0",
         "lodash": "4.18.1",
-        "popper.js": "1.16.1",
-        "postcss": "8.5.15",
-        "resolve-url-loader": "5.0.0",
         "sass": "1.101.0",
-        "sass-loader": "17.0.0",
         "select2": "4.1.0",
         "select2-bootstrap-5-theme": "1.3.0",
         "sweetalert2": "11.26.25",
         "toastr": "2.1.4",
-        "webpack": "5.104.1"
+        "vite": "8.1.3"
     }
 }

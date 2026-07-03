@@ -1,3 +1,11 @@
+@use "@fortawesome/fontawesome-free/scss/variables" with (
+    $font-path: "/build/webfonts"
+);
+@use "@fortawesome/fontawesome-free/scss/fontawesome";
+@use "@fortawesome/fontawesome-free/scss/brands";
+@use "@fortawesome/fontawesome-free/scss/regular";
+@use "@fortawesome/fontawesome-free/scss/solid";
+
 // Fonts
 /* nunito-regular - latin */
 @font-face {
@@ -17,16 +25,11 @@
 @import "variables";
 
 // Bootstrap
-@import "~bootstrap/scss/bootstrap";
-@import "~select2/dist/css/select2.css";
+@import "bootstrap/scss/bootstrap";
+@import "select2/dist/css/select2.css";
 
 $s2bs5-border-color: $border-color;
-@import "~select2-bootstrap-5-theme/src/_include-all";
-
-@import "~@fortawesome/fontawesome-free/scss/brands";
-@import "~@fortawesome/fontawesome-free/scss/regular";
-@import "~@fortawesome/fontawesome-free/scss/solid";
-@import "~@fortawesome/fontawesome-free/scss/fontawesome";
+@import "select2-bootstrap-5-theme/src/include-all";
 
 .col-form-label.required:after {
     content: "*";

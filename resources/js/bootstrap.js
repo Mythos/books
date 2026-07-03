@@ -1,28 +1,28 @@
-window._ = require("lodash");
+import _ from "lodash";
+import $ from "jquery";
+import * as bootstrap from "bootstrap";
+import select2Factory from "select2";
+import Swal from "sweetalert2";
+import Quagga from "@ericblade/quagga2";
+import Chart from "chart.js/auto";
+import { PieChart } from "./charts/PieChart";
 
 /**
- * We'll load jQuery and the Bootstrap jQuery plugin which provides support
- * for JavaScript based Bootstrap features such as modals and tabs. This
- * code may be modified to fit the specific needs of your application.
+ * We'll load jQuery and Bootstrap, which provide support for JavaScript based
+ * Bootstrap features such as modals and tabs. This code may be modified to fit
+ * the specific needs of your application.
  */
 
 try {
-    window.Popper = require("popper.js").default;
-    window.$ = window.jQuery = require("jquery");
-
-    window.bootstrap = require("bootstrap");
-    window.select2 = require("select2");
+    window._ = _;
+    window.$ = window.jQuery = $;
+    window.bootstrap = bootstrap;
+    window.select2 = select2Factory(window, $);
 } catch (e) { }
 
-window.Swal = require("sweetalert2");
-
-import Quagga from '@ericblade/quagga2';
+window.Swal = Swal;
 window.Quagga = Quagga;
-
-import Chart from "chart.js/auto";
 window.Chart = Chart;
-
-import { PieChart } from "./charts/PieChart";
 window.PieChart = PieChart;
 
 /**
@@ -37,7 +37,7 @@ window.PieChart = PieChart;
 
 // window.Echo = new Echo({
 //     broadcaster: 'pusher',
-//     key: process.env.MIX_PUSHER_APP_KEY,
-//     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
+//     key: import.meta.env.VITE_PUSHER_APP_KEY,
+//     cluster: import.meta.env.VITE_PUSHER_APP_CLUSTER,
 //     forceTLS: true
 // });
