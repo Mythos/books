@@ -28,7 +28,7 @@ services:
             - books
 
     mariadb:
-        image: mariadb:11.8.8@sha256:be1ef4fe5f14589325c08a41c76334097ce66c86264b75e1d28342c742782a61
+        image: mariadb:12.3.3@sha256:dd9b303aed4f4890ed09f766d8ca9ddfd176c0c6f6267feff53b3192ec65a979
         ports:
             - "${DB_FORWARD_PORT:-3306}:3306"
         environment:
