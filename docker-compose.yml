@@ -16,7 +16,7 @@ services:
             - books
 
     web:
-        image: nginx:1.29.3-alpine@sha256:b3c656d55d7ad751196f21b7fd2e8d4da9cb430e32f646adcf92441b72f82b14
+        image: nginx:1.31.5-alpine@sha256:72ba65eb42c10344912a84ff42408db7d34f2feb642204570ab8fc5ffd29f1d3
         ports:
             - "${APP_FORWARD_PORT:-8080}:80"
         volumes:
