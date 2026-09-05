@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "daf479a5380d3bfb061571a633dacfe9",
+    "content-hash": "f05f2a87902ee669a963586463eee9ba",
     "packages": [
         {
             "name": "brick/math",
@@ -2807,16 +2807,16 @@
         },
         {
             "name": "nicebooks/isbn",
-            "version": "0.8.6",
+            "version": "0.8.17",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nicebooks-com/isbn.git",
-                "reference": "1bffb44673f98644bee33cf17991169cd1dc6fde"
+                "reference": "be14008f8d540d32ea990e4a3e64ba742b8b2aee"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nicebooks-com/isbn/zipball/1bffb44673f98644bee33cf17991169cd1dc6fde",
-                "reference": "1bffb44673f98644bee33cf17991169cd1dc6fde",
+                "url": "https://api.github.com/repos/nicebooks-com/isbn/zipball/be14008f8d540d32ea990e4a3e64ba742b8b2aee",
+                "reference": "be14008f8d540d32ea990e4a3e64ba742b8b2aee",
                 "shasum": ""
             },
             "require": {
@@ -2824,7 +2824,7 @@
             },
             "require-dev": {
                 "brick/varexporter": "~0.7.0",
-                "carthage-software/mago": "1.25.1",
+                "carthage-software/mago": "1.47.4",
                 "ext-dom": "*",
                 "php-coveralls/php-coveralls": "^2.5.2",
                 "phpunit/phpunit": "^11.5"
@@ -2850,9 +2850,9 @@
             ],
             "support": {
                 "issues": "https://github.com/nicebooks-com/isbn/issues",
-                "source": "https://github.com/nicebooks-com/isbn/tree/0.8.6"
+                "source": "https://github.com/nicebooks-com/isbn/tree/0.8.17"
             },
-            "time": "2026-06-26T23:36:23+00:00"
+            "time": "2026-09-05T04:58:22+00:00"
         },
         {
             "name": "nikic/php-parser",
