@@ -17,7 +17,7 @@
         "laravel/tinker": "3.0.2",
         "laravel/ui": "4.6.3",
         "livewire/livewire": "4.3.3",
-        "nicebooks/isbn": "0.8.6",
+        "nicebooks/isbn": "0.8.17",
         "php-flasher/flasher": "2.6.1",
         "php-flasher/flasher-laravel": "2.6.1",
         "php-flasher/flasher-toastr": "2.6.1",
