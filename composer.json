@@ -21,7 +21,7 @@
         "php-flasher/flasher": "2.6.1",
         "php-flasher/flasher-laravel": "2.6.1",
         "php-flasher/flasher-toastr": "2.6.1",
-        "php-flasher/flasher-toastr-laravel": "2.6.1",
+        "php-flasher/flasher-toastr-laravel": "2.6.3",
         "spatie/laravel-sluggable": "4.0.2"
     },
     "require-dev": {
