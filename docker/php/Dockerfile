@@ -1,4 +1,4 @@
-FROM php:8.5.7-fpm-bookworm@sha256:8971d7dee33749d35c98ae465bfa769346961151a8c24a0a41c9713fcbc1f521
+FROM php:8.5.10-fpm-bookworm@sha256:cc45fc347dcdef585e907fa7dab27087039f2adf7bd911c22b79a3d80cc98d08
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
