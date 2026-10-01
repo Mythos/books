@@ -1,6 +1,6 @@
 import _ from "lodash";
 import $ from "jquery";
-import * as bootstrap from "bootstrap";
+import bootstrap from "bootstrap/dist/js/bootstrap.bundle";
 import select2Factory from "select2";
 import Swal from "sweetalert2";
 import Quagga from "@ericblade/quagga2";
