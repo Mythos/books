@@ -20,13 +20,13 @@
     "src": "resources/fonts/nunito-v20-latin-regular.woff2"
   },
   "resources/js/app.js": {
-    "file": "assets/app-CMbECZMO.js",
+    "file": "assets/app-BgBCiXzV.js",
     "name": "app",
     "src": "resources/js/app.js",
     "isEntry": true
   },
   "resources/sass/app.scss": {
-    "file": "assets/app-BEu_-bRv.css",
+    "file": "assets/app-CsSlvKMr.css",
     "name": "app",
     "names": [
       "app.css"

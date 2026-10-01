@@ -1,7 +1,7 @@
 {
     "name": "books",
     "private": true,
-    "packageManager": "pnpm@11.9.0",
+    "packageManager": "pnpm@11.19.0",
     "scripts": {
         "dev": "pnpm run development",
         "development": "vite",
@@ -15,17 +15,17 @@
         "@ericblade/quagga2": "1.12.1",
         "@flasher/flasher": "2.2.0",
         "@flasher/flasher-toastr": "2.2.0",
-        "@fortawesome/fontawesome-free": "7.3.0",
+        "@fortawesome/fontawesome-free": "7.3.1",
         "bootstrap": "5.3.8",
         "chart.js": "4.5.1",
         "jquery": "4.0.0",
-        "laravel-vite-plugin": "3.1.0",
+        "laravel-vite-plugin": "3.2.0",
         "lodash": "4.18.1",
-        "sass": "1.101.0",
+        "sass": "1.102.0",
         "select2": "4.1.0",
         "select2-bootstrap-5-theme": "1.3.0",
         "sweetalert2": "11.26.25",
         "toastr": "2.1.4",
-        "vite": "8.1.3"
+        "vite": "8.3.1"
     }
 }
