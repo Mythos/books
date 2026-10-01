@@ -3,7 +3,8 @@
 namespace App\Rules;
 
 use Illuminate\Contracts\Validation\Rule;
-use Nicebooks\Isbn\IsbnTools;
+use Nicebooks\Isbn\Exception\InvalidIsbnException;
+use Nicebooks\Isbn\Isbn as IsbnNumber;
 
 class Isbn implements Rule
 {
@@ -26,9 +27,13 @@ class Isbn implements Rule
      */
     public function passes($attribute, $value)
     {
-        $tools = new IsbnTools();
+        try {
+            IsbnNumber::of($value);
 
-        return $tools->isValidIsbn($value);
+            return true;
+        } catch (InvalidIsbnException) {
+            return false;
+        }
     }
 
     /**

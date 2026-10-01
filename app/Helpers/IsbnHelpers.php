@@ -5,8 +5,8 @@ namespace App\Helpers;
 use Exception;
 use Http;
 use Illuminate\Support\Facades\Log;
+use Nicebooks\Isbn\Exception\InvalidIsbnException;
 use Nicebooks\Isbn\Isbn;
-use Nicebooks\Isbn\IsbnTools;
 
 class IsbnHelpers
 {
@@ -15,12 +15,11 @@ class IsbnHelpers
         if (empty($isbn)) {
             return null;
         }
-        $tools = new IsbnTools();
-        if ($tools->isValidIsbn($isbn)) {
-            return Isbn::of($isbn)->to13();
+        try {
+            return Isbn::of($isbn)->to13()->toString();
+        } catch (InvalidIsbnException) {
+            return null;
         }
-
-        return null;
     }
 
     public static function format($isbn): ?string
@@ -28,9 +27,7 @@ class IsbnHelpers
         if (empty($isbn)) {
             return null;
         }
-        $tools = new IsbnTools();
-
-        return $tools->format($isbn);
+        return Isbn::of($isbn)->toFormattedString();
     }
 
     public static function getPublishDateByIsbn(?string $isbn): ?string
