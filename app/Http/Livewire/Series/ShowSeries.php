@@ -24,13 +24,13 @@ class ShowSeries extends Component
 
     public int $new;
 
-    public int $ordered;
+    public int $orderedCount;
 
-    public int $shipped;
+    public int $shippedCount;
 
-    public int $delivered;
+    public int $deliveredCount;
 
-    public int $read;
+    public int $readCount;
 
     protected $listeners = ['show_nsfw' => '$refresh'];
 
@@ -45,10 +45,10 @@ class ShowSeries extends Component
         $this->series = Series::with(['genres', 'magazines'])->find($this->series->id);
         $this->volumes = Volume::whereSeriesId($this->series->id)->orderBy('number')->get();
         $this->new = $this->volumes->where('status', VolumeStatus::NEW)->count();
-        $this->ordered = $this->volumes->where('status', VolumeStatus::ORDERED)->count();
-        $this->shipped = $this->volumes->where('status', VolumeStatus::SHIPPED)->count();
-        $this->delivered = $this->volumes->where('status', VolumeStatus::DELIVERED)->count();
-        $this->read = $this->volumes->where('status', VolumeStatus::READ)->count();
+        $this->orderedCount = $this->volumes->where('status', VolumeStatus::ORDERED)->count();
+        $this->shippedCount = $this->volumes->where('status', VolumeStatus::SHIPPED)->count();
+        $this->deliveredCount = $this->volumes->where('status', VolumeStatus::DELIVERED)->count();
+        $this->readCount = $this->volumes->where('status', VolumeStatus::READ)->count();
 
         return view('livewire.series.show-series')->extends('layouts.app')->section('content');
     }

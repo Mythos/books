@@ -33,10 +33,10 @@
         ];
         const valueSet = [
             @this.new,
-            @this.ordered,
-            @this.shipped,
-            @this.delivered,
-            @this.read,
+            @this.orderedCount,
+            @this.shippedCount,
+            @this.deliveredCount,
+            @this.readCount,
         ];
 
         const colors = [
