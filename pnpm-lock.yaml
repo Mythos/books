@@ -31,13 +31,13 @@ importers:
         version: 4.0.0
       laravel-vite-plugin:
         specifier: 3.2.0
-        version: 3.2.0(vite@8.3.1(@types/node@26.1.0)(sass@1.102.0)(terser@5.48.0))
+        version: 3.2.0(vite@8.3.1(@types/node@26.1.0)(sass@1.105.1)(terser@5.48.0))
       lodash:
         specifier: 4.18.1
         version: 4.18.1
       sass:
-        specifier: 1.102.0
-        version: 1.102.0
+        specifier: 1.105.1
+        version: 1.105.1
       select2:
         specifier: 4.1.0
         version: 4.1.0
@@ -52,7 +52,7 @@ importers:
         version: 2.1.4
       vite:
         specifier: 8.3.1
-        version: 8.3.1(@types/node@26.1.0)(sass@1.102.0)(terser@5.48.0)
+        version: 8.3.1(@types/node@26.1.0)(sass@1.105.1)(terser@5.48.0)
 
 packages:
 
@@ -796,8 +796,8 @@ packages:
     engines: {node: ^20.19.0 || >=22.12.0}
     hasBin: true
 
-  sass@1.102.0:
-    resolution: {integrity: sha512-NSOyTnaQF7rTAEOtI2fwb386vL+akyiQLBZu8Na7hXCb+umJy0GAqlcMIaqACZ6Z1VgTBS4K9PG6B3IdjHGJsw==}
+  sass@1.105.1:
+    resolution: {integrity: sha512-1CnAWPyrrnVQzXGB/DUep1vYCKCm1CIBr+YxjjiW6wk9qtzemnGP4qicH56T2F9S4Hjtv/Ne3jDz8JqfdDU4oA==}
     engines: {node: '>=20.19.0'}
     hasBin: true
 
@@ -1331,11 +1331,11 @@ snapshots:
 
   jquery@4.0.0: {}
 
-  laravel-vite-plugin@3.2.0(vite@8.3.1(@types/node@26.1.0)(sass@1.102.0)(terser@5.48.0)):
+  laravel-vite-plugin@3.2.0(vite@8.3.1(@types/node@26.1.0)(sass@1.105.1)(terser@5.48.0)):
     dependencies:
       picocolors: 1.1.1
       tinyglobby: 0.2.17
-      vite: 8.3.1(@types/node@26.1.0)(sass@1.102.0)(terser@5.48.0)
+      vite: 8.3.1(@types/node@26.1.0)(sass@1.105.1)(terser@5.48.0)
       vite-plugin-full-reload: 1.2.0
 
   lightningcss-android-arm64@1.33.0:
@@ -1450,7 +1450,7 @@ snapshots:
       '@rolldown/binding-win32-arm64-msvc': 1.2.12
       '@rolldown/binding-win32-x64-msvc': 1.2.12
 
-  sass@1.102.0:
+  sass@1.105.1:
     dependencies:
       chokidar: 5.0.0
       immutable: 5.1.9
@@ -1579,7 +1579,7 @@ snapshots:
       picocolors: 1.1.1
       picomatch: 2.3.2
 
-  vite@8.3.1(@types/node@26.1.0)(sass@1.102.0)(terser@5.48.0):
+  vite@8.3.1(@types/node@26.1.0)(sass@1.105.1)(terser@5.48.0):
     dependencies:
       lightningcss: 1.33.0
       picomatch: 4.0.7
@@ -1589,5 +1589,5 @@ snapshots:
     optionalDependencies:
       '@types/node': 26.1.0
       fsevents: 2.3.3
-      sass: 1.102.0
+      sass: 1.105.1
       terser: 5.48.0
