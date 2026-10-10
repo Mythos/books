@@ -10,7 +10,7 @@
     "require": {
         "php": "8.5.11",
         "guzzlehttp/guzzle": "7.15.5",
-        "intervention/image": "4.3.3",
+        "intervention/image": "4.3.5",
         "jantinnerezo/livewire-alert": "4.2.0",
         "laravel/framework": "13.34.0",
         "laravel/sanctum": "4.3.3",
