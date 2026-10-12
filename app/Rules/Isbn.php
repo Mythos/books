@@ -2,47 +2,19 @@
 
 namespace App\Rules;
 
-use Illuminate\Contracts\Validation\Rule;
+use Closure;
+use Illuminate\Contracts\Validation\ValidationRule;
 use Nicebooks\Isbn\Exception\InvalidIsbnException;
 use Nicebooks\Isbn\Isbn as IsbnNumber;
 
-class Isbn implements Rule
+class Isbn implements ValidationRule
 {
-    /**
-     * Create a new rule instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        //
-    }
-
-    /**
-     * Determine if the validation rule passes.
-     *
-     * @param  string  $attribute
-     * @param  mixed  $value
-     * @return bool
-     */
-    public function passes($attribute, $value)
+    public function validate(string $attribute, mixed $value, Closure $fail): void
     {
         try {
-            IsbnNumber::of($value);
-
-            return true;
+            IsbnNumber::of((string) $value);
         } catch (InvalidIsbnException) {
-            return false;
+            $fail(__('The provided ISBN is invalid'));
         }
-    }
-
-    /**
-     * Get the validation error message.
-     *
-     * @return string
-     */
-    public function message()
-    {
-        return __('The provided ISBN is invalid');
     }
 }
