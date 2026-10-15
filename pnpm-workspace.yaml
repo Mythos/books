@@ -1,6 +1,10 @@
 packages:
   - .
 
+overrides:
+  # Quagga's decoder needs patched libvips, libheif and librsvg dependencies.
+  '@ericblade/quagga2>sharp': '0.35.5'
+
 allowBuilds:
   '@parcel/watcher': true
   sharp: true
