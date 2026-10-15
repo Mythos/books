@@ -7,7 +7,7 @@
             <div class="modal-body" style="position: static">
                 <div class="row">
                     <div class="col-md-12">
-                        <label for="input-stream_constraints" class="col-form-label">{{ __('Camera') }}</label>
+                        <label for="deviceSelection" class="col-form-label">{{ __('Camera') }}</label>
                         <select id="deviceSelection" name="input-stream_constraints" class="form-select">
                         </select>
                     </div>
@@ -86,48 +86,66 @@
             }
         );
         // Start the live stream scanner when the modal opens
-        $('#livestream_scanner').on('shown.bs.modal', function(e) {
+        $('#livestream_scanner').on('shown.bs.modal', function() {
+            initCamera();
+        });
+
+        function updateCameraSelection() {
+            var activeTrack = Quagga.CameraAccess.getActiveTrack();
+            var activeDeviceId = activeTrack && activeTrack.getSettings().deviceId;
             var streamLabel = Quagga.CameraAccess.getActiveStreamLabel();
-            Quagga.CameraAccess.enumerateVideoDevices()
+            return Quagga.CameraAccess.enumerateVideoDevices()
                 .then(function(devices) {
-                    function pruneText(text) {
-                        return text.length > 30 ? text.substr(0, 30) : text;
-                    }
-                    debugger;
                     var $deviceSelection = document.getElementById("deviceSelection");
                     while ($deviceSelection.firstChild) {
                         $deviceSelection.removeChild($deviceSelection.firstChild);
                     }
-                    devices.forEach(function(device) {
+                    devices.forEach(function(device, index) {
+                        var deviceId = device.deviceId || device.id || '';
+                        var label = device.label || deviceId || (@json(__('Camera')) + ' ' + (index + 1));
                         var $option = document.createElement("option");
-                        $option.value = device.deviceId || device.id;
-                        $option.appendChild(document.createTextNode(pruneText(device.label || device.deviceId || device.id)));
-                        $option.selected = streamLabel === device.label;
+                        $option.value = deviceId;
+                        $option.textContent = label.slice(0, 30);
+                        $option.selected = activeDeviceId ? activeDeviceId === deviceId : Boolean(streamLabel) && streamLabel === device.label;
                         $deviceSelection.appendChild($option);
                     });
-                    initCamera();
                 });
-        });
+        }
 
         $('#deviceSelection').change(function() {
             var deviceId = $(this).val();
-            liveStreamConfig.inputStream.constraints.deviceId = deviceId;
+            if (deviceId) {
+                liveStreamConfig.inputStream.constraints.deviceId = deviceId;
+            } else {
+                delete liveStreamConfig.inputStream.constraints.deviceId;
+            }
             Quagga.stop();
             initCamera();
         });
+
+        function showCameraError(error) {
+            $('#livestream_scanner .modal-body .error').empty().append(
+                $('<div class="alert alert-danger" role="alert"></div>').text(error.name + ': ' + error.message)
+            );
+        }
 
         function initCamera() {
             Quagga.init(
                 liveStreamConfig,
                 function(err) {
+                    if (!$('#livestream_scanner').hasClass('show')) {
+                        Quagga.stop();
+                        return;
+                    }
                     if (err) {
-                        $('#livestream_scanner .modal-body .error').html('<div class="alert alert-danger"><strong><span class="fa fa-exclamation-triangle"></span> ' + err.name + '</strong>: ' + err.message + '</div>');
+                        showCameraError(err);
                         Quagga.stop();
                         return;
                     } else {
                         $('#livestream_scanner .modal-body .error').html('');
                     }
                     Quagga.start();
+                    updateCameraSelection().catch(showCameraError);
                 }
             );
         }
