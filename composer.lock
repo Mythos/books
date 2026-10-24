@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "2104ef2d57010e9df8b5b571f6efdb9b",
+    "content-hash": "3fc5621d16172fa3400c6a42b30f9c5c",
     "packages": [
         {
             "name": "brick/math",
@@ -2817,16 +2817,16 @@
         },
         {
             "name": "nicebooks/isbn",
-            "version": "0.8.31",
+            "version": "0.8.35",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nicebooks-com/isbn.git",
-                "reference": "177c4e0dc79a640326f1b0810c9ab583fde15704"
+                "reference": "7201a8755fe77ce27a0b510ba8af720b522d9604"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nicebooks-com/isbn/zipball/177c4e0dc79a640326f1b0810c9ab583fde15704",
-                "reference": "177c4e0dc79a640326f1b0810c9ab583fde15704",
+                "url": "https://api.github.com/repos/nicebooks-com/isbn/zipball/7201a8755fe77ce27a0b510ba8af720b522d9604",
+                "reference": "7201a8755fe77ce27a0b510ba8af720b522d9604",
                 "shasum": ""
             },
             "require": {
@@ -2860,9 +2860,9 @@
             ],
             "support": {
                 "issues": "https://github.com/nicebooks-com/isbn/issues",
-                "source": "https://github.com/nicebooks-com/isbn/tree/0.8.31"
+                "source": "https://github.com/nicebooks-com/isbn/tree/0.8.35"
             },
-            "time": "2026-10-15T05:17:53+00:00"
+            "time": "2026-10-24T05:05:19+00:00"
         },
         {
             "name": "nikic/php-parser",
