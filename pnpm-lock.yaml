@@ -12,8 +12,8 @@ importers:
   .:
     devDependencies:
       '@ericblade/quagga2':
-        specifier: 1.12.1
-        version: 1.12.1(@types/node@26.1.0)
+        specifier: 1.13.0
+        version: 1.13.0(@types/node@26.1.0)
       '@flasher/flasher':
         specifier: 2.2.0
         version: 2.2.0
@@ -62,8 +62,8 @@ packages:
   '@emnapi/runtime@1.11.3':
     resolution: {integrity: sha512-Xz4Tpyki7XyrpbUK1jR1AhdAdaXyhhY4lZ3neLodmhpuWfy2PAQN5B46sAiU4liOXGLkHypn/qU+jvfWSCYYLA==}
 
-  '@ericblade/quagga2@1.12.1':
-    resolution: {integrity: sha512-Ar7x7LHxqO9yqJ4nwrwywpyHcmSqykSi4CPDapp+L5xS5IFCTXmvJewn+2GzVNKOQHdXfRC3E57B5vufQiNCDw==}
+  '@ericblade/quagga2@1.13.0':
+    resolution: {integrity: sha512-DlBskCfQgP+HwAsCDFYPI6qeB5ifT4BQODNmedkxr364TD3Z4YtldBaQInM4ap6Os6vJ2YcgFiUPMAOTbHgkDw==}
     engines: {node: '>= 20.0'}
 
   '@flasher/flasher-toastr@2.2.0':
@@ -764,7 +764,7 @@ snapshots:
       tslib: 2.8.1
     optional: true
 
-  '@ericblade/quagga2@1.12.1(@types/node@26.1.0)':
+  '@ericblade/quagga2@1.13.0(@types/node@26.1.0)':
     dependencies:
       gl-matrix: 3.4.4
     optionalDependencies:

@@ -12,7 +12,7 @@
         "production": "vite build"
     },
     "devDependencies": {
-        "@ericblade/quagga2": "1.12.1",
+        "@ericblade/quagga2": "1.13.0",
         "@flasher/flasher": "2.2.0",
         "@flasher/flasher-toastr": "2.2.0",
         "@fortawesome/fontawesome-free": "7.3.1",
