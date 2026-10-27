@@ -6,7 +6,7 @@ I also use this project to improve my Laravel skills as I'm mainly a .NET develo
 
 ## Installation
 
-* Make sure to have [Laravel 8.X requirements](https://laravel.com/docs/8.x/deployment#server-requirements) installed
+* Install PHP 8.5.12 and the extensions listed in the [Laravel 13 requirements](https://laravel.com/docs/13.x/deployment#server-requirements).
 * Clone this repository
 * Run `composer install --no-dev`
 * Set your credentials and settings in `.env`
@@ -18,7 +18,7 @@ I also use this project to improve my Laravel skills as I'm mainly a .NET develo
 
 ## Docker Development
 
-The repository includes a Docker Compose setup that can replace a local Laragon/XAMPP-style installation. It provides PHP-FPM, Nginx, MariaDB, Redis, Mailpit and a Node container for Laravel Mix assets. The normal Laravel `.env` file is also used by Docker Compose; `.env.example` contains separate comment blocks for Laravel application settings and Docker development settings.
+The repository includes a Docker Compose setup that can replace a local Laragon/XAMPP-style installation. It provides PHP-FPM, Nginx, MariaDB, Redis, Mailpit and a Node container for Vite assets. The normal Laravel `.env` file is also used by Docker Compose; `.env.example` contains separate comment blocks for Laravel application settings and Docker development settings.
 
 1. Copy `.env.example` to `.env` and adjust values if needed.
 2. Start the runtime services:
@@ -40,7 +40,7 @@ The repository includes a Docker Compose setup that can replace a local Laragon/
 
     ```sh
     docker compose run --rm node sh -c "corepack enable pnpm && pnpm install --frozen-lockfile"
-    docker compose run --rm node sh -c "corepack enable pnpm && pnpm run dev"
+    docker compose run --rm node sh -c "corepack enable pnpm && pnpm run prod"
     ```
 
 For continuous frontend rebuilds, run:
@@ -59,6 +59,12 @@ docker compose exec app vendor/bin/phpunit
 docker compose exec app php artisan tinker
 docker compose down
 ```
+
+### Upgrading an existing database
+
+The Compose stack uses MariaDB 13.0.2 and enables `MARIADB_AUTO_UPGRADE` so the image runs `mariadb-upgrade` when an existing database requires it. Before starting a newer major version, stop application writes, make a database dump and preserve a cold copy of the MariaDB volume. The image's automatic backup covers the system database only; it does not replace an application-data backup.
+
+Keep the previous image digest and the pre-upgrade backup until the application has been checked. Do not start an older MariaDB image against an upgraded data directory. For rollback, use the old image with the preserved pre-upgrade volume or restore the dump into a separate compatible instance. MariaDB 13.0 is a rolling release; continue tracking its support window when updating the stack.
 
 ## Contribution
 

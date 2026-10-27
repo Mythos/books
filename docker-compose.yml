@@ -16,7 +16,7 @@ services:
             - books
 
     web:
-        image: nginx:1.31.7-alpine@sha256:42c36dfd0b3503b7966771550a91521262b4750665929821abf5069715610e20
+        image: nginx:1.31.8-alpine@sha256:1ef7ca94d7879df82421428ce13bd1eaa412404953859cf7a5b6512c25e67a60
         ports:
             - "${APP_FORWARD_PORT:-8080}:80"
         volumes:
@@ -28,10 +28,11 @@ services:
             - books
 
     mariadb:
-        image: mariadb:11.8.9@sha256:6422478cb8e159f080fb1d8ccf65101e26fe51385787fde7d16c3b165a331f15
+        image: mariadb:13.0.2@sha256:4844586367ef1b639ae699953e00a6a18f460f700e52df00401e1101a6ef2450
         ports:
             - "${DB_FORWARD_PORT:-3306}:3306"
         environment:
+            MARIADB_AUTO_UPGRADE: "1"
             MARIADB_DATABASE: ${DB_DATABASE:-books}
             MARIADB_USER: ${DB_USERNAME:-books}
             MARIADB_PASSWORD: ${DB_PASSWORD:-books}
@@ -48,7 +49,7 @@ services:
             - books
 
     redis:
-        image: redis:8.10.2-alpine@sha256:3811787313eba226a2ef38658c6ccb91cd5e110edc89c37767de373120a0e5a0
+        image: redis:8.10.3-alpine@sha256:896f241f438ab6a210cfb24f573b84bea721a4cbe67f1b4fd07eb638b3b02a7b
         ports:
             - "${REDIS_FORWARD_PORT:-6379}:6379"
         volumes:
@@ -62,7 +63,7 @@ services:
             - books
 
     mailpit:
-        image: axllent/mailpit:v1.31.6@sha256:23fe39e81bde596a918000b3135c0f85dc8bb4c9ea6be274b051143f3e300387
+        image: axllent/mailpit:v1.32.0@sha256:0790692be935ea4420d085694f7985b1f692ca6a8771ab0e0bd8ba75ac180498
         ports:
             - "${MAILPIT_SMTP_FORWARD_PORT:-1025}:1025"
             - "${MAILPIT_DASHBOARD_FORWARD_PORT:-8025}:8025"
@@ -70,7 +71,7 @@ services:
             - books
 
     node:
-        image: node:24.22.0-bookworm@sha256:14078204b6bb268c107ceff6d3c43f45a888105e5c2b18b14c32b3409d93a1b0
+        image: node:24.22.1-bookworm@sha256:6449e19d8184d84062525b6a7524def03146c2cb04a7f08b076680d0e8e4240a
         profiles:
             - assets
         working_dir: /var/www/html
