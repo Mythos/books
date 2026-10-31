@@ -71,7 +71,7 @@ services:
             - books
 
     node:
-        image: node:24.22.1-bookworm@sha256:6449e19d8184d84062525b6a7524def03146c2cb04a7f08b076680d0e8e4240a
+        image: node:26.13.0-bookworm@sha256:fa52d1669505e29b58c042875b1d65c229e0787a3610fd52869b22b68e480853
         profiles:
             - assets
         working_dir: /var/www/html
