@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "2656e19818deaa4c9345bc21242e725a",
+    "content-hash": "8db12212d3ebb606653adfe09f6f76f4",
     "packages": [
         {
             "name": "brick/math",
@@ -4004,28 +4004,28 @@
         },
         {
             "name": "spatie/laravel-sluggable",
-            "version": "4.0.6",
+            "version": "6.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/laravel-sluggable.git",
-                "reference": "8bdb6cc508459b22328f2743fda18883957da0a1"
+                "reference": "d0137c02bb85477d04ddd5da49f34c4d71087ff9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-sluggable/zipball/8bdb6cc508459b22328f2743fda18883957da0a1",
-                "reference": "8bdb6cc508459b22328f2743fda18883957da0a1",
+                "url": "https://api.github.com/repos/spatie/laravel-sluggable/zipball/d0137c02bb85477d04ddd5da49f34c4d71087ff9",
+                "reference": "d0137c02bb85477d04ddd5da49f34c4d71087ff9",
                 "shasum": ""
             },
             "require": {
-                "illuminate/database": "^12.0|^13.0",
-                "illuminate/support": "^12.0|^13.0",
-                "php": "^8.3"
+                "illuminate/database": "^13.0",
+                "illuminate/support": "^13.0",
+                "php": "^8.4"
             },
             "require-dev": {
                 "larastan/larastan": "^3.0",
                 "laravel/pint": "^1.24",
-                "orchestra/testbench": "^10.0|^11.0",
-                "pestphp/pest": "^4.0",
+                "orchestra/testbench": "^11.0",
+                "pestphp/pest": "^5.0",
                 "spatie/laravel-translatable": "^6.0"
             },
             "type": "library",
@@ -4070,7 +4070,7 @@
             ],
             "support": {
                 "issues": "https://github.com/spatie/laravel-sluggable/issues",
-                "source": "https://github.com/spatie/laravel-sluggable/tree/4.0.6"
+                "source": "https://github.com/spatie/laravel-sluggable/tree/6.0.0"
             },
             "funding": [
                 {
@@ -4078,7 +4078,8 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-10-27T14:24:52+00:00"
+            "time": "2026-11-13T13:00:30+00:00",
+            "published-time": "2026-11-13T13:01:27+00:00"
         },
         {
             "name": "symfony/clock",
@@ -10121,5 +10122,5 @@
         "php": "8.5.12"
     },
     "platform-dev": {},
-    "plugin-api-version": "2.9.0"
+    "plugin-api-version": "2.11.0"
 }
