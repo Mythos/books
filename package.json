@@ -16,7 +16,7 @@
         "@flasher/flasher": "2.2.0",
         "@flasher/flasher-toastr": "2.2.0",
         "@fortawesome/fontawesome-free": "7.3.1",
-        "bootstrap": "5.3.8",
+        "bootstrap": "5.3.9",
         "chart.js": "4.6.1",
         "jquery": "4.0.0",
         "laravel-vite-plugin": "3.2.0",
