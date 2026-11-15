@@ -12,7 +12,7 @@
         "guzzlehttp/guzzle": "8.3.1",
         "intervention/image": "4.4.0",
         "jantinnerezo/livewire-alert": "4.2.0",
-        "laravel/framework": "13.39.0",
+        "laravel/framework": "13.40.0",
         "laravel/sanctum": "4.3.3",
         "laravel/tinker": "3.0.2",
         "laravel/ui": "4.6.3",
