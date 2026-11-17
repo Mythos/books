@@ -16,7 +16,7 @@ services:
             - books
 
     web:
-        image: nginx:1.31.8-alpine@sha256:1ef7ca94d7879df82421428ce13bd1eaa412404953859cf7a5b6512c25e67a60
+        image: nginx:1.31.8-alpine@sha256:fed7e14be83cbd2661a75cdc5b872d936cf155d46c327084d30b8df19ae88d72
         ports:
             - "${APP_FORWARD_PORT:-8080}:80"
         volumes:
@@ -28,7 +28,7 @@ services:
             - books
 
     mariadb:
-        image: mariadb:13.0.2@sha256:4844586367ef1b639ae699953e00a6a18f460f700e52df00401e1101a6ef2450
+        image: mariadb:13.0.2@sha256:54f493ea0d60b621a5bff84e5b20100f8b86b6efa6b79158e04756c5194a5e4d
         ports:
             - "${DB_FORWARD_PORT:-3306}:3306"
         environment:
@@ -49,7 +49,7 @@ services:
             - books
 
     redis:
-        image: redis:8.10.3-alpine@sha256:896f241f438ab6a210cfb24f573b84bea721a4cbe67f1b4fd07eb638b3b02a7b
+        image: redis:8.10.3-alpine@sha256:7958cfbb9d152f87dadfbc89f1b0b15938f0b81ff8982feb327476f4911935c3
         ports:
             - "${REDIS_FORWARD_PORT:-6379}:6379"
         volumes:
@@ -63,7 +63,7 @@ services:
             - books
 
     mailpit:
-        image: axllent/mailpit:v1.32.0@sha256:0790692be935ea4420d085694f7985b1f692ca6a8771ab0e0bd8ba75ac180498
+        image: axllent/mailpit:v1.34.0@sha256:23a2ef85bc50853ab3093645d1d64679afd8887e89da5e48a88940c172591a4e
         ports:
             - "${MAILPIT_SMTP_FORWARD_PORT:-1025}:1025"
             - "${MAILPIT_DASHBOARD_FORWARD_PORT:-8025}:8025"
@@ -71,7 +71,7 @@ services:
             - books
 
     node:
-        image: node:24.22.1-bookworm@sha256:6449e19d8184d84062525b6a7524def03146c2cb04a7f08b076680d0e8e4240a
+        image: node:24.22.3-bookworm@sha256:9d266751ca3d7fdbe651c878ffd5ad0a42fed49a18c283509267c97f025b7496
         profiles:
             - assets
         working_dir: /var/www/html
