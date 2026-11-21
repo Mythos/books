@@ -13,7 +13,7 @@
         "intervention/image": "4.4.1",
         "jantinnerezo/livewire-alert": "4.2.0",
         "laravel/framework": "13.42.0",
-        "laravel/sanctum": "4.4.0",
+        "laravel/sanctum": "4.5.0",
         "laravel/tinker": "3.1.0",
         "laravel/ui": "4.6.3",
         "livewire/livewire": "4.4.8",
