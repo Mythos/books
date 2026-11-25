@@ -6,7 +6,7 @@ I also use this project to improve my Laravel skills as I'm mainly a .NET develo
 
 ## Installation
 
-* Install PHP 8.5.12 and the extensions listed in the [Laravel 13 requirements](https://laravel.com/docs/13.x/deployment#server-requirements).
+* Install PHP 8.5.13 and the extensions listed in the [Laravel 13 requirements](https://laravel.com/docs/13.x/deployment#server-requirements).
 * Clone this repository
 * Run `composer install --no-dev`
 * Set your credentials and settings in `.env`
@@ -39,8 +39,7 @@ The repository includes a Docker Compose setup that can replace a local Laragon/
 4. Build frontend assets once:
 
     ```sh
-    docker compose run --rm node sh -c "corepack enable pnpm && pnpm install --frozen-lockfile"
-    docker compose run --rm node sh -c "corepack enable pnpm && pnpm run prod"
+    docker compose run --rm node sh -ec "pnpm install --frozen-lockfile && pnpm run prod"
     ```
 
 For continuous frontend rebuilds, run:

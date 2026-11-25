@@ -16,7 +16,7 @@ services:
             - books
 
     web:
-        image: nginx:1.31.8-alpine@sha256:fed7e14be83cbd2661a75cdc5b872d936cf155d46c327084d30b8df19ae88d72
+        image: nginx:1.31.10-alpine@sha256:aceb952b920393b7d0bc7b978927fc283370bea89fb082c6fef0ce18c60f96a9
         ports:
             - "${APP_FORWARD_PORT:-8080}:80"
         volumes:
@@ -49,7 +49,7 @@ services:
             - books
 
     redis:
-        image: redis:8.10.3-alpine@sha256:7958cfbb9d152f87dadfbc89f1b0b15938f0b81ff8982feb327476f4911935c3
+        image: redis:8.12.0-alpine@sha256:5af80107c1eeecb484a2269b80a26d12bfa6521787da4663bd9f19f60a163483
         ports:
             - "${REDIS_FORWARD_PORT:-6379}:6379"
         volumes:
@@ -71,11 +71,18 @@ services:
             - books
 
     node:
-        image: node:24.22.3-bookworm@sha256:9d266751ca3d7fdbe651c878ffd5ad0a42fed49a18c283509267c97f025b7496
+        image: node:26.13.1-bookworm@sha256:893ea48106e988a5f91e69629d6472600daa9d0494adf7db87eb0b886ce82255
         profiles:
             - assets
         working_dir: /var/www/html
-        command: sh -c "corepack enable pnpm && (test -d node_modules/vite || pnpm install --frozen-lockfile) && pnpm run watch-poll"
+        entrypoint:
+            - sh
+            - -ec
+            - |
+                npm install --global --no-audit --no-fund "$$(node -p 'require("./package.json").packageManager')"
+                exec docker-entrypoint.sh "$$@"
+            - --
+        command: ["sh", "-ec", "pnpm install --frozen-lockfile && exec pnpm run watch-poll"]
         volumes:
             - ./:/var/www/html
             - node_modules:/var/www/html/node_modules

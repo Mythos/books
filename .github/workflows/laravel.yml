@@ -13,17 +13,18 @@ jobs:
     steps:
       - uses: shivammathur/setup-php@eb7c497e18156a6bbabfef1d3a82760b9eda3962 # 2.40.0
         with:
-          php-version: "8.5"
+          php-version: "8.5.13"
+          tools: composer:2.11.3
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
-          node-version: "24.22.3"
+          node-version: "26.13.1"
       - name: Copy .env
         run: php -r "file_exists('.env') || copy('.env.example', '.env');"
       - name: Install Dependencies
         run: composer install --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
-      - name: Enable pnpm
-        run: corepack enable pnpm
+      - name: Install pnpm
+        run: npm install --global --no-audit --no-fund "$(node -p 'require("./package.json").packageManager')"
       - name: Get pnpm store path
         id: pnpm-store
         run: echo "path=$(pnpm store path --silent)" >> "$GITHUB_OUTPUT"
