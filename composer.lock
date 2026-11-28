@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "beaf243faa317cc00c7fad162536f4c0",
+    "content-hash": "b51153b2819b6e52f54146ad3b3e4635",
     "packages": [
         {
             "name": "brick/math",
@@ -1145,16 +1145,16 @@
         },
         {
             "name": "intervention/image",
-            "version": "4.4.1",
+            "version": "4.4.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Intervention/image.git",
-                "reference": "3a47838f2e0f4ec6c8c9b43a5d73ac985b975830"
+                "reference": "7d8ef63ee95368f5ca13636b5d32acf4b48ca2db"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Intervention/image/zipball/3a47838f2e0f4ec6c8c9b43a5d73ac985b975830",
-                "reference": "3a47838f2e0f4ec6c8c9b43a5d73ac985b975830",
+                "url": "https://api.github.com/repos/Intervention/image/zipball/7d8ef63ee95368f5ca13636b5d32acf4b48ca2db",
+                "reference": "7d8ef63ee95368f5ca13636b5d32acf4b48ca2db",
                 "shasum": ""
             },
             "require": {
@@ -1201,7 +1201,7 @@
             ],
             "support": {
                 "issues": "https://github.com/Intervention/image/issues",
-                "source": "https://github.com/Intervention/image/tree/4.4.1"
+                "source": "https://github.com/Intervention/image/tree/4.4.2"
             },
             "funding": [
                 {
@@ -1217,8 +1217,8 @@
                     "type": "ko_fi"
                 }
             ],
-            "time": "2026-10-30T13:38:01+00:00",
-            "published-time": "2026-10-30T13:41:47+00:00"
+            "time": "2026-11-25T15:23:13+00:00",
+            "published-time": "2026-11-28T12:42:39+00:00"
         },
         {
             "name": "jantinnerezo/livewire-alert",
